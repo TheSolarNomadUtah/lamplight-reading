@@ -112,7 +112,7 @@ function renderLook(){const L=getLook();$('look').innerHTML=`<div class="card bi
  <h3>Font</h3>${Object.entries(FONTS).map(([k,f])=>`<button style="font-family:${f[0].replace(/"/g,"'")};border:3px solid ${L.ff===k?'var(--acc)':'#ccc'}" onclick="setLook('ff','${k}')">${f[1]}</button>`).join('')}
  <p class="story" style="margin-top:14px">The quick fox jumps. Read me to test your settings!</p>
  <p class="soft">No fonts are downloaded, to keep the app private and offline. "Lexend" and "OpenDyslexic" are used if they're installed on this device. Otherwise the app falls back to similar easy-to-read fonts.</p>
- <button onclick="localStorage.removeItem('lamp_look');applyLook();renderLook()">Reset to default</button> <span class="soft">App version 4</span></div>`}
+ <button onclick="localStorage.removeItem('lamp_look');applyLook();renderLook()">Reset to default</button> <span class="soft">App version 5</span></div>`}
 function exportLog(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({log:getLog(),storyNotes:getSN(),look:getLook()},null,2)],{type:'application/json'}));a.download='lamplight-log.json';a.click()}
 applyLook();render();
 if('serviceWorker' in navigator&&location.protocol!=='file:'){navigator.serviceWorker.register('sw.js').then(r=>r.update());let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl){rl=1;location.reload()}})}
