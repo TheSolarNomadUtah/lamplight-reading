@@ -14,7 +14,7 @@ body{font-family:var(--ff,Georgia,serif)}
 .big input[type=range]{height:34px}.big button{font-size:1.1rem;padding:12px 18px;margin:4px}.swatch{min-width:130px}.w{padding:2px 3px;border-radius:6px;cursor:pointer}.w.miss{background:#f6d3c6}.w.ok{background:#d9ead9}.w.cur{background:var(--hi)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
 table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #eee4d2;padding:6px;text-align:left;font-size:.95rem}
-.hidden{display:none}select,input,textarea{font:inherit;padding:6px;border:1px solid #d8cdb8;border-radius:8px;width:100%}
+.hidden{display:none}select,input,textarea{background:var(--card);color:var(--ink);font:inherit;padding:6px;border:1px solid #d8cdb8;border-radius:8px;width:100%}
 .timer{font-size:1.1rem;color:var(--soft)}
 @media print{header,nav,.noprint{display:none!important}body{background:#fff}.card{border:none}}
 </style></head><body>
@@ -31,7 +31,7 @@ table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #eee4d2;
 <p>You are the tutor; the app is your coach. Each night: 2 min warm-up, 6–8 min reading together, 2–3 min talking about it, then a quick note in the log. About 10–15 minutes.</p>
 <ul><li>No coins, streaks, ads, or autoplay. Skipping a night is fine.</li><li>No accounts. Everything is saved only in this browser (localStorage). Nothing is sent anywhere.</li>
 <li>Read-aloud check uses your browser's speech recognition where available (Chrome/Edge). In Chrome the audio may be processed by the browser vendor's servers. It's optional, and you decide what counts as a miss. <b>It does not work in Brave</b> (Brave blocks the speech service) or Firefox, so use Chrome or Edge, or just tap words by hand.</li>
-<li>Tap any word while she reads to mark it as tricky. Tap it again to clear it.</li></ul>
+<li><b>Clear and catchy:</b> each story has one short, rhythmic "say it together" line and a picture-like comparison. Short beats and vivid images are easier to remember than long explanations, and the goal is for her to feel smart, not for the story to sound smart. Read it together twice at the end.</li><li>Tap any word while she reads to mark it as tricky. Tap it again to clear it.</li></ul>
 <p><button onclick="if(confirm('Erase all saved progress and notes on this device?')){localStorage.removeItem('lamp_log');localStorage.removeItem('lamp_notes');render()}">Erase all progress</button> <button onclick="exportLog()">Export log + notes (JSON)</button></p></div></section>
 </main>
 <script src="stories.js"></script>
@@ -69,7 +69,7 @@ function start(id){const s=S.find(x=>x.id===id);cur={s,tricky:new Set()};show('s
  <div class="card"><h2>${s.t}</h2><div class="noprint"><button class="p" id="tb" onclick="toggleTimer()">Start reading timer</button> <span class="timer" id="tm">0:00</span>
  <button id="mic" onclick="mic()">🎤 Read-aloud check</button> <span class="soft" id="ms"></span></div>
  <p class="story" id="st">${(()=>{let i=0;return s.text.split('\n').map(line=>line.split(/\s+/).filter(Boolean).map(w=>`<span class="w" data-i="${i++}" onclick="mark(this)">${w}</span>`).join(' ')).join('<br>')})()}</p>
- <div class="card" style="background:#0000;border-style:dashed"><b>💡 Takeaway:</b> ${s.takeaway||''}</div></div>
+ <div class="card" style="background:#0000;border-style:dashed"><b>💡 Takeaway:</b> ${s.takeaway||''}${s.hook?`<p style="font-size:1.25rem;margin:.6em 0 0"><b>🔁 Say it together, twice:</b> <i>${s.hook}</i></p>`:''}</div></div>
  <div class="card"><h3>Talk about it</h3><ul>${s.talk.map(c=>`<li>${c}</li>`).join('')}</ul>
  <label class="soft">Tonight's session note (optional, saved to the progress log when you press Save)</label><textarea id="note" rows="2" placeholder="e.g. read the comet part with great expression"></textarea>
  <label class="soft">📝 Story notebook (kept for this story, saved as you type, shared by parent and kid)</label><textarea id="snote" rows="3" oninput="saveSN('${s.id}',this.value)" placeholder="Words to revisit, questions she asked, funny things she said...">${esc(getSN()[s.id]||'')}</textarea>
@@ -99,21 +99,21 @@ function esc(t){return t.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const THEMES={warm:['#f6f1e7','#2f2a24','#fffdf8','#5b7a6a','Warm paper'],sepia:['#efe1c6','#4a3524','#f7ecd6','#8a5a2b','Sepia'],dark:['#1d1f24','#e8e4da','#2a2d34','#7fa890','Night (dark)'],contrast:['#000000','#ffffff','#111111','#ffd400','High contrast'],pastel:['#e9f1f7','#1f2a44','#fdf9ec','#4a6fa5','Calm pastel (dyslexia-friendly)'],mint:['#e7f4ec','#203a2c','#f6fbf7','#3f8a62','Mint']};
 const FONTS={serif:['Georgia, "Times New Roman", serif','Storybook (Georgia)'],sans:['Verdana, "Segoe UI", Arial, sans-serif','Clear (Verdana)'],lexend:['Lexend, "Atkinson Hyperlegible", Verdana, Tahoma, sans-serif','Lexend-style (easy reading)'],dys:['OpenDyslexic, "Comic Sans MS", "Comic Neue", Verdana, sans-serif','OpenDyslexic-style'],round:['"Trebuchet MS", "Nunito", Verdana, sans-serif','Rounded (Trebuchet)']};
 function getLook(){return Object.assign({theme:'warm',fs:1.6,lh:2,ff:'serif',bg:'',fg:''},JSON.parse(localStorage.getItem('lamp_look')||'{}'))}
-function setLook(k,v){const L=getLook();L[k]=v;if(k==='theme'){L.bg='';L.fg=''}localStorage.setItem('lamp_look',JSON.stringify(L));applyLook();renderLook()}
+function setLook(k,v,keep){const L=getLook();L[k]=v;if(k==='theme'){L.bg='';L.fg=''}localStorage.setItem('lamp_look',JSON.stringify(L));applyLook();if(keep){const e=$('lbl_'+k);if(e)e.textContent=(+v).toFixed(1)}else renderLook()}
 function applyLook(){const L=getLook(),t=THEMES[L.theme]||THEMES.warm,r=document.documentElement.style;
  r.setProperty('--bg',L.bg||t[0]);r.setProperty('--ink',L.fg||t[1]);r.setProperty('--card',L.bg?L.bg:t[2]);r.setProperty('--acc',t[3]);r.setProperty('--soft',L.fg||t[1]);
  r.setProperty('--fs',L.fs+'rem');r.setProperty('--lh',L.lh);r.setProperty('--ff',FONTS[L.ff][0]);
  document.body.style.background='var(--bg)';document.body.style.color='var(--ink)';}
 function renderLook(){const L=getLook();$('look').innerHTML=`<div class="card big"><h2>🎨 Look & feel</h2>
  <h3>Color theme</h3>${Object.entries(THEMES).map(([k,t])=>`<button class="swatch" style="background:${t[0]};color:${t[1]};border:3px solid ${L.theme===k?t[3]:'#ccc'}" onclick="setLook('theme','${k}')">${t[4]}</button>`).join('')}
- <h3>My own colors</h3><label>Text color <input type="color" value="${L.fg||THEMES[L.theme][1]}" oninput="setLook('fg',this.value)" style="width:80px;height:50px"></label> &nbsp; <label>Background <input type="color" value="${L.bg||THEMES[L.theme][0]}" oninput="setLook('bg',this.value)" style="width:80px;height:50px"></label>
- <h3>Story text size: ${L.fs.toFixed(1)}</h3><input type="range" min="1.1" max="3" step="0.1" value="${L.fs}" oninput="setLook('fs',+this.value)">
- <h3>Line spacing: ${(+L.lh).toFixed(1)}</h3><input type="range" min="1.3" max="3" step="0.1" value="${L.lh}" oninput="setLook('lh',+this.value)">
+ <h3>My own colors</h3><label>Text color <input type="color" value="${L.fg||THEMES[L.theme][1]}" oninput="setLook('fg',this.value,1)" onchange="setLook('fg',this.value,1)" style="width:80px;height:50px"></label> &nbsp; <label>Background <input type="color" value="${L.bg||THEMES[L.theme][0]}" oninput="setLook('bg',this.value,1)" onchange="setLook('bg',this.value,1)" style="width:80px;height:50px"></label>
+ <h3>Story text size: <span id="lbl_fs">${L.fs.toFixed(1)}</span></h3><input type="range" min="1.1" max="3" step="0.1" value="${L.fs}" oninput="setLook('fs',+this.value,1)">
+ <h3>Line spacing: <span id="lbl_lh">${(+L.lh).toFixed(1)}</span></h3><input type="range" min="1.3" max="3" step="0.1" value="${L.lh}" oninput="setLook('lh',+this.value,1)">
  <h3>Font</h3>${Object.entries(FONTS).map(([k,f])=>`<button style="font-family:${f[0].replace(/"/g,"'")};border:3px solid ${L.ff===k?'var(--acc)':'#ccc'}" onclick="setLook('ff','${k}')">${f[1]}</button>`).join('')}
  <p class="story" style="margin-top:14px">The quick fox jumps. Read me to test your settings!</p>
  <p class="soft">No fonts are downloaded, to keep the app private and offline. "Lexend" and "OpenDyslexic" are used if they're installed on this device. Otherwise the app falls back to similar easy-to-read fonts.</p>
- <button onclick="localStorage.removeItem('lamp_look');applyLook();renderLook()">Reset to default</button></div>`}
+ <button onclick="localStorage.removeItem('lamp_look');applyLook();renderLook()">Reset to default</button> <span class="soft">App version 4</span></div>`}
 function exportLog(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({log:getLog(),storyNotes:getSN(),look:getLook()},null,2)],{type:'application/json'}));a.download='lamplight-log.json';a.click()}
 applyLook();render();
-if('serviceWorker' in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('sw.js');
+if('serviceWorker' in navigator&&location.protocol!=='file:'){navigator.serviceWorker.register('sw.js').then(r=>r.update());let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl){rl=1;location.reload()}})}
 </script></body></html>
