@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#5b7a6a"><link rel="icon" href="icon.svg"><title>Lamplight Reading: a calm nightly session</title>
+<style>
+:root{--bg:#f6f1e7;--card:#fffdf8;--ink:#2f2a24;--soft:#7a6f60;--acc:#5b7a6a;--hi:#f3e2b3}
+*{box-sizing:border-box}body{margin:0;font-family:Georgia,serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{padding:14px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e4dccb}
+h1{font-size:1.3rem;margin:0;font-weight:normal}nav button{margin-left:6px}
+button{font:inherit;background:var(--card);border:1px solid #d8cdb8;border-radius:10px;padding:8px 14px;cursor:pointer;color:var(--ink)}
+button.p{background:var(--acc);color:#fff;border-color:var(--acc)}main{max-width:860px;margin:0 auto;padding:20px}
+.card{background:var(--card);border:1px solid #e4dccb;border-radius:16px;padding:18px 22px;margin-bottom:16px}
+.coach{border-left:6px solid var(--acc)}.soft{color:var(--soft);font-size:.92rem}
+.story{font-size:1.6rem;line-height:2}.w{padding:2px 3px;border-radius:6px;cursor:pointer}.w.miss{background:#f6d3c6}.w.ok{background:#d9ead9}.w.cur{background:var(--hi)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #eee4d2;padding:6px;text-align:left;font-size:.95rem}
+.hidden{display:none}select,input,textarea{font:inherit;padding:6px;border:1px solid #d8cdb8;border-radius:8px;width:100%}
+.timer{font-size:1.1rem;color:var(--soft)}
+@media print{header,nav,.noprint{display:none!important}body{background:#fff}.card{border:none}}
+</style></head><body>
+<header><h1>🕯️ Lamplight Reading</h1><nav class="noprint">
+<button onclick="show('home')">Tonight</button><button onclick="show('lib')">Stories</button><button onclick="show('log')">Progress</button><button onclick="show('about')">For grown-ups</button></nav></header>
+<main>
+<section id="home"></section>
+<section id="lib" class="hidden"></section>
+<section id="session" class="hidden"></section>
+<section id="log" class="hidden"></section>
+<section id="print" class="hidden"></section>
+<section id="about" class="hidden"><div class="card"><h2>How this works</h2>
+<p>You are the tutor; the app is your coach. Each night: 2 min warm-up, 6–8 min reading together, 2–3 min talking about it, then a quick note in the log. About 10–15 minutes.</p>
+<ul><li>No coins, streaks, ads, or autoplay. Skipping a night is fine.</li><li>No accounts. Everything is saved only in this browser (localStorage). Nothing is sent anywhere.</li>
+<li>Read-aloud check uses your browser's speech recognition where available (Chrome/Edge). In Chrome the audio may be processed by the browser vendor's servers. It's optional, and you decide what counts as a miss. <b>It does not work in Brave</b> (Brave blocks the speech service) or Firefox, so use Chrome or Edge, or just tap words by hand.</li>
+<li>Tap any word while she reads to mark it as tricky. Tap it again to clear it.</li></ul>
+<p><button onclick="if(confirm('Erase all saved progress on this device?')){localStorage.removeItem('lamp_log');render()}">Erase all progress</button> <button onclick="exportLog()">Export log (JSON)</button></p></div></section>
+</main>
+<script>
+const S=[
+{id:'s1',lvl:'K–1 · Decodable (short a)',g:0.5,t:'Sam and the Cap',focus:'short a, CVC words',
+ text:'Sam has a cap. The cap is tan. Sam sat on a mat. A cat ran at the mat. The cat sat on the cap! Sam had to pat the cat. Now Sam and the cat nap.',
+ coach:['Warm-up: say "a" like in "apple." Have her tap it on her arm for each word: c-a-t, m-a-t, s-a-t.','If she stalls on a word, cover all but the first letter and slide your finger: "Say each sound, then blend."','Praise effort, not speed: "You stretched that word out yourself."'],
+ talk:['Where did the cat sit?','Why do you think Sam patted the cat?'],words:['cap','tan','mat','pat','nap','ran']},
+{id:'s2',lvl:'Grade 1 · Digraphs (sh, ch, th)',g:1,t:'The Ship in the Shed',focus:'sh, ch, th',
+ text:'Beth has a ship in the shed. It is a red ship with a big mast. Chad helps Beth lift the ship. They push it to the pond. Splash! The ship can float. Beth and Chad cheer. Then they rush home for lunch.',
+ coach:['Warm-up: "sh" is a quiet sound, finger to lips. "ch" is a sneeze. "th" puts your tongue out a little.','Point to two letters that make ONE sound. Have her circle them on the printable sheet.','If she says "s-h," remind her: "These two are a team. They make one sound."'],
+ talk:['What did the ship need to float?','What would you name the ship?'],words:['ship','shed','Chad','push','cheer','rush','lunch']},
+{id:'s3',lvl:'Grade 1–2 · Blends & silent e',g:1.5,t:'Kite Day',focus:'blends (st, fl, gr) and silent e (a_e, i_e)',
+ text:'Jade made a kite from a green bag and two sticks. She gave it a long tail. On the hill, the wind was strong. Jade ran and let the string slide. The kite rose up and up. It flew past the tall pine. "Fly, kite, fly!" Jade said with a grin.',
+ coach:['Warm-up: write "kit" then add an e: "kite." The e is silent, but it makes the i say its name.','For blends, say both sounds fast: s-t, st. Don\'t add an "uh" between them.','If she reads "rose" as "ros," point to the e and ask what job it does.'],
+ talk:['How did Jade make her kite?','What would you put on your own kite?'],words:['Jade','made','kite','slide','rose','strong','string']},
+{id:'s4',lvl:'Grade 2–3 · Vowel teams',g:2.5,t:'The Rain Garden',focus:'ai, ay, ee, ea, oa, ow',
+ text:'Every day in May, Ray and his grandma check the garden. When the rain came, the low corner filled with water like a little lake. "We can plant a rain garden," Grandma said. They dug a deep bowl in the soil and set seeds in neat rows. Soon green leaves peeked out. Bees came to the blooms, and toads hid in the cool shade. Ray learned that a puddle can be a home.',
+ coach:['Warm-up: "When two vowels go walking, the first one often does the talking" is only a hint, not a rule. Try "rain," "seed," "boat."','Let her use the picture in her head. Ask, "Does that word make sense in the sentence?"','Model expression: read one sentence like a storyteller, then let her echo it.'],
+ talk:['Why did they choose the low corner?','What animals came, and why?'],words:['rain','garden','deep','neat','leaves','toads','learned']},
+{id:'s5',lvl:'Grade 3 · Multisyllable words',g:3,t:'Marisol\'s Lantern',focus:'breaking long words into syllables',
+ text:'On the night of the festival, Marisol carried a paper lantern down the crowded street. Her little brother, Tomas, held the edge of her sweater so he would not get lost. Suddenly the wind blew out her candle. Marisol felt disappointed, but an elderly neighbor smiled and offered a match. "A lantern is better when someone helps you light it," he said. Together they watched hundreds of tiny flames drift toward the river.',
+ coach:['Warm-up: clap the syllables in "fes-ti-val," "lan-tern," "dis-ap-point-ed."','For a long word, cover part of it with your thumb and read it in chunks.','Ask her to find the sentence that tells the lesson of the story.'],
+ talk:['How did Marisol feel when the candle went out? How do you know?','What did the neighbor mean?'],words:['festival','lantern','crowded','suddenly','disappointed','elderly','hundreds']},
+{id:'s6',lvl:'Grade 4 · Informational',g:4,t:'How a Mushroom Talks Underground',focus:'informational text, new vocabulary, main idea',
+ text:'Under a forest floor lies a hidden web of thin threads called mycelium. Each thread is thinner than a hair, yet together they can stretch for miles. Scientists have discovered that these fungal threads wrap around tree roots and trade with them. The tree shares sugar it makes from sunlight, and the fungus delivers water and minerals the tree cannot reach on its own. Some researchers think trees may even send chemical warnings through this network when insects attack. The mushroom you see above ground is only a small part of the organism, a bit like an apple on a very large, invisible tree.',
+ coach:['Before reading, ask: "What do you already know about mushrooms?" Then predict what the text will teach.','When she meets "mycelium" or "organism," don\'t explain right away. Ask what the sentence around it suggests.','After reading, have her say the main idea in one sentence of 12 words or fewer.'],
+ talk:['What does the tree give the fungus, and what does it get back?','Why does the author compare a mushroom to an apple?'],words:['mycelium','discovered','fungal','minerals','researchers','chemical','organism']},
+{id:'s7',lvl:'Grade 5 · Chapter-style narrative',g:5,t:'The Star Counter',focus:'inference, figurative language, character motivation',
+ text:'Every clear night, Nadia climbed onto the shed roof with a notebook and a borrowed telescope that wobbled whenever she breathed too hard. Her goal was ambitious: to count every star she could see in the small square of sky between the cottonwood and the water tower. Her older cousin called it pointless. "There are billions," he scoffed. "You will never finish." Nadia only shrugged. She was not really counting to reach the end. She was counting because each number was a promise to keep looking. One September night, a faint smudge appeared that had not been there before. She checked her notes three times, her heart drumming like rain on a tin roof. Weeks later, an email arrived from an observatory: the smudge was a comet, and her careful records had helped confirm its path.',
+ coach:['Ask her to find a comparison ("like rain on a tin roof") and explain what it shows about Nadia\'s feelings.','Inference question: "Why did Nadia keep counting if she knew she couldn\'t finish?" Ask her to point to evidence in the text.','Challenge, going deeper rather than faster: have her rewrite the cousin\'s line so he is kind instead.'],
+ talk:['What changed the cousin\'s idea of "pointless"? (Imagine what he might say now.)','What is something you would be patient enough to track for a whole year?'],words:['ambitious','scoffed','pointless','observatory','confirm','records','faint']}
+,{id:'s8',lvl:'Grade 4 · Narrative',g:4,t:'The Bridge of Lost Socks',focus:'character traits, sequence of events',
+ text:'Theo had a theory: the dryer in his apartment building was eating socks. Every Saturday he lost at least one, and so did his neighbors. Instead of complaining, Theo built a small investigation kit with a flashlight, a notebook, and a magnet on a string. Behind the machine he discovered a narrow gap where socks slipped down into a dusty pipe. He fished out forty-two socks of every color. Rather than throwing them away, Theo hung them along the laundry room wall like a rainbow bridge with a sign that read, "Claim your missing half." By Sunday evening, nearly every sock had found its partner.',
+ coach:['Warm-up: ask what a "theory" is. Explain that scientists test theories with evidence.','Have her retell the events in order using first, next, then, finally.','Ask for two words that describe Theo, plus a sentence from the story that proves each one.'],
+ talk:['Why did Theo hang the socks up instead of throwing them away?','What everyday mystery would you investigate?'],words:['theory','investigation','discovered','narrow','partner','apartment']},
+{id:'s9',lvl:'Grade 4 · Informational',g:4,t:'Why Apricots Need a Cold Winter',focus:'cause and effect, science vocabulary',
+ text:'Many fruit trees, including apricots, need a certain number of chilly hours each winter before they can bloom. Gardeners call these chill hours. Without enough cold, buds open late or not at all. Too much warmth too early can be a problem as well. If a tree blossoms during a warm week in March and a hard frost follows, the delicate flowers freeze, and no fruit forms that summer. The tree itself usually survives and will try again the next spring. That is why a tree can be perfectly healthy and still have an empty year.',
+ coach:['Warm-up: draw two boxes on paper labeled Cause and Effect.','Pause after each sentence that has "if" or "without" in it, and have her fill in a box.','Connect it to real life: does she know a tree that skipped a year?'],
+ talk:['What happens if a tree blooms too early?','Why might a healthy tree have no fruit?'],words:['certain','chill','blossoms','delicate','survives','frost']},
+{id:'s10',lvl:'Grade 4 · Narrative',g:4.3,t:'Grandpa\'s Radio',focus:'dialogue, inferring feelings',
+ text:'The old radio on Grandpa\'s shelf had not made a sound in twenty years. "It\'s just furniture now," he said, but Lucia noticed how he dusted it every Sunday. She borrowed a library book about electronics and asked her neighbor, Mr. Okafor, to help. They found a cracked wire and a burned-out tube. It took three weekends and plenty of patience. When Lucia finally twisted the dial, a crackle filled the room, then a trumpet song. Grandpa set down his coffee and closed his eyes. "That," he whispered, "was the song from the night I met your grandmother."',
+ coach:['Read the dialogue in different voices together, with her as Lucia and you as Grandpa.','Ask: "Grandpa said it was just furniture. Did he really believe that? What clue tells you?"','Point out how quotation marks show who is speaking.'],
+ talk:['Why did Lucia want to fix the radio?','What object in your family has a story behind it?'],words:['electronics','noticed','patience','crackle','whispered','furniture']},
+{id:'s11',lvl:'Grade 4 · Informational',g:4.5,t:'Bamboo: The Grass That Builds',focus:'main idea and supporting details',
+ text:'Bamboo looks like a tree, but it is actually a giant grass. Some kinds can grow nearly three feet in a single day, which makes bamboo one of the fastest-growing plants on Earth. Builders in many countries use it for houses, scaffolding, and bridges because its hollow stems are both light and remarkably strong. After harvesting, bamboo regrows from its roots without replanting. However, it must be dried and treated carefully, or insects and moisture will weaken it. Engineers are still studying how to use it safely in modern buildings.',
+ coach:['Before reading, ask her to guess: tree or grass?','After reading, have her name the main idea and three supporting details on her fingers.','Point out the signal word "However" and what changes after it.'],
+ talk:['What makes bamboo a good building material?','What is one problem with bamboo?'],words:['actually','scaffolding','hollow','remarkably','harvesting','engineers']},
+{id:'s12',lvl:'Grade 5 · Narrative',g:5,t:'The Map Without Names',focus:'theme, character change',
+ text:'When Priya moved to a town where she knew no one, she drew a map of her new neighborhood with no names on it, only shapes: the yellow house, the bakery with the crooked sign, the park with one swing. Each week she challenged herself to learn one name to add. The baker was Mr. Ferraro, who saved her the broken cookies. The girl on the single swing was Hannah, who was also new and also lonely. By winter the map was crowded with handwriting, and Priya realized the town had not changed at all. She had simply stopped being a stranger in it.',
+ coach:['Ask what the blank map symbolizes at the start, and what the full map means at the end.','Theme talk: "What lesson is the author sharing?" Ask for an answer in one sentence.','Challenge: have her find the sentence where Priya changes.'],
+ talk:['Why do you think Hannah was on the single swing?','What would your map of new names look like?'],words:['challenged','crooked','realized','stranger','neighborhood','simply']},
+{id:'s13',lvl:'Grade 5 · Informational',g:5,t:'Listening to Wi-Fi',focus:'technical vocabulary, explaining a process',
+ text:'Wi-Fi signals bounce off walls, furniture, and even people. Normally we ignore these reflections, but engineers have discovered they carry information. When someone walks through a room, the pattern of reflected signals changes in tiny, measurable ways. Even the gentle rise and fall of a sleeping person\'s chest can ripple the signal. By analyzing those ripples with a computer, researchers can detect motion without a camera. This raises an important question: if walls cannot block this kind of sensing, how should people protect their privacy? Scientists believe the technology must be designed so that the people being sensed stay in control.',
+ coach:['Explain "reflection" with a flashlight and a mirror before reading.','Have her explain the process in three steps: signal, change, analysis.','Discuss the privacy question. There\'s no single right answer, so have her back up her opinion with reasons.'],
+ talk:['How can Wi-Fi notice breathing?','Should sensing like this be allowed in homes? Why?'],words:['reflections','measurable','analyzing','detect','privacy','technology']},
+{id:'s14',lvl:'Grade 5 · Narrative',g:5.3,t:'The Last Bookmobile Stop',focus:'point of view, figurative language',
+ text:'For thirty-one years, Mrs. Delgado drove the bookmobile along the same dusty county road, a library on wheels that rattled like a drawer of spoons. Tonight was her final route. At the last stop, a farmhouse far from any town, she expected one or two readers. Instead, headlights bloomed across the field like fireflies. Families she had served for decades had come, each holding the first book they had ever borrowed from her. A man who was now a teacher handed her a worn copy of a picture book. "You gave me this when I was six," he said. "I never stopped reading."',
+ coach:['Find the two comparisons that use "like." What does each one help you picture?','Point of view: is it told by Mrs. Delgado or by a narrator? How can you tell?','Ask her to infer how Mrs. Delgado felt, using one word and one piece of evidence.'],
+ talk:['Why did families bring their first borrowed books?','Who has helped you love something?'],words:['bookmobile','decades','rattled','expected','borrowed','served']},
+{id:'s15',lvl:'Grade 5 · Informational',g:5.5,t:'Silence Above the Clouds',focus:'compare and contrast, author\'s purpose',
+ text:'Astronomers prefer observatories on mountaintops for two reasons: thinner air and darkness. Down at sea level, starlight must pass through thick, shimmering layers of atmosphere that blur the image. On a high summit, much of that air lies below the telescope. Darkness matters just as much. Streetlights scatter a glow called light pollution that can hide all but the brightest stars. Some communities now protect their night skies by using shielded lights that point downward. Places that succeed can earn recognition as dark sky parks, attracting visitors who travel hundreds of miles simply to see the Milky Way.',
+ coach:['Draw a T-chart comparing sea level and the summit.','Author\'s purpose: is the author trying to inform, persuade, or entertain? Have her find evidence.','Connect it to stargazing: what could your town do to protect dark skies?'],
+ talk:['Why are mountaintops better for telescopes?','How could a town reduce light pollution?'],words:['astronomers','observatories','atmosphere','summit','pollution','recognition']}
+];
+const $=id=>document.getElementById(id);
+const getLog=()=>JSON.parse(localStorage.getItem('lamp_log')||'[]');
+const setLog=l=>localStorage.setItem('lamp_log',JSON.stringify(l));
+function show(id){['home','lib','session','log','print','about'].forEach(x=>$(x).classList.toggle('hidden',x!==id));render()}
+function wc(s){return s.text.split(/\s+/).length}
+function startLvl(){return localStorage.getItem('lamp_start')||'s1'}
+function suggest(){const l=getLog();const ord=S.slice().sort((a,b)=>a.g-b.g);if(!l.length)return S.find(s=>s.id===startLvl())||ord[0];
+ const last=l[l.length-1];const i=ord.findIndex(s=>s.id===last.story);const acc=last.words?1-last.missed/last.words:1;
+ if(acc>=0.95)return ord[Math.min(i+1,ord.length-1)]; // move up
+ if(acc>=0.90)return ord[i]; // stay and reread
+ return ord[Math.max(i-1,0)]; // step down
+}
+function render(){
+ const sg=suggest();
+ $('home').innerHTML=`<div class="card coach"><div class="soft">Tonight's plan · about 12 minutes</div><h2>${sg.t}</h2><p class="soft">${sg.lvl}, focus: ${sg.focus}</p>
+ <ol><li><b>Warm-up (2 min):</b> ${sg.coach[0].replace(/^Warm-up: /,"")}</li><li><b>Read together (6–8 min):</b> She reads aloud. You tap the words she finds tricky.</li><li><b>Talk (2–3 min):</b> ${sg.talk[0]}</li><li><b>Log it (30 sec)</b></li></ol>
+ <button class="p" onclick="start('${sg.id}')">Begin tonight's session</button> <button onclick="printSheet('${sg.id}')">Printable practice</button></div>
+ <div class="card"><p class="soft">Suggestion rule: about 95% of words read correctly means move up a level. 90–94% means stay and reread. Below 90% means step down one story. You can always choose a different story under "Stories."</p>
+ <label class="soft">Start at level (used until the first session is logged):</label><select onchange="localStorage.setItem('lamp_start',this.value);render()">${S.slice().sort((a,b)=>a.g-b.g).map(s=>`<option value="${s.id}" ${s.id===startLvl()?'selected':''}>${s.lvl}: ${s.t}</option>`).join('')}</select></div>`;
+ $('lib').innerHTML='<div class="grid">'+S.map(s=>`<div class="card"><div class="soft">${s.lvl}</div><h3>${s.t}</h3><p class="soft">${wc(s)} words · ${s.focus}</p><button class="p" onclick="start('${s.id}')">Read</button> <button onclick="printSheet('${s.id}')">Print</button></div>`).join('')+'</div>';
+ const l=getLog();
+ $('log').innerHTML=`<div class="card"><h2>Progress log</h2><p class="soft">Saved on this device only.</p>${chart(l)}
+ <table><tr><th>Date</th><th>Story</th><th>Level</th><th>Accuracy</th><th>WPM</th><th>Tricky words</th><th>Note</th></tr>${l.slice().reverse().map(e=>{const s=S.find(x=>x.id===e.story)||{};return `<tr><td>${new Date(e.date).toLocaleDateString()}</td><td>${s.t||''}</td><td>${s.g??''}</td><td>${e.words?Math.round(100*(1-e.missed/e.words))+'%':''}</td><td>${e.wpm||'–'}</td><td>${(e.tricky||[]).join(', ')}</td><td>${e.note||''}</td></tr>`}).join('')||'<tr><td colspan=7 class="soft">No sessions yet.</td></tr>'}</table></div>`;
+}
+function chart(l){if(l.length<1)return'';const W=760,H=140,n=l.length;const pts=l.map((e,i)=>{const s=S.find(x=>x.id===e.story);const x=20+(n==1?W/2:i*(W-40)/(n-1));const y=H-15-(s?s.g:0)/5*(H-30);return[x,y]});
+ return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="background:#faf6ee;border-radius:10px"><text x="4" y="14" font-size="11" fill="#7a6f60">Grade level of stories read over time</text><polyline fill="none" stroke="#5b7a6a" stroke-width="2" points="${pts.map(p=>p.join(',')).join(' ')}"/>${pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="#5b7a6a"/>`).join('')}</svg>`}
+let cur=null,t0=0,tick=null,rec=null;
+function start(id){const s=S.find(x=>x.id===id);cur={s,tricky:new Set()};show('session');t0=0;
+ const words=s.text.split(/\s+/);
+ $('session').innerHTML=`<div class="card coach"><div class="soft">Coach card · ${s.lvl}</div><ul>${s.coach.map(c=>`<li>${c}</li>`).join('')}</ul><p class="soft">Preview words: <b>${s.words.join(' · ')}</b></p></div>
+ <div class="card"><h2>${s.t}</h2><div class="noprint"><button class="p" id="tb" onclick="toggleTimer()">Start reading timer</button> <span class="timer" id="tm">0:00</span>
+ <button id="mic" onclick="mic()">🎤 Read-aloud check</button> <span class="soft" id="ms"></span></div>
+ <p class="story" id="st">${words.map((w,i)=>`<span class="w" data-i="${i}" onclick="mark(this)">${w}</span>`).join(' ')}</p></div>
+ <div class="card"><h3>Talk about it</h3><ul>${s.talk.map(c=>`<li>${c}</li>`).join('')}</ul>
+ <label class="soft">Quick note (optional)</label><textarea id="note" rows="2" placeholder="e.g. read the comet part with great expression"></textarea>
+ <p><button class="p" onclick="finish()">Save to progress log</button> <button onclick="show('home')">Leave without saving</button></p></div>`;}
+function mark(el){const w=el.textContent;el.classList.toggle('miss');el.classList.contains('miss')?cur.tricky.add(el.dataset.i+'|'+w):cur.tricky.delete(el.dataset.i+'|'+w)}
+function toggleTimer(){if(tick){clearInterval(tick);tick=null;$('tb').textContent='Resume timer';return}const base=Date.now()-t0*1000;tick=setInterval(()=>{t0=(Date.now()-base)/1000;$('tm').textContent=Math.floor(t0/60)+':'+String(Math.floor(t0%60)).padStart(2,'0')},250);$('tb').textContent='Pause timer'}
+const norm=w=>w.toLowerCase().replace(/[^a-z']/g,'');
+function mic(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$('ms').textContent='Speech check is not available in this browser (it does not work in Brave or Firefox). Tap words by hand instead.';return}
+ if(rec){rec.stop();return}rec=new SR();rec.continuous=true;rec.interimResults=true;rec.lang='en-US';const spans=[...document.querySelectorAll('#st .w')];let heard=[];
+ rec.onresult=e=>{heard=[];for(const r of e.results)heard.push(...r[0].transcript.split(/\s+/).map(norm).filter(Boolean));
+  let j=0;spans.forEach(sp=>{const t=norm(sp.textContent);const k=heard.indexOf(t,j);if(k>=0&&k-j<4){sp.classList.add('ok');j=k+1}})};
+ rec.onend=()=>{rec=null;$('mic').textContent='🎤 Read-aloud check';$('ms').textContent='Green words were heard. Use your own judgment and tap any real misses.'};
+ rec.onerror=e=>{$('ms').textContent='Speech check failed ('+e.error+'). It does not work in Brave. Try Chrome or Edge, or tap words by hand.'};rec.start();$('mic').textContent='⏹ Stop listening';$('ms').textContent='Listening…'}
+function finish(){if(tick)toggleTimer();if(rec)rec.stop();const n=wc(cur.s);const l=getLog();
+ l.push({date:Date.now(),story:cur.s.id,words:n,missed:cur.tricky.size,tricky:[...cur.tricky].map(x=>x.split('|')[1].replace(/[^\w']/g,'')),wpm:t0>10?Math.round(n/(t0/60)):null,note:$('note').value});setLog(l);show('log')}
+function printSheet(id){const s=S.find(x=>x.id===id);const tr=[...new Set(getLog().flatMap(e=>e.tricky||[]))].slice(-8);show('print');
+ $('print').innerHTML=`<div class="card"><button class="noprint p" onclick="print()">Print this page</button> <button class="noprint" onclick="show('home')">Back</button>
+ <h2>Practice sheet: ${s.t}</h2><p>Name: ____________ &nbsp; Date: ________</p><p><b>Focus:</b> ${s.focus}</p>
+ <h3>1. Read these words. Circle the tricky part.</h3><p style="font-size:1.5rem;word-spacing:1.2em">${s.words.join(' ')}</p>
+ ${tr.length?`<h3>2. Words from your log to practice again</h3><p style="font-size:1.4rem;word-spacing:1em">${tr.join(' ')}</p>`:''}
+ <h3>${tr.length?3:2}. Write a sentence using two of the words above.</h3><p>__________________________________________________</p><p>__________________________________________________</p>
+ <h3>Talk or draw</h3><p>${s.talk[1]}</p><div style="border:1px dashed #aaa;height:160px;border-radius:10px"></div>
+ <p class="soft">Grown-up: spend 5 minutes on this sheet, not more. Counts as a session too.</p></div>`}
+function exportLog(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(getLog(),null,2)],{type:'application/json'}));a.download='lamplight-log.json';a.click()}
+render();
+if('serviceWorker' in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('sw.js');
+</script></body></html>
