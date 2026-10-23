@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#5b7a6a"><link rel="icon" href="icon.svg"><title>Lamplight Reading: a calm nightly session</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#5b7a6a"><link rel="icon" href="icon.svg"><title>Lamplight Reading: a calm nightly session</title>
 <style>
 :root{--bg:#f6f1e7;--card:#fffdf8;--ink:#2f2a24;--soft:#7a6f60;--acc:#5b7a6a;--hi:#f3e2b3}
 *{box-sizing:border-box}body{margin:0;font-family:Georgia,serif;background:var(--bg);color:var(--ink);line-height:1.5}
@@ -32,16 +32,23 @@ table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #eee4d2;
 <ul><li>No coins, streaks, ads, or autoplay. Skipping a night is fine.</li><li>No accounts. Everything is saved only in this browser (localStorage). Nothing is sent anywhere.</li>
 <li>Read-aloud check uses your browser's speech recognition where available (Chrome/Edge). In Chrome the audio may be processed by the browser vendor's servers. It's optional, and you decide what counts as a miss. <b>It does not work in Brave</b> (Brave blocks the speech service) or Firefox, so use Chrome or Edge, or just tap words by hand.</li>
 <li><b>Clear and catchy:</b> each story has one short, rhythmic "say it together" line and a picture-like comparison. Short beats and vivid images are easier to remember than long explanations, and the goal is for her to feel smart, not for the story to sound smart. Read it together twice at the end.</li><li>Tap any word while she reads to mark it as tricky. Tap it again to clear it.</li></ul>
-<p><button onclick="if(confirm('Erase all saved progress and notes on this device?')){localStorage.removeItem('lamp_log');localStorage.removeItem('lamp_notes');render()}">Erase all progress</button> <button onclick="exportLog()">Export log + notes (JSON)</button></p></div></section>
+<p><button onclick="if(confirm('Erase all saved progress and notes on this device?')){LS.del('lamp_log');LS.del('lamp_notes');render()}">Erase all progress</button> <button onclick="exportLog()">Export log + notes (JSON)</button></p></div></section>
 </main>
 <script src="stories.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const getLog=()=>JSON.parse(localStorage.getItem('lamp_log')||'[]');
-const setLog=l=>localStorage.setItem('lamp_log',JSON.stringify(l));
+const APP_VERSION=6;
+// Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
+const MEM={};let STORE_OK=true;
+const LS={get:k=>{try{return window.localStorage.getItem(k)}catch(e){STORE_OK=false;return k in MEM?MEM[k]:null}},
+ set:(k,v)=>{MEM[k]=v;try{window.localStorage.setItem(k,v)}catch(e){STORE_OK=false}},
+ del:k=>{delete MEM[k];try{window.localStorage.removeItem(k)}catch(e){STORE_OK=false}}};
+function safeJSON(t,d){try{return t?JSON.parse(t):d}catch(e){return d}}
+const getLog=()=>safeJSON(LS.get('lamp_log'),[]);
+const setLog=l=>LS.set('lamp_log',JSON.stringify(l));
 function show(id){['home','lib','session','log','print','look','about'].forEach(x=>$(x).classList.toggle('hidden',x!==id));render()}
 function wc(s){return s.text.split(/\s+/).length}
-function startLvl(){return localStorage.getItem('lamp_start')||'s1'}
+function startLvl(){return LS.get('lamp_start')||'s1'}
 function suggest(){const l=getLog();const ord=S.slice().sort((a,b)=>a.g-b.g);if(!l.length)return S.find(s=>s.id===startLvl())||ord[0];
  const last=l[l.length-1];const i=ord.findIndex(s=>s.id===last.story);const acc=last.words?1-last.missed/last.words:1;
  if(acc>=0.95)return ord[Math.min(i+1,ord.length-1)]; // move up
@@ -55,7 +62,7 @@ function render(){
  <ol><li><b>Warm-up (2 min):</b> ${sg.coach[0].replace(/^Warm-up: /,"")}</li><li><b>Read together (6–8 min):</b> She reads aloud. You tap the words she finds tricky.</li><li><b>Talk (2–3 min):</b> ${sg.talk[0]}</li><li><b>Log it (30 sec)</b></li></ol>
  <button class="p" onclick="start('${sg.id}')">Begin tonight's session</button> <button onclick="printSheet('${sg.id}')">Printable practice</button></div>
  <div class="card"><p class="soft">Suggestion rule: about 95% of words read correctly means move up a level. 90–94% means stay and reread. Below 90% means step down one story. You can always choose a different story under "Stories."</p>
- <label class="soft">Start at level (used until the first session is logged):</label><select onchange="localStorage.setItem('lamp_start',this.value);render()">${S.slice().sort((a,b)=>a.g-b.g).map(s=>`<option value="${s.id}" ${s.id===startLvl()?'selected':''}>${s.lvl}: ${s.t}</option>`).join('')}</select></div>`;
+ <label class="soft">Start at level (used until the first session is logged):</label><select onchange="LS.set('lamp_start',this.value);render()">${S.slice().sort((a,b)=>a.g-b.g).map(s=>`<option value="${s.id}" ${s.id===startLvl()?'selected':''}>${s.lvl}: ${s.t}</option>`).join('')}</select></div>`;
  $('lib').innerHTML='<div class="grid">'+S.map(s=>`<div class="card"><div class="soft">${s.lvl}</div><h3>${s.t}</h3><p class="soft">${wc(s)} words · ${s.focus}</p><button class="p" onclick="start('${s.id}')">Read</button> <button onclick="printSheet('${s.id}')">Print</button></div>`).join('')+'</div>';
  const l=getLog();
  $('log').innerHTML=`<div class="card"><h2>Progress log</h2><p class="soft">Saved on this device only.</p>${chart(l)}
@@ -93,27 +100,32 @@ function printSheet(id){const s=S.find(x=>x.id===id);const tr=[...new Set(getLog
  <h3>${tr.length?3:2}. Write a sentence using two of the words above.</h3><p>__________________________________________________</p><p>__________________________________________________</p>
  <h3>Talk or draw</h3><p>${s.talk[1]}</p><div style="border:1px dashed #aaa;height:160px;border-radius:10px"></div>
  <p class="soft">Grown-up: spend 5 minutes on this sheet, not more. Counts as a session too.</p></div>`}
-function getSN(){return JSON.parse(localStorage.getItem('lamp_notes')||'{}')}
-function saveSN(id,v){const n=getSN();n[id]=v;localStorage.setItem('lamp_notes',JSON.stringify(n))}
+function getSN(){return safeJSON(LS.get('lamp_notes'),{})}
+function saveSN(id,v){const n=getSN();n[id]=v;LS.set('lamp_notes',JSON.stringify(n))}
 function esc(t){return t.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
 const THEMES={warm:['#f6f1e7','#2f2a24','#fffdf8','#5b7a6a','Warm paper'],sepia:['#efe1c6','#4a3524','#f7ecd6','#8a5a2b','Sepia'],dark:['#1d1f24','#e8e4da','#2a2d34','#7fa890','Night (dark)'],contrast:['#000000','#ffffff','#111111','#ffd400','High contrast'],pastel:['#e9f1f7','#1f2a44','#fdf9ec','#4a6fa5','Calm pastel (dyslexia-friendly)'],mint:['#e7f4ec','#203a2c','#f6fbf7','#3f8a62','Mint']};
 const FONTS={serif:['Georgia, "Times New Roman", serif','Storybook (Georgia)'],sans:['Verdana, "Segoe UI", Arial, sans-serif','Clear (Verdana)'],lexend:['Lexend, "Atkinson Hyperlegible", Verdana, Tahoma, sans-serif','Lexend-style (easy reading)'],dys:['OpenDyslexic, "Comic Sans MS", "Comic Neue", Verdana, sans-serif','OpenDyslexic-style'],round:['"Trebuchet MS", "Nunito", Verdana, sans-serif','Rounded (Trebuchet)']};
-function getLook(){return Object.assign({theme:'warm',fs:1.6,lh:2,ff:'serif',bg:'',fg:''},JSON.parse(localStorage.getItem('lamp_look')||'{}'))}
-function setLook(k,v,keep){const L=getLook();L[k]=v;if(k==='theme'){L.bg='';L.fg=''}localStorage.setItem('lamp_look',JSON.stringify(L));applyLook();if(keep){const e=$('lbl_'+k);if(e)e.textContent=(+v).toFixed(1)}else renderLook()}
+function getLook(){return Object.assign({theme:'warm',fs:1.6,lh:2,ff:'serif',bg:'',fg:''},safeJSON(LS.get('lamp_look'),{}))}
+function setLook(k,v,keep){const L=getLook();L[k]=v;if(k==='theme'){L.bg='';L.fg=''}LS.set('lamp_look',JSON.stringify(L));applyLook();if(keep){const e=$('lbl_'+k);if(e)e.textContent=(+v).toFixed(1)}else renderLook()}
 function applyLook(){const L=getLook(),t=THEMES[L.theme]||THEMES.warm,r=document.documentElement.style;
  r.setProperty('--bg',L.bg||t[0]);r.setProperty('--ink',L.fg||t[1]);r.setProperty('--card',L.bg?L.bg:t[2]);r.setProperty('--acc',t[3]);r.setProperty('--soft',L.fg||t[1]);
  r.setProperty('--fs',L.fs+'rem');r.setProperty('--lh',L.lh);r.setProperty('--ff',FONTS[L.ff][0]);
- document.body.style.background='var(--bg)';document.body.style.color='var(--ink)';}
+ const bgc=L.bg||t[0],fgc=L.fg||t[1];document.documentElement.style.background=bgc;document.body.style.backgroundColor=bgc;document.body.style.color=fgc;
+ const dark=parseInt(bgc.slice(1,3),16)+parseInt(bgc.slice(3,5),16)+parseInt(bgc.slice(5,7),16)<384;document.documentElement.style.colorScheme=dark?'dark':'light';
+ const m=document.querySelector('meta[name=theme-color]');if(m)m.content=bgc;}
 function renderLook(){const L=getLook();$('look').innerHTML=`<div class="card big"><h2>🎨 Look & feel</h2>
  <h3>Color theme</h3>${Object.entries(THEMES).map(([k,t])=>`<button class="swatch" style="background:${t[0]};color:${t[1]};border:3px solid ${L.theme===k?t[3]:'#ccc'}" onclick="setLook('theme','${k}')">${t[4]}</button>`).join('')}
- <h3>My own colors</h3><label>Text color <input type="color" value="${L.fg||THEMES[L.theme][1]}" oninput="setLook('fg',this.value,1)" onchange="setLook('fg',this.value,1)" style="width:80px;height:50px"></label> &nbsp; <label>Background <input type="color" value="${L.bg||THEMES[L.theme][0]}" oninput="setLook('bg',this.value,1)" onchange="setLook('bg',this.value,1)" style="width:80px;height:50px"></label>
- <h3>Story text size: <span id="lbl_fs">${L.fs.toFixed(1)}</span></h3><input type="range" min="1.1" max="3" step="0.1" value="${L.fs}" oninput="setLook('fs',+this.value,1)">
- <h3>Line spacing: <span id="lbl_lh">${(+L.lh).toFixed(1)}</span></h3><input type="range" min="1.3" max="3" step="0.1" value="${L.lh}" oninput="setLook('lh',+this.value,1)">
+ <h3>My own colors</h3><label>Text color <input type="color" value="${L.fg||THEMES[L.theme][1]}" oninput="setLook('fg',this.value,1)" onchange="setLook('fg',this.value,1)" onblur="setLook('fg',this.value,1)" style="width:80px;height:50px"></label> &nbsp; <label>Background <input type="color" value="${L.bg||THEMES[L.theme][0]}" oninput="setLook('bg',this.value,1)" onchange="setLook('bg',this.value,1)" onblur="setLook('bg',this.value,1)" style="width:80px;height:50px"></label>
+ <h3>Story text size: <span id="lbl_fs">${L.fs.toFixed(1)}</span></h3><input type="range" min="1.1" max="3" step="0.1" value="${L.fs}" oninput="setLook('fs',+this.value,1)" onchange="setLook('fs',+this.value,1)">
+ <h3>Line spacing: <span id="lbl_lh">${(+L.lh).toFixed(1)}</span></h3><input type="range" min="1.3" max="3" step="0.1" value="${L.lh}" oninput="setLook('lh',+this.value,1)" onchange="setLook('lh',+this.value,1)">
  <h3>Font</h3>${Object.entries(FONTS).map(([k,f])=>`<button style="font-family:${f[0].replace(/"/g,"'")};border:3px solid ${L.ff===k?'var(--acc)':'#ccc'}" onclick="setLook('ff','${k}')">${f[1]}</button>`).join('')}
  <p class="story" style="margin-top:14px">The quick fox jumps. Read me to test your settings!</p>
  <p class="soft">No fonts are downloaded, to keep the app private and offline. "Lexend" and "OpenDyslexic" are used if they're installed on this device. Otherwise the app falls back to similar easy-to-read fonts.</p>
- <button onclick="localStorage.removeItem('lamp_look');applyLook();renderLook()">Reset to default</button> <span class="soft">App version 5</span></div>`}
+ <button onclick="LS.del('lamp_look');applyLook();renderLook()">Reset to default</button> <span class="soft">App version ${APP_VERSION}</span> <button onclick="repairApp()">Repair / update app</button>${STORE_OK?"":"<p class=\"soft\"><b>Note:</b> this browser is blocking site storage (privacy setting), so settings only last until you close the tab. In Brave, set Shields to allow cookies for this site. In Firefox, allow cookies for this site.</p>"}</div>`}
 function exportLog(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({log:getLog(),storyNotes:getSN(),look:getLook()},null,2)],{type:'application/json'}));a.download='lamplight-log.json';a.click()}
+async function repairApp(){try{const rs=await navigator.serviceWorker?.getRegistrations?.()||[];for(const r of rs)await r.unregister();const ks=await caches?.keys?.()||[];for(const k of ks)await caches.delete(k)}catch(e){}location.reload()}
+(async()=>{try{if(location.protocol==='file:')return;const r=await fetch('version.json?'+Date.now(),{cache:'no-store'});const v=(await r.json()).version;
+ if(v>APP_VERSION&&!sessionStorage.getItem('lamp_fix')){sessionStorage.setItem('lamp_fix','1');repairApp()}}catch(e){}})();
 applyLook();render();
 if('serviceWorker' in navigator&&location.protocol!=='file:'){navigator.serviceWorker.register('sw.js').then(r=>r.update());let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl){rl=1;location.reload()}})}
 </script></body></html>
