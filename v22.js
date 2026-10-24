@@ -8,5 +8,5 @@ try{const vis=SECTIONS.find(x=>$(x)&&!$(x).classList.contains('hidden'))||'hub';
  const h=bar.getBoundingClientRect().height;['pcv','pgd'].forEach(id=>{const c=$(id);if(c){c.style.top=h+'px';c.style.height=`calc(100% - ${h}px)`}});const l=$('plab');if(l)l.style.top=(h+8)+'px'}return ps.apply(this,arguments)}}
 document.head.insertAdjacentHTML('beforeend',`<style>@media (max-width:640px){#pstudio .pbar{height:auto!important;min-height:58px;padding:6px!important;flex-wrap:wrap!important}}
 body.inpaint #fhome{display:none!important}</style>`);
-setInterval(()=>{const p=$('paint');document.body.classList.toggle('inpaint',!!(p&&!p.classList.contains('hidden')&&$('pstudio')))},300);
+
 addEventListener('resize',()=>{if($('pstudio')&&!$('paint').classList.contains('hidden'))try{renderPaintBar()}catch(e){}});
