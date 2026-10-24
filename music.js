@@ -2,10 +2,10 @@
 // To swap the voice: run tools/gen_voice.py <voice> and change "voice" in music-data.js. Nothing is recorded or sent anywhere.
 SECTIONS.push('music');document.querySelector('main').insertAdjacentHTML('afterbegin','<section id="music" class="hidden"></section>');
 RENDER.music=()=>renderMusic();
-const MV=MUSIC.voice||'heart',mslug=w=>w.toLowerCase().replace(/[^a-z]/g,'');
+const mslug=w=>w.toLowerCase().replace(/[^a-z]/g,'');
 let AC=null;const ac=()=>{if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C()}if(AC.state==='suspended')AC.resume();return AC};
 const BUF={};
-function loadClip(name){if(name in BUF)return BUF[name];const c=ac();return BUF[name]=(c?fetch(`audio/${MV}/${name}.mp3`).then(r=>{if(!r.ok)throw 0;return r.arrayBuffer()}).then(b=>new Promise((ok,no)=>c.decodeAudioData(b,ok,no))).catch(()=>null):Promise.resolve(null))}
+function loadClip(name,vv){const V=vv||curVoice(),K=V+'/'+name;if(K in BUF)return BUF[K];const c=ac();return BUF[K]=(c?fetch(`audio/${V}/${name}.mp3`).then(r=>{if(!r.ok)throw 0;return r.arrayBuffer()}).then(b=>new Promise((ok,no)=>c.decodeAudioData(b,ok,no))).catch(()=>null):Promise.resolve(null))}
 let MT=[],MSRC=[];const later=(f,ms)=>MT.push(setTimeout(f,ms));
 function musicStop(){MT.forEach(clearTimeout);MT=[];MSRC.forEach(s=>{try{s.stop()}catch(e){}});MSRC=[];try{speechSynthesis.cancel()}catch(e){}}
 function playClip(buf,when,gain,fallbackText){const c=ac();if(buf&&c){const s=c.createBufferSource(),g=c.createGain();g.gain.value=gain||1;s.buffer=buf;s.connect(g).connect(c.destination);s.start(when||c.currentTime);MSRC.push(s);return buf.duration}
@@ -37,13 +37,13 @@ function renderMusic(){musicStop();const v=MU.v,el=$('music');
  const back=`<button class="bigbtn" onclick="musicStop();MU={v:null};renderMusic()">⬅ Music</button>`;
  if(!v){el.innerHTML=`<div class="card big" style="text-align:center"><h2>🎵 Music & Singing</h2><p style="font-size:1.15rem">Sing, chant, tap and hum. Sound helps the brain hear the parts of words.</p>
  <div class="hubgrid">${[['🎤','Sing-along','sing','Words light up'],['🔤','Letter songs','letters','A to Z sounds'],['🥁','Drum pad','drum','Tap the beats'],['〰️','Hum & match','hum','Match the note'],['🎼','Make a song','make','Story → song']].map(a=>`<button class="hubtile" onclick="MU={v:'${a[2]}'};renderMusic()"><span>${a[0]}</span>${a[1]}<small>${a[3]}</small></button>`).join('')}</div>
- <p class="soft">The voice is a computer voice (Kokoro “Heart”). It chants and speaks in rhythm over the music; it doesn't truly sing. Nothing is recorded or saved.</p></div>`;return}
+ <p class="soft">The voice is a computer voice (Kokoro, pick it in 🎨 Look). Songs with a real tune (Twinkle, Row Your Boat) are sung; the rest are chanted in rhythm. Nothing is recorded or saved.</p></div>`;return}
  if(v==='sing')return renderSing(back);if(v==='letters')return renderLSongs(back);if(v==='drum')return renderDrum(back);if(v==='hum')return renderHum(back);if(v==='make')return renderMake(back)}
 function karaokeHTML(tl){let li=-1,h='';tl.forEach((w,i)=>{if(w.li!==li){if(li>=0)h+='</div>';h+='<div class="kline">';li=w.li}h+=`<span class="kw" id="kw${i}">${esc(w.w)}</span> `});return h+'</div>'}
 function runKaraoke(tl,opts){musicStop();const c=ac();opts=opts||{};const t0=(c?c.currentTime:0)+.35;
  tl.forEach((w,i)=>{w.ns.forEach(n=>note(n.m,t0+n.t,n.d,opts.inst||'piano',opts.vol));later(()=>{document.querySelectorAll('.kw.on').forEach(e=>e.classList.remove('on'));const e=$('kw'+i);if(e){e.classList.add('on','was')}},(t0-(c?c.currentTime:0)+w.t)*1000);
-  if(opts.voice&&opts.bufs)playClip(opts.bufs[i],c?t0+w.t:0,1.1,w.w)});
- const end=tl.length?tl[tl.length-1].end:0;if(opts.beat&&c)for(let t=0;t<end;t+=60/opts.bpm)drumHit(Math.round(t/(60/opts.bpm))%2?'hat':'kick',t0+t);
+  if(opts.voice&&opts.bufs&&!opts.sung)playClip(opts.bufs[i],c?t0+w.t:0,1.1,w.w)});
+ if(opts.sung)playClip(opts.sung,c?t0:0,1.2);const end=tl.length?tl[tl.length-1].end:0;if(opts.beat&&c)for(let t=0;t<end;t+=60/opts.bpm)drumHit(Math.round(t/(60/opts.bpm))%2?'hat':'kick',t0+t);
  later(()=>{document.querySelectorAll('.kw.on').forEach(e=>e.classList.remove('on'));if(opts.done)opts.done()},(end+.6)*1000)}
 function renderSing(back){const s=MUSIC.songs.find(x=>x.id===MU.s);
  if(!s){$('music').innerHTML=`<div class="card big"><h2>🎤 Sing-along</h2><p>Pick a song. The words light up with the music. Sing or chant along!</p><div class="grid">${MUSIC.songs.map(x=>`<button class="card" style="text-align:left;font-size:1.15rem" onclick="MU.s='${x.id}';renderMusic()"><b>${x.t}</b><br><span class="soft">${x.band} · ${x.kind}</span></button>`).join('')}</div>${back}</div>`;return}
@@ -52,8 +52,8 @@ function renderSing(back){const s=MUSIC.songs.find(x=>x.id===MU.s);
  <p><button class="bigbtn p" onclick="singPlay(true)">▶ Sing with voice</button> <button class="bigbtn" onclick="singPlay(false)">🎶 Music only (you sing)</button> <button class="bigbtn" onclick="musicStop()">⏹ Stop</button></p>
  <p>Speed: ${[[.8,'🐢 Slow'],[1,'Normal'],[1.15,'🐇 Fast']].map(x=>`<button class="${MU.sp===x[0]?'p':''}" onclick="MU.sp=${x[0]};renderMusic()">${x[1]}</button>`).join(' ')} <label><input type="checkbox" id="sbeat" ${MU.beat?'checked':''} onchange="MU.beat=this.checked"> drum beat</label></p>
  <p id="sfb" class="soft"></p><button class="bigbtn" onclick="MU.s=null;renderMusic()">⬅ Songs</button> ${back}</div>`}
-async function singPlay(voice){const s=MUSIC.songs.find(x=>x.id===MU.s),tl=songTimeline(s,s.bpm*MU.sp);let bufs=null;if(voice){$('sfb').textContent='Getting the voice ready…';bufs=await Promise.all(tl.map(w=>loadClip('w_'+mslug(w.w))));$('sfb').textContent=''}
- runKaraoke(tl,{voice,bufs,beat:MU.beat,bpm:s.bpm*MU.sp,inst:'piano',done:()=>{try{markDay('music')}catch(e){}const f=$('sfb');if(f)f.textContent='⭐ Great singing!'}})}
+async function singPlay(voice){const s=MUSIC.songs.find(x=>x.id===MU.s),tl=songTimeline(s,s.bpm*MU.sp);let bufs=null;if(voice){$('sfb').textContent='Getting the voice ready…';const sung=(s.notes&&(MU.sp||1)===1&&SINGMODE()==='sing')?await loadClip('s_'+s.id):null;bufs=sung?[]:await Promise.all(tl.map(w=>loadClip('w_'+mslug(w.w))));MU.sung=sung;$('sfb').textContent=''}
+ runKaraoke(tl,{voice,bufs,sung:voice?MU.sung:null,beat:MU.beat,bpm:s.bpm*MU.sp,inst:'piano',done:()=>{try{markDay('music')}catch(e){}const f=$('sfb');if(f)f.textContent='⭐ Great singing!'}})}
 // Letter songs: a 2-bar tune per letter + the voice clip "B says buh, buh, buh. Ball and bee!"
 function letterTune(i){const P=[60,62,64,67,69],a=P[i%5],b=P[(i+2)%5],c2=P[(i+4)%5];return[[a,.5],[a,.5],[b,.5],[b,.5],[c2,1],[b,.5],[a,.5],[67,.5],[64,.5],[62,.5],[60,1.5]]}
 function playLetterSong(L){musicStop();const i=MUSIC.letters.findIndex(x=>x[0]===L),r=MUSIC.letters[i],c=ac(),b=60/100;
@@ -120,7 +120,7 @@ function renderMake(back){const st=S.find(x=>x.id===MU.ms),m=MU.mood||'happy',in
 {const sh=show;show=function(id){if(id!=='music'){musicStop();humStop()}sh(id)}}
 {const rh=renderHub;renderHub=function(){rh();const g=$('hub').querySelectorAll('.hubgrid')[1];if(g)g.insertAdjacentHTML('beforeend',`<button class="hubtile" onclick="MU={v:null};show('music')"><span>🎵</span>Music</button>`)}}
 {const rl=renderLib;renderLib=function(){rl();const c=$('lib').querySelector('.card');if(c)c.insertAdjacentHTML('afterend',`<div class="card"><h3 style="margin-top:0">🎵 Music & Singing</h3>${MUSIC.songs.map(x=>`<button onclick="MU={v:'sing',s:'${x.id}'};show('music')">🎤 ${x.t}</button>`).join(' ')} <button onclick="MU={v:'letters'};show('music')">🔤 Letter songs</button> <button onclick="MU={v:'make'};show('music')">🎼 Turn a story into a song</button></div>`)}}
-const KOKORO_CREDIT='Voice: Kokoro-82M “Heart” voice (Apache-2.0 license), pre-recorded into audio files on our own site. Music is made live in your browser. No voice or sound is sent anywhere.';
+const KOKORO_CREDIT='Voice: Kokoro-82M voices (Apache-2.0 license), pre-recorded into audio files on our own site. Music is made live in your browser. No voice or sound is sent anywhere.';
 {const ra=renderAbout;renderAbout=function(){ra();$('about').insertAdjacentHTML('beforeend',`<div class="card"><h3>🎵 Music & credits</h3><p>${KOKORO_CREDIT}</p><p class="soft">Hum & match uses the microphone only while that screen is open and never records.</p></div>`)}}
 {const rad=renderAdults;renderAdults=function(){rad();$('adults').insertAdjacentHTML('beforeend',`<div class="card"><p class="soft">🎵 ${KOKORO_CREDIT}</p></div>`)}}
 document.head.insertAdjacentHTML('beforeend',`<style>.karaoke{font-size:clamp(1.5rem,5vw,2.3rem);line-height:1.7;margin:14px 0}.kw{padding:2px 6px;border-radius:10px;transition:all .12s}.kw.was{color:var(--acc)}.kw.on{background:var(--hi);color:#2f2a24;transform:scale(1.15);display:inline-block;box-shadow:0 0 18px var(--hi)}
