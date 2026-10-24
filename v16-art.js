@@ -8,7 +8,7 @@ ART.face=function(cx,cy,s,ex,ink){ink=ink||'#3a2a2a';const E=(x,y)=>`<ellipse cx
  switch(ex){
  case'joy':return A(cx-dx,ey,1)+A(cx+dx,ey,1)+ck+`<path d="M${cx-6*s} ${my-2*s} Q${cx} ${my+9*s} ${cx+6*s} ${my-2*s}Z" fill="${ink}"/><path d="M${cx-3*s} ${my+3*s} Q${cx} ${my+6*s} ${cx+3*s} ${my+3*s}" fill="#ff7a8a"/>`;
  case'wow':return E(cx-dx,ey)+E(cx+dx,ey)+ck+`<ellipse cx="${cx}" cy="${my+1*s}" rx="${3*s}" ry="${4*s}" fill="${ink}"/>`;
- case'sleepy':return A(cx-dx,ey,0)+A(cx+dx,ey,0)+ck+smile(3)+`<text x="${cx+16*s}" y="${cy-14*s}" font-size="${8*s}" fill="#7a8bd6" font-family="sans-serif" font-weight="bold">z</text>`;
+ case'sleepy':return A(cx-dx,ey,0)+A(cx+dx,ey,0)+ck+smile(3);
  case'calm':return A(cx-dx,ey,0)+A(cx+dx,ey,0)+ck+smile(5);
  case'sad':return E(cx-dx,ey+1*s)+E(cx+dx,ey+1*s)+`<path d="M${cx-dx-5*s} ${ey-8*s} L${cx-dx+4*s} ${ey-10*s}M${cx+dx+5*s} ${ey-8*s} L${cx+dx-4*s} ${ey-10*s}" stroke="${ink}" stroke-width="${1.8*s}" stroke-linecap="round"/><path d="M${cx-5*s} ${my+3*s} Q${cx} ${my-3*s} ${cx+5*s} ${my+3*s}" stroke="${ink}" stroke-width="${2*s}" fill="none" stroke-linecap="round"/><path d="M${cx+dx+2*s} ${ey+6*s} q${-3*s} ${5*s} 0 ${7*s} q${3*s} ${-2*s} 0 ${-7*s}" fill="#6cc4ff"/>`;
  case'mad':return E(cx-dx,ey+1*s)+E(cx+dx,ey+1*s)+`<path d="M${cx-dx-6*s} ${ey-9*s} L${cx-dx+5*s} ${ey-5*s}M${cx+dx+6*s} ${ey-9*s} L${cx+dx-5*s} ${ey-5*s}" stroke="${ink}" stroke-width="${2.6*s}" stroke-linecap="round"/><path d="M${cx-5*s} ${my+3*s} Q${cx} ${my-2*s} ${cx+5*s} ${my+3*s}" stroke="${ink}" stroke-width="${2.2*s}" fill="none" stroke-linecap="round"/><ellipse cx="${cx-dx-4*s}" cy="${cy+4*s}" rx="${4*s}" ry="${2.6*s}" fill="#ff5a4a" opacity=".5"/><ellipse cx="${cx+dx+4*s}" cy="${cy+4*s}" rx="${4*s}" ry="${2.6*s}" fill="#ff5a4a" opacity=".5"/>`;

@@ -11,11 +11,11 @@ voiceIndex();
 const speak0=speak;
 speak=function(t,rate){const k=clipKey(t),idx=VIDX[curVoice()];const fake={onend:null,onerror:null};
  if(k&&idx){idx.then(set=>{if(!set.has(k)){const u=speak0(t,rate);if(u){u.onend=()=>fake.onend&&fake.onend();u.onerror=u.onend}return}
-  try{speechSynthesis.cancel()}catch(e){}loadClip(k).then(b=>{if(!b){const u=speak0(t,rate);if(u)u.onend=()=>fake.onend&&fake.onend();return}const c=ac(),s=c.createBufferSource();s.buffer=b;s.playbackRate.value=rate&&rate<.75?.92:1;s.connect(c.destination);s.start();s.onended=()=>fake.onend&&fake.onend()})});return fake}
+  try{speechSynthesis.cancel()}catch(e){}loadClip(k).then(b=>{if(!b){const u=speak0(t,rate);if(u)u.onend=()=>fake.onend&&fake.onend();return}const c=ac(),s=c.createBufferSource();s.buffer=b;s.playbackRate.value=1;s.connect(c.destination);s.start();s.onended=()=>fake.onend&&fake.onend()})});return fake}
  return speak0(t,rate)};
 // Picture cards: stretched sound (device voice) then the word in the family voice.
 const cardSay0=cardSay;cardSay=function(){const deck=CARDS.filter(c=>c[0]===CD.deck),c=deck[CD.i%deck.length];voiceIndex().then(set=>{if(!set.has('w_'+mslug(c[1])+'.mp3')&&!set.has('w_'+mslug(c[1])))return cardSay0();
- document.querySelector('.wcard')?.classList.add('lit');loadClip('w_'+mslug(c[1])).then(b=>{const a=ac();if(!b||!a)return;[[.62,0],[1,b.duration/.62+.35]].forEach(([r,d])=>{const s=a.createBufferSource();s.buffer=b;s.playbackRate.value=r;s.connect(a.destination);s.start(a.currentTime+d)})});
+ document.querySelector('.wcard')?.classList.add('lit');loadClip('w_'+mslug(c[1])).then(b=>{const a=ac();if(!b||!a)return;[[1,0],[1,b.duration+.5]].forEach(([r,d])=>{const s=a.createBufferSource();s.buffer=b;s.playbackRate.value=r;s.connect(a.destination);s.start(a.currentTime+d)})});
  const cnt=safeJSON(LS.get('lamp_cards'),{});cnt[c[1]]=(cnt[c[1]]||0)+1;LS.set('lamp_cards',JSON.stringify(cnt));markDay('cards');lightCheck()})};
 // ---------- Voice picker ----------
 let VP={msg:''};
@@ -87,10 +87,10 @@ SECTIONS.push('mylight');document.querySelector('main').insertAdjacentHTML('afte
 let LMUS=null;function calmMusic(on){clearInterval(LMUS);LMUS=null;if(!on)return;const ch=[[57,64,69],[53,60,65],[55,62,67],[52,59,64]];let k=0;const go=()=>{const c=ac();if(!c)return;ch[k++%4].forEach(m=>note(m,c.currentTime,3.5,'pad',.08))};go();LMUS=setInterval(go,4000)}
 RENDER.mylight=function(){if(LV)LV.stop();const st=lightStats(),p=curProfile(),next=LAYERS.find(l=>st.n<l[0]);
  $('mylight').innerHTML=`<div class="card big" style="padding:0;overflow:hidden;background:#070914;color:#f6efe0"><canvas id="lightbig" style="width:100%;height:70vh;display:block"></canvas>
- <div style="padding:14px"><h2 style="margin:.2em 0">${p.av} ${esc(p.name)}'s Light</h2><p>${st.n} stor${st.n===1?'y':'ies'} · ${st.ntop} kinds · ${st.letters}/26 letters · ${st.streak}-day streak. ${next?`Next color at ${next[0]} stories.`:'Every layer unlocked!'}</p>
+ <div style="padding:14px"><h2 style="margin:.2em 0">${p.av} ${esc(p.name)}'s Light</h2><p>${st.n} stor${st.n===1?'y':'ies'} · ${st.ntop} kinds · ${st.letters}/26 letters · ${st.streak}-day streak. ${next?`Next color at ${next[0]} stor${next[0]===1?'y':'ies'}.`:'Every layer unlocked!'}</p>
  <p class="soft" style="color:#bfb8a8">Every kid's light is one of a kind. Each kind of story adds its own color, and reading many kinds blends toward white light, like Isaac Newton found when he mixed the rainbow.</p>
  <button class="bigbtn" onclick="calmMusic(!LMUS);this.textContent=LMUS?'🔇 Music off':'🎶 Calm music'">🎶 Calm music</button> <button class="bigbtn" onclick="calmMusic(false);show('hub')">⬅ Home</button>
- <h3>🪜 Light Ladder</h3><div class="ladder">${LAYERS.map(l=>{const on=st.n>=l[0],bg=l[3]==='iri'?'conic-gradient(#f0f,#0ff,#ff0,#f0f)':l[3];return `<div class="rung ${on?'on':''}" onclick="this.classList.toggle('open')"><span style="background:${on?bg:'#2a2d3a'};box-shadow:${on?'0 0 18px '+(l[3]==='iri'?'#fff':l[3]):'none'}"></span><b>${on?l[1]:'???'}</b><small>${l[0]} stories</small>${on?`<p>${l[2]}</p>`:''}</div>`}).join('')}</div>
+ <h3>🪜 Light Ladder</h3><div class="ladder">${LAYERS.map(l=>{const on=st.n>=l[0],bg=l[3]==='iri'?'conic-gradient(#f0f,#0ff,#ff0,#f0f)':l[3];return `<div class="rung ${on?'on':''}" onclick="this.classList.toggle('open')"><span style="background:${on?bg:'#2a2d3a'};box-shadow:${on?'0 0 18px '+(l[3]==='iri'?'#fff':l[3]):'none'}"></span><b>${on?l[1]:'???'}</b><small>${l[0]} stor${l[0]===1?'y':'ies'}</small>${on?`<p>${l[2]}</p>`:''}</div>`}).join('')}</div>
  <p class="soft" style="color:#bfb8a8">${st.streak>=7?'✅':'🔒'} 7-day streak: sparkles · ${st.letters>=26?'✅':'🔒'} all 26 letters: ring of letter-stars</p></div></div>`;
  LV=makeLight($('lightbig'),{dpr:Math.min(2,devicePixelRatio||1)})};
 const renderHub0=renderHub;renderHub=function(){renderHub0();lightCheck();const lc=document.querySelector('#hub .lampcard>div');if(!lc)return;lc.innerHTML='<canvas id="lightmini" title="My Light" style="width:150px;height:150px;border-radius:50%;cursor:pointer;display:block"></canvas><button onclick="show(\'mylight\')" style="margin-top:6px">✨ My Light</button>';$('lightmini').onclick=()=>show('mylight');makeLight($('lightmini'),{dpr:1})};

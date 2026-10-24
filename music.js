@@ -21,9 +21,9 @@ function note(m,t,dur,inst,vol){const c=ac();if(!c)return;vol=vol||.25;const f=m
   g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(.35,t+.35);g.gain.setValueAtTime(.35,t+Math.max(.36,dur));g.gain.exponentialRampToValueAtTime(0.0001,t+dur+.8);o.connect(fl);o2.connect(fl);fl.connect(g).connect(out);[o,o2].forEach(x=>{x.start(t);x.stop(t+dur+.9);MSRC.push(x)})}
  else {osc('triangle',f,1,.005,Math.max(.4,dur*1.2));osc('sine',f*2,.3,.005,.3)}}
 function drumHit(kind,t){const c=ac();if(!c)return;t=t||c.currentTime;const g=c.createGain();g.connect(c.destination);
- if(kind==='kick'||kind==='tom'){const o=c.createOscillator();const f0=kind==='kick'?150:220;o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(kind==='kick'?45:110,t+.25);g.gain.setValueAtTime(.9,t);g.gain.exponentialRampToValueAtTime(.001,t+.35);o.connect(g);o.start(t);o.stop(t+.4)}
+ if(kind==='kick'||kind==='tom'){const o=c.createOscillator();const f0=kind==='kick'?150:220;o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(kind==='kick'?45:110,t+.25);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.9,t+.004);g.gain.exponentialRampToValueAtTime(.001,t+.35);g.gain.setTargetAtTime(0,t+.36,.01);o.connect(g);o.start(t);o.stop(t+.45)}
  else{const n=c.createBufferSource(),b=c.createBuffer(1,c.sampleRate*.3,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;n.buffer=b;const fl=c.createBiquadFilter();fl.type=kind==='hat'?'highpass':'bandpass';fl.frequency.value=kind==='hat'?7000:kind==='clap'?1500:1800;
-  const len=kind==='hat'?.06:.18;g.gain.setValueAtTime(.6,t);g.gain.exponentialRampToValueAtTime(.001,t+len);n.connect(fl).connect(g);n.start(t);n.stop(t+len+.02)}}
+  const len=kind==='hat'?.06:.18;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.6,t+.003);g.gain.exponentialRampToValueAtTime(.001,t+len);g.gain.setTargetAtTime(0,t+len,.005);n.connect(fl).connect(g);n.start(t);n.stop(t+len+.05)}}
 // ---------- Song parsing (word/syllable tokens + melody) ----------
 function parseSong(s){const words=[];s.lines.forEach((l,li)=>l.split(/\s+/).filter(Boolean).forEach(w=>words.push({w:w.replace(/\|/g,''),syl:w.split('|').length,li})));
  const total=words.reduce((n,x)=>n+x.syl,0);let notes;
