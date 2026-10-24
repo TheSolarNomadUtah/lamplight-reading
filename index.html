@@ -59,7 +59,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=12;
+const APP_VERSION=13;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;
 const RAW={get:k=>{try{return window.localStorage.getItem(k)}catch(e){STORE_OK=false;return k in MEM?MEM[k]:null}},
@@ -160,7 +160,7 @@ async function repairApp(){try{const rs=await navigator.serviceWorker?.getRegist
 (async()=>{try{if(location.protocol==='file:')return;const r=await fetch('version.json?'+Date.now(),{cache:'no-store'});const v=(await r.json()).version;
  if(v>APP_VERSION&&!sessionStorage.getItem('lamp_fix')){sessionStorage.setItem('lamp_fix','1');repairApp()}}catch(e){}})();
 // ---------- v7: speech helper ----------
-function speak(t,rate){try{if(!('speechSynthesis' in window))return null;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=rate||0.85;u.lang='en-US';speechSynthesis.speak(u);return u}catch(e){return null}}
+function speak(t,rate){try{if(!('speechSynthesis' in window))return null;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=rate||0.85;u.lang=window.SPEAK_LANG||'en-US';speechSynthesis.speak(u);return u}catch(e){return null}}
 const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 // ---------- v7: Letters game (uppercase <-> lowercase) ----------
 const AB='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -219,4 +219,4 @@ function soloAns(b,ok){if(ok){b.classList.add('yes');SO.right+=SO.tried?0:1;SO.t
 applyLook();renderBar();render();$("home").classList.add("hidden");
 if('serviceWorker' in navigator&&location.protocol!=='file:'){navigator.serviceWorker.register('sw.js').then(r=>r.update());let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl){rl=1;location.reload()}})}
 </script>
-<script src="v10.js"></script><script src="music-data.js"></script><script src="music.js"></script><script src="v12.js"></script></body></html>
+<script src="v10.js"></script><script src="music-data.js"></script><script src="music.js"></script><script src="v12.js"></script><script src="stories-es.js"></script><script src="i18n.js"></script></body></html>

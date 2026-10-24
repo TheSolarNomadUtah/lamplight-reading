@@ -4,7 +4,7 @@ const VOICES=[['heart','Heart','Warm and natural (default)'],['bella','Bella','B
 PKEYS.push('lamp_voice','lamp_lightseen');
 function curVoice(){const v=LS.get('lamp_voice')||RAW.get('lamp_voice_family')||'heart';return VOICES.some(x=>x[0]===v)?v:'heart'}
 function SINGMODE(){return RAW.get('lamp_singmode')||'sing'}
-const VIDX={};function voiceIndex(v){v=v||curVoice();return VIDX[v]||(VIDX[v]=fetch(`audio/${v}/index.json`).then(r=>r.ok?r.json():[]).then(a=>new Set(a)).catch(()=>new Set()))}
+const VIDX={};function voiceIndex(v){v=v||curVoice();return VIDX[v]||(VIDX[v]=fetch(`audio/${v}/index.json`).then(r=>r.ok?r.json():[]).then(a=>new Set(a.map(f=>f.replace(/\.mp3$/,'')))).catch(()=>new Set()))}
 const PHRK={'yes':'p_yes','good try. pick another one.':'p_try','great job!':'p_great','you read it! great job!':'p_read'};
 function clipKey(t){const s=String(t).trim(),l=s.toLowerCase();if(PHRK[l])return PHRK[l];if(/^[a-z]$/i.test(s))return 'n_'+l;const m=l.replace(/^yes!\s*/,'');if(/^[a-z']+[.!?]?$/.test(l))return 'w_'+l.replace(/[^a-z]/g,'');return null}
 voiceIndex();
@@ -14,8 +14,8 @@ speak=function(t,rate){const k=clipKey(t),idx=VIDX[curVoice()];const fake={onend
   try{speechSynthesis.cancel()}catch(e){}loadClip(k).then(b=>{if(!b){const u=speak0(t,rate);if(u)u.onend=()=>fake.onend&&fake.onend();return}const c=ac(),s=c.createBufferSource();s.buffer=b;s.playbackRate.value=rate&&rate<.75?.92:1;s.connect(c.destination);s.start();s.onended=()=>fake.onend&&fake.onend()})});return fake}
  return speak0(t,rate)};
 // Picture cards: stretched sound (device voice) then the word in the family voice.
-const cardSay0=cardSay;cardSay=function(){const deck=CARDS.filter(c=>c[0]===CD.deck),c=deck[CD.i%deck.length];voiceIndex().then(set=>{if(!set.has('w_'+c[1]))return cardSay0();
- document.querySelector('.wcard')?.classList.add('lit');loadClip('w_'+c[1]).then(b=>{const a=ac();if(!b||!a)return;[[.62,0],[1,b.duration/.62+.35]].forEach(([r,d])=>{const s=a.createBufferSource();s.buffer=b;s.playbackRate.value=r;s.connect(a.destination);s.start(a.currentTime+d)})});
+const cardSay0=cardSay;cardSay=function(){const deck=CARDS.filter(c=>c[0]===CD.deck),c=deck[CD.i%deck.length];voiceIndex().then(set=>{if(!set.has('w_'+mslug(c[1])+'.mp3')&&!set.has('w_'+mslug(c[1])))return cardSay0();
+ document.querySelector('.wcard')?.classList.add('lit');loadClip('w_'+mslug(c[1])).then(b=>{const a=ac();if(!b||!a)return;[[.62,0],[1,b.duration/.62+.35]].forEach(([r,d])=>{const s=a.createBufferSource();s.buffer=b;s.playbackRate.value=r;s.connect(a.destination);s.start(a.currentTime+d)})});
  const cnt=safeJSON(LS.get('lamp_cards'),{});cnt[c[1]]=(cnt[c[1]]||0)+1;LS.set('lamp_cards',JSON.stringify(cnt));markDay('cards');lightCheck()})};
 // ---------- Voice picker ----------
 let VP={msg:''};
@@ -95,3 +95,4 @@ RENDER.mylight=function(){if(LV)LV.stop();const st=lightStats(),p=curProfile(),n
  LV=makeLight($('lightbig'),{dpr:Math.min(2,devicePixelRatio||1)})};
 const renderHub0=renderHub;renderHub=function(){renderHub0();lightCheck();const lc=document.querySelector('#hub .lampcard>div');if(!lc)return;lc.innerHTML='<canvas id="lightmini" title="My Light" style="width:150px;height:150px;border-radius:50%;cursor:pointer;display:block"></canvas><button onclick="show(\'mylight\')" style="margin-top:6px">✨ My Light</button>';$('lightmini').onclick=()=>show('mylight');makeLight($('lightmini'),{dpr:1})};
 document.head.insertAdjacentHTML('beforeend','<style>.lcele{position:fixed;left:50%;top:30%;transform:translate(-50%,-30%);z-index:99;background:radial-gradient(#fffbe8,#ffe7a3);border-radius:24px;padding:24px;text-align:center;box-shadow:0 0 80px 30px #ffe08a;max-width:340px;animation:lce 1s ease}.lcele>div:first-child{font-size:3rem}.ladder{display:flex;flex-wrap:wrap;gap:10px}.rung{width:96px;text-align:center;opacity:.45;cursor:pointer}.rung.on{opacity:1}.rung span{display:block;width:44px;height:44px;border-radius:50%;margin:0 auto 4px}.rung small{display:block;color:#bfb8a8}.rung p{display:none;font-size:.85rem}.rung.open p{display:block}@keyframes lce{from{transform:translate(-50%,-30%) scale(.3);opacity:0}}</style>');
+RENDER.hub=renderHub;if(!$('hub').classList.contains('hidden'))renderHub();

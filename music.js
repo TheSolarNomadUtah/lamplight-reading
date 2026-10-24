@@ -2,7 +2,7 @@
 // To swap the voice: run tools/gen_voice.py <voice> and change "voice" in music-data.js. Nothing is recorded or sent anywhere.
 SECTIONS.push('music');document.querySelector('main').insertAdjacentHTML('afterbegin','<section id="music" class="hidden"></section>');
 RENDER.music=()=>renderMusic();
-const mslug=w=>w.toLowerCase().replace(/[^a-z]/g,'');
+const mslug=w=>w.toLowerCase().normalize('NFD').replace(/[^a-z]/g,'');
 let AC=null;const ac=()=>{if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C()}if(AC.state==='suspended')AC.resume();return AC};
 const BUF={};
 function loadClip(name,vv){const V=vv||curVoice(),K=V+'/'+name;if(K in BUF)return BUF[K];const c=ac();return BUF[K]=(c?fetch(`audio/${V}/${name}.mp3`).then(r=>{if(!r.ok)throw 0;return r.arrayBuffer()}).then(b=>new Promise((ok,no)=>c.decodeAudioData(b,ok,no))).catch(()=>null):Promise.resolve(null))}
@@ -61,7 +61,7 @@ function playLetterSong(L){musicStop();const i=MUSIC.letters.findIndex(x=>x[0]==
   playClip(buf,t0+.4*b,1.2,`${L} says ${r[1]}, ${r[1]}, ${r[1]}. ${r[2]} and ${r[3]}!`);const e=$('lsbig');if(e){e.classList.add('pop');later(()=>e.classList.remove('pop'),t*1000)}})}
 function renderLSongs(back){const L=MU.L||'A',r=MUSIC.letters.find(x=>x[0]===L);
  $('music').innerHTML=`<div class="card big" style="text-align:center"><h2>🔤 Letter songs</h2><div id="lsbig" class="lsbig" onclick="playLetterSong('${L}')">${L}${L.toLowerCase()}</div>
- <p style="font-size:1.5rem"><b>${L}</b> says <b>${r[1]}</b> — ${r[2]} and ${r[3]}!</p><button class="bigbtn p" onclick="playLetterSong('${L}')">▶ Play the ${L} song</button> <button class="bigbtn" onclick="MU.L='${MUSIC.letters[(MUSIC.letters.findIndex(x=>x[0]===L)+1)%26][0]}';renderMusic();playLetterSong(MU.L)">Next ➡</button>
+ <p style="font-size:1.5rem"><b>${L}</b> ${typeof LANG!=="undefined"&&LANG==="es"?"suena":"says"} <b>${r[1]}</b> — ${r[2]} and ${r[3]}!</p><button class="bigbtn p" onclick="playLetterSong('${L}')">▶ Play the ${L} song</button> <button class="bigbtn" onclick="MU.L='${MUSIC.letters[(MUSIC.letters.findIndex(x=>x[0]===L)+1)%MUSIC.letters.length][0]}';renderMusic();playLetterSong(MU.L)">Next ➡</button>
  <div style="margin-top:10px">${MUSIC.letters.map(x=>`<button class="pchip ${x[0]===L?'p':''}" onclick="MU.L='${x[0]}';renderMusic();playLetterSong('${x[0]}')">${x[0]}</button>`).join('')}</div>${back}</div>`}
 // Drum pad: tap once per syllable
 function syllables(w){return w.split('|').length}
