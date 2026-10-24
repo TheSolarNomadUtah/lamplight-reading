@@ -8,3 +8,6 @@ document.head.insertAdjacentHTML('beforeend',`<style>
 // Translate "descriptor: Title" in the Start-at-level options.
 if(typeof LANG!=='undefined'&&LANG!=='en'){const t0=trText;trText=function(n){t0(n);const v=n.nodeValue;if(!v||!/: /.test(v)||!n.parentElement||n.parentElement.tagName!=='OPTION')return;
  const o=v.split(' · ').map(seg=>{const m=seg.match(/^(.*?): (.+)$/);if(!m)return seg;return (DICT[m[1].trim()]||m[1])+': '+(DICT[m[2].trim()]||m[2])}).join(' · ');if(o!==v)n.nodeValue=o}}
+
+// The first screen is drawn before the language swaps in stories; redraw it now, then reveal (only if the dictionary is ready).
+if(typeof LANG!=='undefined'&&LANG!=='en'){try{const vis=SECTIONS.find(x=>$(x)&&!$(x).classList.contains('hidden'))||'hub';show(vis)}catch(e){}if(Object.keys(DICT).length)document.documentElement.classList.remove('i18nwait')}
