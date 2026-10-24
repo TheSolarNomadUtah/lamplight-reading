@@ -3,7 +3,7 @@
 <style>
 :root{--bg:#f6f1e7;--card:#fffdf8;--ink:#2f2a24;--soft:#7a6f60;--acc:#5b7a6a;--hi:#f3e2b3}
 *{box-sizing:border-box}body{margin:0;font-family:Georgia,serif;background:var(--bg);color:var(--ink);line-height:1.5}
-header{padding:14px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e4dccb}
+header{padding:14px 20px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;border-bottom:1px solid #e4dccb}
 h1{font-size:1.3rem;margin:0;font-weight:normal}nav button{margin-left:6px}
 button{font:inherit;background:var(--card);border:1px solid #d8cdb8;border-radius:10px;padding:8px 14px;cursor:pointer;color:var(--ink)}
 button.p{background:var(--acc);color:#fff;border-color:var(--acc)}main{max-width:860px;margin:0 auto;padding:20px}
@@ -21,9 +21,10 @@ table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #eee4d2;
 .tile.sel{background:var(--hi);color:#2f2a24}.tile.done{opacity:.35}.tile.no{animation:wig .35s}.tile.yes,.bigbtn.yes{background:#d9ead9;color:#2f2a24}
 @keyframes wig{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .bigbtn,.big .bigbtn{font-size:1.5rem;padding:16px 26px;border-radius:16px;margin:6px}.sw.say{background:var(--hi);color:#2f2a24}.stars{font-size:2rem;letter-spacing:4px}
+.pchip{font-size:1.1rem;padding:6px 12px;margin:2px}.pchip.on{background:var(--acc);color:#fff}.snd{font-size:clamp(1.6rem,6vw,2.6rem);min-width:clamp(90px,24vw,150px);min-height:clamp(90px,24vw,130px);margin:6px;border-radius:20px;border:3px solid var(--acc);background:var(--card);color:var(--ink)}.snd small{display:block;font-size:1rem}.snd.say{background:var(--hi);color:#2f2a24}
 </style></head><body>
-<header><h1>🕯️ Lamplight Reading</h1><nav class="noprint">
-<button onclick="show('home')">Tonight</button><button onclick="show('lib')">Stories</button><button onclick="show('solo')">⭐ Solo</button><button onclick="show('letters')">🔤 Letters</button><button onclick="show('log')">Progress</button><button onclick="show('look')">🎨 Look</button><button onclick="show('about')">For grown-ups</button></nav></header>
+<header><h1>🕯️ Lamplight Reading</h1><span id="pbar" class="noprint"></span><nav class="noprint">
+<button onclick="show('home')">Tonight</button><button onclick="show('lib')">Stories</button><button onclick="show('echo')">👶 Echo</button><button onclick="show('solo')">⭐ Solo</button><button onclick="show('letters')">🔤 Letters</button><button onclick="show('log')">Progress</button><button onclick="show('kids')">👧 Kids</button><button onclick="show('look')">🎨 Look</button><button onclick="show('about')">For grown-ups</button></nav></header>
 <main>
 <section id="home"></section>
 <section id="lib" class="hidden"></section>
@@ -33,28 +34,37 @@ table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #eee4d2;
 <section id="look" class="hidden"></section>
 <section id="solo" class="hidden"></section>
 <section id="letters" class="hidden"></section>
-<section id="about" class="hidden"><div class="card"><h2>How this works</h2>
-<p>You are the tutor; the app is your coach. Each night: 2 min warm-up, 6–8 min reading together, 2–3 min talking about it, then a quick note in the log. About 10–15 minutes.</p>
-<ul><li>No coins, streaks, ads, or autoplay. Skipping a night is fine.</li><li>No accounts. Everything is saved only in this browser (localStorage). Nothing is sent anywhere.</li>
-<li>Read-aloud check uses your browser's speech recognition where available (Chrome/Edge). In Chrome the audio may be processed by the browser vendor's servers. It's optional, and you decide what counts as a miss. <b>It does not work in Brave</b> (Brave blocks the speech service) or Firefox, so use Chrome or Edge, or just tap words by hand.</li>
-<li><b>Clear and catchy:</b> each story has one short, rhythmic "say it together" line and a picture-like comparison. Short beats and vivid images are easier to remember than long explanations, and the goal is for her to feel smart, not for the story to sound smart. Read it together twice at the end.</li><li><b>⭐ Solo</b> lets a child read alone: tap a word to hear it, "Read to me" highlights word by word, then a few tap-to-answer questions earn stars. <b>🔤 Letters</b> practices matching big and little letters. Both save on this device only. Read-aloud uses your browser's built-in voice.</li><li>Tap any word while she reads to mark it as tricky. Tap it again to clear it.</li></ul>
-<p><button onclick="if(confirm('Erase all saved progress and notes on this device?')){LS.del('lamp_log');LS.del('lamp_notes');LS.del('lamp_letters');LS.del('lamp_solo');render()}">Erase all progress</button> <button onclick="exportLog()">Export log + notes (JSON)</button></p></div></section>
+<section id="about" class="hidden"></section>
+<section id="echo" class="hidden"></section>
+<section id="kids" class="hidden"></section>
 </main>
 <script src="stories.js"></script>
 <script src="stories2.js"></script>
 <script src="stories3.js"></script>
+<script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=7;
+const APP_VERSION=9;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;
-const LS={get:k=>{try{return window.localStorage.getItem(k)}catch(e){STORE_OK=false;return k in MEM?MEM[k]:null}},
+const RAW={get:k=>{try{return window.localStorage.getItem(k)}catch(e){STORE_OK=false;return k in MEM?MEM[k]:null}},
  set:(k,v)=>{MEM[k]=v;try{window.localStorage.setItem(k,v)}catch(e){STORE_OK=false}},
  del:k=>{delete MEM[k];try{window.localStorage.removeItem(k)}catch(e){STORE_OK=false}}};
+// v9 profiles: progress keys are stored per kid profile. Look settings stay shared.
+const PKEYS=['lamp_log','lamp_notes','lamp_solo','lamp_letters','lamp_start','lamp_echo'];
+const pk=k=>PKEYS.includes(k)?k+'@'+curPid():k;
+const LS={get:k=>RAW.get(pk(k)),set:(k,v)=>RAW.set(pk(k),v),del:k=>RAW.del(pk(k))};
+function getProfiles(){return safeJSON(RAW.get('lamp_profiles'),null)}
+function saveProfiles(P){RAW.set('lamp_profiles',JSON.stringify(P))}
+function curPid(){const P=getProfiles();return P?P.cur:'p1'}
+function curProfile(){const P=getProfiles();return P.list.find(x=>x.id===P.cur)||P.list[0]}
+(function migrate(){if(getProfiles())return;// first run on v9: move old single-user progress into a default profile
+ saveProfiles({cur:'p1',list:[{id:'p1',name:'Reader 1',band:'k',av:'🦊'}]});
+ for(const k of PKEYS){const v=RAW.get(k);if(v!=null){RAW.set(k+'@p1',v);RAW.del(k)}}})();
 function safeJSON(t,d){try{return t?JSON.parse(t):d}catch(e){return d}}
 const getLog=()=>safeJSON(LS.get('lamp_log'),[]);
 const setLog=l=>LS.set('lamp_log',JSON.stringify(l));
-function show(id){if(typeof stopRead==='function'&&id!=='solo')stopRead();['home','lib','session','log','print','look','about','solo','letters'].forEach(x=>$(x).classList.toggle('hidden',x!==id));render();if(id==='solo')renderSolo();if(id==='letters')renderLetters()}
+function show(id){if(typeof stopRead==='function'&&id!=='solo')stopRead();['home','lib','session','log','print','look','about','solo','letters','echo','kids'].forEach(x=>$(x).classList.toggle('hidden',x!==id));render();if(id==='solo')renderSolo();if(id==='letters')renderLetters();if(id==='echo')renderEcho();if(id==='kids')renderKids();if(id==='about')renderAbout()}
 function wc(s){return s.text.split(/\s+/).length}
 function startLvl(){return LS.get('lamp_start')||'s1'}
 function suggest(){const l=getLog();const ord=S.slice().sort((a,b)=>a.g-b.g);if(!l.length)return S.find(s=>s.id===startLvl())||ord[0];
@@ -191,6 +201,6 @@ function soloQ(){const s=SO.s;if(SO.qi>=SO.qs.length){const stars=1+(SO.right===
  $('solo').innerHTML=`<div class="card big" style="text-align:center"><p class="soft">Question ${SO.qi+1} of ${SO.qs.length}</p><h2 onclick="speak(this.textContent)" style="cursor:pointer">🔊 ${q}</h2>${opts.map(o=>`<button class="bigbtn" onclick="soloAns(this,${o.ok})">${o.t}</button>`).join('')}<p id="qfb" style="font-size:1.3rem;min-height:1.6em"></p><button onclick="renderSolo()">⬅ Back to stories</button></div>`;speak(q)}
 function soloAns(b,ok){if(ok){b.classList.add('yes');SO.right+=SO.tried?0:1;SO.tried=false;$('qfb').textContent='⭐ Yes!';speak('Yes!');SO.qi++;setTimeout(soloQ,1000)}else{SO.tried=true;b.disabled=true;b.style.opacity=.4;$('qfb').textContent='Good try! Pick another one.';speak('Good try. Pick another one.')}}
 
-applyLook();render();
+applyLook();renderBar();render();
 if('serviceWorker' in navigator&&location.protocol!=='file:'){navigator.serviceWorker.register('sw.js').then(r=>r.update());let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl){rl=1;location.reload()}})}
 </script></body></html>
