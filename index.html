@@ -38,8 +38,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 .ptext{font-size:1.4rem;line-height:1.9}.tline{border-bottom:2px solid #999;margin:14px 0;padding:4px 0;font-size:2.4rem;position:relative}.tw{font-family:Verdana,sans-serif;color:transparent;-webkit-text-stroke:1px #aaa;margin-right:40px;border-bottom:1px dashed #ccc}
 @media print{footer,.pbar{display:none!important}.sheet{page-break-after:always}.tw{-webkit-text-stroke:1px #888}.ppage h3{margin:10px 0 4px}}
 </style></head><body>
-<header><h1>🕯️ Lamplight Learning <small class="tagline" style="display:block;font-size:.5em;font-weight:normal;opacity:.75">Learn, play, and glow</small></h1><span id="pbar" class="noprint"></span><nav class="noprint">
-<button onclick="show('home')">Tonight</button><button onclick="show('lib')">Stories</button><button onclick="show('echo')">👶 Echo</button><button onclick="show('solo')">⭐ Solo</button><button onclick="show('letters')">🔤 Letters</button><button onclick="show('log')">Progress</button><button onclick="show('kids')">👧 Kids</button><button onclick="show('look')">🎨 Look</button><button onclick="show('about')">For grown-ups</button></nav></header>
+<header><h1>🕯️ Lamplight Learning <small class="tagline" style="display:block;font-size:.5em;font-weight:normal;opacity:.75">Learn, play, and glow</small></h1><span id="pbar" class="noprint"></span><nav class="noprint"><button onclick="show('hub')">🏠 Home</button><button onclick="show('lib')">📚 Library</button><button onclick="show('adults')">👪 Grown-ups</button></nav></header>
 <main>
 <section id="home"></section>
 <section id="lib" class="hidden"></section>
@@ -59,7 +58,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=19;
+const APP_VERSION=20;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;
 const RAW={get:k=>{try{return window.localStorage.getItem(k)}catch(e){STORE_OK=false;return k in MEM?MEM[k]:null}},
@@ -217,6 +216,7 @@ function soloQ(){const s=SO.s;if(SO.qi>=SO.qs.length){const stars=1+(SO.right===
 function soloAns(b,ok){if(ok){b.classList.add('yes');SO.right+=SO.tried?0:1;SO.tried=false;$('qfb').textContent='⭐ Yes!';speak('Yes!');SO.qi++;setTimeout(soloQ,1000)}else{SO.tried=true;b.disabled=true;b.style.opacity=.4;$('qfb').textContent='Good try! Pick another one.';speak('Good try. Pick another one.')}}
 
 applyLook();renderBar();render();$("home").classList.add("hidden");
-if('serviceWorker' in navigator&&location.protocol!=='file:'){navigator.serviceWorker.register('sw.js',{scope:'./'}).then(r=>r.update());let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl){rl=1;location.reload()}})}
+if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navigator.serviceWorker.controller;navigator.serviceWorker.register('sw.js',{scope:'./'}).then(r=>r.update());let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl&&hadSW){rl=1;location.reload()}})}
 </script>
-<script src="v10.js"></script><script src="music-data.js"></script><script src="music.js"></script><script src="v12.js"></script><script src="stories-es.js"></script><script src="v14.js"></script><script src="seq-demos.js"></script><script src="v16-seq.js"></script><script src="v16-art.js"></script><script src="v16.js"></script><script src="v17.js"></script><script src="move.js"></script><script src="i18n.js"></script><script src="v19.js"></script></body></html>
+<script src="v10.js"></script><script src="music-data.js"></script><script src="music.js"></script><script src="v12.js"></script><script src="stories-es.js"></script><script src="v14.js"></script><script src="seq-demos.js"></script><script src="v16-seq.js"></script><script src="v16-art.js"></script><script src="v16.js"></script><script src="v17.js"></script><script src="move.js"></script><script src="i18n.js"></script><script src="v19.js"></script>
+<script src="v20.js"></script></body></html>
