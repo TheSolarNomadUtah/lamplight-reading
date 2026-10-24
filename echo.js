@@ -87,7 +87,7 @@ function renderAbout(){const p=curProfile(),s=pStats(p.id);
  <p><button class="p" onclick="copyFb()">📋 Copy feedback summary</button> <span id="fb_msg" class="soft"></span></p></div>
  <div class="card"><p><button onclick="if(confirm('Erase all progress and notes for ${esc(p.name)} on this device?')){['lamp_log','lamp_notes','lamp_letters','lamp_solo','lamp_echo'].forEach(k=>LS.del(k));render();renderAbout()}">Erase ${esc(p.name)}'s progress</button> <button onclick="exportLog()">Export ${esc(p.name)}'s log (JSON)</button></p></div>`}
 function fbSummary(){const b=BANDS[$('fb_band').value],tr=[...document.querySelectorAll('#fb_tried input:checked')].map(x=>x.value);
- return `Lamplight Reading feedback (v${APP_VERSION}, ${new Date().toLocaleDateString()})\nAge group: ${b}\nTried: ${tr.join(', ')||'(none checked)'}\nNotes: ${$('fb_text').value.trim()||'(none)'}`}
+ return `Lamplight Learning feedback (v${APP_VERSION}, ${new Date().toLocaleDateString()})\nAge group: ${b}\nTried: ${tr.join(', ')||'(none checked)'}\nNotes: ${$('fb_text').value.trim()||'(none)'}`}
 async function copyFb(){const t=fbSummary();let ok=false;try{await navigator.clipboard.writeText(t);ok=true}catch(e){}
  if(!ok){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{ok=document.execCommand('copy')}catch(e){}ta.remove()}
  $('fb_msg').textContent=ok?'Copied! Now paste it into a text or email.':'Could not copy automatically. Select and copy this:';if(!ok)$('fb_msg').insertAdjacentHTML('afterend','<pre style="white-space:pre-wrap">'+esc(t)+'</pre>')}

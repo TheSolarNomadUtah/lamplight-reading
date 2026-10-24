@@ -114,7 +114,7 @@ function weekRows(pid){const D=getDays(pid),log=safeJSON(RAW.get('lamp_log@'+pid
 function renderDaycare(){const P=getProfiles();
  if(DC.sheet){const ids=DC.sheet==='all'?P.list.map(p=>p.id):[DC.sheet];
   $('daycare').innerHTML=`<div class="noprint card"><button class="p" onclick="print()">🖨️ Print</button> <button onclick="DC.sheet=null;renderDaycare()">⬅ Back</button></div>`+ids.map(id=>{const p=P.list.find(x=>x.id===id),s=pStats(id),R=weekRows(id),n=streakOf(getDays(id));
-   return `<div class="card sheet"><h2>${p.av} ${esc(p.name)}: this week at Lamplight</h2><p class="soft">${BANDS[p.band]||''} · week ending ${new Date().toLocaleDateString()} · lamp streak: ${n} day${n===1?'':'s'}</p>
+   return `<div class="card sheet"><h2>${p.av} ${esc(p.name)}: this week at Lamplight Learning</h2><p class="soft">${BANDS[p.band]||''} · week ending ${new Date().toLocaleDateString()} · lamp streak: ${n} day${n===1?'':'s'}</p>
    <table><tr><th>Day</th><th>Read</th><th>Solo</th><th>Letters</th><th>Trace</th><th>Cards</th><th>Echo</th><th>Stories</th></tr>${R.map(r=>`<tr><td>${r.d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})}</td>${['read','solo','letters','trace','cards','echo'].map(k=>`<td>${r.a[k]?'✔ '+r.a[k]:''}</td>`).join('')}<td>${r.stories.join(', ')}</td></tr>`).join('')}</table>
    <p><b>So far:</b> ${s.read} stories read together · ${s.stars} solo stars · ${s.letters}/26 letters known · ${Object.keys(safeJSON(RAW.get('lamp_trace@'+id),{})).length} letters traced</p><p>Notes from the teacher: ____________________________________________</p><p class="soft">🔒 ${ZERO}</p></div>`}).join('');return}
  $('daycare').innerHTML=`<div class="card"><h2>🏫 Daycare mode</h2><p class="soft">Tap a child to switch to them. Print a weekly sheet for parents.</p>
@@ -132,7 +132,7 @@ function printPage(id){const s=S.find(x=>x.id===id);show('print');const kw=s.wor
  $('print').innerHTML=`<div class="card ppage"><p class="noprint"><button class="p" onclick="print()">🖨️ Print this page</button> <button onclick="show('lib')">⬅ Library</button> <button onclick="printSheet('${s.id}')">Practice sheet instead</button></p>
  <p>Name: ______________ &nbsp; Date: ________</p><h1 style="font-size:2rem;font-weight:normal">${s.t}</h1><div class="ptext">${s.text.replace(/\n/g,'<br>')}</div>
  <h3>Trace the words</h3>${kw.map(w=>`<div class="tline"><span class="tw">${w}</span><span class="tw">${w}</span><span class="tw">${w}</span></div>`).join('')}
- <h3>Color it in</h3><div style="text-align:center">${outlineFor(s)}</div><p class="soft">Lamplight Reading · ${s.lvl}</p></div>`}
+ <h3>Color it in</h3><div style="text-align:center">${outlineFor(s)}</div><p class="soft">Lamplight Learning · ${s.lvl}</p></div>`}
 // ---------- Paint Studio ----------
 const PCOL=[['#e53935','red'],['#fb8c00','orange'],['#fdd835','yellow'],['#43a047','green'],['#1e88e5','blue'],['#8e24aa','purple'],['#ec407a','pink'],['#6d4c41','brown'],['#ffffff','white'],['#212121','black']];
 const WHEEL=[['red',0],['red-orange',15],['orange',30],['yellow-orange',45],['yellow',60],['yellow-green',90],['green',120],['teal',165],['cyan',180],['blue',220],['violet',265],['magenta',300]];

@@ -1,4 +1,4 @@
-// Lamplight Reading stories. All original. g = grade level; takeaway = the one idea to keep.
+// Lamplight Learning stories. All original. g = grade level; takeaway = the one idea to keep.
 const S=[
 // ---------- Kindergarten ----------
 {id:'s1',lvl:'K · Decodable (short a) · bouncy rhyme',g:0.5,t:'Sam and the Cap',focus:'short a, CVC words',

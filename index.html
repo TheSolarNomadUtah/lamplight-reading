@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="manifest" href="manifest.webmanifest"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#5b7a6a"><link rel="icon" href="icon.svg"><title>Lamplight Reading: a calm nightly session</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#5b7a6a"><link rel="icon" href="icon.svg"><title>Lamplight Learning: a calm nightly session</title>
 <style>
 :root{--bg:#f6f1e7;--card:#fffdf8;--ink:#2f2a24;--soft:#7a6f60;--acc:#5b7a6a;--hi:#f3e2b3}
 *{box-sizing:border-box}body{margin:0;font-family:Georgia,serif;background:var(--bg);color:var(--ink);line-height:1.5}
@@ -38,7 +38,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 .ptext{font-size:1.4rem;line-height:1.9}.tline{border-bottom:2px solid #999;margin:14px 0;padding:4px 0;font-size:2.4rem;position:relative}.tw{font-family:Verdana,sans-serif;color:transparent;-webkit-text-stroke:1px #aaa;margin-right:40px;border-bottom:1px dashed #ccc}
 @media print{footer,.pbar{display:none!important}.sheet{page-break-after:always}.tw{-webkit-text-stroke:1px #888}.ppage h3{margin:10px 0 4px}}
 </style></head><body>
-<header><h1>🕯️ Lamplight Reading</h1><span id="pbar" class="noprint"></span><nav class="noprint">
+<header><h1>🕯️ Lamplight Learning <small class="tagline" style="display:block;font-size:.5em;font-weight:normal;opacity:.75">Learn, play, and glow</small></h1><span id="pbar" class="noprint"></span><nav class="noprint">
 <button onclick="show('home')">Tonight</button><button onclick="show('lib')">Stories</button><button onclick="show('echo')">👶 Echo</button><button onclick="show('solo')">⭐ Solo</button><button onclick="show('letters')">🔤 Letters</button><button onclick="show('log')">Progress</button><button onclick="show('kids')">👧 Kids</button><button onclick="show('look')">🎨 Look</button><button onclick="show('about')">For grown-ups</button></nav></header>
 <main>
 <section id="home"></section>
@@ -59,7 +59,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=14;
+const APP_VERSION=15;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;
 const RAW={get:k=>{try{return window.localStorage.getItem(k)}catch(e){STORE_OK=false;return k in MEM?MEM[k]:null}},

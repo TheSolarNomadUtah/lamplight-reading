@@ -119,7 +119,7 @@ function renderOffline(){const el=$('offcard');if(!el)return;const all=RAW.get('
  ${window.BIP?'<p><button class="bigbtn" onclick="BIP.prompt();BIP=null">📲 Install now</button></p>':''}
  <p><b>iPhone / iPad (Safari):</b> tap the Share button ⬆️, then “Add to Home Screen”.</p>
  <p><b>Android (Chrome):</b> tap the ⋮ menu, then “Add to Home screen” or “Install app”.</p>
- <p><b>Computer (Chrome or Edge):</b> click the install icon ⊕ at the right of the address bar, or the menu, then “Install Lamplight”.</p>
+ <p><b>Computer (Chrome or Edge):</b> click the install icon ⊕ at the right of the address bar, or the menu, then “Install Lamplight Learning”.</p>
  <p><b>Firefox on a computer:</b> bookmark the page. It still works offline after a visit.</p></details>`}
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.BIP=e;renderOffline()});
 {const ra=renderAdults;renderAdults=function(){ra();$('adults').insertAdjacentHTML('afterbegin','<div class="card" id="offcard"></div>');renderOffline();if(OFF.size==null)offSize()};RENDER.adults=renderAdults}
