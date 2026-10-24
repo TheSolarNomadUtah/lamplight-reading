@@ -1,8 +1,8 @@
-// v7 batch: Pre-K "Awakening", more Kindergarten stories + lessons, and new Grade 1-2 stories.
+// v7 batch: Pre-K "Echo", more Kindergarten stories + lessons, and new Grade 1-2 stories.
 // q = solo-mode comprehension taps: [question, [choices], index of right answer]
 S.push(
-// ---------- Pre-K · Awakening (read WITH an adult: you read, child points and echoes) ----------
-{id:'a1',lvl:'Pre-K · Awakening · echo me',g:0.1,t:'I See',focus:'pointing to words, "I see"',
+// ---------- Pre-K · Echo (read WITH an adult: you read, child points and echoes) ----------
+{id:'a1',lvl:'Pre-K · Echo · echo me',g:0.1,t:'I See',focus:'pointing to words, "I see"',
  text:`I see a sun. ☀️
 I see a dog. 🐶
 I see a cup. 🥤
@@ -14,7 +14,7 @@ Mom sees me!`,
  coach:['Warm-up: point to each word as you say it, slowly. Let her finger ride on top of yours.','You read a line, she echoes it. Swap Mom for any name she loves.','Celebrate the pointing, not the reading: "You touched every word!"'],
  talk:['What do you see right now?','Who sees you every day?'],words:['I','see','sun','dog','cup','bug'],
  q:[['What did we see that is in the sky?',['sun','cup','bug'],0],['Who sees me?',['Mom','a bug','a cup'],0]]},
-{id:'a2',lvl:'Pre-K · Awakening · sound play',g:0.12,t:'Mmm, Mmm, Mmm',focus:'letter sound /m/',
+{id:'a2',lvl:'Pre-K · Echo · sound play',g:0.12,t:'Mmm, Mmm, Mmm',focus:'letter sound /m/',
  text:`M says mmm.
 Mmm, moon. 🌙
 Mmm, milk. 🥛
@@ -26,7 +26,7 @@ Mmm, yum!`,
  coach:['Warm-up: rub your tummy and hum "mmm." That hum is the letter M.','Say each word slowly with a long mmm at the start.','Find something in the room that starts with mmm.'],
  talk:['What food makes you say mmm?','Can you think of a name that starts with mmm?'],words:['M','moon','milk','mouse','muffin','yum'],
  q:[['What sound does M make?',['mmm','sss','t-t-t'],0],['Which one starts with mmm?',['moon','sun','dog'],0]]},
-{id:'a3',lvl:'Pre-K · Awakening · body rhythm',g:0.14,t:'Up and Down',focus:'opposites, movement words',
+{id:'a3',lvl:'Pre-K · Echo · body rhythm',g:0.14,t:'Up and Down',focus:'opposites, movement words',
  text:`Up, up, up! 🙌
 Down, down, down. 👇
 Big, big, big!
@@ -40,7 +40,7 @@ Hug!`,
  coach:['Warm-up: stand up. Act out each word as you read it.','Read "fast" quickly and "slow" very slowly. Rhythm teaches meaning.','End with a real hug.'],
  talk:['What is the opposite of hot?','Show me big, then small.'],words:['up','down','big','small','fast','slow','stop'],
  q:[['What is the opposite of up?',['down','big','fast'],0],['What did we do at the end?',['hug','run','sleep'],0]]},
-{id:'a4',lvl:'Pre-K · Awakening · counting song',g:0.16,t:'One Duck, Two Ducks',focus:'counting 1-5, the word "duck"',
+{id:'a4',lvl:'Pre-K · Echo · counting song',g:0.16,t:'One Duck, Two Ducks',focus:'counting 1-5, the word "duck"',
  text:`One duck. 🦆
 Two ducks. 🦆🦆
 Three ducks swim.
@@ -52,7 +52,7 @@ Five ducks say,
  coach:['Warm-up: count her fingers to five.','Hold up fingers for each line. Let her shout the quacks.','Point out the s on "ducks": s means more than one.'],
  talk:['How many ducks said quack?','What else can you count to five?'],words:['one','two','three','four','five','duck','quack'],
  q:[['How many ducks at the end?',['five','two','one'],0],['What do ducks say?',['quack','moo','woof'],0]]},
-{id:'a5',lvl:'Pre-K · Awakening · goodnight lull',g:0.18,t:'Night, Night',focus:'repeated phrase, calm reading',
+{id:'a5',lvl:'Pre-K · Echo · goodnight lull',g:0.18,t:'Night, Night',focus:'repeated phrase, calm reading',
  text:`Night, night, sun.
 Night, night, tree.
 Night, night, cat.
@@ -64,7 +64,7 @@ Shh… shh… shh.`,
  coach:['Warm-up: read in a whisper voice. Soft voices teach that print can be calm too.','Let her fill in the last word of each line.','Say goodnight to three real things in her room.'],
  talk:['What do you say goodnight to?','What comes out at night?'],words:['night','sun','tree','cat','me','moon'],
  q:[['What is up at night?',['the moon','the sun','a duck'],0],['What do we say?',['Night, night','Good morning','Quack'],0]]},
-{id:'a6',lvl:'Pre-K · Awakening · letter hunt',g:0.2,t:'Where Is B?',focus:'letter B, /b/ sound',
+{id:'a6',lvl:'Pre-K · Echo · letter hunt',g:0.2,t:'Where Is B?',focus:'letter B, /b/ sound',
  text:`B is for ball. ⚽
 B is for bear. 🐻
 B is for bus. 🚌
