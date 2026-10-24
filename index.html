@@ -22,6 +22,21 @@ table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #eee4d2;
 @keyframes wig{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .bigbtn,.big .bigbtn{font-size:1.5rem;padding:16px 26px;border-radius:16px;margin:6px}.sw.say{background:var(--hi);color:#2f2a24}.stars{font-size:2rem;letter-spacing:4px}
 .pchip{font-size:1.1rem;padding:6px 12px;margin:2px}.pchip.on{background:var(--acc);color:#fff}.snd{font-size:clamp(1.6rem,6vw,2.6rem);min-width:clamp(90px,24vw,150px);min-height:clamp(90px,24vw,130px);margin:6px;border-radius:20px;border:3px solid var(--acc);background:var(--card);color:var(--ink)}.snd small{display:block;font-size:1rem}.snd.say{background:var(--hi);color:#2f2a24}
+.hubgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:10px}.hubgrid.small{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
+.hubtile{display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 8px;font-size:1.2rem;border-radius:20px;border:2px solid #e4dccb;min-height:120px;justify-content:center}.hubtile span{font-size:2.6rem}.hubtile small{font-size:.8rem;color:var(--soft)}.hubtile.age{border-color:var(--acc)}.hubtile.cur{background:var(--hi);color:#2f2a24}.hubgrid.small .hubtile{min-height:90px;font-size:1rem}.hubgrid.small .hubtile span{font-size:1.8rem}
+.hh{margin:18px 4px 8px;font-weight:normal;color:var(--soft)}.lampcard{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.filt{margin-top:8px}.filt button{margin:3px;padding:6px 12px}
+.glowpulse{animation:gp 4s ease-in-out infinite;transform-origin:center}@keyframes gp{50%{opacity:.75}}.twk{animation:tw 3s ease-in-out infinite}@keyframes tw{50%{opacity:.2}}
+.cardart{width:min(78vw,340px);height:auto;filter:drop-shadow(0 8px 30px rgba(255,200,100,.35))}.reveal{cursor:pointer;animation:rv 1.4s ease-out both}@keyframes rv{from{opacity:0;filter:blur(14px);transform:scale(.94)}to{opacity:1;filter:none;transform:none}}
+.cword{font-size:clamp(3rem,13vw,5.5rem);letter-spacing:.08em;cursor:pointer}.cword span{display:inline-block;animation:lt .7s ease-out both}@keyframes lt{from{opacity:0;transform:translateY(10px);text-shadow:0 0 0 #ffd97a}60%{text-shadow:0 0 24px #ffd97a}to{opacity:1;transform:none}}
+.wcard.lit .cardart{animation:lit 1.6s ease-out}@keyframes lit{40%{filter:drop-shadow(0 0 50px #ffd97a) brightness(1.12)}}.stretch{font-size:1.3rem;letter-spacing:.1em}
+.trrow{margin:8px 0}.trrow .pchip{min-width:44px}.clip{margin:8px 0}footer.zero{text-align:center;padding:16px;font-size:.85rem;color:var(--soft)}p.zero{font-size:.95rem}.zerobox{border-left:6px solid #3f9d5a}
+body.painting header,body.painting footer{display:none}body.painting main{max-width:none;padding:0}
+#pstudio{position:fixed;inset:0;background:#0d0f1a;display:flex;flex-direction:column;z-index:50}#pcv,#pgd{position:absolute;left:0;right:0;top:58px;bottom:0;width:100%;height:calc(100% - 58px);touch-action:none}#pgd{pointer-events:none}
+.pbar{height:58px;display:flex;align-items:center;gap:4px;padding:0 6px;overflow-x:auto;background:#1a1d2b;z-index:2}.pbar button{padding:6px 9px;font-size:1.2rem;background:#2a2f44;color:#fff;border-color:#3a3f58}.pbar button.on{background:#ffd97a;color:#000}.pbar select{background:#2a2f44;color:#fff}
+.pcols{display:flex;gap:3px}.pc{width:30px;height:30px;padding:0!important;border-radius:50%!important;border:2px solid #444!important}.pc.on{outline:3px solid #ffd97a}
+#plab{position:absolute;right:8px;top:66px;bottom:8px;width:min(380px,94vw);overflow:auto;z-index:3}.labcard{background:#fffdf8;color:#2f2a24;border-radius:18px;padding:14px}.mixrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:10px 0;font-size:1.6rem}.blob{display:inline-block;width:46px;height:46px;border-radius:50%;border:2px solid #ccc}.blob.big2{width:64px;height:64px}
+.ptext{font-size:1.4rem;line-height:1.9}.tline{border-bottom:2px solid #999;margin:14px 0;padding:4px 0;font-size:2.4rem;position:relative}.tw{font-family:Verdana,sans-serif;color:transparent;-webkit-text-stroke:1px #aaa;margin-right:40px;border-bottom:1px dashed #ccc}
+@media print{footer,.pbar{display:none!important}.sheet{page-break-after:always}.tw{-webkit-text-stroke:1px #888}.ppage h3{margin:10px 0 4px}}
 </style></head><body>
 <header><h1>🕯️ Lamplight Reading</h1><span id="pbar" class="noprint"></span><nav class="noprint">
 <button onclick="show('home')">Tonight</button><button onclick="show('lib')">Stories</button><button onclick="show('echo')">👶 Echo</button><button onclick="show('solo')">⭐ Solo</button><button onclick="show('letters')">🔤 Letters</button><button onclick="show('log')">Progress</button><button onclick="show('kids')">👧 Kids</button><button onclick="show('look')">🎨 Look</button><button onclick="show('about')">For grown-ups</button></nav></header>
@@ -44,7 +59,7 @@ table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #eee4d2;
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=9;
+const APP_VERSION=10;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;
 const RAW={get:k=>{try{return window.localStorage.getItem(k)}catch(e){STORE_OK=false;return k in MEM?MEM[k]:null}},
@@ -201,6 +216,7 @@ function soloQ(){const s=SO.s;if(SO.qi>=SO.qs.length){const stars=1+(SO.right===
  $('solo').innerHTML=`<div class="card big" style="text-align:center"><p class="soft">Question ${SO.qi+1} of ${SO.qs.length}</p><h2 onclick="speak(this.textContent)" style="cursor:pointer">🔊 ${q}</h2>${opts.map(o=>`<button class="bigbtn" onclick="soloAns(this,${o.ok})">${o.t}</button>`).join('')}<p id="qfb" style="font-size:1.3rem;min-height:1.6em"></p><button onclick="renderSolo()">⬅ Back to stories</button></div>`;speak(q)}
 function soloAns(b,ok){if(ok){b.classList.add('yes');SO.right+=SO.tried?0:1;SO.tried=false;$('qfb').textContent='⭐ Yes!';speak('Yes!');SO.qi++;setTimeout(soloQ,1000)}else{SO.tried=true;b.disabled=true;b.style.opacity=.4;$('qfb').textContent='Good try! Pick another one.';speak('Good try. Pick another one.')}}
 
-applyLook();renderBar();render();
+applyLook();renderBar();render();$("home").classList.add("hidden");
 if('serviceWorker' in navigator&&location.protocol!=='file:'){navigator.serviceWorker.register('sw.js').then(r=>r.update());let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl){rl=1;location.reload()}})}
-</script></body></html>
+</script>
+<script src="v10.js"></script></body></html>
