@@ -17,9 +17,13 @@ table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #eee4d2;
 .hidden{display:none}select,input,textarea{background:var(--card);color:var(--ink);font:inherit;padding:6px;border:1px solid #d8cdb8;border-radius:8px;width:100%}
 .timer{font-size:1.1rem;color:var(--soft)}
 @media print{header,nav,.noprint{display:none!important}body{background:#fff}.card{border:none}}
+.tile,.big .tile{font-size:clamp(2.4rem,9vw,4rem);min-width:clamp(70px,20vw,120px);min-height:clamp(70px,20vw,120px);margin:6px;border-radius:18px;border:3px solid var(--acc);background:var(--card);color:var(--ink);font-family:var(--ff,Georgia,serif)}
+.tile.sel{background:var(--hi);color:#2f2a24}.tile.done{opacity:.35}.tile.no{animation:wig .35s}.tile.yes,.bigbtn.yes{background:#d9ead9;color:#2f2a24}
+@keyframes wig{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.bigbtn,.big .bigbtn{font-size:1.5rem;padding:16px 26px;border-radius:16px;margin:6px}.sw.say{background:var(--hi);color:#2f2a24}.stars{font-size:2rem;letter-spacing:4px}
 </style></head><body>
 <header><h1>🕯️ Lamplight Reading</h1><nav class="noprint">
-<button onclick="show('home')">Tonight</button><button onclick="show('lib')">Stories</button><button onclick="show('log')">Progress</button><button onclick="show('look')">🎨 Look</button><button onclick="show('about')">For grown-ups</button></nav></header>
+<button onclick="show('home')">Tonight</button><button onclick="show('lib')">Stories</button><button onclick="show('solo')">⭐ Solo</button><button onclick="show('letters')">🔤 Letters</button><button onclick="show('log')">Progress</button><button onclick="show('look')">🎨 Look</button><button onclick="show('about')">For grown-ups</button></nav></header>
 <main>
 <section id="home"></section>
 <section id="lib" class="hidden"></section>
@@ -27,17 +31,21 @@ table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #eee4d2;
 <section id="log" class="hidden"></section>
 <section id="print" class="hidden"></section>
 <section id="look" class="hidden"></section>
+<section id="solo" class="hidden"></section>
+<section id="letters" class="hidden"></section>
 <section id="about" class="hidden"><div class="card"><h2>How this works</h2>
 <p>You are the tutor; the app is your coach. Each night: 2 min warm-up, 6–8 min reading together, 2–3 min talking about it, then a quick note in the log. About 10–15 minutes.</p>
 <ul><li>No coins, streaks, ads, or autoplay. Skipping a night is fine.</li><li>No accounts. Everything is saved only in this browser (localStorage). Nothing is sent anywhere.</li>
 <li>Read-aloud check uses your browser's speech recognition where available (Chrome/Edge). In Chrome the audio may be processed by the browser vendor's servers. It's optional, and you decide what counts as a miss. <b>It does not work in Brave</b> (Brave blocks the speech service) or Firefox, so use Chrome or Edge, or just tap words by hand.</li>
-<li><b>Clear and catchy:</b> each story has one short, rhythmic "say it together" line and a picture-like comparison. Short beats and vivid images are easier to remember than long explanations, and the goal is for her to feel smart, not for the story to sound smart. Read it together twice at the end.</li><li>Tap any word while she reads to mark it as tricky. Tap it again to clear it.</li></ul>
-<p><button onclick="if(confirm('Erase all saved progress and notes on this device?')){LS.del('lamp_log');LS.del('lamp_notes');render()}">Erase all progress</button> <button onclick="exportLog()">Export log + notes (JSON)</button></p></div></section>
+<li><b>Clear and catchy:</b> each story has one short, rhythmic "say it together" line and a picture-like comparison. Short beats and vivid images are easier to remember than long explanations, and the goal is for her to feel smart, not for the story to sound smart. Read it together twice at the end.</li><li><b>⭐ Solo</b> lets a child read alone: tap a word to hear it, "Read to me" highlights word by word, then a few tap-to-answer questions earn stars. <b>🔤 Letters</b> practices matching big and little letters. Both save on this device only. Read-aloud uses your browser's built-in voice.</li><li>Tap any word while she reads to mark it as tricky. Tap it again to clear it.</li></ul>
+<p><button onclick="if(confirm('Erase all saved progress and notes on this device?')){LS.del('lamp_log');LS.del('lamp_notes');LS.del('lamp_letters');LS.del('lamp_solo');render()}">Erase all progress</button> <button onclick="exportLog()">Export log + notes (JSON)</button></p></div></section>
 </main>
 <script src="stories.js"></script>
+<script src="stories2.js"></script>
+<script src="stories3.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=6;
+const APP_VERSION=7;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;
 const LS={get:k=>{try{return window.localStorage.getItem(k)}catch(e){STORE_OK=false;return k in MEM?MEM[k]:null}},
@@ -46,7 +54,7 @@ const LS={get:k=>{try{return window.localStorage.getItem(k)}catch(e){STORE_OK=fa
 function safeJSON(t,d){try{return t?JSON.parse(t):d}catch(e){return d}}
 const getLog=()=>safeJSON(LS.get('lamp_log'),[]);
 const setLog=l=>LS.set('lamp_log',JSON.stringify(l));
-function show(id){['home','lib','session','log','print','look','about'].forEach(x=>$(x).classList.toggle('hidden',x!==id));render()}
+function show(id){if(typeof stopRead==='function'&&id!=='solo')stopRead();['home','lib','session','log','print','look','about','solo','letters'].forEach(x=>$(x).classList.toggle('hidden',x!==id));render();if(id==='solo')renderSolo();if(id==='letters')renderLetters()}
 function wc(s){return s.text.split(/\s+/).length}
 function startLvl(){return LS.get('lamp_start')||'s1'}
 function suggest(){const l=getLog();const ord=S.slice().sort((a,b)=>a.g-b.g);if(!l.length)return S.find(s=>s.id===startLvl())||ord[0];
@@ -63,7 +71,7 @@ function render(){
  <button class="p" onclick="start('${sg.id}')">Begin tonight's session</button> <button onclick="printSheet('${sg.id}')">Printable practice</button></div>
  <div class="card"><p class="soft">Suggestion rule: about 95% of words read correctly means move up a level. 90–94% means stay and reread. Below 90% means step down one story. You can always choose a different story under "Stories."</p>
  <label class="soft">Start at level (used until the first session is logged):</label><select onchange="LS.set('lamp_start',this.value);render()">${S.slice().sort((a,b)=>a.g-b.g).map(s=>`<option value="${s.id}" ${s.id===startLvl()?'selected':''}>${s.lvl}: ${s.t}</option>`).join('')}</select></div>`;
- $('lib').innerHTML='<div class="grid">'+S.map(s=>`<div class="card"><div class="soft">${s.lvl}</div><h3>${s.t}</h3><p class="soft">${wc(s)} words · ${s.focus}</p><button class="p" onclick="start('${s.id}')">Read</button> <button onclick="printSheet('${s.id}')">Print</button></div>`).join('')+'</div>';
+ $('lib').innerHTML='<div class="grid">'+S.slice().sort((a,b)=>a.g-b.g).map(s=>`<div class="card"><div class="soft">${s.lvl}</div><h3>${s.t}</h3><p class="soft">${wc(s)} words · ${s.focus}</p><button class="p" onclick="start('${s.id}')">Read</button> <button onclick="printSheet('${s.id}')">Print</button></div>`).join('')+'</div>';
  const l=getLog();
  $('log').innerHTML=`<div class="card"><h2>Progress log</h2><p class="soft">Saved on this device only.</p>${chart(l)}
  <table><tr><th>Date</th><th>Story</th><th>Level</th><th>Accuracy</th><th>WPM</th><th>Tricky words</th><th>Note</th></tr>${l.slice().reverse().map(e=>{const s=S.find(x=>x.id===e.story)||{};return `<tr><td>${new Date(e.date).toLocaleDateString()}</td><td>${s.t||''}</td><td>${s.g??''}</td><td>${e.words?Math.round(100*(1-e.missed/e.words))+'%':''}</td><td>${e.wpm||'–'}</td><td>${(e.tricky||[]).join(', ')}</td><td>${e.note||''}</td></tr>`}).join('')||'<tr><td colspan=7 class="soft">No sessions yet.</td></tr>'}</table></div>`;
@@ -126,6 +134,63 @@ function exportLog(){const a=document.createElement('a');a.href=URL.createObject
 async function repairApp(){try{const rs=await navigator.serviceWorker?.getRegistrations?.()||[];for(const r of rs)await r.unregister();const ks=await caches?.keys?.()||[];for(const k of ks)await caches.delete(k)}catch(e){}location.reload()}
 (async()=>{try{if(location.protocol==='file:')return;const r=await fetch('version.json?'+Date.now(),{cache:'no-store'});const v=(await r.json()).version;
  if(v>APP_VERSION&&!sessionStorage.getItem('lamp_fix')){sessionStorage.setItem('lamp_fix','1');repairApp()}}catch(e){}})();
+// ---------- v7: speech helper ----------
+function speak(t,rate){try{if(!('speechSynthesis' in window))return null;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=rate||0.85;u.lang='en-US';speechSynthesis.speak(u);return u}catch(e){return null}}
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+// ---------- v7: Letters game (uppercase <-> lowercase) ----------
+const AB='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const getLet=()=>safeJSON(LS.get('lamp_letters'),{});
+function letGot(L){const p=getLet();p[L]=(p[L]||0)+1;LS.set('lamp_letters',JSON.stringify(p))}
+let LG={mode:'find',say:true,set:'all'};
+function letPool(){return LG.set==='all'?AB:LG.set==='a-m'?AB.slice(0,13):AB.slice(13)}
+function renderLetters(){const p=getLet(),known=AB.filter(L=>(p[L]||0)>=3).length;
+ const head=`<div class="card big"><h2>🔤 Big letters, little letters</h2><p class="soft">Every letter has a big (uppercase) shape and a little (lowercase) shape. Same letter, same sound.</p>
+ <button class="${LG.mode==='find'?'p':''}" onclick="LG.mode='find';renderLetters()">Find the little letter</button><button class="${LG.mode==='pairs'?'p':''}" onclick="LG.mode='pairs';renderLetters()">Match pairs</button>
+ <select style="width:auto" onchange="LG.set=this.value;renderLetters()"><option value="all" ${LG.set==='all'?'selected':''}>A–Z</option><option value="a-m" ${LG.set==='a-m'?'selected':''}>A–M</option><option value="n-z" ${LG.set==='n-z'?'selected':''}>N–Z</option></select>
+ <label class="soft" style="display:inline"><input type="checkbox" style="width:auto" ${LG.say?'checked':''} onchange="LG.say=this.checked"> 🔊 Say letters out loud</label>
+ <div id="lgame" style="text-align:center;margin-top:12px"></div>
+ <p class="soft">Letters learned (matched 3+ times): <b id="lk">${known}</b> / 26</p><p style="word-spacing:6px">${AB.map(L=>`<span title="${p[L]||0}" style="opacity:${(p[L]||0)>=3?1:.3}">${L}${L.toLowerCase()}</span>`).join(' ')}</p></div>`;
+ $('letters').innerHTML=head;LG.mode==='find'?findRound():pairsRound()}
+function findRound(){const pool=letPool(),T=pool[Math.floor(Math.random()*pool.length)];const opts=shuf([T,...shuf(AB.filter(x=>x!==T)).slice(0,3)]);
+ $('lgame').innerHTML=`<p style="font-size:1.4rem">Find the little letter for</p><div class="tile" style="display:inline-flex;align-items:center;justify-content:center;font-size:clamp(4rem,16vw,7rem)" onclick="LG.say&&speak('${T}')">${T}</div><div>${opts.map(o=>`<button class="tile" onclick="findPick(this,'${o}','${T}')">${o.toLowerCase()}</button>`).join('')}</div><p id="lfb" style="font-size:1.3rem;min-height:1.6em"></p>`;
+ if(LG.say)speak('Find the little letter for '+T)}
+function findPick(b,o,T){if(o===T){b.classList.add('yes');letGot(T);$('lfb').textContent='⭐ Yes! Big '+T+' and little '+T.toLowerCase()+' match!';if(LG.say)speak('Yes! '+T+'.');setTimeout(()=>{const k=$('lk');renderLetters()},1300)}
+ else{b.classList.remove('no');void b.offsetWidth;b.classList.add('no');$('lfb').textContent='Almost! That one is little '+o.toLowerCase()+'. Try again.';if(LG.say)speak('That is '+o+'. Try again.')}}
+let PR=null;
+function pairsRound(){const ls=shuf(letPool()).slice(0,4);PR={sel:null,left:4};
+ $('lgame').innerHTML=`<p style="font-size:1.3rem">Tap a big letter, then its little letter.</p><div>${shuf(ls).map(L=>`<button class="tile" data-k="${L}" data-u="1" onclick="pairTap(this)">${L}</button>`).join('')}</div><div>${shuf(ls).map(L=>`<button class="tile" data-k="${L}" data-u="0" onclick="pairTap(this)">${L.toLowerCase()}</button>`).join('')}</div><p id="lfb" style="font-size:1.3rem;min-height:1.6em"></p>`}
+function pairTap(b){if(b.classList.contains('done'))return;if(LG.say)speak(b.dataset.k);
+ if(!PR.sel||PR.sel.dataset.u===b.dataset.u){if(PR.sel)PR.sel.classList.remove('sel');PR.sel=b;b.classList.add('sel');return}
+ const a=PR.sel;a.classList.remove('sel');PR.sel=null;
+ if(a.dataset.k===b.dataset.k){a.classList.add('done');b.classList.add('done');letGot(b.dataset.k);PR.left--;$('lfb').textContent='⭐ '+b.dataset.k+' and '+b.dataset.k.toLowerCase()+' match!';if(!PR.left){$('lfb').textContent='🌟 All matched! Great job!';if(LG.say)speak('All matched! Great job!');setTimeout(renderLetters,1600)}}
+ else{[a,b].forEach(x=>{x.classList.remove('no');void x.offsetWidth;x.classList.add('no')});$('lfb').textContent='Not a match yet. Try again!'}}
+// ---------- v7: Solo reading (kid alone) ----------
+const getSolo=()=>safeJSON(LS.get('lamp_solo'),{});
+let SO=null,readTimer=null;
+function soloQs(s){if(s.q)return s.q;const other=shuf([...new Set(S.filter(x=>x.id!==s.id).flatMap(x=>x.words))].filter(w=>!s.words.includes(w))).slice(0,2);return [['Which word was in the story?',[s.words[0],...other],0]]}
+let SOG='early',SOT='';
+function renderSolo(){stopRead();const sv=getSolo();const tags=[...new Set(S.flatMap(s=>s.tags||[]))].sort();
+ const list=S.filter(s=>(SOG==='early'?s.g<3:s.g>=3)&&(!SOT||(s.tags||[]).includes(SOT))).sort((a,b)=>a.g-b.g);
+ $('solo').innerHTML=`<div class="card big" style="text-align:center"><h2>⭐ Solo reading</h2><p style="font-size:1.2rem">Pick a story. Tap any word to hear it.</p><p class="stars">${'⭐'.repeat(Math.min(Object.values(sv).reduce((n,x)=>n+(x.stars||0),0),30))||'☆'}</p>
+ <button class="bigbtn ${SOG==='early'?'p':''}" onclick="SOG='early';renderSolo()">Pre-K – Grade 2</button><button class="bigbtn ${SOG==='big'?'p':''}" onclick="SOG='big';renderSolo()">Grades 3 – 5</button>
+ <p>${['',...tags].map(t=>`<button style="margin:3px" class="${SOT===t?'p':''}" onclick="SOT='${t}';renderSolo()">${t||'All'}</button>`).join('')}</p></div>
+ <div class="grid">${list.map(s=>`<button class="card" style="text-align:left;font-size:1.2rem" onclick="soloStart('${s.id}')"><b>${s.t}</b><br><span class="soft">${s.lvl.split('·')[0]} · ${wc(s)} words</span> ${sv[s.id]?'⭐'.repeat(sv[s.id].stars):''}</button>`).join('')||'<p class="soft">No stories with that tag yet.</p>'}</div>`}
+function soloStart(id){const s=S.find(x=>x.id===id);SO={s,qi:0,right:0};let i=0;
+ $('solo').innerHTML=`<div class="card big"><div style="position:sticky;top:0;background:var(--card);z-index:2;padding:4px 0"><button class="bigbtn" onclick="renderSolo()">⬅ Back</button> <button class="bigbtn p" id="rtm" onclick="readToMe()">🔊 Read to me</button></div>
+ <h2>${s.t}</h2><p class="story" id="sst">${s.text.split('\n').map(line=>line.split(/\s+/).filter(Boolean).map(w=>`<span class="w sw" data-i="${i++}" onclick="speak(this.textContent.replace(/[^\\w']/g,''),0.7)">${w}</span>`).join(' ')).join('<br>')}</p>
+ <p style="text-align:center"><button class="bigbtn p" style="font-size:1.8rem" onclick="soloDone()">🌟 I read it!</button></p></div>`}
+function stopRead(){if(readTimer){clearTimeout(readTimer);readTimer=null}try{speechSynthesis.cancel()}catch(e){}document.querySelectorAll('.sw.say').forEach(x=>x.classList.remove('say'));const b=$('rtm');if(b)b.textContent='🔊 Read to me'}
+function readToMe(){if(readTimer||document.querySelector('.sw.say')){stopRead();return}const sp=[...document.querySelectorAll('#sst .sw')];let k=0;$('rtm').textContent='⏹ Stop';
+ const step=()=>{sp.forEach(x=>x.classList.remove('say'));if(k>=sp.length||!$('sst')){stopRead();return}const el=sp[k++];el.classList.add('say');if(k%8===1)el.scrollIntoView({block:'center',behavior:'smooth'});const w=el.textContent.replace(/[^\w']/g,'');
+  const u=w?speak(w,0.8):null;let next=false;const go=()=>{if(next)return;next=true;readTimer=setTimeout(step,/[.!?]$/.test(el.textContent)?350:80)};
+  if(u){u.onend=go;u.onerror=go}readTimer=setTimeout(go,u?Math.max(700,w.length*160):550)};step()}
+function soloDone(){stopRead();speak('You read it! Great job!');SO.qs=soloQs(SO.s);SO.qi=0;SO.right=0;soloQ()}
+function soloQ(){const s=SO.s;if(SO.qi>=SO.qs.length){const stars=1+(SO.right===SO.qs.length?1:0)+(SO.right>0?1:0);const sv=getSolo();sv[s.id]={stars:Math.max(stars,(sv[s.id]||{}).stars||0),date:Date.now(),right:SO.right,of:SO.qs.length};LS.set('lamp_solo',JSON.stringify(sv));
+  $('solo').innerHTML=`<div class="card big" style="text-align:center"><h2>🌟 You read “${s.t}”!</h2><p class="stars" style="font-size:3.5rem">${'⭐'.repeat(stars)}</p><p style="font-size:1.3rem">🔁 ${s.hook||''}</p><button class="bigbtn p" onclick="renderSolo()">Pick another story</button> <button class="bigbtn" onclick="soloStart('${s.id}')">Read it again</button></div>`;speak(stars+' stars!');return}
+ const [q,ch,c]=SO.qs[SO.qi];const opts=shuf(ch.map((t,i)=>({t,ok:i===c})));
+ $('solo').innerHTML=`<div class="card big" style="text-align:center"><p class="soft">Question ${SO.qi+1} of ${SO.qs.length}</p><h2 onclick="speak(this.textContent)" style="cursor:pointer">🔊 ${q}</h2>${opts.map(o=>`<button class="bigbtn" onclick="soloAns(this,${o.ok})">${o.t}</button>`).join('')}<p id="qfb" style="font-size:1.3rem;min-height:1.6em"></p><button onclick="renderSolo()">⬅ Back to stories</button></div>`;speak(q)}
+function soloAns(b,ok){if(ok){b.classList.add('yes');SO.right+=SO.tried?0:1;SO.tried=false;$('qfb').textContent='⭐ Yes!';speak('Yes!');SO.qi++;setTimeout(soloQ,1000)}else{SO.tried=true;b.disabled=true;b.style.opacity=.4;$('qfb').textContent='Good try! Pick another one.';speak('Good try. Pick another one.')}}
+
 applyLook();render();
 if('serviceWorker' in navigator&&location.protocol!=='file:'){navigator.serviceWorker.register('sw.js').then(r=>r.update());let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl){rl=1;location.reload()}})}
 </script></body></html>
