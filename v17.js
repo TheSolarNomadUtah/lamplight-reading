@@ -17,7 +17,7 @@ cardSay=function(){const deck=CARDS.filter(c=>c[0]===CD.deck),c=deck[CD.i%deck.l
 {const rm=renderMusic;renderMusic=function(){rm();const el=$('music');
  if(MU.v==='sing'&&MU.s){const bs=el.querySelectorAll('button');bs.forEach(b=>{const o=b.getAttribute('onclick')||'';if(o==='singPlay(true)'){b.textContent='🗣 Say the words';b.classList.remove('p')}if(o==='singPlay(false)'){b.textContent='▶ Play song';b.classList.add('p');b.parentNode.prepend(b)}});
   el.querySelector('.karaoke')?.insertAdjacentHTML('afterend','<p class="soft">The tune plays on the warm glow sound. Read or sing the glowing words. Tap “Say the words” to hear them spoken first.</p>')}
- if(MU.v==='make')el.querySelectorAll('button').forEach(b=>{if(/MU\.ins=/.test(b.getAttribute('onclick')||''))b.style.display='none'});
+ if(MU.v==='make'){const b=[...el.querySelectorAll('b')].find(x=>/^Instrument:/.test(x.textContent));if(b)b.parentElement.innerHTML='<b>Sound:</b> <span class="chip">✨ Glow</span> <span class="soft">Every song uses the warm glow sound.</span>'};
  el.querySelectorAll('p.soft').forEach(p=>{if(/are sung/.test(p.textContent))p.textContent='Every song plays on the same warm glow sound from Bedtime Glow. The words light up for you to read or sing. Nothing is recorded or saved.'})};RENDER.music=renderMusic}
 {const vp=renderVoicePick;renderVoicePick=function(){vp();const el=$('vpick');if(el)el.querySelectorAll('label').forEach(l=>{if(/Sung songs/.test(l.textContent))l.parentNode.remove()})}}
 // ================= 2. SOUND SHAPES: real physics =================
