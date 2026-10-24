@@ -1,0 +1,24 @@
+// v18: Lamplight Learning's home is https://lamplightlearn.org. Progress lives only on each device and each web address,
+// so this helps families carry it over by hand. Nothing is sent to any server: the "move" link carries the data in the #hash, which browsers never send.
+const NEW_HOME='https://lamplightlearn.org/';
+function mvPack(){const P=getProfiles(),d={app:'lamplight',v:APP_VERSION,saved:new Date().toISOString(),profiles:P,progress:{},settings:{}};
+ P.list.forEach(p=>{d.progress[p.id]={};PKEYS.forEach(k=>{const v=RAW.get(k+'@'+p.id);if(v!=null)d.progress[p.id][k]=v})});
+ try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(/^lamp_/.test(k)&&!k.includes('@')&&k!=='lamp_profiles')d.settings[k]=localStorage.getItem(k)}}catch(e){}
+ if(d.profiles)d.profiles={cur:d.profiles.cur,list:d.profiles.list.map(p=>Object.assign({},p,{av:avStore(p.av)}))};return d}
+function mvApplySettings(d){try{Object.entries(d.settings||{}).forEach(([k,v])=>{if(/^lamp_/.test(k))localStorage.setItem(k,v)})}catch(e){}}
+function mvLink(){const s=JSON.stringify(mvPack());return NEW_HOME+'#lamp-import='+btoa(unescape(encodeURIComponent(s)))}
+function mvBanner(html){if($('mvbar'))$('mvbar').remove();document.body.insertAdjacentHTML('afterbegin',`<div id="mvbar" role="status">${html}<button onclick="$('mvbar').remove()" aria-label="Close">✖</button></div>`)}
+const ON_OLD=/github\.io$/.test(location.hostname);
+// Arriving with a move link: load the progress, then wipe it from the address bar.
+(function(){const h=location.hash;if(!h.startsWith('#lamp-import='))return;history.replaceState(null,'',location.pathname+location.search);
+ try{const d=JSON.parse(decodeURIComponent(escape(atob(h.slice(13)))));const n=d.profiles&&d.profiles.list?d.profiles.list.length:0;
+  if(confirm(`Bring over ${n} kid${n===1?'':'s'} and their progress from the old Lamplight link? This replaces what is on this device for this address.`)){const k=importText(JSON.stringify(d));mvApplySettings(d);RAW.set('lamp_moved','1');try{applyLook()}catch(e){}try{renderBar()}catch(e){}show('hub');try{sessionStorage.setItem('lamp_mvmsg',String(k))}catch(e){}}}
+ catch(e){mvBanner('Sorry, that move link did not work. On the old link use Grown-ups → Kids → “Save all kids to a file”, then load the file here.')}})();
+// One-time notices
+setTimeout(()=>{let mk=null;try{mk=sessionStorage.getItem('lamp_mvmsg');sessionStorage.removeItem('lamp_mvmsg')}catch(e){}if(mk){mvBanner(`✅ Welcome home! ${mk} kid${mk==='1'?'':'s'} moved to <b>lamplightlearn.org</b>. Bookmark this address.`);return}if(ON_OLD){fetch(NEW_HOME+'version.json',{mode:'no-cors',cache:'no-store'}).then(()=>mvBanner(`🏡 Lamplight Learning has moved to <b>lamplightlearn.org</b>. <button class="p" onclick="location.href=mvLink()">Move my kids &amp; progress there</button> <button onclick="exportAll()">⬇️ Save a backup file</button>`)).catch(()=>{});return}
+ if(!RAW.get('lamp_moved')&&!RAW.get('lamp_move_seen')){RAW.set('lamp_move_seen','1');mvBanner(`🏡 Lamplight Learning's new home is <b>lamplightlearn.org</b>. Used the old link before? Your kids' progress stayed with it. Load your backup file here: <label class="button">⬆️ Load progress file<input type="file" accept=".json,application/json" hidden onchange="mvImportFile(this.files[0])"></label>`)}},600);
+function mvImportFile(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);const n=importText(r.result);mvApplySettings(d);RAW.set('lamp_moved','1');try{renderBar()}catch(e){}mvBanner(`✅ Loaded ${n} kid${n===1?'':'s'}. Welcome home!`)}catch(e){mvBanner('Could not load that file: '+esc(e.message))}};r.readAsText(f)}
+// Help page: moving section
+{const ra=renderAbout;renderAbout=function(){ra();$('about').insertAdjacentHTML('afterbegin',`<div class="card"><h3>🏡 Moving devices or addresses</h3><p>Lamplight keeps progress only on this device. To move it: tap <b>Save progress file</b>, then open <a href="${NEW_HOME}">lamplightlearn.org</a> on the new device and tap <b>Load progress file</b>.</p>
+ <p><button onclick="exportAll()">⬇️ Save progress file</button> <label class="button">⬆️ Load progress file<input type="file" accept=".json,application/json" hidden onchange="mvImportFile(this.files[0])"></label> ${ON_OLD?`<button class="p" onclick="location.href=mvLink()">Move everything to lamplightlearn.org</button>`:''}</p></div>`)};RENDER.about=renderAbout}
+document.head.insertAdjacentHTML('beforeend','<style>#mvbar{position:sticky;top:0;z-index:60;background:#fff3c4;color:#3a2a10;padding:10px 44px 10px 14px;text-align:center;line-height:2;box-shadow:0 2px 10px rgba(0,0,0,.15)}#mvbar>button:last-child{position:absolute;right:8px;top:8px}label.button{display:inline-block;padding:.3em .8em;border-radius:10px;background:#e9e1cf;cursor:pointer}</style>');
