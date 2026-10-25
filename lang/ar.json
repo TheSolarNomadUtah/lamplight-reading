@@ -872,5 +872,20 @@
 "Oslo": "أوسلو",
 "Arctic Circle": "الدائرة القطبية الشمالية",
 "Sydney": "سيدني",
-"12 levels · timed to the millisecond": "12 مستوى · بدقة الملّي ثانية"
+"12 levels · timed to the millisecond": "12 مستوى · بدقة الملّي ثانية",
+"Each planet rings a bell when it finishes a lap around the Sun. Mercury is fast; Saturn takes 29 Earth years!": "كل كوكب يقرع جرساً عندما يُكمل دورة حول الشمس. عطارد سريع، وزحل يحتاج 29 سنة أرضية!",
+"Blue wave {a} + pink wave {b} = gold wave. Ratios like 3:4 or 2:3 sound sweet together; 7:8 sounds wobbly (that wobble is called beating).": "الموجة الزرقاء {a} + الموجة الوردية {b} = الموجة الذهبية. نسب مثل 3:4 أو 2:3 تبدو عذبة معاً، و7:8 تبدو متذبذبة (هذا التذبذب يسمى الخفقان).",
+"{d}: {h} hours of daylight at latitude {l}°. Longer days sing higher notes.": "{d}: {h} ساعات من ضوء النهار عند خط العرض {l}°. الأيام الأطول تغني نغمات أعلى.",
+"Stays in this screen only.": "يبقى في هذه الشاشة فقط.",
+"Your special date becomes your own song.": "تاريخك المميز يصبح أغنيتك الخاصة.",
+"start number, e.g. 27": "رقم البداية، مثلاً 27",
+"type any number": "اكتب أي رقم",
+"Table:": "الجدول:",
+"Growth number, used for compound interest and populations.": "رقم النمو، يُستخدم في الفائدة المركبة وأعداد السكان.",
+"Found in sunflowers, shells and pinecones.": "موجود في عباد الشمس والأصداف وأكواز الصنوبر.",
+"Numbers only divisible by 1 and themselves.": "أعداد لا تقبل القسمة إلا على 1 وعلى نفسها.",
+"Each is the sum of the two before: 1 1 2 3 5 8…": "كل عدد هو مجموع العددين قبله: 1 1 2 3 5 8…",
+"Pick a table and hear it climb.": "اختر جدولاً واستمع إليه يصعد.",
+"Type any number at all.": "اكتب أي رقم تريده.",
+"Even: halve it. Odd: ×3+1. Always falls to 1?": "زوجي: اقسمه على 2. فردي: ×3+1. هل يصل دائماً إلى 1؟"
 }

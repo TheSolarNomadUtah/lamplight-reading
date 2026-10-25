@@ -794,5 +794,20 @@
 "Oslo": "Oslo",
 "Arctic Circle": "Círculo polar ártico",
 "Sydney": "Sídney",
-"12 levels · timed to the millisecond": "12 niveles · al milisegundo"
+"12 levels · timed to the millisecond": "12 niveles · al milisegundo",
+"Each planet rings a bell when it finishes a lap around the Sun. Mercury is fast; Saturn takes 29 Earth years!": "Cada planeta toca una campana al terminar una vuelta al Sol. ¡Mercurio es rápido; Saturno tarda 29 años terrestres!",
+"Blue wave {a} + pink wave {b} = gold wave. Ratios like 3:4 or 2:3 sound sweet together; 7:8 sounds wobbly (that wobble is called beating).": "Onda azul {a} + onda rosa {b} = onda dorada. Proporciones como 3:4 o 2:3 suenan dulces juntas; 7:8 suena temblorosa (ese temblor se llama batimiento).",
+"{d}: {h} hours of daylight at latitude {l}°. Longer days sing higher notes.": "{d}: {h} horas de luz a latitud {l}°. Los días más largos cantan notas más agudas.",
+"Stays in this screen only.": "Se queda solo en esta pantalla.",
+"Your special date becomes your own song.": "Tu fecha especial se convierte en tu propia canción.",
+"start number, e.g. 27": "número inicial, p. ej. 27",
+"type any number": "escribe cualquier número",
+"Table:": "Tabla:",
+"Growth number, used for compound interest and populations.": "El número del crecimiento, usado para el interés compuesto y las poblaciones.",
+"Found in sunflowers, shells and pinecones.": "Está en los girasoles, las conchas y las piñas.",
+"Numbers only divisible by 1 and themselves.": "Números que solo se dividen entre 1 y ellos mismos.",
+"Each is the sum of the two before: 1 1 2 3 5 8…": "Cada uno es la suma de los dos anteriores: 1 1 2 3 5 8…",
+"Pick a table and hear it climb.": "Elige una tabla y escucha cómo sube.",
+"Type any number at all.": "Escribe el número que quieras.",
+"Even: halve it. Odd: ×3+1. Always falls to 1?": "Par: divídelo entre 2. Impar: ×3+1. ¿Siempre llega a 1?"
 }

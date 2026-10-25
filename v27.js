@@ -84,7 +84,7 @@ function melStart(id,seqOverride){gStop();const L=MEL[GM.mlvl||0],c=ac();if(!c)r
 function melTap(id,m){const s=MS[id];note(m,ac().currentTime,.35,'bells',.3);melLight(id,m);if(!s||s.lock||s.done)return;
  if(m===s.seq[s.i]){s.i++;if(s.i===s.seq.length){s.done=1;const stars=s.err===0?3:s.err===1?2:1;if(id==='solo'){gSave('mel_'+s.L.id,stars);melStarRow()}$('mfb_'+id).innerHTML=`${starStr(stars)} You got it!`;if(id!=='solo')duetDone(id,stars)}}
  else{s.err++;const k=document.querySelector(`#mp_${id} .mkeys`);if(k){k.classList.add('shake');setTimeout(()=>k.classList.remove('shake'),300)}
-  if(s.err>=3){s.done=1;$('mfb_'+id).innerHTML=`${starStr(0)} 3 mistakes. Try again!`;if(id!=='solo')duetDone(id,0)}else{$('mfb_'+id).textContent=gT('Oops ({e}/3). Keep going from note {i}.',{e:gNum(s.err),i:gNum(s.i+1)})}}}
+  if(s.err>=3){s.done=1;$('mfb_'+id).innerHTML=`${starStr(0)} ${gT('3 mistakes. Try again!')}`;if(id!=='solo')duetDone(id,0)}else{$('mfb_'+id).textContent=gT('Oops ({e}/3). Keep going from note {i}.',{e:gNum(s.err),i:gNum(s.i+1)})}}}
 // ================= Word Ladder =================
 const WL={};
 async function ladRender(){const d=await gdata(),st=gStars(),i=GM.lad||0,L=d.ladders[i];
