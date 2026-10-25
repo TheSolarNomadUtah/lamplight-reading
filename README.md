@@ -40,3 +40,7 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 - Word Scramble timer/score/Skip and the Library "Nothing matches" line are translated (Spanish, Arabic).
 - Rhythm Echo: the 3-2-1 count-in starts by itself right after the last demo hit.
 - Sound board: a new `audio/heart/sb_<id>` clip, once listed in the heart index, plays first; otherwise the old clips, otherwise the soft tone.
+
+## v34
+- Rhythm Echo: the 3-2-1 count-in is scheduled on the audio clock, 0.5 s after the last demo hit, one beat per step (debug: localStorage lamp_rxdebug=1).
+- Word Scramble status line ("Best", seconds, numbers) translated in Spanish and Arabic.
