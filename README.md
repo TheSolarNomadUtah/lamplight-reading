@@ -50,3 +50,9 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 - Glow points per profile (`lamp_glow`, localStorage only): story 3 (from the reading log, so old profiles keep full credit), game round 1 and song 1 (max 5 a day each), sound board 1 (max 1 a day), Star songs 1 and Cymatica 1 (max 1 a day each).
 - Light page: story color layers unchanged; one soft cymatic ring per milestone (Music and Games at 5/15/40/80, Sounds and Stars at 3/10/25/50) in the reading theme's colors, with a short bloom when earned (none with reduced motion).
 - Daycare weekly sheet gets a Play column.
+
+## v36
+- Light page heading "{name}'s Light" translated (es "La luz de …", ar "نور …", name isolated for RTL).
+- Home lamp: any lit day shows a warm flame and glow at 55% minimum; the streak adds up to 100% at 10 days (flicker off with reduced motion).
+- About 30 s of singing counts as the song point (max 5 a day); finishing the same song doesn't count twice.
+- QA preview (saves nothing while on): `localStorage.setItem('lamp_glowsim','1,2,3,4')` (rings per music,games,sounds,stars; a single number = all four) and `localStorage.setItem('lamp_glowbloom','all')` (or a number of last rings) to replay the bloom each time the Light page opens. URL form: `?glowsim=4&glowbloom=all`. Clear with `localStorage.removeItem('lamp_glowsim')` and `localStorage.removeItem('lamp_glowbloom')`.
