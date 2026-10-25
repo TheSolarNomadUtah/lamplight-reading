@@ -6,7 +6,7 @@ for d,_,n in os.walk(R):
   if rel.startswith(('.git','tools')):continue
   for f in n:
     p=os.path.normpath(os.path.join(rel,f)).replace('\\','/')
-    if f.endswith('.png') or (rel=='.' and f.endswith('.mp3')) or f in('offline.json','offline-opus.json','.nojekyll') or f.endswith('.md'):continue
+    if f.endswith('.png') or (rel=='.' and f.endswith('.mp3')) or f in('offline.json','offline-opus.json','.nojekyll','CNAME','.gitignore') or f.endswith('.md'):continue
     fs.append([p,os.path.getsize(os.path.join(d,f))])
 fs.sort();fs.insert(0,['./',os.path.getsize(os.path.join(R,'index.html'))])
 for name,skip in (('offline.json','.opus'),('offline-opus.json','.mp3')):
