@@ -1,7 +1,7 @@
 // v38: gentle UI sound effects from the Lamplight kit (all CC0), copied as-is into audio/sfx/.
 // Opus first, MP3 fallback (AFMT from v25). Cached on the device for offline. Instruments are untouched.
 const SFX_NAMES=['chime_correct','try_again','sparkle_star','tap_soft','page_turn','alt_correct_kenney'];
-const SFX_GAIN={page_turn:.5};                       // kit: page turn at 0.5; the rest play as delivered (pre-leveled)
+const SFX_GAIN={page_turn:.5,alt_correct_kenney:.5};                       // kit: page turn at 0.5; the rest play as delivered (pre-leveled)
 const SFXB={},SFXLAST={};
 function sfxLoad(n){if(n in SFXB)return SFXB[n];const c=ac();return SFXB[n]=c?fetch('audio/sfx/'+n+AEXT).then(r=>{if(!r.ok)throw 0;return r.arrayBuffer()}).then(a=>c.decodeAudioData(a)).catch(()=>{delete SFXB[n];return null}):Promise.resolve(null)}
 async function sfx(n){try{const now=performance.now();if(SFXLAST[n]&&now-SFXLAST[n]<150)return;SFXLAST[n]=now;

@@ -15,7 +15,7 @@ nmPlay=function(){if(NM.on){nmStop();return}NM.on=true;NM.seq=nmDigits();NM.i=0;
 nmStop=function(){NM.on=false;if(NM.sch){NM.sch.stop();NM.sch=null}clearInterval(NM.timer);cancelAnimationFrame(NM.raf);const b=$('nmplay');if(b)b.textContent='▶ Play';nmIdle()};
 function nmIdle(){const cv=$('nmc');if(!cv||NM.on||NM.toy)return;const x=cv.getContext('2d'),W=cv.width,H=cv.height;x.fillStyle='#070914';x.fillRect(0,0,W,H);const ds=nmDigits().slice(0,60);
  ds.forEach((v,i)=>{const a=i*2.39996,r=Math.sqrt(i+1)*H/18;x.fillStyle=`hsla(${(nmNote(v,i)*29)%360},80%,60%,.55)`;x.beginPath();x.arc(W/2+r*Math.cos(a),H/2+r*Math.sin(a),4+(v%10)*.6,0,7);x.fill()});
- x.fillStyle='#f6efe0';x.font='20px sans-serif';x.textAlign='center';x.fillText('Press ▶ Play to hear '+NSRC[NM.src][0],W/2,H-24);x.textAlign='start'}
+ x.fillStyle='#f6efe0';x.font='20px sans-serif';x.textAlign='center';x.direction=document.documentElement.dir==='rtl'?'rtl':'ltr';x.fillText(gT('Press ▶ Play to hear {name}',{name:'\u2068'+String(NSRC[NM.src][0]).replace(/^([^\p{L}]*)(.+)$/u,(_,a,b)=>a+gT(b))+'\u2069'}),W/2,H-24);x.textAlign='start';x.direction='inherit'}
 {const rn=RENDER.numbers;RENDER.numbers=function(){rn();nmIdle()}}
 nbPlay=function(){MU={v:'compose'};renderMusic();sqPlay()};
 // ---------- Hear sample: loading / playing / error / needs internet ----------

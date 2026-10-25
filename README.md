@@ -70,3 +70,7 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 ## Credits
 - Interface and page sounds: Kenney (kenney.nl), CC0. Thank you, Kenney!
 - Chimes and sparkles: made for Lamplight from simple harmonic ratios (3:2, 5:4), CC0.
+
+## v39
+- alt_correct sound at gain 0.5 (it was about 6 dB louder than the other effects).
+- Number Music canvas hint "Press ▶ Play to hear …" translated (es, ar) and drawn right-to-left in Arabic.
