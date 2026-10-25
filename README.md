@@ -56,3 +56,8 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 - Home lamp: any lit day shows a warm flame and glow at 55% minimum; the streak adds up to 100% at 10 days (flicker off with reduced motion).
 - About 30 s of singing counts as the song point (max 5 a day); finishing the same song doesn't count twice.
 - QA preview (saves nothing while on): `localStorage.setItem('lamp_glowsim','1,2,3,4')` (rings per music,games,sounds,stars; a single number = all four) and `localStorage.setItem('lamp_glowbloom','all')` (or a number of last rings) to replay the bloom each time the Light page opens. URL form: `?glowsim=4&glowbloom=all`. Clear with `localStorage.removeItem('lamp_glowsim')` and `localStorage.removeItem('lamp_glowbloom')`.
+
+## v37
+- Light rings redrawn as symmetric cymatic patterns: Music 3-fold, Games 4-fold, Sounds 5-fold, Stars 6-fold, each in its own warm color derived from the theme accent. Ring levels: 1 scalloped petals, 2 mirrored petals (lattice), 3 inner rose, 4 outer halo with nodes. Thin, low-opacity lines with a soft glow.
+- Bloom: 1.6 s fade + scale-in (0.86 to 1, ease-out) on newly earned rings; static under reduced motion. The ring canvas exposes `data-bloom` (0 to 1) for QA.
+- Home lamp: the lit-today flame and rings now render on the first page load (the hub is re-rendered once all scripts have loaded).
