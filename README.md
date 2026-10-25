@@ -44,3 +44,9 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 ## v34
 - Rhythm Echo: the 3-2-1 count-in is scheduled on the audio clock, 0.5 s after the last demo hit, one beat per step (debug: localStorage lamp_rxdebug=1).
 - Word Scramble status line ("Best", seconds, numbers) translated in Spanish and Arabic.
+
+## v35: Everything adds glow, reading most
+- Any practice lights today for the streak: a finished game round, a sung song, 3+ sound board taps, or 30 s of Star songs / Cymatica. Missing a day is still fine.
+- Glow points per profile (`lamp_glow`, localStorage only): story 3 (from the reading log, so old profiles keep full credit), game round 1 and song 1 (max 5 a day each), sound board 1 (max 1 a day), Star songs 1 and Cymatica 1 (max 1 a day each).
+- Light page: story color layers unchanged; one soft cymatic ring per milestone (Music and Games at 5/15/40/80, Sounds and Stars at 3/10/25/50) in the reading theme's colors, with a short bloom when earned (none with reduced motion).
+- Daycare weekly sheet gets a Play column.

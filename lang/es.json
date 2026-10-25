@@ -905,5 +905,13 @@
 "Time! You got {n}. Best {b}.": "¡Tiempo! Lograste {n}. Mejor: {b}.",
 "type the word": "escribe la palabra",
 "Nothing matches. Try fewer filters.": "No hay resultados. Prueba con menos filtros.",
-"Best": "Mejor"
+"Best": "Mejor",
+"Glow points: {n}": "Puntos de luz: {n}",
+"Stories {n}": "Cuentos {n}",
+"Music {n}": "Música {n}",
+"Games {n}": "Juegos {n}",
+"Sounds {n}": "Sonidos {n}",
+"Stars {n}": "Estrellas {n}",
+"Rings: {n}": "Anillos: {n}",
+"Everything adds glow, reading most: a story is worth 3, a game or song 1. Music, games, sounds and stars each add soft rings around your light.": "Todo suma luz, y leer suma más: un cuento vale 3, un juego o una canción 1. La música, los juegos, los sonidos y las estrellas añaden anillos suaves alrededor de tu luz."
 }

@@ -983,5 +983,13 @@
 "Time! You got {n}. Best {b}.": "انتهى الوقت! حصلت على {n}. الأفضل: {b}.",
 "type the word": "اكتب الكلمة",
 "Nothing matches. Try fewer filters.": "لا توجد نتائج. جرّب عوامل تصفية أقل.",
-"Best": "الأفضل"
+"Best": "الأفضل",
+"Glow points: {n}": "نقاط الضوء: {n}",
+"Stories {n}": "القصص {n}",
+"Music {n}": "الموسيقى {n}",
+"Games {n}": "الألعاب {n}",
+"Sounds {n}": "الأصوات {n}",
+"Stars {n}": "النجوم {n}",
+"Rings: {n}": "الحلقات: {n}",
+"Everything adds glow, reading most: a story is worth 3, a game or song 1. Music, games, sounds and stars each add soft rings around your light.": "كل شيء يزيد الضوء، والقراءة أكثر: القصة بـ 3، واللعبة أو الأغنية بـ 1. الموسيقى والألعاب والأصوات والنجوم تضيف حلقات هادئة حول ضوئك."
 }
