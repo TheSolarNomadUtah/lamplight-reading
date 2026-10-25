@@ -23,5 +23,8 @@ Live: https://lamplightlearn.org
 
 Kepler data courtesy of NASA and the Kepler Science Team, via the Mikulski Archive for Space Telescopes (MAST). The data are bundled with the app, so no request ever leaves the device.
 
+## Word Ladder word list (v30)
+`games-data.json` words3/words4: ENABLE word list (public domain) ∩ common English words (wordfreq, zipf ≥ 2.6), plus required QA words, minus the LDNOOBW bad-word list and a hand-made kid-safety list. All ladders are checked by BFS; par is the true shortest path. Only words with a w_ clip are spoken.
+
 ## Cymatica (v28 prototype)
 A breathing companion, only in the Grown-up arcade (v29: Star songs moved there too, out of Number Music): soft tones in the Bedtime Glow style, with round-plate (Bessel) patterns from Sound Shapes that form as you breathe in. It is for relaxation only, not a medical treatment.
