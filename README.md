@@ -28,3 +28,9 @@ Kepler data courtesy of NASA and the Kepler Science Team, via the Mikulski Archi
 
 ## Cymatica (v28 prototype)
 A breathing companion, only in the Grown-up arcade (v29: Star songs moved there too, out of Number Music): soft tones in the Bedtime Glow style, with round-plate (Bessel) patterns from Sound Shapes that form as you breathe in. It is for relaxation only, not a medical treatment.
+
+## v32
+- One Games hub for every age (the separate Grown-up arcade is gone). Each tile shows an age badge.
+- Star songs now has 7 Kepler stars (HAT-P-7 b, TrES-2 b, Kepler-6 b, Kepler-16, Kepler-34, V1154 Cygni, RR Lyrae), a planet-crossing view (phase-folded transits; planet size from √depth), and a compare mode. All data: NASA Kepler, Quarter 1 PDCSAP flux via MAST.
+- Melody Echo adds 14/16-note levels, public-domain kid songs (Hot Cross Buns, Mary Had a Little Lamb, Twinkle, Frère Jacques, London Bridge, Ode to Joy), rhythm + pitch levels, and free play/compose (saved in this browser).
+- Echo sound board plays existing heart clips; `audio/heart/sb_<id>` are optional placeholders for QA recordings (soft tone until then).

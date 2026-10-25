@@ -1,6 +1,6 @@
 // Audio (.opus or .mp3) is never precached except by the page (heart, in the device's format) and is stored in lamplight-extra.
 // Network-first so updates show right away; cache is the offline fallback.
-const C='lamplight-v31';const F=['./','i18n.js','stories-es.js','index.html','manifest.webmanifest','icon.svg','stories.js','stories2.js','stories3.js','echo.js','v10.js','music-data.js','music.js','v12.js','v14.js','seq-demos.js','v16-seq.js','v16-art.js','v16.js','v17.js','move.js','v19.js','v20.js','v21.js','v22.js','v23.js','v24.js','offline.json','audio/heart/index.json','v25.js','v27.js','games-data.json','v28.js','stars.json','v29.js','v30.js','v31.js','audio/sing/songs.json'];
+const C='lamplight-v32';const F=['./','i18n.js','stories-es.js','index.html','manifest.webmanifest','icon.svg','stories.js','stories2.js','stories3.js','echo.js','v10.js','music-data.js','music.js','v12.js','v14.js','seq-demos.js','v16-seq.js','v16-art.js','v16.js','v17.js','move.js','v19.js','v20.js','v21.js','v22.js','v23.js','v24.js','offline.json','audio/heart/index.json','v25.js','v27.js','games-data.json','v28.js','stars.json','v29.js','v30.js','v31.js','v32.js','audio/sing/songs.json'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(F)));self.skipWaiting()});
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C&&!x.startsWith('lamplight-extra')).map(x=>caches.delete(x)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;
