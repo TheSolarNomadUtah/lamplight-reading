@@ -726,5 +726,12 @@
 "Glow": "توهّج",
 "Every song uses the warm glow sound.": "كل الأغاني تستخدم صوت التوهّج الدافئ.",
 "Play my song": "شغّل أغنيتي",
-"as a song": "كأغنية"
+"as a song": "كأغنية",
+"Singing voice (Twinkle)": "صوت الغناء (تلألأ)",
+"Used for “Twinkle, Twinkle, Little Star”. Other songs use the glow sound. Heart is saved for offline; others download (about 185 KB) the first time.": "يُستخدم في «تلألأ يا نجمي الصغير». الأغاني الأخرى تستخدم صوت التوهّج. صوت Heart محفوظ للعمل دون اتصال؛ والأصوات الأخرى تُنزَّل (نحو 185 كيلوبايت) في المرة الأولى.",
+"Singing (Twinkle): sung with SoulX-Singer (Apache-2.0) using Kokoro-82M voice timbres (Apache-2.0). No third-party recordings. Played as recorded, with no pitch changes.": "الغناء (تلألأ): غُنّي باستخدام SoulX-Singer (Apache-2.0) وطابع أصوات Kokoro-82M (Apache-2.0). لا تسجيلات من أطراف أخرى. يُشغَّل كما سُجّل دون تغيير طبقة الصوت.",
+"Loading…": "جارٍ التحميل…",
+"Great singing!": "غناء رائع!",
+"Needs internet: this singing voice is not downloaded yet. Pick Heart, or connect once.": "يحتاج إلى إنترنت: صوت الغناء هذا غير منزَّل بعد. اختر Heart أو اتصل مرة واحدة.",
+"Needs internet": "يحتاج إلى إنترنت"
 }
