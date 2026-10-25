@@ -977,5 +977,10 @@
 "{n} s": "{n} ث",
 "{n} words · up to {m} beats": "{n} كلمات · حتى {m} مقاطع",
 "{s} changes about {n} times more.": "{s} يتغير أكثر بنحو {n} مرة.",
-"{t} s": "{t} ث"
+"{t} s": "{t} ث",
+"Skip": "تخطَّ",
+"Score": "النقاط",
+"Time! You got {n}. Best {b}.": "انتهى الوقت! حصلت على {n}. الأفضل: {b}.",
+"type the word": "اكتب الكلمة",
+"Nothing matches. Try fewer filters.": "لا توجد نتائج. جرّب عوامل تصفية أقل."
 }

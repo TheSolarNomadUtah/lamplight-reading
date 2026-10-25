@@ -34,3 +34,9 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 - Star songs now has 7 Kepler stars (HAT-P-7 b, TrES-2 b, Kepler-6 b, Kepler-16, Kepler-34, V1154 Cygni, RR Lyrae), a planet-crossing view (phase-folded transits; planet size from √depth), and a compare mode. All data: NASA Kepler, Quarter 1 PDCSAP flux via MAST.
 - Melody Echo adds 14/16-note levels, public-domain kid songs (Hot Cross Buns, Mary Had a Little Lamb, Twinkle, Frère Jacques, London Bridge, Ode to Joy), rhythm + pitch levels, and free play/compose (saved in this browser).
 - Echo sound board plays existing heart clips; `audio/heart/sb_<id>` are optional placeholders for QA recordings (soft tone until then).
+
+## v33
+- Games hub tiles are dark with light text in every reading theme (WCAG AA).
+- Word Scramble timer/score/Skip and the Library "Nothing matches" line are translated (Spanish, Arabic).
+- Rhythm Echo: the 3-2-1 count-in starts by itself right after the last demo hit.
+- Sound board: a new `audio/heart/sb_<id>` clip, once listed in the heart index, plays first; otherwise the old clips, otherwise the soft tone.

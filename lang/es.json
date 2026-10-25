@@ -899,5 +899,10 @@
 "{n} s": "{n} s",
 "{n} words · up to {m} beats": "{n} palabras · hasta {m} sílabas",
 "{s} changes about {n} times more.": "{s} cambia unas {n} veces más.",
-"{t} s": "{t} s"
+"{t} s": "{t} s",
+"Skip": "Saltar",
+"Score": "Puntos",
+"Time! You got {n}. Best {b}.": "¡Tiempo! Lograste {n}. Mejor: {b}.",
+"type the word": "escribe la palabra",
+"Nothing matches. Try fewer filters.": "No hay resultados. Prueba con menos filtros."
 }
