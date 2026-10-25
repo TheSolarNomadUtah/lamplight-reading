@@ -1,0 +1,5 @@
+// v29: Star songs and Cymatica live only in the Grown-up arcade. No kids' screen links to them, and show() refuses to open them from anywhere else.
+{const rn=RENDER.numbers;RENDER.numbers=function(){rn();const b=$('numbers').querySelector('[data-stars]');if(b)b.closest('p').remove()}}
+{const ra=RENDER.arcade;RENDER.arcade=function(){ra();if(!AR.v){const g=$('arcade').querySelector('.hubgrid');if(g&&!g.querySelector('[data-starsongs]'))g.insertAdjacentHTML('beforeend',`<button class="hubtile" data-starsongs onclick="show('starsongs')"><span>✨</span>Star songs<small>Real starlight from Kepler</small></button>`)}}}
+{const rs=RENDER.starsongs;RENDER.starsongs=function(){rs();const b=[...$('starsongs').querySelectorAll('button.bigbtn')].pop();if(b){b.setAttribute('onclick',"sgStop();AR.v=null;show('arcade')");b.textContent='⬅ Grown-up arcade'}}}
+{const GROWN=['starsongs','cymatica'];let cur=null;const sh=show;show=function(id){if(GROWN.includes(id)&&!(cur==='arcade'||GROWN.includes(cur))){id='hub'}cur=id;sh(id)}}
