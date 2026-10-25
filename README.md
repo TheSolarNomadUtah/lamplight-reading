@@ -61,3 +61,12 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 - Light rings redrawn as symmetric cymatic patterns: Music 3-fold, Games 4-fold, Sounds 5-fold, Stars 6-fold, each in its own warm color derived from the theme accent. Ring levels: 1 scalloped petals, 2 mirrored petals (lattice), 3 inner rose, 4 outer halo with nodes. Thin, low-opacity lines with a soft glow.
 - Bloom: 1.6 s fade + scale-in (0.86 to 1, ease-out) on newly earned rings; static under reduced motion. The ring canvas exposes `data-bloom` (0 to 1) for QA.
 - Home lamp: the lit-today flame and rings now render on the first page load (the hub is re-rendered once all scripts have loaded).
+
+## v38
+- Gentle UI sounds (audio/sfx/, Opus first with MP3 fallback, cached on the device): chime_correct (round passed), try_again (missed round), sparkle_star (3 stars, Word Ladder solved, new Syllable Sprint best), tap_soft (valid ladder step), page_turn (opening a story, gain 0.5), alt_correct_kenney (correct Syllable Sprint / Word Scramble answer). Each plays at most once per 150 ms; half volume in Bedtime mode. Instrument sounds are unchanged.
+- Translations: "All games, every age", the "Pad" instrument and the "Ohm" (Om, 136.1 Hz) tone label in Spanish and Arabic.
+- Accessibility: the language picker has a label; the page has a meta description.
+
+## Credits
+- Interface and page sounds: Kenney (kenney.nl), CC0. Thank you, Kenney!
+- Chimes and sparkles: made for Lamplight from simple harmonic ratios (3:2, 5:4), CC0.

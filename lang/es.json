@@ -511,7 +511,7 @@
 "Grand": "De cola",
 "Heart": "Corazón",
 "Mint": "Menta",
-"Pad": "Pad",
+"Pad": "Fondo",
 "Utah": "Utah",
 "Help.": "Ayuda.",
 "She reads aloud. You tap the words she finds tricky.": "Ella lee en voz alta. Tú tocas las palabras difíciles.",
@@ -917,5 +917,8 @@
 "{name}'s Light": "La luz de {name}",
 "Lit today! Your streak: {n} days": "¡Encendida hoy! Tu racha: {n} días",
 "Preview mode: rings are simulated and nothing is saved.": "Modo de prueba: los anillos son simulados y no se guarda nada.",
-"Everything adds glow, reading most: a story is worth 3; a game round or about 30 seconds of singing is worth 1. Music, games, sounds and stars each add soft rings around your light.": "Todo suma luz, y leer suma más: un cuento vale 3; una partida o unos 30 segundos cantando valen 1. La música, los juegos, los sonidos y las estrellas añaden anillos suaves alrededor de tu luz."
+"Everything adds glow, reading most: a story is worth 3; a game round or about 30 seconds of singing is worth 1. Music, games, sounds and stars each add soft rings around your light.": "Todo suma luz, y leer suma más: un cuento vale 3; una partida o unos 30 segundos cantando valen 1. La música, los juegos, los sonidos y las estrellas añaden anillos suaves alrededor de tu luz.",
+"All games, every age": "Todos los juegos, para todas las edades",
+"Ohm": "Om",
+"Interface and page sounds: Kenney (kenney.nl), CC0. Chimes and sparkles: made for Lamplight from simple harmonic ratios (3:2, 5:4), CC0.": "Sonidos de la interfaz y de páginas: Kenney (kenney.nl), CC0. Campanitas y destellos: creados para Lamplight con proporciones armónicas simples (3:2, 5:4), CC0."
 }
