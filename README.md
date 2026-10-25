@@ -14,3 +14,14 @@ Live: https://lamplightlearn.org
 3. Run `python3 tools/gen_offline.py`. Stems play together on one audio-clock start time (backing 0.6, vocal 1.0), rate 1, no pitch change.
 - Audio formats: every clip ships as Opus (mono; speech 32 kbps, singing 56 kbps) with the original MP3 as fallback. Opus files are re-encoded from the MP3 sources by `tools/encode_audio.py` with no gain boost and a limiter, so every file is at or below -1.5 dBTP (loudness about -19.5 LUFS). Same Kokoro-82M / SoulX-Singer (Apache-2.0) content, just a different codec.
 - Singing stems (`<song>_backing*.*` + `<song>_<voice>_vox.*`, when present) come from the same SoulX-Singer + Kokoro pipeline (Apache-2.0); backing tracks are generated in-house, with no third-party recordings.
+
+## Star songs data (v28)
+`stars.json` holds three real light curves from NASA's Kepler mission (Quarter 1 long-cadence PDCSAP flux, downloaded once from MAST, archive.stsci.edu, on 2026-10-24, then normalized and averaged to 300 points or fewer):
+- HAT-P-7 b / Kepler-2 b transit (KIC 10666592), 3 orbits
+- Kepler-16 eclipsing binary (KIC 12644769), the primary eclipse
+- V1154 Cygni Cepheid (KIC 7548061), 3 pulses
+
+Kepler data courtesy of NASA and the Kepler Science Team, via the Mikulski Archive for Space Telescopes (MAST). The data are bundled with the app, so no request ever leaves the device.
+
+## Cymatica (v28 prototype)
+A breathing companion in the Grown-up arcade: soft tones in the Bedtime Glow style, with round-plate (Bessel) patterns from Sound Shapes that form as you breathe in. It is for relaxation only, not a medical treatment.
