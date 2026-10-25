@@ -1,0 +1,6 @@
+{
+ "_doc": "One entry per sung song, keyed by MUSIC song id. Files live in audio/sing/ as <slug>_backing[ _m].(opus|mp3) + <slug>_<voice>_vox.(opus|mp3) for stems, or <slug>_<voice>.(opus|mp3) for a full mix. 'backing' maps key -> file stem: f = women's key, m = men's key (-12); omit m if one backing fits both. 'stems' and 'mix' list the voices that have each kind; stems win when both exist.",
+ "songs": {
+  "m1": {"slug": "twinkle", "lines": 2, "backing": null, "stems": [], "mix": ["heart","bella","nicole","emma","isabella","nova","michael","liam","adam","puck","george","eric"]}
+ }
+}
