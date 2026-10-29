@@ -93,3 +93,12 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 - Piano sample start gain 0.8 → 0.5 (code only).
 - Drums: egg shaker (hat) gain 0.8 → 1.44 (1.8x), peak −8.4 dBFS (Opus) / −12.4 dBFS (MP3). Hand clap 0.8 → 1.12 (1.4x, the most that keeps it below −6 dBFS): peak −6.4 dBFS (Opus) / −7.2 dBFS (MP3). Kick and tom unchanged. Sample files untouched.
 - Removed the unused "Marimba" strings from the es/ar dictionaries.
+
+## v43
+- Bells = VCSL Vibraphone, soft mallets (CC0), 7 samples (MIDI 55–76) copied as-is into `audio/inst/bells/`, Opus first with MP3 fallback, loaded like the piano (on first tap, cached on the device, in "Save everything"); the old synth bells play until they load. Used everywhere bells play: Free play, Melody Echo, Rhythm Echo count-in, Number Music, the sequencer.
+- Nearest sample, pitch-shifted up to ±2 semitones. 77–84 (above F#5): the top sample (76) is pitched up rather than switching to the synth, so the timbre and level stay the same across the keyboard (measured within 0.8 dB of the 76 note; the synth was 1–2 dB louder and a different sound).
+- Release: the note holds for its length, then fades (time constant 0.12 s). A fast Melody Echo phrase (0.21 s per note) has the previous note 10 dB down by the note after next and 20 dB down at 0.55 s; the raw tail would still be at full level there.
+- Gain 0.22, which matches the piano at 0.5 (within 1 dB of max momentary loudness at C4, A4, E5). Bedtime half volume kept.
+
+## Credits (bells)
+- Bell sounds: Versilian Community Sample Library (VCSL), CC0.
