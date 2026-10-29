@@ -9,7 +9,7 @@
  else if(inst==='organ'){lp.frequency.value=3000;[1,2,3,4].forEach((h,i)=>{const x=c.createOscillator(),g=c.createGain();x.type='sine';x.frequency.value=f*h;g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(.4/(i+1),t+.03);g.gain.setValueAtTime(.4/(i+1),t+dur);g.gain.linearRampToValueAtTime(0.0001,t+dur+.1);x.connect(g).connect(lp);x.start(t);x.stop(t+dur+.15);MSRC.push(x)})}
  else{lp.frequency.value=1500;[-7,7].forEach(dt=>{const x=c.createOscillator(),g=c.createGain();x.type='sawtooth';x.frequency.value=f;x.detune.value=dt;g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(.25,t+.15);g.gain.setValueAtTime(.25,t+Math.max(.16,dur));g.gain.linearRampToValueAtTime(0.0001,t+dur+.35);x.connect(g).connect(lp);x.start(t);x.stop(t+dur+.4);MSRC.push(x)})}}}
 const DRUMMAP={36:'kick',38:'snare',39:'clap',42:'hat',45:'tom'},DRUMROWS=[42,39,38,45,36];
-const SQINS=[['grand','🎹 Grand piano'],['piano','🎵 Soft piano'],['harp','🪕 Harp'],['bells','🔔 Bells'],['marimba','🪵 Marimba'],['pluck','⚡ Pluck synth'],['strings','🎻 Strings'],['organ','⛪ Organ'],['pad','☁️ Pad'],['bass','🎸 Bass'],['drums','🥁 Drums']];
+const SQINS=[['grand','🎹 Grand piano'],['piano','🎵 Soft piano'],['harp','🪕 Harp'],['bells','🔔 Bells'],['pluck','⚡ Pluck synth'],['strings','🎻 Strings'],['organ','⛪ Organ'],['pad','☁️ Pad'],['bass','🎸 Bass'],['drums','🥁 Drums']];
 let SQ={song:null,tr:0,on:false,zoom:14,len:2,scroll:0,ph:0,timer:0};
 function sqNew(){return{name:'My song',bpm:100,spb:4,beats:4,steps:64,tracks:[{name:'Melody',ins:'grand',vol:.7,notes:[]},{name:'Bass',ins:'bass',vol:.6,notes:[]},{name:'Drums',ins:'drums',vol:.6,notes:[]}]}}
 function sqClone(s){return JSON.parse(JSON.stringify(s))}

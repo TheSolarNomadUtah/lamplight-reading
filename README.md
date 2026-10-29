@@ -77,3 +77,14 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 
 ## v40
 - Number Music source names: "π Pi" translated (es "Pi", ar "π باي"); the "e" source name added to the es/ar dictionaries so every source name on that screen has an entry.
+
+## v41
+- Instruments (copied as-is from the Lamplight kit into `audio/inst/`, Opus first with MP3 fallback, loaded on first use and cached on the device, listed in "Save everything"):
+  - Piano = FreePats Upright Piano KW, 10 samples (MIDI 57–84, every 3 semitones), nearest sample pitch-shifted by `playbackRate` (max ±1.5 st), 120 ms release. One 🎹 Piano button.
+  - Drums = FreePats World Percussion conga kit: kick → low conga, tom → conga, hat → egg shaker, clap → hand clap. Rhythm Echo scheduler unchanged.
+  - Synth fallback until samples load. Bells stay the default and are unchanged; Bedtime Glow levels unchanged. Marimba removed from every instrument picker.
+- Free play & compose: a bigger two-octave piano (C4–C6) that scrolls sideways on upright phones and fits whole in landscape and on desktop; buttons 🔔 Bells · 🎹 Piano · ✨ Glow; hint translated (es, ar); keyboard stays left-to-right in Arabic.
+
+## Credits (instruments)
+- Piano: Upright Piano KW by FreePats (Gonzalo & Roberto), CC0.
+- Drums: FreePats World Percussion (Xavimart, Gonzalo, Roberto; congas from the Versilian Community Sample Library), CC0.

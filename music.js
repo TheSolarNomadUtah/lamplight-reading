@@ -110,7 +110,7 @@ function storyToSong(text,mood,maxWords){const M=MOODS[mood]||MOODS.happy,ws=tex
  const s={id:'mk'+mood+hashStr(text),lines:lines.map(l=>l.replace(/\|/g,'')),bpm:M.bpm};let k=hashStr(text)%M.sc.length,notes=[];
  s.lines.forEach((l,li)=>{const w=l.split(/\s+/).filter(Boolean);w.forEach((x,j)=>{k=(k+[1,1,-1,2,-2,1,0][(j+li+x.length)%7]+M.sc.length)%M.sc.length;const last=j===w.length-1;notes.push((M.o+M.sc[last?0:k])+':'+(last?2:(mood==='silly'?.5:1)))})});s.notes=notes.join(' ');return s}
 function renderMake(back){const st=S.find(x=>x.id===MU.ms),m=MU.mood||'happy',ins=MU.ins||'piano';
- const pick=`<p><b>Instrument:</b> ${[['piano','🎹 Piano'],['bells','🔔 Bells'],['marimba','🪵 Marimba'],['pad','☁️ Soft pad']].map(x=>`<button class="${ins===x[0]?'p':''}" onclick="MU.ins='${x[0]}';renderMusic()">${x[1]}</button>`).join(' ')}</p>
+ const pick=`<p><b>Instrument:</b> ${[['piano','🎹 Piano'],['bells','🔔 Bells'],['pad','☁️ Soft pad']].map(x=>`<button class="${ins===x[0]?'p':''}" onclick="MU.ins='${x[0]}';renderMusic()">${x[1]}</button>`).join(' ')}</p>
  <p><b>Mood:</b> ${Object.entries(MOODS).map(([k,v])=>`<button class="${m===k?'p':''}" onclick="MU.mood='${k}';renderMusic()">${v.e} ${k}</button>`).join(' ')}</p>`;
  if(!st){const list=S.filter(x=>x.g<3).slice(0,40);$('music').innerHTML=`<div class="card big"><h2>🎼 Make a song</h2>${pick}<p>Pick a story to turn into a song:</p><div class="grid">${list.map(x=>`<button class="card" style="text-align:left" onclick="MU.ms='${x.id}';renderMusic()"><b>${x.t}</b><br><span class="soft">${x.lvl.split('·')[0]}</span></button>`).join('')}</div>${back}</div>`;return}
  const s=storyToSong(st.text,m),tl=songTimeline(s,s.bpm);

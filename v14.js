@@ -68,7 +68,7 @@ function btStart(min,first){BT.min=min;BT.t0=performance.now();BT.end=BT.t0+min*
 // ================= 3. NOTE-BLOCK COMPOSER =================
 const NB_ROWS=[['C+',72,'#ff8fb1'],['A',69,'#ffb86b'],['G',67,'#ffe66b'],['E',64,'#9be86b'],['D',62,'#6be0e8'],['C',60,'#8fa8ff'],['👏 Clap','clap','#e0b3ff'],['🥁 Drum','kick','#ff7a7a']];
 const NB_START={'Twinkle':['C:0,1;G:2,3;A:4,5;G:6;','kick:0,4,8,12'],'Twinkle 2':['E:0,1;D:2,3;D:4,5;C:6;','kick:0,8;clap:4,12'],'Rain drops':['C+:0;A:2;G:4;E:6;D:8;C:10;D:12;E:14','kick:0,8'],'Space beat':['C:0,3,6;G:8,11;A:14','kick:0,4,8,12;clap:2,6,10,14']};
-let NB={g:null,bpm:100,ins:'marimba',on:false,step:0,timer:0,name:''};
+let NB={g:null,bpm:100,ins:'bells',on:false,step:0,timer:0,name:''};
 function nbEmpty(){return NB_ROWS.map(()=>Array(16).fill(0))}
 function nbParse(s){const g=nbEmpty();s.join(';').split(';').filter(Boolean).forEach(p=>{const[k,v]=p.split(':'),r=NB_ROWS.findIndex(x=>x[0]===k||x[1]===k);if(r>=0)v.split(',').forEach(i=>g[r][+i]=1)});return g}
 function nbSongs(){return safeJSON(LS.get('lamp_songs'),{})}
@@ -83,7 +83,7 @@ function renderCompose(){if(!NB.g)NB.g=nbParse(NB_START.Twinkle);const S=nbSongs
  el.innerHTML=`<div class="card big" style="background:#0b0d1c;color:#f6efe0"><h2>🧱 Note blocks</h2><p>Tap blocks to light them up, then press Play. Every note fits together, so it always sounds nice!</p>
  <div class="nbgrid">${NB_ROWS.map((row,r)=>`<div class="nbl" style="color:${row[2]}">${row[0]}</div>`+NB.g[r].map((v,s)=>`<button class="nbc ${v?'on':''} ${s%4===0?'beat':''}" style="--c:${row[2]}" data-r="${r}" data-s="${s}" onclick="nbTog(${r},${s})" aria-label="${row[0]} step ${s+1}"></button>`).join('')).join('')}</div>
  <p><button class="bigbtn p" id="nbplay" onclick="nbPlay()">${NB.on?'⏹ Stop':'▶ Play'}</button> <button class="bigbtn" onclick="nbStop();NB.g=nbEmpty();renderCompose()">🧽 Clear</button> <button class="bigbtn" onclick="nbSave()">💾 Save</button></p>
- <p><b>Instrument:</b> ${[['marimba','🪵 Marimba'],['piano','🎹 Piano'],['bells','🔔 Bells'],['pad','☁️ Soft pad']].map(x=>`<button class="nbins ${NB.ins===x[0]?'p':''}" onclick="NB.ins='${x[0]}';document.querySelectorAll('.nbins').forEach(b=>b.classList.remove('p'));this.classList.add('p')">${x[1]}</button>`).join(' ')}
+ <p><b>Instrument:</b> ${[['piano','🎹 Piano'],['bells','🔔 Bells'],['pad','☁️ Soft pad']].map(x=>`<button class="nbins ${NB.ins===x[0]?'p':''}" onclick="NB.ins='${x[0]}';document.querySelectorAll('.nbins').forEach(b=>b.classList.remove('p'));this.classList.add('p')">${x[1]}</button>`).join(' ')}
  <b>Speed:</b> <input type="range" min="60" max="160" value="${NB.bpm}" style="width:140px;vertical-align:middle" oninput="NB.bpm=+this.value;if(NB.on){nbStop();nbPlay()}"></p>
  <p><b>Try one:</b> ${Object.keys(NB_START).map(n=>`<button onclick="nbLoad('${n}',1)">${n}</button>`).join(' ')}</p>
  ${Object.keys(S).length?`<p><b>${esc(curProfile().name)}'s songs:</b> ${Object.keys(S).map(n=>`<button onclick="nbLoad(this.dataset.n)" data-n="${esc(n)}">🎵 ${esc(n)}</button><button onclick="nbDel(this.dataset.n)" data-n="${esc(n)}" title="Delete">✖</button>`).join(' ')}</p>`:''}
