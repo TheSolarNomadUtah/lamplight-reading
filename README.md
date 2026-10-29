@@ -88,3 +88,8 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 ## Credits (instruments)
 - Piano: Upright Piano KW by FreePats (Gonzalo & Roberto), CC0.
 - Drums: FreePats World Percussion (Xavimart, Gonzalo, Roberto; congas from the Versilian Community Sample Library), CC0.
+
+## v42
+- Piano sample start gain 0.8 → 0.5 (code only).
+- Drums: egg shaker (hat) gain 0.8 → 1.44 (1.8x), peak −8.4 dBFS (Opus) / −12.4 dBFS (MP3). Hand clap 0.8 → 1.12 (1.4x, the most that keeps it below −6 dBFS): peak −6.4 dBFS (Opus) / −7.2 dBFS (MP3). Kick and tom unchanged. Sample files untouched.
+- Removed the unused "Marimba" strings from the es/ar dictionaries.

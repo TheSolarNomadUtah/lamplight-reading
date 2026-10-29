@@ -2,7 +2,9 @@
 // Piano = FreePats Upright Piano KW (10 samples, every 3 semitones, MIDI 57-84). Drums = FreePats World Percussion conga kit.
 // Opus first, MP3 fallback (AFMT from v25). Loaded on first use, never in first paint; cached on the device; synth fallback until loaded.
 const PIANO_SM=[57,60,63,66,69,72,75,78,81,84],DRUM_SM=['kick','tom','hat','clap'];
-const INSTB={};let PIANO_P=null,DRUM_P=null;
+const INSTB={};
+// v42: hat 1.8x (peak -8.4 dBFS Opus); clap 1.4x, the most that keeps its peak below -6 dBFS (-6.4 dBFS Opus). Kick/tom unchanged.
+const DRUM_GAIN={kick:.8,tom:.8,hat:1.44,clap:1.12};let PIANO_P=null,DRUM_P=null;
 function instLoad(u){const c=ac();if(!c)return Promise.resolve(null);
  return fetch(u).then(r=>{if(!r.ok)throw 0;try{if('caches' in window){const cl=r.clone();caches.open('lamplight-extra').then(k=>k.put(u,cl)).catch(()=>{})}}catch(e){}return r.arrayBuffer()})
   .then(a=>new Promise((ok,no)=>c.decodeAudioData(a,ok,no))).then(b=>INSTB[u]=b).catch(()=>null)}
@@ -17,12 +19,12 @@ const bedGain=()=>document.body.classList.contains('bedtime')?.5:1;
  const n=PIANO_SM.reduce((a,b)=>Math.abs(b-mm)<Math.abs(a-mm)?b:a),b=INSTB['audio/inst/piano/'+n+AEXT];
  if(!b)return nt(m,t,dur,inst,vol);                              // oscillator fallback while loading
  t=Math.max(t||0,c.currentTime);const s=c.createBufferSource(),g=c.createGain();s.buffer=b;s.playbackRate.value=2**((mm-n)/12);
- const v=.8*Math.min(1.25,(vol||.25)/.3)*bedGain(),end=t+Math.max(.15,dur||.5);
+ const v=.5*Math.min(1.25,(vol||.25)/.3)*bedGain(),end=t+Math.max(.15,dur||.5);
  g.gain.setValueAtTime(v,t);g.gain.setValueAtTime(v,end);g.gain.exponentialRampToValueAtTime(.0001,end+.12);
  s.connect(g).connect(c.destination);s.start(t);s.stop(end+.15);MSRC.push(s)}}
 {const dh=drumHit;drumHit=function(kind,t){const c=ac();if(!c)return;drumsLoad();const b=INSTB['audio/inst/drums/'+kind+AEXT];
  if(!b)return dh(kind,t);t=Math.max(t||c.currentTime,c.currentTime);
- const s=c.createBufferSource(),g=c.createGain();s.buffer=b;g.gain.value=.8*bedGain();s.connect(g).connect(c.destination);s.start(t);MSRC.push(s)}}
+ const s=c.createBufferSource(),g=c.createGain();s.buffer=b;g.gain.value=(DRUM_GAIN[kind]||.8)*bedGain();s.connect(g).connect(c.destination);s.start(t);MSRC.push(s)}}
 // drums are tiny (8 KB): fetch them on the first tap anywhere so Rhythm Echo's first pattern already uses them
 document.addEventListener('pointerdown',()=>{try{drumsLoad()}catch(e){}},{once:true,capture:true});
 
