@@ -74,3 +74,6 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 ## v39
 - alt_correct sound at gain 0.5 (it was about 6 dB louder than the other effects).
 - Number Music canvas hint "Press ▶ Play to hear …" translated (es, ar) and drawn right-to-left in Arabic.
+
+## v40
+- Number Music source names: "π Pi" translated (es "Pi", ar "π باي"); the "e" source name added to the es/ar dictionaries so every source name on that screen has an entry.
