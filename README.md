@@ -102,3 +102,12 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 
 ## Credits (bells)
 - Bell sounds: Versilian Community Sample Library (VCSL), CC0.
+
+## v44: Sound Lab (experimental)
+- Hidden behind a test flag: open `https://lamplightlearn.org/?lab=1` once (it sets `localStorage.lamp_lab=1`), or set `localStorage.lamp_lab='1'` yourself. An "Experimental" Sound Lab tile then appears at the end of the Games hub (ages 10+). Without the flag nothing changes. Turn it off with `localStorage.removeItem('lamp_lab')`.
+- Three toys made in code (Web Audio + canvas), no new files, no outside requests, no glow points or streak:
+  - Kundt's tube: pick or slide a tone (or a "Mode n" button for the tube's n-th resonance, f = n·343/(2L)); foam beads drift into columns at the nodes. Microphone is opt-in, shows a red "Microphone is on" badge, and its tracks are stopped when you turn it off, switch toys, leave the lab, or the tab is hidden.
+  - Für Elise in circles: the opening (bars 1–8 with the first ending, played twice, A minor 3/8). Right hand = sawtooth (orange), left hand = square (blue), drawn by 8 Fourier epicycles each; keyboard E2–E5 and a two-staff score light up as notes play.
+  - Moiré slider: two fine meshes; turn, scale or drag the top one; slow "breathing" mode.
+- Safety: all lab audio goes lowpass (2.6 kHz) → compressor/limiter (−20 dB threshold, 20:1, 2 ms attack) → 0.42 output; half volume in Bedtime. Measured (offline render of the real graph): Für Elise −22.2 LUFS, true peak −13.7 dBTP; loudest tube tone −14.4 dBTP; both together −12.9 dBTP. Flash check (12 canvas regions, 6 s each, ≥10% relative-luminance swings): 0 flashes per second in all three toys. Reduced motion slows every toy down.
+- Inspiration (links only): Kundt's tube by wonderofscience (https://x.com/i/status/1986772622550368376); Für Elise by Fourier series by anish2good / maniclang.com (https://x.com/i/status/2115092008301891657); moiré mesh over an LED screen by mathelirium (https://x.com/i/status/2104056289860952548); twisted lattices by Dragonmaurizio (https://x.com/i/status/2115113611563545008); Be Smart, "This Weird Pattern Will Let Us Reshape Matter" (https://www.youtube.com/watch?v=w6hK2PML6Uc).

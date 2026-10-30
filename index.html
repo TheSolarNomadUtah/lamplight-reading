@@ -59,7 +59,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=43;
+const APP_VERSION=44;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;
 const RAW={get:k=>{try{return window.localStorage.getItem(k)}catch(e){STORE_OK=false;return k in MEM?MEM[k]:null}},
@@ -220,4 +220,4 @@ applyLook();renderBar();render();$("home").classList.add("hidden");
 if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navigator.serviceWorker.controller;navigator.serviceWorker.register('sw.js',{scope:'./'}).then(r=>r.update());let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl&&hadSW){rl=1;location.reload()}})}
 </script>
 <script src="v10.js"></script><script src="music-data.js"></script><script src="music.js"></script><script src="v12.js"></script><script src="stories-es.js"></script><script src="v14.js"></script><script src="seq-demos.js"></script><script src="v16-seq.js"></script><script src="v16-art.js"></script><script src="v16.js"></script><script src="v17.js"></script><script src="move.js"></script><script src="i18n.js"></script><script src="v19.js"></script>
-<script src="v20.js"></script><script src="v21.js"></script><script src="v22.js"></script><script src="v23.js"></script><script src="v24.js"></script><script src="v25.js"></script><script src="v27.js"></script><script src="v28.js"></script><script src="v29.js"></script><script src="v30.js"></script><script src="v31.js"></script><script src="v32.js"></script><script src="v33.js"></script><script src="v34.js"></script><script src="v35.js"></script><script src="v36.js"></script><script src="v37.js"></script><script src="v38.js"></script><script src="v41.js"></script><script src="v43.js"></script></body></html>
+<script src="v20.js"></script><script src="v21.js"></script><script src="v22.js"></script><script src="v23.js"></script><script src="v24.js"></script><script src="v25.js"></script><script src="v27.js"></script><script src="v28.js"></script><script src="v29.js"></script><script src="v30.js"></script><script src="v31.js"></script><script src="v32.js"></script><script src="v33.js"></script><script src="v34.js"></script><script src="v35.js"></script><script src="v36.js"></script><script src="v37.js"></script><script src="v38.js"></script><script src="v41.js"></script><script src="v43.js"></script><script src="v44.js"></script></body></html>
