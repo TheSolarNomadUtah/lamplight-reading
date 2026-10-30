@@ -111,3 +111,9 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
   - Moiré slider: two fine meshes; turn, scale or drag the top one; slow "breathing" mode.
 - Safety: all lab audio goes lowpass (2.6 kHz) → compressor/limiter (−20 dB threshold, 20:1, 2 ms attack) → 0.42 output; half volume in Bedtime. Measured (offline render of the real graph): Für Elise −22.2 LUFS, true peak −13.7 dBTP; loudest tube tone −14.4 dBTP; both together −12.9 dBTP. Flash check (12 canvas regions, 6 s each, ≥10% relative-luminance swings): 0 flashes per second in all three toys. Reduced motion slows every toy down.
 - Inspiration (links only): Kundt's tube by wonderofscience (https://x.com/i/status/1986772622550368376); Für Elise by Fourier series by anish2good / maniclang.com (https://x.com/i/status/2115092008301891657); moiré mesh over an LED screen by mathelirium (https://x.com/i/status/2104056289860952548); twisted lattices by Dragonmaurizio (https://x.com/i/status/2115113611563545008); Be Smart, "This Weird Pattern Will Let Us Reshape Matter" (https://www.youtube.com/watch?v=w6hK2PML6Uc).
+
+## v45: Sound Lab fixes
+- Mic: taps are ignored while the permission prompt is pending; every stream is tracked and all are stopped on Off, toy switch, leaving the lab or a hidden tab; a stream that arrives after you left the lab or the tube is stopped at once. Tested with a fake mic delayed 0.7 s (leave during prompt, switch toy during prompt, double tap: 1 stream, all tracks ended).
+- `?lab=0` removes `lamp_lab`. Grown-ups has a "Hide Sound Lab" / "Show Sound Lab" card (es/ar) once the lab has been turned on on this device.
+- Tube tone gain 0.32 → 0.05 and an automatic fade-out after 45 s. Measured: 80 / 220 / 1200 Hz at −27.1 / −25.6 / −23.3 LUFS, all at or below Für Elise (−22.2 LUFS).
+- Phones: the moiré sliders no longer wrap, the Für Elise circles are larger and the wave fits the canvas, and the Online badge is hidden in the lab on narrow screens.

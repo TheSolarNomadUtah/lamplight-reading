@@ -1,7 +1,7 @@
 // v44: Sound Lab (experimental, grown-ups). Behind a test flag: ?lab=1 or localStorage lamp_lab=1.
 // Three toys made in code (Web Audio + canvas): Kundt's tube, Für Elise by Fourier epicycles, Moiré slider.
 // No new files to download, no outside requests, no glow points or streak. All lab sound goes through one master limiter.
-const LAB_ON=(()=>{try{if(/[?&]lab=1\b/.test(location.search))localStorage.setItem('lamp_lab','1');return localStorage.getItem('lamp_lab')==='1'}catch(e){return /[?&]lab=1\b/.test(location.search)}})();
+let LAB_ON=(()=>{try{if(/[?&]lab=1\b/.test(location.search))localStorage.setItem('lamp_lab','1');if(/[?&]lab=0\b/.test(location.search))localStorage.removeItem('lamp_lab');return localStorage.getItem('lamp_lab')==='1'}catch(e){return /[?&]lab=1\b/.test(location.search)}})();
 SECTIONS.push('lab');document.querySelector('main').insertAdjacentHTML('afterbegin','<section id="lab" class="hidden"></section>');
 const LAB={toy:'kundt',raf:0,f:220,len:1,mic:null,micStream:null,an:null,fe:null,mo:{a:3.2,s:1.04,dx:0,dy:0,auto:1}};
 const LAB_NARROW=()=>innerWidth<640;const LAB_RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -38,18 +38,24 @@ function feStop(){if(LAB.fe){(LAB.fe.osc||[]).forEach(o=>{try{o.stop()}catch(e){
 function fePlay(){if(LAB.fe)return feStop();const c=ac();if(!c)return;const t0=c.currentTime+.25;LAB.fe={t0,osc:feSchedule(c,t0)};const b=$('lab_feplay');if(b)b.textContent=gT('Stop')}
 
 // ---------- Mic (opt-in only) ----------
-async function labMicOn(){if(LAB.micStream)return labMicOff();try{const s=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false}});
- const c=ac();LAB.micStream=s;const src=c.createMediaStreamSource(s),an=c.createAnalyser();an.fftSize=4096;src.connect(an);LAB.an=an;LAB.mic=src}catch(e){LAB.micMsg=gT('The microphone is not available.')}labUI()}
-function labMicOff(){try{if(LAB.micStream)LAB.micStream.getTracks().forEach(t=>t.stop())}catch(e){}try{LAB.mic&&LAB.mic.disconnect()}catch(e){}LAB.micStream=null;LAB.mic=null;LAB.an=null;labUI()}
+// v45: ignore taps while the permission prompt is pending; every stream is tracked and stopped; a stream that arrives after the
+// user left the lab or the tube (or the tab was hidden) is stopped at once.
+LAB.streams=new Set();LAB.micPending=0;LAB.micGen=0;
+const labTubeActive=()=>{const el=$('lab');return !!el&&!el.classList.contains('hidden')&&LAB.toy==='kundt'&&!document.hidden};
+async function labMicOn(){if(LAB.micPending)return;if(LAB.micStream)return labMicOff();LAB.micPending=1;const gen=LAB.micGen;try{const s=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false}});
+ LAB.streams.add(s);if(gen!==LAB.micGen||!labTubeActive()){s.getTracks().forEach(t=>t.stop());LAB.streams.delete(s);return}
+ const c=ac();LAB.micStream=s;const src=c.createMediaStreamSource(s),an=c.createAnalyser();an.fftSize=4096;src.connect(an);LAB.an=an;LAB.mic=src}catch(e){LAB.micMsg=gT('The microphone is not available.')}finally{LAB.micPending=0}labUI()}
+function labMicOff(){LAB.micGen++;try{if(LAB.micStream)LAB.micStream.getTracks().forEach(t=>t.stop());LAB.streams.forEach(s=>s.getTracks().forEach(t=>t.stop()));LAB.streams.clear()}catch(e){}try{LAB.mic&&LAB.mic.disconnect()}catch(e){}LAB.micStream=null;LAB.mic=null;LAB.an=null;labUI()}
 function micPitch(){const an=LAB.an;if(!an)return 0;const d=new Float32Array(an.frequencyBinCount);an.getFloatFrequencyData(d);const c=AC,bw=c.sampleRate/an.fftSize;let bi=0,bv=-200;
  for(let i=Math.floor(80/bw);i<Math.min(d.length,1300/bw);i++)if(d[i]>bv){bv=d[i];bi=i}return bv>-70?bi*bw:0}
 document.addEventListener('visibilitychange',()=>{if(document.hidden){labMicOff();labToneOff();feStop()}});
-{const sh=show;show=function(id){if(id!=='lab')labStop();return sh(id)}}
+{const sh=show;show=function(id){if(id!=='lab')labStop();document.body.classList.toggle('inlab',id==='lab');return sh(id)}}
 
 // ---------- Tone for the tube (gentle glow-style sine) ----------
+const LAB_TONE=.05;   // v45: was .32 (the limiter was holding it up); now at or below Für Elise's loudness (see README v45). Fades out by itself after 45 s.
 function labToneOn(){const c=ac();if(!c)return;if(LAB.tone)return labToneOff();const b=labBus(c),o=c.createOscillator(),o2=c.createOscillator(),g=c.createGain();o.type='sine';o2.type='triangle';
- o.frequency.value=LAB.f;o2.frequency.value=LAB.f;const g2=c.createGain();g2.gain.value=.25;o.connect(g);o2.connect(g2).connect(g);g.gain.setValueAtTime(0,c.currentTime);g.gain.linearRampToValueAtTime(.32,c.currentTime+.4);g.connect(b.in);o.start();o2.start();LAB.tone={o,o2,g};labUI()}
-function labToneOff(){const T=LAB.tone;if(!T)return;LAB.tone=null;const c=AC;try{T.g.gain.setTargetAtTime(0,c.currentTime,.08);T.o.stop(c.currentTime+.5);T.o2.stop(c.currentTime+.5)}catch(e){}labUI()}
+ o.frequency.value=LAB.f;o2.frequency.value=LAB.f;const g2=c.createGain();g2.gain.value=.25;o.connect(g);o2.connect(g2).connect(g);g.gain.setValueAtTime(0,c.currentTime);g.gain.linearRampToValueAtTime(LAB_TONE,c.currentTime+.4);g.gain.setValueAtTime(LAB_TONE,c.currentTime+42);g.gain.linearRampToValueAtTime(0,c.currentTime+45);LAB.toneTm=setTimeout(()=>{if(LAB.tone&&LAB.tone.g===g)labToneOff()},45200);g.connect(b.in);o.start();o2.start();LAB.tone={o,o2,g};labUI()}
+function labToneOff(){clearTimeout(LAB.toneTm);const T=LAB.tone;if(!T)return;LAB.tone=null;const c=AC;try{T.g.gain.setTargetAtTime(0,c.currentTime,.08);T.o.stop(c.currentTime+.5);T.o2.stop(c.currentTime+.5)}catch(e){}labUI()}
 function labSetF(f){LAB.f=f;if(LAB.tone){const c=AC;LAB.tone.o.frequency.setTargetAtTime(f,c.currentTime,.03);LAB.tone.o2.frequency.setTargetAtTime(f,c.currentTime,.03)}const e=$('lab_fv');if(e)e.textContent=gNum(Math.round(f))+' Hz'}
 function labStop(){cancelAnimationFrame(LAB.raf);LAB.raf=0;labMicOff();labToneOff();feStop()}
 
@@ -65,7 +71,7 @@ function labUI(){const el=$('lab');if(!el||el.classList.contains('hidden'))retur
   <button class="bigbtn" onclick="labMicOn()" aria-pressed="${!!LAB.micStream}">${LAB.micStream?gT('Turn microphone off'):gT('Use microphone')}</button></p>
   ${LAB.micStream?`<p class="labmic" role="status"><span class="dot"></span> ${gT('Microphone is on. Sing or hum a note. Nothing is recorded or saved.')}</p>`:`<p class="soft">${gT('The microphone is only used if you turn it on. Nothing is recorded or saved.')}</p>`}${LAB.micMsg?`<p class="soft">${LAB.micMsg}</p>`:''}`
  :t==='elise'?`<p><button id="lab_feplay" class="bigbtn p" onclick="fePlay()">${LAB.fe?gT('Stop'):gT('Play')}</button></p><p class="soft"><span class="lab_rh">■</span> ${gT('Right hand: sawtooth wave')} · <span class="lab_lh">■</span> ${gT('Left hand: square wave')}</p>`
- :`<p><label>${gT('Turn')} <input type="range" min="0" max="20" step="0.05" value="${LAB.mo.a}" oninput="LAB.mo.a=+this.value;LAB.mo.auto=0"></label> <label>${gT('Size')} <input type="range" min="0.9" max="1.15" step="0.002" value="${LAB.mo.s}" oninput="LAB.mo.s=+this.value;LAB.mo.auto=0"></label></p>
+ :`<p class="labsl"><label>${gT('Turn')} <input type="range" min="0" max="20" step="0.05" value="${LAB.mo.a}" oninput="LAB.mo.a=+this.value;LAB.mo.auto=0"></label> <label>${gT('Size')} <input type="range" min="0.9" max="1.15" step="0.002" value="${LAB.mo.s}" oninput="LAB.mo.s=+this.value;LAB.mo.auto=0"></label></p>
   <p class="soft">${gT('Drag the picture to slide the top mesh.')}</p><p><button onclick="LAB.mo.auto=LAB.mo.auto?0:1;labUI()">${LAB.mo.auto?gT('Pause breathing'):gT('Let it breathe')}</button></p>`;
  el.innerHTML=`<div class="card big labcard"><div class="labhead">${LAB_SVG}<div><h2>${gT('Sound Lab')}</h2><b class="labexp">${gT('Experimental')}</b></div></div>
  <p class="soft">${gT('A test space for grown-ups and curious kids together. These toys do not count toward the light or the streak.')}</p>
@@ -111,12 +117,12 @@ function drawElise(x,cv){const W=cv.width,H=cv.height,c=AC;x.fillStyle='#0a0d1c'
  // epicycles (visual speed is slowed down a lot so nothing flickers)
  const vs=LAB_RM?.05:.25,tt=(c?c.currentTime:performance.now()/1000);
  [[0,'#ff9a3c',180,'saw'],[1,'#58a6ff',380,'sq']].forEach(([h,col,cy,kind])=>{const e=cur[h],f=e?mtof(e[1]):mtof(h?45:69),ph=tt*vs*f/110*6.283;
-  let X=120,Y=cy;x.lineWidth=1;const R=46,trail=[];for(let i=1;i<=8;i++){const kk=kind==='saw'?i:2*i-1,r=R*(kind==='saw'?2/(Math.PI*i):4/(Math.PI*kk)),a=ph*kk;
+  const nar=W<700,R=nar?62:46,cx0=nar?R*1.45:120,tr0=nar?cx0+R*1.9:260,trN=Math.max(40,Math.floor((W-14-tr0)/(nar?1:1)));let X=cx0,Y=cy;x.lineWidth=nar?1.4:1;for(let i=1;i<=8;i++){const kk=kind==='saw'?i:2*i-1,r=R*(kind==='saw'?2/(Math.PI*i):4/(Math.PI*kk)),a=ph*kk;
    x.strokeStyle=e?col+'55':'#ffffff22';x.beginPath();x.arc(X,Y,r,0,6.283);x.stroke();const nx=X+r*Math.cos(a),ny=Y+(kind==='saw'&&i%2===0?1:-1)*r*Math.sin(a);x.strokeStyle=e?col:'#ffffff44';x.beginPath();x.moveTo(X,Y);x.lineTo(nx,ny);x.stroke();X=nx;Y=ny}
   // the wave the circles draw, as a slow-moving trace
   x.strokeStyle=e?col:col+'44';x.lineWidth=2;x.beginPath();x.moveTo(X,Y);
-  for(let j=0;j<=460;j++){const a=ph-j*.03;let y=0;for(let i=1;i<=8;i++){const kk=kind==='saw'?i:2*i-1;y+=(kind==='saw'?(i%2?1:-1)*2/(Math.PI*i):4/(Math.PI*kk))*Math.sin(a*kk)}x.lineTo(260+j,cy-R*y)}x.stroke();
-  x.strokeStyle=col+'44';x.lineWidth=1;x.beginPath();x.moveTo(X,Y);x.lineTo(260,Y);x.stroke()});
+  for(let j=0;j<=Math.min(460,trN);j++){const a=ph-j*.03;let y=0;for(let i=1;i<=8;i++){const kk=kind==='saw'?i:2*i-1;y+=(kind==='saw'?(i%2?1:-1)*2/(Math.PI*i):4/(Math.PI*kk))*Math.sin(a*kk)}x.lineTo(tr0+j,cy-R*y)}x.stroke();
+  x.strokeStyle=col+'44';x.lineWidth=1;x.beginPath();x.moveTo(X,Y);x.lineTo(tr0,Y);x.stroke()});
  // keyboard E2..E5
  const ky=440,kh=90,white=[];for(let m=FE_LO;m<=FE_HI;m++)if(![1,3,6,8,10].includes(m%12))white.push(m);const kw=(W-40)/white.length;
  const lit=m=>{const e=act.find(a=>a[1]===m);return e?(e[3]?'#58a6ff':'#ff9a3c'):null};
@@ -141,7 +147,11 @@ function drawMoire(x,cv,t){const W=cv.width,H=cv.height,M=LAB.mo;
  mesh('rgba(38,30,70,.78)',0,1,0,0);mesh('rgba(20,40,80,.78)',M.a,M.s,M.dx,M.dy)}
 
 // ---------- Hub tile (only with the flag), styles ----------
-if(LAB_ON)GHUB.push(['lab','','Sound Lab','Experimental: tube, circles, moiré',10,"show('lab')"]);
+const LAB_TILE=['lab','','Sound Lab','Experimental: tube, circles, moiré',10,"show('lab')"];if(LAB_ON)GHUB.push(LAB_TILE);
+function labSetOn(on){try{on?localStorage.setItem('lamp_lab','1'):localStorage.removeItem('lamp_lab')}catch(e){}LAB_ON=on;const i=GHUB.indexOf(LAB_TILE);if(on&&i<0)GHUB.push(LAB_TILE);if(!on&&i>=0)GHUB.splice(i,1);if(!on)labStop();RENDER.adults&&RENDER.adults()}
+{const ra=RENDER.adults;if(ra)RENDER.adults=function(){ra.apply(this,arguments);const el=$('adults');if(!el||el.querySelector('.labtoggle'))return;if(!LAB_ON&&!localStorage.getItem('lamp_lab_seen'))return;
+ el.insertAdjacentHTML('beforeend',`<div class="card labtoggle"><h3>${gT('Sound Lab')} <b class="labexp">${gT('Experimental')}</b></h3><p class="soft">${LAB_ON?gT('The Sound Lab tile is showing in Games.'):gT('The Sound Lab is hidden.')}</p><button onclick="labSetOn(${!LAB_ON})">${LAB_ON?gT('Hide Sound Lab'):gT('Show Sound Lab')}</button></div>`)}}
+try{if(LAB_ON)localStorage.setItem('lamp_lab_seen','1')}catch(e){}
 {const rg=RENDER.games;RENDER.games=function(){rg();if(!LAB_ON||GM.v)return;const b=document.querySelector('#games .hubtile[data-g="lab"]');if(b){const s=b.querySelector('span');if(s)s.innerHTML=LAB_SVG;b.classList.add('labtile');b.insertAdjacentHTML('beforeend',`<b class="labexp">${gT('Experimental')}</b>`)}}}
 document.head.insertAdjacentHTML('beforeend',`<style>
 .labcard{text-align:center;background:#0b0e1d;color:#f6efe0}.labcard .soft{color:#bfb8a8}
@@ -152,5 +162,7 @@ document.head.insertAdjacentHTML('beforeend',`<style>
 .labmic{display:inline-flex;gap:8px;align-items:center;background:#4a1d1d;color:#ffe3e3;border:1px solid #ff8a8a;border-radius:999px;padding:6px 14px;font-weight:700}
 .labmic .dot{width:12px;height:12px;border-radius:50%;background:#ff5a5a;box-shadow:0 0 8px #ff5a5a}
 .lab_rh{color:#ff9a3c}.lab_lh{color:#58a6ff}.labcard input[type=range]{vertical-align:middle;width:min(60vw,320px)}
+.labsl{display:flex;flex-direction:column;align-items:center;gap:8px}.labsl label{display:flex;gap:8px;align-items:center;white-space:nowrap}.labsl input[type=range]{width:min(52vw,300px)}
+@media (max-width:640px){body.inlab #netchip{display:none}}
 .labtile span svg{width:64px;height:64px}
 </style>`);
