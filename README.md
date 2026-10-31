@@ -137,3 +137,7 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 - Moiré: each mesh is drawn once to an offscreen canvas (redrawn only when the canvas size changes) and then rotated and scaled each frame, so it stays smooth at ×0.5.
 - Moiré hum: the beat uses the angle folded into 0–45° (the grid repeats every 90°), so it stays calm when there is no ghost pattern.
 - Kundt's tube: every Play gives the beads a gentle shake so they don't stay stuck at the sides.
+
+## v49: Kundt's tube ends, Paint toolbar on phones
+- Kundt's tube: the pull toward the two end nodes is weaker than toward the inner nodes, the soft wall is a little firmer while sound plays, and each end pile is capped at about half an inner pile, so extra beads spill inward. Beads no longer collect at the sides (mode 1 is the exception: its only nodes are the two ends).
+- Paint: on narrow phones the toolbar wraps and the canvas now starts below it instead of being covered.
