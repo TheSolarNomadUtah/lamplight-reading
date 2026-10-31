@@ -117,3 +117,12 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 - `?lab=0` removes `lamp_lab`. Grown-ups has a "Hide Sound Lab" / "Show Sound Lab" card (es/ar) once the lab has been turned on on this device.
 - Tube tone gain 0.32 → 0.05 and an automatic fade-out after 45 s. Measured: 80 / 220 / 1200 Hz at −27.1 / −25.6 / −23.3 LUFS, all at or below Für Elise (−22.2 LUFS).
 - Phones: the moiré sliders no longer wrap, the Für Elise circles are larger and the wave fits the canvas, and the Online badge is hidden in the lab on narrow screens.
+
+## v46: Sound Lab and Paint additions
+- Kundt's tube: a Reset button scatters the beads evenly. The beads now move with velocity and damping, and the tube gets a light "tap" when the mode changes, so the beads leave the old piles, including the ends, and re-form at the new nodes. Tested: mode 1 → mode 4 piles at 0, ¼, ½, ¾ and 1.
+- Tube mic: sing or hum and the beads follow the pitch, found by normalised autocorrelation (80–1000 Hz, needs a clear note). Opt-in, with the v45 mic safety: pending guard, stops on leave, toy switch and hidden tab, and the red badge.
+- Fourier circles: Für Elise, Twinkle Twinkle and Mary Had a Little Lamb. "Draw your own": drag a closed shape, it is traced by 40 epicycles (DFT), and "Play my shape" turns it into a 2.8 s tone through the lab limiter. On 360 px screens the circles sit clear of the staff and keyboard.
+- Moiré: sliders cover 0–360° and 0.5–2× and redraw on every input. "Soft hum" plays two tones whose beat (max 8 Hz) follows the offset. Quiet, 45 s fade, through the limiter.
+- Paint: Mirror button (off/4/6/8 around the center), Glow on night paper, Singing brush (pentatonic by height, at most ~6 notes a second, off by default, half volume in Bedtime, through the limiter), Fridge shelf (saved on this device only in IndexedDB, with a localStorage fallback; view, delete, 24 pictures max; nothing is uploaded).
+- Measured with OfflineAudioContext through the real graph, true peak / integrated loudness: Für Elise −13.7 dBTP / −22.2 LUFS, Twinkle −13.8 / −22.6, Mary −13.8 / −22.7, shape −15.5 / −21.8, moiré hum −17.2 / −24.2, singing brush −14.1 / −22.2. Flashes: 0 per second in every toy, including a full 360° moiré sweep.
+- The inspiration links for these toys stay in this README only. The app makes no outside requests.
