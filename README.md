@@ -130,3 +130,10 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 ## v47: Paint toolbar tidy
 - The Mirror button is now the only control for 4-, 6- and 8-way symmetry. The symmetry menu no longer lists Kaleido 4/6/8; when one of them is on, the menu shows it as "Mirror n", so the default (6, mirrored) and any current setting keep working. Mirror cycles 4 → 6 → 8 → off; from any other menu choice it starts at 4.
 - "Trippy color drift" is now "Color drift". All Paint toolbar labels (tool titles, symmetry menu) are translated into es and ar.
+
+## v48: Paint multi-touch, smoother Moiré, calmer hum, tube shake
+- Paint tracks each finger (pointerId) on its own, so two fingers draw two separate strokes instead of a zig-zag between them. Mirror, the glow brush and the singing brush still work per stroke.
+- Paint opens with Mirror off (plain free drawing). The Mirror button still cycles 4 → 6 → 8 → off.
+- Moiré: each mesh is drawn once to an offscreen canvas (redrawn only when the canvas size changes) and then rotated and scaled each frame, so it stays smooth at ×0.5.
+- Moiré hum: the beat uses the angle folded into 0–45° (the grid repeats every 90°), so it stays calm when there is no ghost pattern.
+- Kundt's tube: every Play gives the beads a gentle shake so they don't stay stuck at the sides.
