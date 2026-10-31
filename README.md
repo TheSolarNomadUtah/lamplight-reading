@@ -141,3 +141,8 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 ## v49: Kundt's tube ends, Paint toolbar on phones
 - Kundt's tube: the pull toward the two end nodes is weaker than toward the inner nodes, the soft wall is a little firmer while sound plays, and each end pile is capped at about half an inner pile, so extra beads spill inward. Beads no longer collect at the sides (mode 1 is the exception: its only nodes are the two ends).
 - Paint: on narrow phones the toolbar wraps and the canvas now starts below it instead of being covered.
+
+## v50: Tube starts on mode 2, gentle slope in mode 1
+- Kundt's tube opens at 343 Hz (mode 2 for the 1 m tube), so the first Play shows a clear middle pile.
+- Mode 1 (whose only nodes are the two ends) now shows a gentle slope: beads thin out toward the middle instead of forming two piles against the walls. Modes 2 and up are unchanged from v49.
+- Modes 2 and up: each node gets a fair share of beads (end nodes half a share, since they touch a wall), whatever the starting layout, and piles spread sideways so no pile is taller than the tube (every bead stays visible). This replaces the v49 end-pile cap.

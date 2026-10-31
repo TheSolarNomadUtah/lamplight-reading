@@ -1,3 +1,5 @@
+let K1=.004;   // mode 1: beads relax toward a gentle slope (density 1+8x from the middle), not two piles at the walls
+
 // v49: Kundt's tube: end nodes pull weaker than inner nodes, a firmer soft wall while sound plays, and capped end piles (extra beads spill inward), so beads no longer collect at the ends.
 drawKundt=function(x,cv,t){const W=cv.width,H=cv.height,L=LAB.len;let f=LAB.f,on=!!LAB.tone,mic=false;
  if(LAB.an){const p=micPitch();if(p){LAB.pf=LAB.pf?LAB.pf*.8+p*.2:p;LAB.pt=t}if(LAB.pf&&t-(LAB.pt||0)<.6){f=LAB.pf;on=true;mic=true;const e=$('lab_fv');if(e)e.textContent=gNum(Math.round(f))+' Hz'}}
@@ -9,12 +11,13 @@ drawKundt=function(x,cv,t){const W=cv.width,H=cv.height,L=LAB.len;let f=LAB.f,on
  if(!BEADS||BEADS[0].v===undefined)labBeadsReset();
  const sp=LAB_RM?.25:1,NB=Math.round(tw/7),bins=new Array(NB).fill(0);
  if(on&&res>.3&&LAB.kn!==near){if(LAB.kn)LAB.shk=1;LAB.kn=near}const shk=LAB.shk||0;if(shk)LAB.shk=shk<.02?0:shk*.97;   // new mode: tap the tube so beads leave old piles (ends too) and re-form
- for(const b of BEADS){const a=Math.abs(Math.sin(k*b.u));
-  if(on){const ew=Math.min(1,Math.min(b.u,1-b.u)/.12);b.v+=-.00045*sp*res*Math.sin(2*k*b.u)/near*ew*ew;                        // toward the nodes
+ const NBk=Math.round((W-80)/7);BEADS.forEach((b,i)=>b.i=i);for(const b of BEADS){const a=Math.abs(Math.sin(k*b.u));
+  if(on){if(near===1){const r=(b.i+.5)/BEADS.length,c=r<.5?1-2*r:2*r-1,X=.93*(Math.sqrt(1+80*c)-1)/8;b.v+=K1*sp*res*((r<.5?.5-X/2:.5+X/2)-b.u)}else{const N=BEADS.length,r=(b.i+.5)/N*near,j=r<.5?0:r>near-.5?near:Math.round(r),lo=j===0?0:j-.5,hi=j===near?near:j+.5,q=(r-lo)/(hi-lo),cnt=(hi-lo)/near*N,w=Math.max(.012,cnt/(11*NBk));   // v50: every node gets a fair share by rank; piles spread sideways so none is taller than the tube
+  const tu=j===0?q*w:j===near?1-(1-q)*w:j/near+(q-.5)*w;b.v+=.004*sp*res*(tu-b.u)}                        // toward the nodes
    b.v+=(Math.random()-.5)*(.0014*(.25+a*res)+.03*shk)*sp;}                            // kicks: strongest where the air moves, a little everywhere while sound plays
   if(on){if(b.u<.06)b.v+=.0003*sp*(1-b.u/.06);if(b.u>.94)b.v-=.0003*sp*(1-(1-b.u)/.06)}     // soft walls: the ends don't trap beads
   b.v*=.86;b.u+=b.v;if(b.u<.003){b.u=.003;b.v=Math.abs(b.v)*.5}if(b.u>.997){b.u=.997;b.v=-Math.abs(b.v)*.5}}
- BEADS.sort((p,q)=>p.u-q.u);if(on&&near>=2){const cap=BEADS.length/(near+1)*.5|0,hz=.5/near;let l=0,r=0;for(const b of BEADS){if(b.u>=hz)break;if(++l>cap)b.v+=.0009*sp}for(let i=BEADS.length-1;i>=0;i--){const b=BEADS[i];if(b.u<=1-hz)break;if(++r>cap)b.v-=.0009*sp}}
+ BEADS.sort((p,q)=>p.u-q.u);
  for(const b of BEADS){const bi=Math.min(NB-1,Math.floor(b.u*NB)),lvl=bins[bi]++,a=Math.abs(Math.sin(k*b.u))*res,
   wob=LAB_RM?0:Math.sin(t*5+b.h*30)*a*2.5;
   const px=tx+8+(bi+.5)/NB*(tw-16)+(b.h-.5)*4,py=ty+th-9-lvl*3.2-a*10*b.h+wob;
