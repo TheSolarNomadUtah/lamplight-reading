@@ -126,3 +126,7 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 - Paint: Mirror button (off/4/6/8 around the center), Glow on night paper, Singing brush (pentatonic by height, at most ~6 notes a second, off by default, half volume in Bedtime, through the limiter), Fridge shelf (saved on this device only in IndexedDB, with a localStorage fallback; view, delete, 24 pictures max; nothing is uploaded).
 - Measured with OfflineAudioContext through the real graph, true peak / integrated loudness: Für Elise −13.7 dBTP / −22.2 LUFS, Twinkle −13.8 / −22.6, Mary −13.8 / −22.7, shape −15.5 / −21.8, moiré hum −17.2 / −24.2, singing brush −14.1 / −22.2. Flashes: 0 per second in every toy, including a full 360° moiré sweep.
 - The inspiration links for these toys stay in this README only. The app makes no outside requests.
+
+## v47: Paint toolbar tidy
+- The Mirror button is now the only control for 4-, 6- and 8-way symmetry. The symmetry menu no longer lists Kaleido 4/6/8; when one of them is on, the menu shows it as "Mirror n", so the default (6, mirrored) and any current setting keep working. Mirror cycles 4 → 6 → 8 → off; from any other menu choice it starts at 4.
+- "Trippy color drift" is now "Color drift". All Paint toolbar labels (tool titles, symmetry menu) are translated into es and ar.
