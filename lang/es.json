@@ -393,7 +393,6 @@
 "Tap a picture to hear it. Say it again yourself, then wait for your child's turn.": "Toca una imagen para oírla. Repítela tú y espera el turno de tu hijo.",
 "Every number has a song. Each digit becomes a note, and the light shows its shape.": "Cada número tiene una canción. Cada dígito es una nota y la luz muestra su forma.",
 "Every letter has a big (uppercase) shape and a little (lowercase) shape. Same letter, same sound.": "Cada letra tiene una forma grande (mayúscula) y una pequeña (minúscula). Misma letra, mismo sonido.",
-"Works without internet after the first visit; tap Save everything to keep all voices and languages.": "Funciona sin internet tras la primera visita; toca Guardar todo para conservar voces e idiomas.",
 "Read-aloud uses the device's built-in voice. The optional speech check only works in Chrome or Edge.": "La lectura usa la voz del dispositivo. La revisión de voz opcional solo funciona en Chrome o Edge.",
 "Each kid gets their own progress. Use a first name or nickname only. Tap a name at the top to switch.": "Cada niño tiene su propio progreso. Usa solo un nombre o apodo. Toca un nombre arriba para cambiar.",
 "Harder games for parents, teachers and big kids. Play next to your reader and show them practice is fun.": "Juegos más difíciles para padres, maestros y niños grandes. Juega junto a tu lector y muéstrale que practicar es divertido.",
@@ -1005,5 +1004,7 @@
 "All games, every age": "Todos los juegos, para todas las edades",
 "Ohm": "Om",
 "Interface and page sounds: Kenney (kenney.nl), CC0. Chimes and sparkles: made for Lamplight from simple harmonic ratios (3:2, 5:4), CC0.": "Sonidos de la interfaz y de páginas: Kenney (kenney.nl), CC0. Campanitas y destellos: creados para Lamplight con proporciones armónicas simples (3:2, 5:4), CC0.",
-"Press ▶ Play to hear {name}": "Pulsa ▶ Reproducir para oír {name}"
+"Press ▶ Play to hear {name}": "Pulsa ▶ Reproducir para oír {name}",
+"Some sounds need internet. For full offline use, a grown-up can tap Save everything in Grown-ups.": "Algunos sonidos necesitan internet. Para usarla sin conexión por completo, un adulto puede tocar Guardar todo en Adultos.",
+"Opens without internet after the first visit. For every sound, voice and language offline, tap Save everything and wait for 100%.": "Se abre sin internet tras la primera visita. Para tener todos los sonidos, voces e idiomas sin conexión, toca Guardar todo y espera al 100%."
 }

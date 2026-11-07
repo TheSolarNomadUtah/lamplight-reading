@@ -146,3 +146,10 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 - Kundt's tube opens at 343 Hz (mode 2 for the 1 m tube), so the first Play shows a clear middle pile.
 - Mode 1 (whose only nodes are the two ends) now shows a gentle slope: beads thin out toward the middle instead of forming two piles against the walls. Modes 2 and up are unchanged from v49.
 - Modes 2 and up: each node gets a fair share of beads (end nodes half a share, since they touch a wall), whatever the starting layout, and piles spread sideways so no pile is taller than the tube (every bead stays visible). This replaces the v49 end-pile cap.
+
+## v51 — launch fixes (approved scope)
+- Sound board shows only buttons whose recordings play correctly (cow, duck, cat, A, B, clap); dog, sheep, snake, bee, M and night are hidden.
+- Babies Echo: the eight spoken activities (device voice) are hidden; the sound board stays. Mmm, Moon has no "Say the words" button.
+- Letter songs hidden (hub and Library).
+- Save everything: fixed a malformed manifest row so progress reaches 100%; offline wording now says full offline needs Save everything; a gentle note appears when offline and not yet saved (en/es/ar).
+- audio/inst/bells/72.opus trimmed 1 dB to meet the -1.5 dBTP limit. No voice clips changed.

@@ -106,7 +106,7 @@ async function offSave(){if(!('caches' in window)){OFF.msg='This browser cannot 
  OFF.busy=false;OFF.msg=fail?`Saved, but ${fail} files did not download. Tap again when the internet is steady.`:`✅ Everything is saved (${fmtMB(L.bytes)}). Every voice, language and song now works without internet.${OFF.persist?' This device promised to keep it.':''}`;RAW.set('lamp_offline_all',fail?'':'1');renderOffline()}
 async function offRemove(){try{await caches.delete(XC)}catch(e){}RAW.del('lamp_offline_all');OFF.msg='Offline extras removed. The app still works offline with the voice and language you use.';renderOffline()}
 function renderOffline(){const el=$('offcard');if(!el)return;const all=RAW.get('lamp_offline_all');
- el.innerHTML=`<h2>📶 Offline & install</h2><p><b>Works without internet after the first visit; tap Save everything to keep all voices and languages.</b></p>
+ el.innerHTML=`<h2>📶 Offline & install</h2><p><b>Opens without internet after the first visit. For every sound, voice and language offline, tap Save everything and wait for 100%.</b></p>
  <p>${OFF.size?`Save everything: ${OFF.count} files, about <b>${fmtMB(OFF.size)}</b>.`:'Save everything: about 15 MB.'} ${all?'✅ Saved on this device.':''}</p>
  <button class="bigbtn p" onclick="offSave()" ${OFF.busy?'disabled':''}>⬇️ Save everything (all voices and languages)</button> <button class="bigbtn" onclick="offRemove()" ${OFF.busy?'disabled':''}>🗑️ Remove offline extras</button>
  <p><progress id="offbar" value="0" max="1" style="width:100%" class="${OFF.busy?'':'hidden'}"></progress></p><p id="offmsg">${OFF.msg}</p>

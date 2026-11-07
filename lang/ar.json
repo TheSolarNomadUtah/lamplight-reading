@@ -393,7 +393,6 @@
 "Tap a picture to hear it. Say it again yourself, then wait for your child's turn.": "انقر صورة لتسمعها. قلها أنت ثم انتظر دور طفلك.",
 "Every number has a song. Each digit becomes a note, and the light shows its shape.": "لكل رقم أغنية. كل خانة تصبح نغمة، والضوء يُظهر شكلها.",
 "Every letter has a big (uppercase) shape and a little (lowercase) shape. Same letter, same sound.": "لكل حرف شكل كبير وشكل صغير. الحرف نفسه والصوت نفسه.",
-"Works without internet after the first visit; tap Save everything to keep all voices and languages.": "يعمل دون إنترنت بعد الزيارة الأولى؛ اضغط «احفظ كل شيء» للاحتفاظ بكل الأصوات واللغات.",
 "Read-aloud uses the device's built-in voice. The optional speech check only works in Chrome or Edge.": "القراءة الصوتية تستخدم صوت الجهاز. فحص النطق الاختياري يعمل في كروم أو إيدج فقط.",
 "Each kid gets their own progress. Use a first name or nickname only. Tap a name at the top to switch.": "لكل طفل تقدّمه الخاص. استخدم الاسم الأول أو لقبًا فقط. انقر اسمًا في الأعلى للتبديل.",
 "Harder games for parents, teachers and big kids. Play next to your reader and show them practice is fun.": "ألعاب أصعب للأهل والمعلمين والأطفال الكبار. العب بجانب قارئك وأرِه أن التمرين ممتع.",
@@ -1083,5 +1082,7 @@
 "All games, every age": "كل الألعاب، لكل الأعمار",
 "Ohm": "أوم",
 "Interface and page sounds: Kenney (kenney.nl), CC0. Chimes and sparkles: made for Lamplight from simple harmonic ratios (3:2, 5:4), CC0.": "أصوات الواجهة وتقليب الصفحات: Kenney ‏(kenney.nl)، CC0. الأجراس واللمعات: صُنعت لـ Lamplight من نسب متناغمة بسيطة (3:2، 5:4)، CC0.",
-"Press ▶ Play to hear {name}": "اضغط ▶ تشغيل لتسمع {name}"
+"Press ▶ Play to hear {name}": "اضغط ▶ تشغيل لتسمع {name}",
+"Some sounds need internet. For full offline use, a grown-up can tap Save everything in Grown-ups.": "بعض الأصوات تحتاج إلى الإنترنت. للاستخدام الكامل دون اتصال، يمكن لشخص بالغ أن ينقر «احفظ كل شيء» في قسم الكبار.",
+"Opens without internet after the first visit. For every sound, voice and language offline, tap Save everything and wait for 100%.": "يفتح دون إنترنت بعد الزيارة الأولى. لتعمل كل الأصوات واللغات دون اتصال، اضغط «احفظ كل شيء» وانتظر حتى 100٪."
 }
