@@ -153,3 +153,7 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 - Letter songs hidden (hub and Library).
 - Save everything: fixed a malformed manifest row so progress reaches 100%; offline wording now says full offline needs Save everything; a gentle note appears when offline and not yet saved (en/es/ar).
 - audio/inst/bells/72.opus trimmed 1 dB to meet the -1.5 dBTP limit. No voice clips changed.
+
+## v52 — launch fixes from v51 QA
+- When a recorded voice has no clip for a prompt (Letters "Find the little letter for…", Trace 🔊 letter), it stays silent instead of falling back to the device voice.
+- No sideways scroll at 360/390 px: Cymatics canvas capped to the screen; Kids progress table scrolls inside its own box.
