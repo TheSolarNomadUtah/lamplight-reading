@@ -160,3 +160,6 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 
 ## v53
 Ships QA's -0.3 dB gain-only trims for 5 voice clips (dora/l_x, michael/l_n, michael/l_p, michael/w_diamond, nicole/w_panda; mp3 and opus), approved by Ignacio. All voice clips now at or below -1.5 dBTP.
+
+## v54
+Hides Star songs, Cymatica, Sound Lab, Hum & match, Make a song, Note Blocks and Sound Shapes (Ignacio's trim). Their code stays but nothing links to them.
