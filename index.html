@@ -1,5 +1,7 @@
-<!doctype html><html translate="no" lang="en"><head>
-<meta name="google" content="notranslate"><script>(function(){try{var L=localStorage,k=null;for(var i=0;i<L.length;i++){var n=L.key(i);if(/^lamp_lang(@|$)/.test(n)&&L.getItem(n))k=L.getItem(n)}k=k||L.getItem('lamp_lang_device')||(navigator.language||'en').slice(0,2);if(k&&k!=='en'){document.documentElement.classList.add('prewait');setTimeout(function(){document.documentElement.classList.remove('prewait')},3000)}}catch(e){}})()</script><style>html.prewait body{visibility:hidden}</style><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html translate="no" lang="en"><head><meta charset="utf-8">
+<meta name="google" content="notranslate"><script>(function(){try{var L=localStorage,k=null;for(var i=0;i<L.length;i++){var n=L.key(i);if(/^lamp_lang(@|$)/.test(n)&&L.getItem(n))k=L.getItem(n)}k=k||L.getItem('lamp_lang_device')||(navigator.language||'en').slice(0,2);if(k&&k!=='en'){document.documentElement.classList.add('prewait');setTimeout(function(){document.documentElement.classList.remove('prewait')},3000)}}catch(e){}})()</script><style>html.prewait body{visibility:hidden}/* v66 reward surface first-paint guard */
+.lcele{opacity:1!important;animation:none!important;transition:none!important;background:var(--card,#fff9ec)!important;color:var(--ink,#30261d)!important;top:50%!important;transform:translate(-50%,-50%)!important;width:min(340px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;max-height:calc(100vh - 32px);overflow:auto;z-index:10001!important}
+</style><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="manifest" href="manifest.webmanifest"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#5b7a6a"><link rel="icon" href="icon.svg"><title>Lamplight Learning: a calm nightly session</title><meta name="description" content="Lamplight Learning: free, calm reading, music and word games for kids. Works offline, no accounts, zero data collected.">
 <style>
 :root{--bg:#f6f1e7;--card:#fffdf8;--ink:#2f2a24;--soft:#7a6f60;--acc:#5b7a6a;--hi:#f3e2b3}
@@ -59,7 +61,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=65;
+const APP_VERSION=66;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;
 const RAW={get:k=>{try{return window.localStorage.getItem(k)}catch(e){STORE_OK=false;return k in MEM?MEM[k]:null}},
@@ -224,4 +226,5 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="art65.js"></script>
 <script src="v65.js"></script>
 <script src="icons65.js"></script>
+<script src="v66.js"></script>
 </body></html>
