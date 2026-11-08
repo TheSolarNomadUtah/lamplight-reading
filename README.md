@@ -181,3 +181,15 @@ New: Word Kinds game (tap the nouns, pronouns or adjectives; en/es/ar sentences)
 
 ## v60
 More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master tier +33 words, Word Scramble +40 words, Word Ladder +52 ladders (88 total), Word Kinds +27 sentences and Levels 1-3.
+
+## v61 — Six new learning games
+- Sentence Builder: tap words into order, with undo/check controls; three levels from short phrases to longer sentences (18 sentences per language).
+- Rhyme Match: find the rhyming word among three or four choices; three levels, with 18 pairs per language.
+- Lamp Math: count 1–6 lamps, add groups up to 10, then subtract up to 12 (including zero); crossed-out lamps show what is taken away.
+- Pattern Puzzles: complete repeating picture patterns; three levels from AB to AAB/ABC and four-place patterns. Shape, not color alone, identifies every picture.
+- Opposites: choose the opposite word; three levels with 18 pairs per language.
+- Memory Match: uncover 3, 4 or 6 picture pairs, with gentle timed mismatch reveals and no clock to race.
+- Every level saves its best 1–3 stars in the existing per-child `lamp_games` store. Six rounds per level (Memory uses one full board); replay and next-level controls stay parent/child paced.
+- English and Spanish learning content only. New games are absent from other language menus, and direct navigation is guarded. Spanish/Arabic menu and UI strings are bundled; both dictionaries are precached.
+- Original inline SVG art, keyboard-operable buttons, labelled memory cards, live feedback and 390 px phone layouts. No outside requests, microphone or device speech. No voice files or audio clips added/changed; feedback reuses one quiet, rate-limited Bedtime Glow note.
+- Release cache: `lamplight-v61`; `v61.js` is included in both offline-save manifests.
