@@ -193,3 +193,13 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - English and Spanish learning content only. New games are absent from other language menus, and direct navigation is guarded. Spanish/Arabic menu and UI strings are bundled; both dictionaries are precached.
 - Original inline SVG art, keyboard-operable buttons, labelled memory cards, live feedback and 390 px phone layouts. No outside requests, microphone or device speech. No voice files or audio clips added/changed; feedback reuses one quiet, rate-limited Bedtime Glow note.
 - Release cache: `lamplight-v61`; `v61.js` is included in both offline-save manifests.
+
+## v62 — QA fixes
+- Save everything: four bounded attempts per file (12-second timeout, 0.5/1.5/3.5-second backoff), including manifest/body failures. Persistent failures show a translated Try again button that resumes from successful cached files; only a complete save sets the offline-ready flag. New releases refresh app/content files while reusing unchanged audio/font downloads.
+- Word Kinds: one complete sentence earns one shown/saved star, regardless of level. Intermediate word kinds award nothing and do not chime.
+- Rhythm Echo: investigation found no dropped/unreachable v60 levels: v27 had 12, and v60 added 7, making 19. Eight additional distinct patterns now provide the promised 27 selectable levels, preserving all existing IDs/progress.
+- Cursive: English/Spanish only, with a direct-navigation guard. Actual font ink bounds fit all glyphs within a 32 px inset (including J, Y, Z and W); mask and visible guide use the identical font/position.
+- Ladders: a reviewed positive common-word allowlist filters both solutions and accepted typed answers. 62 ladders remain (50 kid, 12 grown-up); named unsafe/obscure words and their flagged inflections are removed. `python3 tools/filter_ladders.py` enforces this for future data edits; the reviewed list is `games-data.json/commonWords`.
+- Syllable Sprint: remove five repeated spellings, preserving the first canonical split; use ze|bra.
+- Echo A/B: labels are letter names only; play exactly the existing n_a/n_b recording for the selected English/Spanish voice. No heart fallback, letter-song clip, device voice or tone. Hide buttons until their current-language recording is confirmed, or when missing (including Arabic).
+- No audio files added or edited. Cache `lamplight-v62`; both offline manifests updated.

@@ -965,7 +965,7 @@
 "This planet is darker than coal! When it crosses its star, about 1 in 70 bits of light gets blocked.": "¡Este planeta es más oscuro que el carbón! Cuando cruza delante de su estrella, tapa más o menos 1 de cada 70 partes de luz.",
 "This star breathes! It puffs up and shrinks, getting brighter and dimmer like a slow heartbeat.": "¡Esta estrella respira! Se hincha y se encoge, y brilla más y menos como un latido lento.",
 "This star pulses twice a day. It brightens fast, then fades slowly, again and again.": "Esta estrella late dos veces al día. Se ilumina rápido y luego se apaga despacio, una y otra vez.",
-"Try again": "Inténtalo otra vez",
+"Try again": "Intentar de nuevo",
 "Tune {n}": "Melodía {n}",
 "Tunes, songs and free play": "Melodías, canciones y toca libre",
 "Two Sun-like stars eclipse each other every 28 days.": "Dos estrellas parecidas al Sol se eclipsan cada 28 días.",
@@ -1080,5 +1080,17 @@
 "Round {a} of {b}": "Ronda {a} de {b}",
 "Play again": "Jugar otra vez",
 "Next level": "Siguiente nivel",
-"Back to Games": "Volver a Juegos"
+"Back to Games": "Volver a Juegos",
+"Preparing offline download…": "Preparando la descarga sin conexión…",
+"Saving… {a}/{b} files ({c} of {d})": "Guardando… {a}/{b} archivos ({c} de {d})",
+"Some files could not be saved. Tap Try again to resume.": "No se pudieron guardar algunos archivos. Toca Intentar de nuevo para continuar.",
+"Everything is saved ({size}). Every voice, language and song now works without internet.": "Todo está guardado ({size}). Todas las voces, idiomas y canciones ya funcionan sin internet.",
+"Steady lanterns": "Faroles constantes",
+"Little rests": "Pequeñas pausas",
+"Two-pad steps": "Pasos con dos sonidos",
+"Three-pad trail": "Camino de tres sonidos",
+"Off-beat reply": "Respuesta a contratiempo",
+"Three-against-two trail": "Camino de tres contra dos",
+"Quiet spaces": "Espacios tranquilos",
+"Lantern finale": "Final de faroles"
 }

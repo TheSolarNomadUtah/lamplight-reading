@@ -1043,7 +1043,7 @@
 "This planet is darker than coal! When it crosses its star, about 1 in 70 bits of light gets blocked.": "هذا الكوكب أغمق من الفحم! عندما يعبر أمام نجمه يحجب نحو جزء واحد من كل 70 من الضوء.",
 "This star breathes! It puffs up and shrinks, getting brighter and dimmer like a slow heartbeat.": "هذا النجم يتنفس! ينتفخ وينكمش، فيسطع ويخفت مثل نبض قلب بطيء.",
 "This star pulses twice a day. It brightens fast, then fades slowly, again and again.": "هذا النجم ينبض مرتين في اليوم. يسطع بسرعة ثم يخفت ببطء، مرة بعد مرة.",
-"Try again": "حاول مرة أخرى",
+"Try again": "حاول مجددًا",
 "Tune {n}": "لحن {n}",
 "Tunes, songs and free play": "ألحان وأغانٍ وعزف حر",
 "Two Sun-like stars eclipse each other every 28 days.": "نجمان يشبهان الشمس يكسف أحدهما الآخر كل 28 يوماً.",
@@ -1158,5 +1158,17 @@
 "Round {a} of {b}": "الجولة {a} من {b}",
 "Play again": "العب مجددًا",
 "Next level": "المستوى التالي",
-"Back to Games": "العودة إلى الألعاب"
+"Back to Games": "العودة إلى الألعاب",
+"Preparing offline download…": "جارٍ تجهيز التنزيل دون اتصال…",
+"Saving… {a}/{b} files ({c} of {d})": "جارٍ الحفظ… {a}/{b} ملفات ({c} من {d})",
+"Some files could not be saved. Tap Try again to resume.": "تعذّر حفظ بعض الملفات. اضغط على حاول مجددًا للمتابعة.",
+"Everything is saved ({size}). Every voice, language and song now works without internet.": "تم حفظ كل شيء ({size}). تعمل الآن جميع الأصوات واللغات والأغاني دون إنترنت.",
+"Steady lanterns": "فوانيس منتظمة",
+"Little rests": "وقفات قصيرة",
+"Two-pad steps": "خطوات بصوتين",
+"Three-pad trail": "مسار بثلاثة أصوات",
+"Off-beat reply": "رد بين النبضات",
+"Three-against-two trail": "مسار ثلاثة مقابل اثنين",
+"Quiet spaces": "مساحات هادئة",
+"Lantern finale": "ختام الفوانيس"
 }

@@ -7,9 +7,12 @@ document.head.insertAdjacentHTML('beforeend',`<style>@font-face{font-family:Lamp
 {
 function curSetup(L){const cv=$('trc'),x=cv.getContext('2d'),W=420;TR.cv=cv;TR.done=false;
  const m=document.createElement('canvas');m.width=m.height=W;const mx=m.getContext('2d');mx.font='240px LampCursive';mx.textAlign='center';mx.textBaseline='alphabetic';mx.lineWidth=40;mx.lineJoin='round';
- const base=TR.low&&/[fgjpqyz]/.test(L)?250:300;mx.strokeStyle='#000';mx.fillStyle='#000';mx.fillText(L,W/2,base);
+ // v62: fit actual ink bounds, not advance width (J/Y/Z descend; W has a long swash).
+ const pad=32,bounds=mx.measureText(L),fit=Math.min(1,(W-pad*2)/Math.max(1,bounds.actualBoundingBoxLeft+bounds.actualBoundingBoxRight),(W-pad*2)/Math.max(1,bounds.actualBoundingBoxAscent+bounds.actualBoundingBoxDescent));
+ mx.font=(240*fit)+'px LampCursive';const bb=mx.measureText(L),cx=W/2+(bb.actualBoundingBoxLeft-bb.actualBoundingBoxRight)/2;
+ const base=Math.max(pad+bb.actualBoundingBoxAscent,Math.min(TR.low&&/[fgjpqyz]/.test(L)?250:300,W-pad-bb.actualBoundingBoxDescent));TR.glyphFit={cx,base,scale:fit};mx.strokeStyle='#000';mx.fillStyle='#000';mx.fillText(L,cx,base);
  const d=mx.getImageData(0,0,W,W).data;const pts=[];for(let y=6;y<W;y+=12)for(let X=6;X<W;X+=12)if(d[(y*W+X)*4+3]>128)pts.push([X,y]);TR.mask=pts;TR.hit=new Uint8Array(pts.length);TR.ink=0;TR.out=0;
- x.clearRect(0,0,W,W);x.font=mx.font;x.textAlign='center';x.setLineDash([4,10]);x.lineWidth=3;x.strokeStyle='#9a8f7d';x.strokeText(L,W/2,base);x.setLineDash([]);x.globalAlpha=.08;x.fillStyle='#5b7a6a';x.fillText(L,W/2,base);x.globalAlpha=1;
+ x.clearRect(0,0,W,W);x.font=mx.font;x.textAlign='center';x.setLineDash([4,10]);x.lineWidth=3;x.strokeStyle='#9a8f7d';x.strokeText(L,cx,base);x.setLineDash([]);x.globalAlpha=.08;x.fillStyle='#5b7a6a';x.fillText(L,cx,base);x.globalAlpha=1;
  const st=pts.reduce((a,p)=>p[1]<a[1]-6||(Math.abs(p[1]-a[1])<=6&&p[0]<a[0])?p:a,[W,W]);const round=/[cCoOsSeagdqGQ]/.test(L);
  x.fillStyle='#3f9d5a';x.beginPath();x.arc(st[0],st[1],13,0,7);x.fill();x.fillStyle='#fff';x.font='bold 16px sans-serif';x.fillText('1',st[0],st[1]+6);
  x.strokeStyle='#3f9d5a';x.lineWidth=4;x.beginPath();if(round){x.moveTo(st[0]-20,st[1]-22);x.lineTo(st[0]-55,st[1]-22);x.moveTo(st[0]-55,st[1]-22);x.lineTo(st[0]-45,st[1]-30);x.moveTo(st[0]-55,st[1]-22);x.lineTo(st[0]-45,st[1]-14)}else{x.moveTo(st[0]-28,st[1]);x.lineTo(st[0]-28,st[1]+40);x.lineTo(st[0]-36,st[1]+30);x.moveTo(st[0]-28,st[1]+40);x.lineTo(st[0]-20,st[1]+30)}x.stroke();
@@ -22,7 +25,7 @@ function curCheck(L){if(TR.done)return;const cov=TR.hit.reduce((a,b)=>a+b,0)/TR.
  if(cov>=0.6&&stray<0.45){TR.done=true;const g=safeJSON(LS.get('lamp_trace'),{});g[L]=(g[L]||0)+1;LS.set('lamp_trace',JSON.stringify(g));markDay('trace');$('trfb').textContent='⭐ Beautiful '+L+'!';speak('Yes! '+L+'!');setTimeout(()=>{if($('trfb'))renderTrace()},1800)}
  else $('trfb').textContent=cov>0.25?'Keep going! Cover the rest of the dots.':'Start at the green dot and follow the dots.';return cov}
  const ts=traceSetup;traceSetup=function(L){return TR.cur?curSetup(L):ts.apply(this,arguments)};
- const rt=renderTrace;renderTrace=function(){if(TR.cur&&!document.fonts.check('240px LampCursive')){document.fonts.load('240px LampCursive').then(()=>{if(!$('trace').classList.contains('hidden'))renderTrace()});}
+ const rt=renderTrace;renderTrace=function(){if(!CONTENT.includes(LANG)){TR.cur=false;$('trace').innerHTML='';return}if(TR.cur&&!document.fonts.check('240px LampCursive')){document.fonts.load('240px LampCursive').then(()=>{if(!$('trace').classList.contains('hidden'))renderTrace()});}
   rt.apply(this,arguments);const bs=[...$('trace').querySelectorAll('button')].filter(b=>/TR\.low=/.test(b.getAttribute('onclick')||''));
   bs.forEach(b=>{b.setAttribute('onclick',b.getAttribute('onclick').replace('TR.low=','TR.cur=false;TR.low='));if(TR.cur)b.classList.remove('p')});
   const last=bs[bs.length-1];if(last)last.insertAdjacentHTML('afterend',` <button class="${TR.cur&&!TR.low?'p':''}" onclick="TR.cur=true;TR.low=false;renderTrace()" style="font-family:LampCursive">${gT('Cursive ABC')}</button><button class="${TR.cur&&TR.low?'p':''}" onclick="TR.cur=true;TR.low=true;renderTrace()" style="font-family:LampCursive">${gT('Cursive abc')}</button>`);
