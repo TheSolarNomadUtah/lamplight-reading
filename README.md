@@ -214,3 +214,12 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Cache `lamplight-v63`; new scripts and translated menu/UI strings are bundled in both offline manifests. No outside requests.
 - Validation: headless `playwright-core` + `/usr/bin/google-chrome` at 390 px in English, Spanish and Arabic; new games at all levels, copy-beat timing, loop persistence/stop, hidden UI, paint stamps, all v61/v62 regressions and offline reload. Zero console errors or outside requests. A 192 kHz OfflineAudioContext stress test checks all three drum kits and eight-voice stacks below the −1.5 dBTP ceiling.
 - Offline manifests: 2,366 rows each; **11,782,270 bytes** standard / **10,616,186 bytes** Opus. Python recomputes every row and total; the `./` row now measures the served `index.html`, not a 4,096-byte directory stat. New art/game/drum scripts total under 49 KB.
+
+
+## v64 — Today's Story
+- A local-day story card sits beside the child's companion on Home. Grown-ups may set a K–5 grade per child; unset profiles keep the original age-band selection. An unread choice waits through missed days, unread stories come first, and saved favorites return after the pool is read. No daily streak or catch-up pressure.
+- Twenty stories per grade, in each of English and Spanish (120 + 120): 55 existing English / 65 new, 15 existing Spanish / 105 new. Each has two or three comprehension questions. Arabic receives translated interface text, not English story content.
+- Solo is text-first; Read Together retains the former Tonight's Plan coach, warm-up, level/focus, talk prompts and optional session note; Printed Page reuses full-story printing. Completion adds one quiet Bedtime Glow chime and a reduced-motion-safe glow.
+- Date, title, grade, mode, quiz score and any session note join the existing local progress log. Older rows are kept intact. The old `home` route now opens Home; Tonight's Plan and the duplicate Grown-up arcade navigation are hidden. Games still uses the shared Scramble/Syllable Sprint engines.
+- QA refinements: hidden Music entrypoints resolve to Drum Garden (English/Spanish), clearer violin/mouse/puppy/nose/sponge drawings, and a cloud replaces the arguable household fish in Odd One Out.
+- No audio/voice files added or changed. Everything stays same-origin and offline-capable; both complete offline manifests remain below 15 MB. Phone/browser evidence is under `/workspace/audit-v64/`; physical-device, caregiver and editorial review are separate from automated tests.
