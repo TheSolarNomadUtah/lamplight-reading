@@ -41,8 +41,8 @@ function pStats(id){const g=k=>safeJSON(RAW.get(k+'@'+id),null);const log=g('lam
  return{read:new Set(log.map(e=>e.story)).size,sessions:log.length,solo:Object.keys(solo).length,stars:Object.values(solo).reduce((a,x)=>a+(x.stars||0),0),letters:Object.values(let_).filter(n=>n>=3).length,notes:Object.values(notes).filter(x=>x&&String(x).trim()).length+log.filter(e=>e.note).length,echo:Object.values(ec).reduce((a,n)=>a+n,0),last:log.length?new Date(log[log.length-1].date).toLocaleDateString():''}}
 function renderKids(){const P=getProfiles();
  $('kids').innerHTML=`<div class="card"><h2>👧 Kids on this device</h2><p class="soft">Each kid gets their own progress. Use a first name or nickname only. Tap a name at the top to switch.</p>
- <table><tr><th></th><th>Name</th><th>Age</th><th>Stories read</th><th>Solo ⭐</th><th>Letters known</th><th>Echo</th><th>Notes</th><th></th></tr>
- ${P.list.map(p=>{const s=pStats(p.id);return`<tr><td style="font-size:1.6rem">${p.av}</td><td><b>${esc(p.name)}</b>${p.id===P.cur?' <span class="soft">(now)</span>':''}</td><td>${BANDS[p.band]||''}</td><td>${s.read} <span class="soft">(${s.sessions} sessions)</span></td><td>${s.stars} <span class="soft">in ${s.solo}</span></td><td>${s.letters}/26</td><td>${s.echo}</td><td>${s.notes}</td>
+ <table><tr><th></th><th>Name</th><th>Age</th><th>Stories read</th><th>Solo ⭐</th><th>${gT('Letters practiced')}</th><th>Echo</th><th>Notes</th><th></th></tr>
+ ${P.list.map(p=>{const s=pStats(p.id);return`<tr><td style="font-size:1.6rem">${p.av}</td><td><b>${esc(p.name)}</b>${p.id===P.cur?' <span class="soft">(now)</span>':''}</td><td>${BANDS[p.band]||''}</td><td>${s.read} <span class="soft">(${s.sessions} sessions)</span></td><td>${s.stars} <span class="soft">in ${s.solo}</span></td><td>${s.letters}</td><td>${s.echo}</td><td>${s.notes}</td>
  <td><button onclick="switchP('${p.id}')">Use</button> <button onclick="editP('${p.id}')">Edit</button> <button onclick="delP('${p.id}')">Delete</button></td></tr>`}).join('')}</table></div>
  <div class="card" id="pform"></div>
  <div class="card"><h3>Backup (good for daycares)</h3><p class="soft">Save all kids' progress to a file, or load it back on this or another device. Loading replaces what is on this device.</p>
@@ -58,13 +58,13 @@ function saveP(id){const name=$('pn').value.trim().slice(0,20);if(!name){$('pn')
 function delP(id){const P=getProfiles();if(P.list.length<2){alert('Keep at least one kid. Use Edit to rename instead.');return}const p=P.list.find(x=>x.id===id);
  if(!confirm('Delete '+p.name+' and all of their progress and notes on this device? This cannot be undone.'))return;
  PKEYS.forEach(k=>RAW.del(k+'@'+id));P.list=P.list.filter(x=>x.id!==id);if(P.cur===id)P.cur=P.list[0].id;saveProfiles(P);renderBar();renderKids()}
-function exportAll(){const P=getProfiles(),data={app:'lamplight',v:APP_VERSION,saved:new Date().toISOString(),profiles:P,progress:{}};
+function exportAll(){const P=getProfiles(),data={app:'lamplight',v:APP_VERSION,saved:new Date().toISOString(),profiles:P,progress:{},sharedLegacy:{arcade:RAW.get('lamp_arcade')}};
  P.list.forEach(p=>{data.progress[p.id]={};PKEYS.forEach(k=>{const v=RAW.get(k+'@'+p.id);if(v!=null)data.progress[p.id][k]=v})});
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,1)],{type:'application/json'}));a.download='lamplight-kids-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove()}
 function importText(t){const d=JSON.parse(t);if(d.app!=='lamplight'||!d.profiles||!Array.isArray(d.profiles.list))throw new Error('Not a Lamplight backup file');
  getProfiles().list.forEach(p=>PKEYS.forEach(k=>RAW.del(k+'@'+p.id)));
  for(const[id,o]of Object.entries(d.progress||{}))for(const[k,v]of Object.entries(o))if(PKEYS.includes(k))RAW.set(k+'@'+id,String(v));
- saveProfiles(d.profiles);return d.profiles.list.length}
+ if(typeof d.sharedLegacy?.arcade==='string')RAW.set('lamp_arcade',d.sharedLegacy.arcade);saveProfiles(d.profiles);return d.profiles.list.length}
 function importAll(f){if(!f)return;if(!confirm('Replace the kids and progress on this device with this file?'))return;const r=new FileReader();
  r.onload=()=>{try{const n=importText(r.result);renderBar();renderKids();$('impmsg').textContent='Loaded '+n+' kid(s).'}catch(e){$('impmsg').textContent='Could not load: '+e.message}};r.readAsText(f)}
 
@@ -85,7 +85,7 @@ function renderAbout(){const p=curProfile(),s=pStats(p.id);
  <label>What did you try?</label><div id="fb_tried">${['Echo','Sound board','Letters','Read together','Solo','Look','Kids profiles'].map(x=>`<label style="display:inline-block;margin-right:12px"><input type="checkbox" style="width:auto" value="${x}"> ${x}</label>`).join('')}</div>
  <label>What worked, what didn't, what the kids liked</label><textarea id="fb_text" rows="5"></textarea>
  <p><button class="p" onclick="copyFb()">📋 Copy feedback summary</button> <span id="fb_msg" class="soft"></span></p></div>
- <div class="card"><p><button onclick="if(confirm('Erase all progress and notes for ${esc(p.name)} on this device?')){['lamp_log','lamp_notes','lamp_letters','lamp_solo','lamp_echo'].forEach(k=>LS.del(k));render();renderAbout()}">Erase ${esc(p.name)}'s progress</button> <button onclick="exportLog()">Export ${esc(p.name)}'s log (JSON)</button></p></div>`}
+ <div class="card"><p><button onclick="pErase68()">Erase ${esc(p.name)}'s progress</button> <button onclick="exportLog()">Export ${esc(p.name)}'s log (JSON)</button></p></div>`}
 function fbSummary(){const b=BANDS[$('fb_band').value],tr=[...document.querySelectorAll('#fb_tried input:checked')].map(x=>x.value);
  return `Lamplight Learning feedback (v${APP_VERSION}, ${new Date().toLocaleDateString()})\nAge group: ${b}\nTried: ${tr.join(', ')||'(none checked)'}\nNotes: ${$('fb_text').value.trim()||'(none)'}`}
 async function copyFb(){const t=fbSummary();let ok=false;try{await navigator.clipboard.writeText(t);ok=true}catch(e){}

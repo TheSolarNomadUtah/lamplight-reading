@@ -61,12 +61,12 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=67;
+const APP_VERSION=68;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
-const MEM={};let STORE_OK=true;
-const RAW={get:k=>{try{return window.localStorage.getItem(k)}catch(e){STORE_OK=false;return k in MEM?MEM[k]:null}},
- set:(k,v)=>{MEM[k]=v;try{window.localStorage.setItem(k,v)}catch(e){STORE_OK=false}},
- del:k=>{delete MEM[k];try{window.localStorage.removeItem(k)}catch(e){STORE_OK=false}}};
+const MEM={};let STORE_OK=true;const VOLATILE=new Set();
+const RAW={get:k=>{if(VOLATILE.has(k))return Object.hasOwn(MEM,k)?MEM[k]:null;try{const v=window.localStorage.getItem(k);MEM[k]=v;return v}catch(e){STORE_OK=false;return Object.hasOwn(MEM,k)?MEM[k]:null}},
+ set:(k,v)=>{MEM[k]=v;try{window.localStorage.setItem(k,v);VOLATILE.delete(k)}catch(e){STORE_OK=false;VOLATILE.add(k)}},
+ del:k=>{MEM[k]=null;try{window.localStorage.removeItem(k);VOLATILE.delete(k)}catch(e){STORE_OK=false;VOLATILE.add(k)}}};
 // v9 profiles: progress keys are stored per kid profile. Look settings stay shared.
 const PKEYS=['lamp_log','lamp_notes','lamp_solo','lamp_letters','lamp_start','lamp_echo'];
 const pk=k=>PKEYS.includes(k)?k+'@'+curPid():k;
@@ -181,7 +181,7 @@ function renderLetters(){const p=getLet(),known=AB.filter(L=>(p[L]||0)>=3).lengt
 function findRound(){const pool=letPool(),T=pool[Math.floor(Math.random()*pool.length)];const opts=shuf([T,...shuf(AB.filter(x=>x!==T)).slice(0,3)]);
  $('lgame').innerHTML=`<p style="font-size:1.4rem">Find the little letter for</p><div class="tile" style="display:inline-flex;align-items:center;justify-content:center;font-size:clamp(4rem,16vw,7rem)" onclick="LG.say&&speak('${T}')">${T}</div><div>${opts.map(o=>`<button class="tile" onclick="findPick(this,'${o}','${T}')">${o.toLowerCase()}</button>`).join('')}</div><p id="lfb" style="font-size:1.3rem;min-height:1.6em"></p>`;
  if(LG.say)speak('Find the little letter for '+T)}
-function findPick(b,o,T){if(o===T){b.classList.add('yes');letGot(T);$('lfb').textContent='⭐ Yes! Big '+T+' and little '+T.toLowerCase()+' match!';if(LG.say)speak('Yes! '+T+'.');setTimeout(()=>{const k=$('lk');renderLetters()},1300)}
+function findPick(b,o,T){if(b.classList.contains('yes'))return;if(o===T){b.classList.add('yes');letGot(T);$('lfb').textContent='⭐ Yes! Big '+T+' and little '+T.toLowerCase()+' match!';if(LG.say)speak('Yes! '+T+'.');setTimeout(()=>{const k=$('lk');renderLetters()},1300)}
  else{b.classList.remove('no');void b.offsetWidth;b.classList.add('no');$('lfb').textContent='Almost! That one is little '+o.toLowerCase()+'. Try again.';if(LG.say)speak('That is '+o+'. Try again.')}}
 let PR=null;
 function pairsRound(){const ls=shuf(letPool()).slice(0,4);PR={sel:null,left:4};
@@ -212,11 +212,11 @@ function readToMe(){if(readTimer||document.querySelector('.sw.say')){stopRead();
   const u=w?speak(w,0.8):null;let next=false;const go=()=>{if(next)return;next=true;readTimer=setTimeout(step,/[.!?]$/.test(el.textContent)?350:80)};
   if(u){u.onend=go;u.onerror=go}readTimer=setTimeout(go,u?Math.max(700,w.length*160):550)};step()}
 function soloDone(){stopRead();speak('You read it! Great job!');SO.qs=soloQs(SO.s);SO.qi=0;SO.right=0;soloQ()}
-function soloQ(){const s=SO.s;if(SO.qi>=SO.qs.length){const stars=1+(SO.right===SO.qs.length?1:0)+(SO.right>0?1:0);const sv=getSolo();sv[s.id]={stars:Math.max(stars,(sv[s.id]||{}).stars||0),date:Date.now(),right:SO.right,of:SO.qs.length};LS.set('lamp_solo',JSON.stringify(sv));
+function soloQ(){if(!SO||(SO.pid68&&SO.pid68!==curPid()))return;const s=SO.s;if(SO.qi>=SO.qs.length){if(SO.saved68)return;SO.saved68=true;const stars=1+(SO.right===SO.qs.length?1:0)+(SO.right>0?1:0);const sv=getSolo();sv[s.id]={stars:Math.max(stars,(sv[s.id]||{}).stars||0),date:Date.now(),right:SO.right,of:SO.qs.length};LS.set('lamp_solo',JSON.stringify(sv));
   $('solo').innerHTML=`<div class="card big" style="text-align:center"><h2>🌟 You read “${s.t}”!</h2><p class="stars" style="font-size:3.5rem">${'⭐'.repeat(stars)}</p><p style="font-size:1.3rem">🔁 ${s.hook||''}</p><button class="bigbtn p" onclick="renderSolo()">Pick another story</button> <button class="bigbtn" onclick="soloStart('${s.id}')">Read it again</button></div>`;speak(stars+' stars!');return}
  const [q,ch,c]=SO.qs[SO.qi];const opts=shuf(ch.map((t,i)=>({t,ok:i===c})));
  $('solo').innerHTML=`<div class="card big" style="text-align:center"><p class="soft">Question ${SO.qi+1} of ${SO.qs.length}</p><h2 onclick="speak(this.textContent)" style="cursor:pointer">🔊 ${q}</h2>${opts.map(o=>`<button class="bigbtn" onclick="soloAns(this,${o.ok})">${o.t}</button>`).join('')}<p id="qfb" style="font-size:1.3rem;min-height:1.6em"></p><button onclick="renderSolo()">⬅ Back to stories</button></div>`;speak(q)}
-function soloAns(b,ok){if(ok){b.classList.add('yes');SO.right+=SO.tried?0:1;SO.tried=false;$('qfb').textContent='⭐ Yes!';speak('Yes!');SO.qi++;setTimeout(soloQ,1000)}else{SO.tried=true;b.disabled=true;b.style.opacity=.4;$('qfb').textContent='Good try! Pick another one.';speak('Good try. Pick another one.')}}
+function soloAns(b,ok){if(!SO||SO.answered68)return;const round=SO,pid=curPid();if(ok){SO.answered68=true;b.classList.add('yes');SO.right+=SO.tried?0:1;SO.tried=false;$('qfb').textContent='⭐ Yes!';speak('Yes!');SO.qi++;setTimeout(()=>{if(SO===round&&curPid()===pid&&!$('solo').classList.contains('hidden')){round.answered68=false;soloQ()}},1000)}else{SO.tried=true;b.disabled=true;b.style.opacity=.4;$('qfb').textContent='Good try! Pick another one.';speak('Good try. Pick another one.')}}
 
 applyLook();renderBar();render();$("home").classList.add("hidden");
 if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navigator.serviceWorker.controller;navigator.serviceWorker.register('sw.js',{scope:'./'}).then(r=>r?.update()).catch(()=>{});let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl&&hadSW){rl=1;location.reload()}})}
@@ -228,4 +228,6 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="icons65.js"></script>
 <script src="v66.js"></script>
 <script src="v67.js"></script>
+<script src="v68.js"></script>
+<script src="progress68.js"></script>
 </body></html>
