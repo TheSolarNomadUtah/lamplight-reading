@@ -14,7 +14,7 @@ Tan cap, fat cat,
 and that is that!`,
  hook:'Cap, cat, can: change one letter, and a new word ran!',
  takeaway:'Short a says /a/, like in "cat." Change one letter and you get a new word: cap, cat, can.',
- coach:['Warm-up: say /a/ like in "apple." Tap it on her arm for each word: c-a-t, m-a-t, s-a-t.','Read the rhyming pairs (cap/nap, cat/that) twice, with a little bounce.','Praise effort, not speed: "You stretched that word out yourself."'],
+ coach:["Warm-up: say /a/ like in \"apple.\" Tap it on your child's arm for each word: c-a-t, m-a-t, s-a-t.",'Read the rhyming pairs (cap/nap, cat/that) twice, with a little bounce.','Praise effort, not speed: "You stretched that word out yourself."'],
  talk:['Where did the cat sit?','What rhymes with "cat"? Try to find three.'],words:['cap','tan','cat','pat','nap','that']},
 {id:'k2',lvl:'K · Decodable (short i) · chant',g:0.4,t:'Big Pig Can Dig',focus:'short i, CVC words',
  text:`Big pig can dig.
@@ -28,7 +28,7 @@ Big pig gets a fig.
 Big pig did a jig!`,
  hook:'Dig, dig, dig, and the prize gets big.',
  takeaway:'Short i says /i/, like in "pig." Hard work (digging) can lead to a nice surprise.',
- coach:['Warm-up: /i/ like an itchy "ih." Say it for pig, dig, fig.','Make it a chant: clap on "dig, pig, dig!"','If she says "pag," point to the i and ask what sound it makes.'],
+ coach:['Warm-up: /i/ like an itchy "ih." Say it for pig, dig, fig.','Make it a chant: clap on "dig, pig, dig!"',"If your child says \"pag,\" point to the i and ask what sound it makes."],
  talk:['What did Big Pig find?','What would you hope to find if you dug a hole?'],words:['pig','dig','pit','lid','six','figs','jig']},
 {id:'k3',lvl:'K · Decodable (short o) · sleepy rhythm',g:0.5,t:'Hop On, Hot Dog',focus:'short o, CVC words',
  text:`A dog is hot.
@@ -42,7 +42,7 @@ A wet dog on a log,
 soft and calm in the fog.`,
  hook:'Too hot? Hop! Splash in, and the heat will stop.',
  takeaway:'Short o says /o/, like in "dog." When you are too hot, water helps you cool down.',
- coach:['Warm-up: open wide for /o/, like the doctor says "ah."','Read "Hop, hop, plop!" with big energy, then read the last two lines softly.','Have her find every word that ends in -og.'],
+ coach:['Warm-up: open wide for /o/, like the doctor says "ah."','Read "Hop, hop, plop!" with big energy, then read the last two lines softly.',"Have your child find every word that ends in -og."],
  talk:['How did the dog cool off?','What do you do when you feel too hot?'],words:['hot','dog','log','bog','hop','plop','fog']},
 {id:'k4',lvl:'K · Decodable (short u) · bouncy rhyme',g:0.6,t:'The Bug in the Rug',focus:'short u, CVC words',
  text:`A bug in a rug.
@@ -56,7 +56,7 @@ and runs to his mug.
 Snug bug, glad pup.`,
  hook:'Snug as a bug: a small safe place is a hug.',
  takeaway:'Short u says /u/, like in "bug." A small hiding place can keep you safe.',
- coach:['Warm-up: /u/ like "uh-oh." Say bug, rug, hug.','Point out that "snug" has a blend: s-n.','Let her act out the pup sniffing.'],
+ coach:['Warm-up: /u/ like "uh-oh." Say bug, rug, hug.','Point out that "snug" has a blend: s-n.',"Let your child act out the pup sniffing."],
  talk:['Why could the pup not get the bug?','Where is your snug spot?'],words:['bug','rug','snug','pup','hug','tug','mug']},
 // ---------- Grade 1 ----------
 {id:'s2',lvl:'Grade 1 · Digraphs (sh, ch, th) · sea-shanty rhythm',g:1,t:'The Ship in the Shed',focus:'sh, ch, th',
@@ -71,7 +71,7 @@ Then they rush home to lunch,
 munch, munch, munch.`,
  hook:'Two letters, one sound, a team that floats around.',
  takeaway:'sh, ch, and th are letter teams. Two letters make one sound. Things that are hollow and light can float.',
- coach:['Warm-up: "sh" is a quiet sound, finger to lips. "ch" is a sneeze. "th" puts your tongue out a little.','Read it like a sea song, swaying on "push, push, push."','If she says "s-h," say: "These two are a team. They make one sound."'],
+ coach:['Warm-up: "sh" is a quiet sound, finger to lips. "ch" is a sneeze. "th" puts your tongue out a little.','Read it like a sea song, swaying on "push, push, push."',"If your child says \"s-h,\" say: \"These two are a team. They make one sound.\""],
  talk:['What did the ship need to float?','What would you name the ship?'],words:['ship','shed','Chad','push','splash','cheer','munch']},
 {id:'g1a',lvl:'Grade 1 · Digraphs (wh, ck) · question-and-answer',g:1,t:'Whack! Who Is That?',focus:'wh, ck, question marks',
  text:`Whack! Whack! What is that?
@@ -84,7 +84,7 @@ It is a woodpecker! Check the tree.
 Whack! It found a bug to eat.`,
  hook:'A question goes up, like a woodpecker looking up.',
  takeaway:'Questions end with a question mark, and your voice goes up. Woodpeckers peck wood to find bugs to eat.',
- coach:['Warm-up: "wh" is breathy, like blowing out a candle. "ck" is a quick /k/ at the end.','Make your voice go up for each question, then let her answer.','Point to the ? and the ! and talk about how each one changes your voice.'],
+ coach:['Warm-up: "wh" is breathy, like blowing out a candle. "ck" is a quick /k/ at the end.',"Make your voice go up for each question, then let your child answer.",'Point to the ? and the ! and talk about how each one changes your voice.'],
  talk:['Why does the woodpecker peck?','What other animal could you make a guessing story about?'],words:['whack','what','which','duck','clock','peck','black','snack']},
 {id:'g1b',lvl:'Grade 1 · Blends (fr, gr, st) · marching beat',g:1.2,t:'Frog Gets Strong',focus:'beginning blends',
  text:`Frog is small. Frog wants to be strong.
@@ -97,7 +97,7 @@ Strong is not just big.
 Strong is what you do.`,
  hook:'Strong is not how big you grow. Strong is what you practice, so.',
  takeaway:'Blends like fr, gr, and st keep both sounds. Being strong means practicing, not just being big.',
- coach:['Warm-up: say f-r-o-g slowly, then fast. Both sounds stay.','March in place on "Step, step, stretch!"','Ask her what "Strong is what you do" means.'],
+ coach:['Warm-up: say f-r-o-g slowly, then fast. Both sounds stay.','March in place on "Step, step, stretch!"',"Ask your child what \"Strong is what you do\" means."],
  talk:['What can Frog do that shows he is strong?','What have you gotten stronger at by practicing?'],words:['frog','strong','step','stretch','grabs','grins','stump']},
 {id:'g1c',lvl:'Grade 1 · Long vowels (silent e) · lullaby',g:1.4,t:'The Moon Is Home',focus:'a_e, i_e, o_e',
  text:`The sun goes down. It is late.
@@ -110,7 +110,7 @@ Mole sits by his hole to see.
 Then Mole goes in to bed. Sleep, Mole, sleep.`,
  hook:'Add an e, and the vowel says its name: kit to kite, not the same!',
  takeaway:'A silent e at the end makes the vowel say its name: kit, kite. Some animals, like moles, love the night.',
- coach:['Warm-up: write "kit," then add an e to make "kite." The e is quiet, but it changes the i.','Read this one slowly and softly, like a lullaby.','Have her find every word that has a silent e.'],
+ coach:['Warm-up: write "kit," then add an e to make "kite." The e is quiet, but it changes the i.','Read this one slowly and softly, like a lullaby.',"Have your child find every word that has a silent e."],
  talk:['What does Mole say the moon looks like?','What do you like about nighttime?'],words:['late','kite','bike','Mole','nose','white','shine','lace']},
 {id:'s3',lvl:'Grade 1–2 · Blends & silent e · wind rhythm',g:1.5,t:'Kite Day',focus:'blends (st, fl, gr) and silent e',
  text:`Jade made a kite from a green bag and two sticks.
@@ -137,7 +137,7 @@ So Marta paints the barn with stars inside,
 and the hole stays open, wide, wide, wide.`,
  hook:'Bossy r changes the sound. Doing right can turn things around.',
  takeaway:'When r follows a vowel, it changes the sound: ar, or, er. Doing what is right for those you care for can matter more than what others think.',
- coach:['Warm-up: "bossy r" changes the vowel. Compare cat and cart, hot and horse.','Read "Corn in the morning, hay in the dark" like a song.','Ask: was Marta right to keep the hole? There is no wrong answer if she gives a reason.'],
+ coach:['Warm-up: "bossy r" changes the vowel. Compare cat and cart, hot and horse.','Read "Corn in the morning, hay in the dark" like a song.',"Ask: was Marta right to keep the hole? There is no wrong answer if your child gives a reason."],
  talk:['Why did Marta keep the hole?','Would you rather sleep under a roof or under the stars?'],words:['farmer','barn','star','horse','smart','Thunder','corn','morning']},
 {id:'g2b',lvl:'Grade 2 · Vowel teams (oo, ou) · spooky-silly rhythm',g:2.2,t:'Who Took the Moon Spoon?',focus:'oo, ou, ow',
  text:`Someone took the Moon Spoon from Grandma's room.
@@ -163,7 +163,7 @@ They gave it a pinecone nose and a sunflower smile.
 Small things, rolled along, can turn into something big.`,
  hook:'Two small words make one big word, like snow rolled into a snowball.',
  takeaway:'A compound word is two small words joined into one: snow + ball. Little efforts add up over time.',
- coach:['Warm-up: cover half of "snowball" with your finger. Read "snow," then "ball."','Have her find every compound word. There are more than ten!','Each line grows like the snowball, so read each one a little bigger.'],
+ coach:['Warm-up: cover half of "snowball" with your finger. Read "snow," then "ball."',"Have your child find every compound word. There are more than ten!",'Each line grows like the snowball, so read each one a little bigger.'],
  talk:['Why did the snowball keep growing?','What is something small you do every day that adds up?'],words:['snowball','weekend','downhill','mailbox','doghouse','bathtub','pinecone','sunflower']},
 {id:'s4',lvl:'Grade 2–3 · Vowel teams · gentle garden rhythm',g:2.5,t:'The Rain Garden',focus:'ai, ay, ee, ea, oa, ow',
  text:`Every day in May, Ray and his grandma check the garden.
@@ -176,7 +176,7 @@ Bees came to the blooms. Toads hid in the cool shade.
 Ray learned that a puddle can be a home.`,
  hook:'A puddle is a problem, and a home in disguise.',
  takeaway:'Rain gardens soak up extra water and give homes to bees and toads. Problems can become gifts.',
- coach:['Warm-up: "When two vowels go walking, the first one often does the talking" is a hint, not a rule. Try rain, seed, toad.','Read "Dig deep, plant seeds, wait, wait, wait" slowly, the way a garden grows.','Ask: "Does that word make sense?" when she guesses.'],
+ coach:['Warm-up: "When two vowels go walking, the first one often does the talking" is a hint, not a rule. Try rain, seed, toad.','Read "Dig deep, plant seeds, wait, wait, wait" slowly, the way a garden grows.',"Ask: \"Does that word make sense?\" when your child guesses."],
  talk:['Why did they choose the low corner?','What animals came, and why?'],words:['rain','garden','deep','seeds','leaves','toads','learned']},
 // ---------- Grade 3 ----------
 {id:'s5',lvl:'Grade 3 · Multisyllable · festival rhythm',g:3,t:'Marisol\'s Lantern',focus:'breaking long words into syllables',
@@ -201,7 +201,7 @@ He carried the eggs without a single crack.
 Being quick feels fun. Being careful gets it done.`,
  hook:'Quick is fun. Careful gets it done.',
  takeaway:'Suffixes change a word: care becomes careful, careless, or carefully. Slowing down can be the fastest way to finish well.',
- coach:['Warm-up: write "care," then add -ful, -less, and -ly. How does the meaning change?','Read the "Beep. Boop." parts in a robot voice. Kids love it.','Ask her to make up a new word with -less, like "sockless."'],
+ coach:['Warm-up: write "care," then add -ful, -less, and -ly. How does the meaning change?','Read the "Beep. Boop." parts in a robot voice. Kids love it.',"Ask your child to make up a new word with -less, like \"sockless.\""],
  talk:['What went wrong when Bolt rushed?','When is it better to go slowly?'],words:['helpful','fearless','quickly','careless','circuits','carefully','single']},
 {id:'g3b',lvl:'Grade 3 · Informational · ocean wave rhythm',g:3.2,t:'The Whale Who Sings in Clicks',focus:'informational text, new vocabulary',
  text:`Far below the waves, sperm whales talk in clicks.
@@ -214,7 +214,7 @@ It takes them about two years to click like grown-ups.
 Scientists now use computers to listen, hoping one day to understand.`,
  hook:'Rhythm is the message. Listening is how we learn.',
  takeaway:'Sperm whales communicate with rhythmic click patterns called codas, and babies learn them by listening to their families, just like people learn to talk.',
- coach:['Tap the click patterns on the table together. Rhythm IS the message.','Have her explain "coda" and "clan" in her own words.','Connect it to her: babies learn to talk by hearing family, so reading together works the same way.'],
+ coach:['Tap the click patterns on the table together. Rhythm IS the message.',"Have your child explain \"coda\" and \"clan\" in their own words.","Connect it to your child: babies learn to talk by hearing family, so reading together works the same way."],
  talk:['How are baby whales like baby humans?','If your family had a secret click code, what would it say?'],words:['codas','pattern','rhythm','clans','accents','babble','scientists']},
 {id:'g3c',lvl:'Grade 3 · Narrative · adventure, crisp short lines',g:3.4,t:'The Canyon Map',focus:'sequence, adventure vocabulary',
  text:`Mia found the map in a library book. Old. Folded. Faded.
@@ -227,7 +227,7 @@ Someone, a century ago, had stood right here.
 Mia took a picture, touched nothing, and left it for the next explorer.`,
  hook:'Take a picture, leave the place. Treasure can be time and space.',
  takeaway:'Treasure can be history itself. Good explorers leave places as they found them.',
- coach:['Read the short lines like steps on a hike: crisp and quick.','Have her retell the route in order: arch, creek, X.','Ask why Mia "touched nothing." Explain the leave-no-trace idea.'],
+ coach:['Read the short lines like steps on a hike: crisp and quick.',"Have your child retell the route in order: arch, creek, X.",'Ask why Mia "touched nothing." Explain the leave-no-trace idea.'],
  talk:['Was the carving a treasure? Why or why not?','Where would you hide a map for someone in the future?'],words:['folded','faded','canyon','followed','carving','spiral','century','explorer']},
 // ---------- Grade 4 ----------
 {id:'s6',lvl:'Grade 4 · Informational · slow forest rhythm',g:4,t:'How a Mushroom Talks Underground',focus:'informational text, main idea',
@@ -240,7 +240,7 @@ Some researchers think trees may even pass chemical warnings through this networ
 The mushroom you see is only a small part, like an apple on a huge, invisible tree.`,
  hook:'Under the ground, trees trade like neighbors.',
  takeaway:'Fungi and trees trade with each other underground. Working together helps both survive.',
- coach:['Before reading, ask: "What do you already know about mushrooms?"','When she meets "mycelium," ask what the sentence around it suggests before you explain.','After reading, have her say the main idea in 12 words or fewer.'],
+ coach:['Before reading, ask: "What do you already know about mushrooms?"',"When your child meets \"mycelium,\" ask what the sentence around it suggests before you explain.","After reading, have your child say the main idea in 12 words or fewer."],
  talk:['What does the tree give, and what does it get back?','Why compare a mushroom to an apple?'],words:['mycelium','fungal','minerals','researchers','chemical','network','invisible']},
 {id:'s8',lvl:'Grade 4 · Narrative · detective rhythm',g:4,t:'The Bridge of Lost Socks',focus:'character traits, sequence',
  text:`Theo had a theory: the dryer in his building was eating socks.
@@ -276,7 +276,7 @@ Grandpa set down his coffee and closed his eyes.
 "That," he whispered, "was the song from the night I met your grandmother."`,
  hook:'Watch what people do. It tells you what they feel.',
  takeaway:'People don\'t always say what they feel, so watch what they do. Learning a new skill can give someone a gift that money can\'t buy.',
- coach:['Read the dialogue in voices: she reads Lucia, you read Grandpa.','Ask: "Did Grandpa really think it was just furniture? What clue tells you?"','Point out the ellipses (...) and how they slow the reading down.'],
+ coach:["Read the dialogue in voices: your child reads Lucia, you read Grandpa.",'Ask: "Did Grandpa really think it was just furniture? What clue tells you?"','Point out the ellipses (...) and how they slow the reading down.'],
  talk:['Why did Lucia want to fix it?','What object in your family has a story?'],words:['furniture','noticed','electronics','patience','crackle','whispered']},
 {id:'s11',lvl:'Grade 4 · Informational · fast-growing rhythm',g:4.5,t:'Bamboo: The Grass That Builds',focus:'main idea and details',
  text:`It looks like a tree. It is actually a grass.
@@ -287,7 +287,7 @@ However, it must be dried and treated carefully, or insects and moisture will we
 Engineers are still studying how to use bamboo safely in modern buildings.`,
  hook:'Fast-growing grass, strong as steel, if you treat it right.',
  takeaway:'Bamboo is a fast-growing, strong, renewable grass, but it needs careful treatment to last.',
- coach:['Guess first: tree or grass?','Have her name the main idea plus three details, counting them on her fingers.','Point out the signal word "However" and what changes after it.'],
+ coach:['Guess first: tree or grass?',"Have your child name the main idea plus three details, counting them on their fingers.",'Point out the signal word "However" and what changes after it.'],
  talk:['What makes bamboo good for building?','What is one problem with it?'],words:['actually','scaffolding','hollow','remarkably','moisture','engineers']},
 {id:'g4a',lvl:'Grade 4 · Narrative · sports beat',g:4.2,t:'The Last Kick',focus:'character motivation, sportsmanship',
  text:`Tie game. Ten seconds left. The ball rolled to Amara's feet.
@@ -300,7 +300,7 @@ Later, he asked her why she had trusted him.
 "Because you never stopped practicing," she said. "I noticed."`,
  hook:'Notice the effort, not just the score.',
  takeaway:'Good teammates notice effort, not just results. Trust can help someone succeed.',
- coach:['Read the short sentences quickly, like a game clock counting down.','Ask: why did Amara pass instead of shooting? Have her find evidence.','Talk about a time someone believed in her.'],
+ coach:['Read the short sentences quickly, like a game clock counting down.',"Ask: why did Amara pass instead of shooting? Have your child find evidence.","Talk about a time someone believed in your child."],
  talk:['Was passing the right choice? Why?','Who is someone whose effort you have noticed?'],words:['seconds','choices','practicing','noticed','trusted','season']},
 {id:'g4b',lvl:'Grade 4 · Informational · electric rhythm',g:4.4,t:'How the Sun Becomes a Light Switch',focus:'explaining a process',
  text:`Sunlight travels 93 million miles, about eight minutes from the Sun to your roof.
@@ -312,7 +312,7 @@ Flip the switch at dusk, and your lamp glows with sunshine that landed hours ago
 Some families even power campers and trailers this way, far from any power line.`,
  hook:'Sun to panel, panel to wire, wire to battery, battery to light.',
  takeaway:'Solar panels turn sunlight into electricity by moving electrons, and batteries save it for later.',
- coach:['Have her draw the steps as arrows: Sun, panel, electrons, wires, battery, lamp.','Words like "electrons" and "silicon" are science words. Praise her for trying them.','Ask: "What would happen on a cloudy week?"'],
+ coach:["Have your child draw the steps as arrows: Sun, panel, electrons, wires, battery, lamp.","Words like \"electrons\" and \"silicon\" are science words. Praise your child for trying them.",'Ask: "What would happen on a cloudy week?"'],
  talk:['Why do you need a battery with solar panels?','What would you power with the sun?'],words:['travels','silicon','particles','electrons','electricity','battery']},
 {id:'g4c',lvl:'Grade 4 · Poem · playful rhyme',g:4.1,t:'The Dragon Who Hated Fire',focus:'rhyme, theme in poetry',
  text:`There once was a dragon named Pip,
@@ -327,7 +327,7 @@ What seems like a problem can be a gift
 when you find the right place for it to lift.`,
  hook:'Your fire is a gift in the right place.',
  takeaway:'Something that causes trouble in one place can be a strength in another. Find where you fit.',
- coach:['Clap the rhythm of the first four lines. Poems have a beat.','Have her find each pair of rhyming words.','Ask what "the right place" for her own big energy might be.'],
+ coach:['Clap the rhythm of the first four lines. Poems have a beat.',"Have your child find each pair of rhyming words.","Ask what \"the right place\" for your child's own big energy might be."],
  talk:['How did Pip turn his fire into a good thing?','What is one of your "too much" traits that could be a strength?'],words:['dragon','scorched','toasted','bakery','favorite','problem']},
 // ---------- Grade 5 ----------
 {id:'s7',lvl:'Grade 5 · Narrative · steady night-sky cadence',g:5,t:'The Star Counter',focus:'inference, figurative language',
@@ -340,7 +340,7 @@ She checked her notes three times, her heart drumming like rain on a tin roof.
 Weeks later, an email arrived from an observatory: the smudge was a comet, and her careful records had helped confirm its path.`,
  hook:'Count to keep looking, not to finish.',
  takeaway:'Patient, careful observation can lead to real discoveries. Even amateurs contribute to science.',
- coach:['Read this one slowly and evenly, like the night sky.','Find the comparison "like rain on a tin roof." What does it show about how Nadia felt?','Ask: why keep counting if she could never finish? Have her point to evidence.'],
+ coach:['Read this one slowly and evenly, like the night sky.','Find the comparison "like rain on a tin roof." What does it show about how Nadia felt?',"Ask: why keep counting if she could never finish? Have your child point to evidence."],
  talk:['What changed about "pointless" by the end?','What would you be patient enough to track for a year?'],words:['ambitious','scoffed','telescope','observatory','confirm','records','faint']},
 {id:'s12',lvl:'Grade 5 · Narrative · quiet, building rhythm',g:5,t:'The Map Without Names',focus:'theme, character change',
  text:`When Priya moved to a town where she knew no one, she drew a map of her neighborhood with no names, only shapes:
@@ -352,7 +352,7 @@ By winter the map was crowded with handwriting.
 The town had not changed at all. Priya had simply stopped being a stranger in it.`,
  hook:'One name at a time, a stranger becomes a neighbor.',
  takeaway:'Belonging grows one connection at a time. Small, brave steps can change how a place feels.',
- coach:['Ask what the blank map stands for at the start, and the full map at the end.','Theme: "What lesson is the author sharing?" Have her answer in one sentence.','Find the sentence where Priya changes.'],
+ coach:['Ask what the blank map stands for at the start, and the full map at the end.',"Theme: \"What lesson is the author sharing?\" Have your child answer in one sentence.",'Find the sentence where Priya changes.'],
  talk:['Why do you think Hannah was on the single swing?','Whose name would go on your map this week?'],words:['challenged','crooked','neighborhood','lonely','stranger','simply']},
 {id:'s13',lvl:'Grade 5 · Informational · wave-like rhythm',g:5,t:'Listening to Wi-Fi',focus:'technical vocabulary, explaining a process',
  text:`Wi-Fi signals bounce off walls, furniture, and even people, like ripples bouncing around a bathtub.
@@ -364,7 +364,7 @@ That raises a big question: if walls can't block this kind of sensing, how shoul
 Many scientists argue the people being sensed must stay in control.`,
  hook:'Signals ripple like water. Privacy needs your consent.',
  takeaway:'Wi-Fi reflections can reveal motion and even breathing. Powerful technology raises questions about privacy and consent.',
- coach:['Explain reflection with a flashlight and a mirror first.','Have her explain the process in three steps: signal, change, analysis.','Discuss the privacy question. Any opinion works as long as she gives reasons.'],
+ coach:['Explain reflection with a flashlight and a mirror first.',"Have your child explain the process in three steps: signal, change, analysis.","Discuss the privacy question. Any opinion works as long as your child gives reasons."],
  talk:['How can Wi-Fi notice breathing?','Should it be allowed in homes? Why?'],words:['reflections','measurable','analyzing','detect','privacy','technology']},
 {id:'s14',lvl:'Grade 5 · Narrative · rattling road rhythm',g:5.3,t:'The Last Bookmobile Stop',focus:'point of view, figurative language',
  text:`For thirty-one years, Mrs. Delgado drove the bookmobile down the same dusty county road,
@@ -376,7 +376,7 @@ Families she had served for decades had come, each holding the first book they h
 A man who was now a teacher handed her a worn picture book. "You gave me this when I was six," he said. "I never stopped reading."`,
  hook:'Small kindness, every week, for years, changes lives.',
  takeaway:'Small acts repeated for years ripple through many lives. Books passed on keep giving.',
- coach:['Find the two "like" comparisons. What does each one help you picture?','Point of view: who tells the story? How can you tell?','Have her infer Mrs. Delgado\'s feelings: one word plus one piece of evidence.'],
+ coach:['Find the two "like" comparisons. What does each one help you picture?','Point of view: who tells the story? How can you tell?',"Have your child infer Mrs. Delgado's feelings: one word plus one piece of evidence."],
  talk:['Why did families bring their first books?','Who has helped you love something?'],words:['bookmobile','rattled','expected','decades','borrowed','served']},
 {id:'s15',lvl:'Grade 5 · Informational · calm, high-altitude cadence',g:5.5,t:'Silence Above the Clouds',focus:'compare/contrast, author\'s purpose',
  text:`Astronomers build observatories on mountaintops for two reasons: thinner air and deeper darkness.
@@ -387,7 +387,7 @@ Some communities protect their skies with shielded lights that point downward.
 Places that succeed can earn recognition as dark-sky parks, and visitors travel hundreds of miles just to see the Milky Way.`,
  hook:'Thin air, dark sky, more stars.',
  takeaway:'Thin air and dark skies let us see more stars. Communities can choose to protect the night.',
- coach:['Make a T-chart comparing sea level and the summit.','Author\'s purpose: to inform, to persuade, or to entertain? Find evidence.','Connect it to stargazing: what could her town do to protect dark skies?'],
+ coach:['Make a T-chart comparing sea level and the summit.','Author\'s purpose: to inform, to persuade, or to entertain? Find evidence.',"Connect it to stargazing: what could your child's town do to protect dark skies?"],
  talk:['Why are mountaintops better for telescopes?','How could a town reduce light pollution?'],words:['astronomers','observatories','atmosphere','summit','pollution','recognition']},
 {id:'g5a',lvl:'Grade 5 · Narrative · tense, crisp adventure',g:5.1,t:'Whiteout on Logan Peak',focus:'suspense, problem-solving',
  text:`The snow came sideways. Visibility: ten feet. Then five.
@@ -399,7 +399,7 @@ They dug a shallow cave in the drift, shared cocoa from the thermos, and flashed
 At dusk, a search team's headlamps answered. Calm, it turned out, had been the bravest choice.`,
  hook:'Stop. Think. Stay warm. Signal.',
  takeaway:'In an emergency: stop, think, stay warm, and signal. Calm beats panic.',
- coach:['Read the short sentences quickly to build tension, then slow down at the end.','Have her list the survival steps they took.','Ask: why is "Think" stronger than "Run" here?'],
+ coach:['Read the short sentences quickly to build tension, then slow down at the end.',"Have your child list the survival steps they took.",'Ask: why is "Think" stronger than "Run" here?'],
  talk:['What would you pack for a winter hike?','When have you stayed calm when it was hard?'],words:['visibility','compass','trailhead','shallow','thermos','signal','search']},
 {id:'g5b',lvl:'Grade 5 · Informational · ancient, grand cadence',g:5.4,t:'The Emperor\'s Clay Army',focus:'history, cause and effect',
  text:`In 1974, farmers digging a well in China struck something hard: the head of a clay soldier.
@@ -410,7 +410,7 @@ But he ruled harshly, and his dynasty collapsed soon after his death.
 Historians still debate his legacy: a builder of unity, or a ruler who cost too many lives?`,
  hook:'Shared symbols join people. History weighs the cost.',
  takeaway:'Shared writing and measurements helped unite China. History asks us to weigh achievements against their human cost.',
- coach:['Find the dates and put them on a quick timeline.','Ask: why would shared writing help people trade and get along?','Debate: let her argue one side of the final question with evidence.'],
+ coach:['Find the dates and put them on a quick timeline.','Ask: why would shared writing help people trade and get along?',"Debate: let your child argue one side of the final question with evidence."],
  talk:['Why do you think each soldier had a different face?','Can someone do great things and harmful things at the same time?'],words:['terracotta','emperor','warriors','chariots','standardized','dynasty','legacy']},
 {id:'g5c',lvl:'Grade 5 · Poem · free verse, slow rhythm',g:5.2,t:'What the River Remembers',focus:'figurative language, theme in poetry',
  text:`The river remembers the mountain it came from,
@@ -424,6 +424,6 @@ Carry what you've learned like the river does:
 gently, steadily, all the way to the sea.`,
  hook:'Carry what you learn, gently, all the way to the sea.',
  takeaway:'Personification gives nature human qualities. What you learn travels with you everywhere you go.',
- coach:['Read it slowly, the way a river moves. Pause at line breaks.','Ask: what human things does the river do? (That is personification.)','Have her pick her favorite line and explain why she likes it.'],
+ coach:['Read it slowly, the way a river moves. Pause at line breaks.','Ask: what human things does the river do? (That is personification.)',"Have your child pick their favorite line and explain why they like it."],
  talk:['What is something you will carry with you all your life?','Why compare a pebble to a letter?'],words:['remembers','pebble','drought','whisper','heron','complain','steadily']}
 ];

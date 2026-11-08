@@ -148,7 +148,6 @@
 "Tonight's session note (optional, saved to the progress log when you press Save)": "ملاحظة جلسة الليلة (اختيارية، تُحفظ في سجلّ التقدّم عند الضغط على حفظ)",
 "Story notebook (kept for this story, saved as you type, shared by parent and kid)": "دفتر القصة (لهذه القصة، يُحفظ أثناء الكتابة، مشترك بين الوالد والطفل)",
 "e.g. read the comet part with great expression": "مثلًا: قرأت جزء المذنّب بتعبير رائع",
-"Words to revisit, questions she asked, funny things she said...": "كلمات للمراجعة، أسئلة طرحتها، أشياء مضحكة قالتها...",
 "Save": "حفظ",
 "Number music": "موسيقى الأرقام",
 "Grown-up arcade": "ألعاب الكبار",
@@ -597,7 +596,6 @@
 "Pad": "خلفية",
 "Utah": "يوتا",
 "Help.": "المساعدة.",
-"She reads aloud. You tap the words she finds tricky.": "تقرأ بصوت عالٍ. وتنقر أنت الكلمات الصعبة.",
 "Tap their name at the top. Tap ＋ or": "انقر اسمه في الأعلى. انقر ＋ أو",
 "or remove someone. Each kid's progress is kept separately.": "أو إزالة أحد. يُحفظ تقدّم كل طفل منفصلًا.",
 "to add": "للإضافة",
@@ -631,8 +629,6 @@
 "Next color at": "اللون التالي عند",
 "story": "قصة",
 "Read the rhyming pairs (cap/nap, cat/that) twice, with a little bounce.": "اقرأ أزواج القافية (cap/nap, cat/that) مرتين بإيقاع خفيف.",
-"Warm-up: say /a/ like in \"apple.\" Tap it on her arm for each word: c-a-t, m-a-t, s-a-t.": "إحماء: قل /a/ كما في \"apple\". انقرها على ذراعها مع كل كلمة: c-a-t, m-a-t, s-a-t.",
-"say /a/ like in \"apple.\" Tap it on her arm for each word: c-a-t, m-a-t, s-a-t.": "قل /a/ كما في \"apple\". انقرها على ذراعها مع كل كلمة: c-a-t, m-a-t, s-a-t.",
 "Cap, cat, can: change one letter, and a new word ran!": "Cap, cat, can: غيّر حرفًا واحدًا فتظهر كلمة جديدة!",
 "e.g. Mia or Bear": "مثلًا: ميا أو دبدوب",
 "🔍 Search stories (e.g. fox, space, short a)": "🔍 ابحث في القصص (مثلًا: ثعلب، فضاء، a قصيرة)",
@@ -1642,5 +1638,9 @@
 "Count syllables at your pace": "عُدّ المقاطع على مهلك",
 "Put scrambled letters in order": "رتّب الحروف المبعثرة",
 "Play together, at your pace": "العبا معًا على مهلكما",
-"You joined the words. Try another ladder whenever you like.": "وصلت بين الكلمات. جرّب سلّمًا آخر متى شئت."
+"You joined the words. Try another ladder whenever you like.": "وصلت بين الكلمات. جرّب سلّمًا آخر متى شئت.",
+"Warm-up: say /a/ like in \"apple.\" Tap it on your child's arm for each word: c-a-t, m-a-t, s-a-t.": "إحماء: قل /a/ كما في \"apple\". انقر برفق على ذراع طفلك مع كل كلمة: c-a-t, m-a-t, s-a-t.",
+"Words to revisit, questions your child asked, funny things your child said...": "كلمات للمراجعة، أسئلة طفلك، تعليقات طفلك الطريفة...",
+"Your child reads aloud. You tap the words they find tricky.": "القراءة بصوت عالٍ، مع النقر على الكلمات الصعبة.",
+"say /a/ like in \"apple.\" Tap it on your child's arm for each word: c-a-t, m-a-t, s-a-t.": "قل /a/ كما في \"apple\". انقر برفق على ذراع طفلك مع كل كلمة: c-a-t, m-a-t, s-a-t."
 }

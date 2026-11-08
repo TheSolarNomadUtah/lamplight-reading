@@ -277,3 +277,8 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Practice still records intentional skill practice and foreground activity in the existing local journal, explicitly without stars, elapsed speed scores or points. All historical reading logs, notes, profiles, stars, best times, tunes and loops stay unchanged. Retired music and arcade links remain hidden.
 - English and Spanish text; Arabic interface only. Existing art, Bedtime Glow sound design and shipped audio are unchanged. No new requests, services, companion features or audio assets.
 - Cache `lamplight-v71`; `v71.js` is precached and both full-offline manifests are byte-recomputed.
+
+## v72 — Neutral story-coach and notebook wording
+- The notebook now prompts for “questions your child asked” and “funny things your child said,” with corresponding Spanish and Arabic strings.
+- Audited all English/Spanish story coaching and notebook copy. Child references use neutral wording; story characters, story text, quizzes, talk questions and existing notes are untouched. The retained legacy Read Together coach and Spanish story-mode guidance are neutral too.
+- Cache `lamplight-v72`; existing precached files retained and both offline manifests byte-recomputed. No new features, requests, art or audio files.

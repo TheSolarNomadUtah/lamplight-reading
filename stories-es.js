@@ -12,7 +12,7 @@ como no hay ninguna.`,hook:'Mmm, mmm, la luna.',coach:['Hagan "mmm" juntos y sie
 {id:'es_p3',lvl:'Pre-K · Eco · animales',g:0.15,t:'¿Quién hace muu?',focus:'sonidos de animales',text:`La vaca hace muu. 🐄
 El gato hace miau. 🐱
 El perro hace guau. 🐶
-¿Y tú? ¡Hola, hola, hola!`,hook:'Muu, miau, guau.',coach:['Esperen a que el niño haga el sonido.'],q:[['¿Quién hace miau?',['el gato','la vaca','el perro'],0]]},
+¿Y tú? ¡Hola, hola, hola!`,hook:'Muu, miau, guau.',coach:["Espera a que tu peque haga el sonido."],q:[['¿Quién hace miau?',['el gato','la vaca','el perro'],0]]},
 {id:'es_p4',lvl:'Pre-K · Eco · cuerpo',g:0.18,t:'Mis manitas',focus:'ritmo y palmas',text:`Mis manitas dan, dan, dan.
 Mis piecitos van, van, van.
 Mi naricita hace achís,
@@ -84,7 +84,7 @@ Desde ese día, deja migas para él en el jardín.`,hook:'Pista por pista, la ve
 El viento y el agua los tallaron muy despacio,
 durante miles y miles de años.
 Al atardecer, la piedra brilla como fuego.
-De noche, el cielo se llena de estrellas.`,hook:'Viento, agua y tiempo hacen arcos.',coach:['Busquen una foto de Arches con el niño.'],q:[['¿Quién talló los arcos?',['el viento y el agua','un gigante','las personas'],0]]},
+De noche, el cielo se llena de estrellas.`,hook:'Viento, agua y tiempo hacen arcos.',coach:["Busca una foto de Arches con tu peque."],q:[['¿Quién talló los arcos?',['el viento y el agua','un gigante','las personas'],0]]},
 {id:'es_23',lvl:'Grado 2 · Humor',g:2.5,t:'El perro que quería volar',focus:'personajes y sentimientos',text:`Toto el perro miraba a los pájaros todo el día.
 "Yo también quiero volar", dijo.
 Saltó desde una caja. ¡Plaf! Cayó en el pasto.
