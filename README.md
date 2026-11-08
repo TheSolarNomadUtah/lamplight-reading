@@ -172,3 +172,6 @@ Hides Number Music (Ignacio: needs more work). Code stays, no entry points.
 
 ## v57
 Hides "Say the words" and its hint on every song (Ignacio). Play song stays.
+
+## v58
+About page: removed the Hum & match microphone note (feature hidden in v54).
