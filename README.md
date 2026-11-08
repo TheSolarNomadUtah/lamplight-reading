@@ -175,3 +175,6 @@ Hides "Say the words" and its hint on every song (Ignacio). Play song stays.
 
 ## v58
 About page: removed the Hum & match microphone note (feature hidden in v54).
+
+## v59
+New: Word Kinds game (tap the nouns, pronouns or adjectives; en/es/ar sentences) in Games, and Cursive ABC / Cursive abc tracing in Trace. Cursive font: Playwrite US Trad, SIL Open Font License (fonts/PlaywriteUSTrad-OFL.txt), bundled and subset, no outside requests.

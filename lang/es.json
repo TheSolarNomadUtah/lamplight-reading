@@ -1006,5 +1006,21 @@
 "Interface and page sounds: Kenney (kenney.nl), CC0. Chimes and sparkles: made for Lamplight from simple harmonic ratios (3:2, 5:4), CC0.": "Sonidos de la interfaz y de páginas: Kenney (kenney.nl), CC0. Campanitas y destellos: creados para Lamplight con proporciones armónicas simples (3:2, 5:4), CC0.",
 "Press ▶ Play to hear {name}": "Pulsa ▶ Reproducir para oír {name}",
 "Some sounds need internet. For full offline use, a grown-up can tap Save everything in Grown-ups.": "Algunos sonidos necesitan internet. Para usarla sin conexión por completo, un adulto puede tocar Guardar todo en Adultos.",
-"Opens without internet after the first visit. For every sound, voice and language offline, tap Save everything and wait for 100%.": "Se abre sin internet tras la primera visita. Para tener todos los sonidos, voces e idiomas sin conexión, toca Guardar todo y espera al 100%."
+"Opens without internet after the first visit. For every sound, voice and language offline, tap Save everything and wait for 100%.": "Se abre sin internet tras la primera visita. Para tener todos los sonidos, voces e idiomas sin conexión, toca Guardar todo y espera al 100%.",
+"Cursive ABC": "ABC cursiva",
+"Cursive abc": "abc cursiva",
+"Word Kinds": "Clases de palabras",
+"Nouns, pronouns, adjectives": "Sustantivos, pronombres, adjetivos",
+"Noun": "Sustantivo",
+"Pronoun": "Pronombre",
+"Adjective": "Adjetivo",
+"a person, place, animal or thing": "una persona, lugar, animal o cosa",
+"a word that stands for a noun, like she or they": "una palabra que reemplaza a un sustantivo, como ella o ellos",
+"a word that tells what something is like": "una palabra que dice cómo es algo",
+"Tap every {kind}": "Toca cada {kind}",
+"Stars: {n} ⭐": "Estrellas: {n} ⭐",
+"You found them all!": "¡Los encontraste todos!",
+"Yes!": "¡Sí!",
+"That one is a {kind}.": "Esa es un {kind}.",
+"Not that one. Try another!": "Esa no. ¡Prueba otra!"
 }
