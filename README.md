@@ -263,3 +263,9 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Resolve titles by stable story id in the current language, including older entries and saved notes. A bundled Spanish catalog covers all 258 shipped story ids; known practice words are translated only for display, with source-language/context checks. Names, unknown vocabulary and original local records are retained.
 - Read Together note labels, print headings and print opt-in derive from the mode’s existing name (Spanish: Leer en compañía).
 - Cache lamplight-v69; offline manifests include the small local-only localization module. No audio changes or outside requests.
+
+## v70 — Every rung is one letter
+- Repair The Word Ladder (kl3): hot → pot → pet → wet → wit → sit → sin → sun → bun → bug → hug. Body, complete preview/word list, bridge quizzes and talk questions agree; the level now lists short i too.
+- Coach: “Let your child invent the next step.” Spanish/Arabic UI strings use the same neutral prompt.
+- Audited all 133 English and 125 Spanish stories: cap → cat → can is valid; the four-sounds lesson is a blending list, not a claimed ladder. There is no separate Spanish kl3 story in the shipped Spanish library; no other skipped letter-ladder steps found. No new translated story or audio added.
+- Cache lamplight-v70; offline manifest byte totals refreshed.

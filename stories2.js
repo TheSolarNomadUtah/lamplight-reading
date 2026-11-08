@@ -108,22 +108,24 @@ Snap, snap, I can read that!`,
  coach:['Warm-up: write the five words on paper. Snap your fingers when she reads one.','Read the sentences together, then let her try them alone.','Hunt for "the" in any other book. It is everywhere!'],
  talk:['Which snap word is the easiest?','Can you find "the" on a cereal box?'],words:['the','a','is','I','see'],
  q:[['Which is a snap word?',['the','zebra','muffin'],0],['The cat is…',['big','blue','sad'],0]]},
-{id:'kl3',lvl:'K · Lesson · CVC word ladder (short o, u, e)',g:0.45,t:'Lesson: The Word Ladder',focus:'CVC words, changing one sound',
+{id:'kl3',lvl:'K · Lesson · CVC word ladder (short o, e, i, u)',g:0.45,t:'Lesson: The Word Ladder',focus:'CVC words, changing one sound',
  text:`Hop on the word ladder!
 hot, change the h to p… pot!
 pot, change the o to e… pet!
 pet, change the p to w… wet!
 wet, change the e to i… wit!
 wit, change the w to s… sit!
+sit, change the t to n… sin!
+sin, change the i to u… sun!
 sun, change the s to b… bun!
 bun, change the n to g… bug!
 bug, change the b to h… hug!
 Top of the ladder. Hug!`,
  hook:'Change one sound, climb one step.',
  takeaway:'Change one letter and you get a new word. Every word is made of sounds you can swap.',
- coach:['Warm-up: say "hot." Now say it with /p/ instead of /h/. That is pot!','Write each word on a ladder drawing and climb with a finger.','Let her invent the next step.'],
- talk:['What word comes after hug if you change h to m?','Which step was hardest?'],words:['hot','pot','pet','wet','sit','sun','bun','bug','hug'],
- q:[['hot, change h to p…',['pot','pet','hug'],0],['What was at the top of the ladder?',['hug','sun','pet'],0]]},
+ coach:['Warm-up: say "hot." Now say it with /p/ instead of /h/. That is pot!','Write each word on a ladder drawing and climb with a finger.','Let your child invent the next step.'],
+ talk:['What changes from sit to sin?','How do you turn sin into sun by changing one letter?'],words:['hot','pot','pet','wet','wit','sit','sin','sun','bun','bug','hug'],
+ q:[['sit, change t to n…',['sin','sun','wit'],0],['sin, change i to u…',['sun','sit','bun'],0],['What was at the top of the ladder?',['hug','sun','pet'],0]]},
 {id:'kl4',lvl:'K · Lesson · rhyme time',g:0.5,t:'Lesson: Rhyme Train',focus:'rhyming families -at, -en, -op, -ug',
  text:`All aboard the rhyme train! Choo choo!
 Car one: cat, hat, bat, mat.
