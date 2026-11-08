@@ -1,0 +1,22 @@
+// v60: more levels in every game. Rhythm Echo +7, Melody Echo +3, Syllable Sprint +1 tier and more words, Word Scramble +40 words,
+// Word Ladder +ladders (games-data.json), Word Kinds +sentences and 3 levels. All on this device, zero data.
+{const gi=RXL.findIndex(x=>x.g);RXL.splice(gi<0?RXL.length:gi,0,
+ {id:'k9',n:'Waltz in 3',bpm:96,len:6,hits:[[0,RXK],[1,RXC],[2,RXC],[3,RXK],[4,RXC],[5,RXC]]},
+ {id:'k10',n:'Gallop',bpm:100,len:8,hits:RXP([0,0.75,1,2,2.75,3,4,4.75,5,6,6.75,7])},
+ {id:'k11',n:'Call and answer',bpm:110,len:16,hits:[...[0,1,2,3].map(t=>[t,RXK]),...[4,4.5,5,6].map(t=>[t,RXC]),...[8,9,10,11].map(t=>[t,RXK]),...[12,12.5,13,14].map(t=>[t,RXC])]},
+ {id:'k12',n:'Fast 160',bpm:160,len:8,hits:RXP([0,1,1.5,2,3,4,5,5.5,6,7])});
+ RXL.push({id:'g5',n:'Off-beats',bpm:110,len:8,g:1,win:90,hits:[0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5].map(t=>[t,RXH])},
+ {id:'g6',n:'4:3 polyrhythm',bpm:80,len:3,g:1,win:100,hits:[...[0,.75,1.5,2.25].map(t=>[t,RXK]),...[0,1,2].map(t=>[t,RXC])]},
+ {id:'g7',n:'Long and tight',bpm:130,len:16,g:1,win:60,once:1,hits:RXP([0,1,1.5,3,4,5.5,6,7,8,9.5,10,11,12,13.5,14,15])})}
+{const ki=MEL.findIndex(x=>x.g);MEL.splice(ki<0?MEL.length:ki,0,{id:'k5',n:'7 notes',len:7});const gi=MEL.findIndex(x=>x.id==='g6');MEL.splice(gi+1,0,{id:'g7',n:'18 notes',len:18,g:1,chrom:1},{id:'g8',n:'20 notes',len:20,g:1,chrom:1})}
+SPL.master=['Master',6,20];
+SPW.push('hip|po|pot|a|mus','e|lec|tric|i|ty','cu|ri|os|i|ty','vo|cab|u|lar|y','an|i|mal','pi|an|o','blue|ber|ry','sun|flow|er','dragon|fly'.replace('dragon','drag|on'),'pump|kin','zeb|ra','li|on','ham|ster','pea|nut','pop|corn','rain|bow','snow|man','tur|tle','pen|guin','ca|ter|pil|lar|s'.replace('|s',''),'ex|tra|or|di|nar|y','in|de|pen|dent','or|gan|i|za|tion','ri|dic|u|lous|ly','ve|loc|i|ty','e|qual|i|ty','ge|og|ra|phy','bi|ol|o|gy','au|to|mo|bile','re|frig|er|a|tor','par|tic|i|pa|tion','un|be|liev|a|ble','op|por|tu|ni|ty');
+SCR.push('planet','rainbow','dolphin','volcano','penguin','jungle','compass','pyramid','dinosaur','backpack','sandwich','treasure','blanket','kitchen','pancake','journey','balloon','thunder','library','mountain','butterfly','elephant','umbrella','hamburger','astronaut','calendar','chocolate','festival','language','question','keyboard','notebook','sunshine','snowflake','fireworks','waterfall','spaceship','alligator','strawberry','microscope');
+WK.en.push("[Dad:n] made [hot:a] [soup:n].","[She:p] wears a [blue:a] [hat:n].","The [old:a] [man:n] sat on a [bench:n].","[We:p] built a [huge:a] [snowman:n].","[He:p] has a [fast:a] [bike:n].","The [puppy:n] licked [me:p].","[They:p] painted a [bright:a] [rainbow:n].","[It:p] was a [quiet:a] [night:n].","My [brother:n] found a [small:a] [shell:n].","The [hungry:a] [bear:n] ate [berries:n].","[I:p] hugged my [fluffy:a] [cat:n].","Our [garden:n] has [pretty:a] [flowers:n].","[You:p] have a [loud:a] [drum:n].","The [sleepy:a] [owl:n] closed [its:p] [eyes:n].","[She:p] and [I:p] ate [crunchy:a] [apples:n].");
+WK.es.push("[Papá:n] hizo una [sopa:n] [caliente:a].","[Ella:p] lleva un [sombrero:n] [azul:a].","El [perrito:n] [me:p] lamió.","[Nosotros:p] hicimos un [muñeco:n] [enorme:a].","[Él:p] tiene una [bici:n] [rápida:a].","[Ellos:p] pintaron un [arcoíris:n] [brillante:a].","Mi [hermano:n] encontró una [concha:n] [pequeña:a].","El [oso:n] [hambriento:a] comió [moras:n].","[Yo:p] abracé a mi [gato:n] [suave:a].","Nuestro [jardín:n] tiene [flores:n] [bonitas:a].","[Tú:p] tienes un [tambor:n] [ruidoso:a].","El [búho:n] [dormido:a] cerró los [ojos:n].");
+// Word Kinds levels: 1 = find one kind, 2 = find two kinds in a row, 3 = all three kinds in the same sentence.
+WKS.lv=WKS.lv||1;
+{const wn=wkNew;wkNew=function(){const L=WK[LANG]||WK.en,need=WKS.lv;let tries=0;do{wn()}while(new Set(WKS.toks.filter(t=>t.k).map(t=>t.k)).size<need&&++tries<50);
+ const ks=[...new Set(WKS.toks.filter(t=>t.k).map(t=>t.k))].sort(()=>Math.random()-.5);WKS.queue=ks.slice(0,need);WKS.want=WKS.queue.shift()}}
+{const wt=wkTap;wkTap=function(i){wt(i);const need=WKS.toks.filter(x=>x.k===WKS.want).length;if(WKS.found>=need&&WKS.queue&&WKS.queue.length){WKS.want=WKS.queue.shift();WKS.found=0;WKS.got--;WKS.msg=gT('Great! Now find the next kind.');wkRender()}}}
+{const wr=wkRender;wkRender=function(){wr();const h=$('games').querySelector('h3');if(h)h.insertAdjacentHTML('beforebegin',`<div class="glv">${[1,2,3].map(n=>`<button class="${WKS.lv===n?'p':''}" onclick="WKS.lv=${n};wkNew();WKS.msg='';wkRender()">${gT('Level {n}',{n:gNum(n)})}</button>`).join(' ')}</div>`)}}

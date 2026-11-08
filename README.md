@@ -178,3 +178,6 @@ About page: removed the Hum & match microphone note (feature hidden in v54).
 
 ## v59
 New: Word Kinds game (tap the nouns, pronouns or adjectives; en/es/ar sentences) in Games, and Cursive ABC / Cursive abc tracing in Trace. Cursive font: Playwrite US Trad, SIL Open Font License (fonts/PlaywriteUSTrad-OFL.txt), bundled and subset, no outside requests.
+
+## v60
+More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master tier +33 words, Word Scramble +40 words, Word Ladder +52 ladders (88 total), Word Kinds +27 sentences and Levels 1-3.
