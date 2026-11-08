@@ -128,11 +128,11 @@ const OUTL={star:'<path d="M100 15 L124 75 L188 78 L138 118 L156 182 L100 146 L4
  tree:'<circle cx="100" cy="75" r="55"/><circle cx="60" cy="100" r="30"/><circle cx="140" cy="100" r="30"/><rect x="88" y="120" width="24" height="65"/>'};
 function outlineFor(s){const t=(s.t+' '+s.text).toLowerCase();const k=/fox|cat|dog|bear/.test(t)?'fox':/rocket|planet|comet|space/.test(t)?'rocket':/moon|night/.test(t)?'moon':/star/.test(t)?'star':/tree|leaf|garden|seed/.test(t)?'tree':'house';
  return `<svg viewBox="0 0 200 200" width="260" height="260" fill="none" stroke="#333" stroke-width="3" stroke-linejoin="round">${OUTL[k]}</svg>`}
-function printPage(id){const s=S.find(x=>x.id===id);show('print');const kw=s.words.filter(w=>/^[a-z']+$/i.test(w)).slice(0,4);
- $('print').innerHTML=`<div class="card ppage"><p class="noprint"><button class="p" onclick="print()">🖨️ Print this page</button> <button onclick="show('lib')">⬅ Library</button> <button onclick="printSheet('${s.id}')">Practice sheet instead</button></p>
- <p>Name: ______________ &nbsp; Date: ________</p><h1 style="font-size:2rem;font-weight:normal">${s.t}</h1><div class="ptext">${s.text.replace(/\n/g,'<br>')}</div>
- <h3>Trace the words</h3>${kw.map(w=>`<div class="tline"><span class="tw">${w}</span><span class="tw">${w}</span><span class="tw">${w}</span></div>`).join('')}
- <h3>Color it in</h3><div style="text-align:center">${outlineFor(s)}</div><p class="soft">Lamplight Learning · ${s.lvl}</p></div>`}
+function printPage(id){const s=S.find(x=>x.id===id);if(!s)return;show('print');const kw=s.words.filter(w=>/^[\p{L}’']+$/u.test(w)).slice(0,4);
+ $('print').innerHTML=`<div class="card ppage"><p class="noprint"><button class="p" onclick="print()">${gT('Print this page')}</button> <button onclick="show('lib')">${gT('Library')}</button> <button onclick="printSheet('${s.id}')">${gT('Practice sheet instead')}</button></p>
+ <p><span>${gT('Name')}</span>: ______________ &nbsp; <span>${gT('Date')}</span>: ________</p><h1 style="font-size:2rem;font-weight:normal">${esc(s.t)}</h1><div class="ptext">${esc(s.text).replace(/\n/g,'<br>')}</div>
+ <h3>${gT('Trace the words')}</h3>${kw.map(w=>`<div class="tline"><span class="tw">${esc(w)}</span><span class="tw">${esc(w)}</span><span class="tw">${esc(w)}</span></div>`).join('')}
+ <h3>${gT('Color it in')}</h3><div style="text-align:center">${outlineFor(s)}</div><p class="soft">Lamplight Learning · ${esc(s.lvl)}</p></div>`;artRefresh63($('print'))}
 // ---------- Paint Studio ----------
 const PCOL=[['#e53935','red'],['#fb8c00','orange'],['#fdd835','yellow'],['#43a047','green'],['#1e88e5','blue'],['#8e24aa','purple'],['#ec407a','pink'],['#6d4c41','brown'],['#ffffff','white'],['#212121','black']];
 const WHEEL=[['red',0],['red-orange',15],['orange',30],['yellow-orange',45],['yellow',60],['yellow-green',90],['green',120],['teal',165],['cyan',180],['blue',220],['violet',265],['magenta',300]];

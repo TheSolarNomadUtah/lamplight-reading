@@ -61,7 +61,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=66;
+const APP_VERSION=67;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;
 const RAW={get:k=>{try{return window.localStorage.getItem(k)}catch(e){STORE_OK=false;return k in MEM?MEM[k]:null}},
@@ -127,14 +127,14 @@ function mic(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition
  rec.onerror=e=>{$('ms').textContent='Speech check failed ('+e.error+'). It does not work in Brave. Try Chrome or Edge, or tap words by hand.'};rec.start();$('mic').textContent='⏹ Stop listening';$('ms').textContent='Listening…'}
 function finish(){if(tick)toggleTimer();if(rec)rec.stop();const n=wc(cur.s);const l=getLog();
  l.push({date:Date.now(),story:cur.s.id,words:n,missed:cur.tricky.size,tricky:[...cur.tricky].map(x=>x.split('|')[1].replace(/[^\w']/g,'')),wpm:t0>10?Math.round(n/(t0/60)):null,note:$('note').value});setLog(l);show('log')}
-function printSheet(id){const s=S.find(x=>x.id===id);const tr=[...new Set(getLog().flatMap(e=>e.tricky||[]))].slice(-8);show('print');
- $('print').innerHTML=`<div class="card"><button class="noprint p" onclick="print()">Print this page</button> <button class="noprint" onclick="show('home')">Back</button>
- <h2>Practice sheet: ${s.t}</h2><p>Name: ____________ &nbsp; Date: ________</p><p><b>Focus:</b> ${s.focus}</p>
- <h3>1. Read these words. Circle the tricky part.</h3><p style="font-size:1.5rem;word-spacing:1.2em">${s.words.join(' ')}</p>
- ${tr.length?`<h3>2. Words from your log to practice again</h3><p style="font-size:1.4rem;word-spacing:1em">${tr.join(' ')}</p>`:''}
- <h3>${tr.length?3:2}. Write a sentence using two of the words above.</h3><p>__________________________________________________</p><p>__________________________________________________</p>
- <h3>Talk or draw</h3><p>${s.talk[1]}</p><div style="border:1px dashed #aaa;height:160px;border-radius:10px"></div>
- <p class="soft">Grown-up: spend 5 minutes on this sheet, not more. Counts as a session too.</p></div>`}
+function printSheet(id){const s=S.find(x=>x.id===id);if(!s)return;const tr=[...new Set(getLog().flatMap(e=>e.tricky||[]))].slice(-8);show('print');
+ $('print').innerHTML=`<div class="card ppage"><button class="noprint p" onclick="print()">${gT('Print this page')}</button> <button class="noprint" onclick="show('home')">${gT('Back')}</button>
+ <h2>${gT('Practice sheet: {title}',{title:esc(s.t)})}</h2><p><span>${gT('Name')}</span>: ____________ &nbsp; <span>${gT('Date')}</span>: ________</p><p><b>${gT('Focus')}:</b> ${esc(s.focus)}</p>
+ <h3>${gNum(1)}. ${gT('Read these words. Circle the tricky part.')}</h3><p style="font-size:1.5rem;word-spacing:1.2em">${s.words.map(esc).join(' ')}</p>
+ ${tr.length?`<h3>${gNum(2)}. ${gT('Words from your log to practice again')}</h3><p style="font-size:1.4rem;word-spacing:1em">${tr.map(esc).join(' ')}</p>`:''}
+ <h3>${gNum(tr.length?3:2)}. ${gT('Write a sentence using two of the words above.')}</h3><p class="writeLine67"></p><p class="writeLine67"></p>
+ <h3>${gT('Talk or draw')}</h3><p>${esc(s.talk[1]||s.talk[0]||'')}</p><div style="border:1px dashed #aaa;height:160px;border-radius:10px"></div>
+ <p class="soft">${gT('Grown-up: spend 5 minutes on this sheet, not more. Counts as a session too.')}</p></div>`;artRefresh63($('print'))}
 function getSN(){return safeJSON(LS.get('lamp_notes'),{})}
 function saveSN(id,v){const n=getSN();n[id]=v;LS.set('lamp_notes',JSON.stringify(n))}
 function esc(t){return t.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
@@ -219,7 +219,7 @@ function soloQ(){const s=SO.s;if(SO.qi>=SO.qs.length){const stars=1+(SO.right===
 function soloAns(b,ok){if(ok){b.classList.add('yes');SO.right+=SO.tried?0:1;SO.tried=false;$('qfb').textContent='⭐ Yes!';speak('Yes!');SO.qi++;setTimeout(soloQ,1000)}else{SO.tried=true;b.disabled=true;b.style.opacity=.4;$('qfb').textContent='Good try! Pick another one.';speak('Good try. Pick another one.')}}
 
 applyLook();renderBar();render();$("home").classList.add("hidden");
-if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navigator.serviceWorker.controller;navigator.serviceWorker.register('sw.js',{scope:'./'}).then(r=>r.update());let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl&&hadSW){rl=1;location.reload()}})}
+if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navigator.serviceWorker.controller;navigator.serviceWorker.register('sw.js',{scope:'./'}).then(r=>r?.update()).catch(()=>{});let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl&&hadSW){rl=1;location.reload()}})}
 </script>
 <script src="v10.js"></script><script src="music-data.js"></script><script src="music.js"></script><script src="v12.js"></script><script src="stories-es.js"></script><script src="v14.js"></script><script src="seq-demos.js"></script><script src="v16-seq.js"></script><script src="v16-art.js"></script><script src="v16.js"></script><script src="v17.js"></script><script src="move.js"></script><script src="i18n.js"></script><script src="v19.js"></script>
 <script src="v20.js"></script><script src="v21.js"></script><script src="v22.js"></script><script src="v23.js"></script><script src="v24.js"></script><script src="v25.js"></script><script src="v27.js"></script><script src="v28.js"></script><script src="v29.js"></script><script src="v30.js"></script><script src="v31.js"></script><script src="v32.js"></script><script src="v33.js"></script><script src="v34.js"></script><script src="v35.js"></script><script src="v36.js"></script><script src="v37.js"></script><script src="v38.js"></script><script src="v41.js"></script><script src="v43.js"></script><script src="v44.js"></script><script src="v46.js"></script><script src="v47.js"></script><script src="v48.js"></script><script src="v49.js"></script><script src="v50.js"></script><script src="v51.js"></script><script src="v52.js"></script><script src="v54.js"></script><script src="v55.js"></script><script src="v56.js"></script><script src="v57.js"></script><script src="v58.js"></script><script src="v59.js"></script><script src="v60.js"></script><script src="v61.js"></script><script src="v62.js"></script><script src="art63.js"></script><script src="v63.js"></script><script src="drum63.js"></script><script src="stories64.js"></script><script src="art64.js"></script><script src="v64.js"></script><script src="echo65-data.js"></script>
@@ -227,4 +227,5 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="v65.js"></script>
 <script src="icons65.js"></script>
 <script src="v66.js"></script>
+<script src="v67.js"></script>
 </body></html>

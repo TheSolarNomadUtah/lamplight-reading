@@ -118,13 +118,13 @@ function renderOffline(){const el=$('offcard');if(!el)return;const all=RAW.get('
  <p><b>Firefox on a computer:</b> bookmark the page. It still works offline after a visit.</p></details>`}
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.BIP=e;renderOffline()});
 {const ra=renderAdults;renderAdults=function(){ra();$('adults').insertAdjacentHTML('afterbegin','<div class="card" id="offcard"></div>');renderOffline();if(OFF.size==null)offSize()};RENDER.adults=renderAdults}
-function netChip(){let c=$('netchip');if(!c){document.body.insertAdjacentHTML('beforeend','<div id="netchip"></div>');c=$('netchip')}const on=navigator.onLine;c.textContent=on?'● Online':'● Offline: still works';c.className=on?'on':'off'}
+function netChip(){let c=$('netchip');if(!c){c=document.createElement('div');c.id='netchip';c.setAttribute('role','status');(document.querySelector('footer')||document.body).appendChild(c)}const on=navigator.onLine;const label=on?'Online':'Offline: still works';c.textContent='● '+(typeof gT==='function'?gT(label):label);c.className=on?'on':'off'}
 addEventListener('online',netChip);addEventListener('offline',netChip);netChip();
 // Home tiles
 {const rh=renderHub;renderHub=function(){rh();const g=$('hub').querySelectorAll('.hubgrid')[1];if(g)g.insertAdjacentHTML('beforeend',`<button class="hubtile" onclick="show('cymatics')"><span>🌀</span>Sound shapes</button><button class="hubtile" onclick="show('bedtime')"><span>🌙</span>Bedtime glow</button>`)};RENDER.hub=renderHub;if(!$('hub').classList.contains('hidden'))renderHub()}
 {const re=renderEcho;renderEcho=function(){re();if(!ECUR)$('echo').insertAdjacentHTML('afterbegin',`<div class="card" style="text-align:center"><button class="bigbtn" onclick="show('cymatics')">🌀 Sound shapes: see your voice</button> <button class="bigbtn" onclick="show('bedtime')">🌙 Bedtime glow</button></div>`)};RENDER.echo=renderEcho}
 document.head.insertAdjacentHTML('beforeend',`<style>
-#netchip{position:fixed;right:8px;bottom:8px;z-index:200;font-size:.8rem;padding:3px 10px;border-radius:12px;background:#1d2a1d;color:#9fe29f;opacity:.85;pointer-events:none}#netchip.off{background:#2a1d1d;color:#ffcf8a}
+#netchip{position:static;display:table;max-width:100%;margin:12px auto 0;overflow-wrap:anywhere;font-size:.8rem;padding:3px 10px;border-radius:12px;background:#1d2a1d;color:#9fe29f;pointer-events:none}#netchip.off{background:#2a1d1d;color:#ffcf8a}
 body.bedtime header,body.bedtime nav,body.bedtime footer,body.bedtime #netchip{display:none!important}
 #btwrap{position:fixed;inset:0;z-index:150;background:#03040a;color:#d9d2c3}#btc{position:absolute;inset:0;width:100%;height:100%;transition:opacity 2s}
 #btword{position:absolute;top:46%;width:100%;text-align:center;font-size:clamp(1.4rem,5vw,2.4rem);color:#fff4dcaa;letter-spacing:.1em;pointer-events:none}
