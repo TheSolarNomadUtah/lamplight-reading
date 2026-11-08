@@ -157,3 +157,6 @@ A breathing companion, only in the Grown-up arcade (v29: Star songs moved there 
 ## v52 — launch fixes from v51 QA
 - When a recorded voice has no clip for a prompt (Letters "Find the little letter for…", Trace 🔊 letter), it stays silent instead of falling back to the device voice.
 - No sideways scroll at 360/390 px: Cymatics canvas capped to the screen; Kids progress table scrolls inside its own box.
+
+## v53
+Ships QA's -0.3 dB gain-only trims for 5 voice clips (dora/l_x, michael/l_n, michael/l_p, michael/w_diamond, nicole/w_panda; mp3 and opus), approved by Ignacio. All voice clips now at or below -1.5 dBTP.
