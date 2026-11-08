@@ -257,3 +257,9 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Fixed shared, stale Scramble bests: new results are child-scoped and reload on a child switch. Old shared scores remain unassigned and are retained in family backups. Kids now says “letters practiced”, without a misleading known/mastered claim or a fixed English-only /26 denominator.
 - Storage failures no longer read back stale disk values over newly saved memory or resurrect failed deletes. The report visibly warns when a durable save failed, offers retry and a local family-backup download. Existing records remain unchanged; full-family backup/import/delete includes the new journal. All processing stays on device, no analytics/outside requests, no audio or voice assets added or changed.
 - Full EN/ES report copy and AR interface strings; original Lamplight SVG art, high-contrast warm/dark layouts, 360/390 px, offline and v67→v68 upgrade coverage. Evidence: `/workspace/audit-v68/`. No claim to recover history the older app never saved; physical-device and caregiver usability review remain separate.
+
+## v69 — Progress log language polish
+- Counts use English/Spanish singulars and Arabic zero, one, two, few, many and other forms throughout on-screen and printable reports (readings, streak days, stars, points, questions and time).
+- Resolve titles by stable story id in the current language, including older entries and saved notes. A bundled Spanish catalog covers all 258 shipped story ids; known practice words are translated only for display, with source-language/context checks. Names, unknown vocabulary and original local records are retained.
+- Read Together note labels, print headings and print opt-in derive from the mode’s existing name (Spanish: Leer en compañía).
+- Cache lamplight-v69; offline manifests include the small local-only localization module. No audio changes or outside requests.
