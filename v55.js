@@ -1,0 +1,7 @@
+// v55: Number Music melody river: the newest note glows in the middle of the screen and older notes drift left, instead of hugging the right edge.
+function nmLoop(){const cv=$('nmc');if(!cv){nmStop();return}NM.raf=requestAnimationFrame(nmLoop);const x=cv.getContext('2d'),W=cv.width,H=cv.height,c=W/2;x.fillStyle='rgba(7,9,20,.12)';x.fillRect(0,0,W,H);x.globalCompositeOperation='lighter';
+ const v=NM.vis||'walk';NM.hist.forEach((h,k)=>{const age=(NM.hist.length-k)/NM.hist.length,hue=(h.m*29)%360,al=(1-age)*.9+.05;
+  if(v==='spiral'){const a=h.i*2.39996,r=Math.sqrt(h.i%600)*W/52;x.fillStyle=`hsla(${hue},95%,62%,${al})`;x.beginPath();x.arc(c+r*Math.cos(a),H/2+r*Math.sin(a),3+(h.m%12)*.6,0,7);x.fill()}
+  else if(v==='circle'){const a1=((h.v%10)/10)*6.283-1.57,nx=NM.hist[k+1];if(nx){const a2=((nx.v%10)/10)*6.283-1.57;x.strokeStyle=`hsla(${hue},90%,60%,${al*.5})`;x.lineWidth=1.5;x.beginPath();x.moveTo(c+Math.cos(a1)*H*.42,H/2+Math.sin(a1)*H*.42);x.quadraticCurveTo(c,H/2,c+Math.cos(a2)*H*.42,H/2+Math.sin(a2)*H*.42);x.stroke()}}
+  else{const n=NM.hist.length,X=W/2-(n-1-k)*W/44,Y=H-((h.m-48)/40)*H;x.fillStyle=`hsla(${hue},95%,62%,${al})`;x.shadowColor=x.fillStyle;x.shadowBlur=14;x.beginPath();x.arc(X,Y,4+al*8,0,7);x.fill();x.shadowBlur=0}});
+ if(v==='circle')for(let d=0;d<10;d++){const a=d/10*6.283-1.57;x.fillStyle='#fff';x.font='14px sans-serif';x.fillText(d,c+Math.cos(a)*H*.47-4,H/2+Math.sin(a)*H*.47+5)}x.globalCompositeOperation='source-over'}

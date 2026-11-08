@@ -163,3 +163,6 @@ Ships QA's -0.3 dB gain-only trims for 5 voice clips (dora/l_x, michael/l_n, mic
 
 ## v54
 Hides Star songs, Cymatica, Sound Lab, Hum & match, Make a song, Note Blocks and Sound Shapes (Ignacio's trim). Their code stays but nothing links to them.
+
+## v55
+Number Music melody river: newest note glows at the center, older notes drift left (was stuck at the right edge).
