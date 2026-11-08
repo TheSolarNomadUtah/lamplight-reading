@@ -4,7 +4,7 @@ SECTIONS.push('games');document.querySelector('main').insertAdjacentHTML('afterb
 let GD=null;const gdata=()=>GD||(GD=fetch('games-data.json').then(r=>r.json()));
 const GM={v:null};const gStars=()=>safeJSON(LS.get('lamp_games'),{});
 function gSave(k,s){const g=gStars();if(!(g[k]>=s)){g[k]=s;LS.set('lamp_games',JSON.stringify(g))}try{markDay('music')}catch(e){}}
-const starStr=n=>'⭐'.repeat(n)+'☆'.repeat(3-n);
+const starStr=n=>typeof pPractice71==='function'&&pPractice71()?'':'⭐'.repeat(n)+'☆'.repeat(3-n);
 const gCard=(h,inner)=>`<div class="card big gcard"><h2>${h}</h2>${inner}</div>`;
 const gBack=`<p><button class="bigbtn" onclick="gStop();GM.v=null;RENDER.games()">⬅ Games</button></p>`;
 function gStop(){try{musicStop()}catch(e){}clearTimeout(GM.rt);clearInterval(GM.tick);GM.busy=0}

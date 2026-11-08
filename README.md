@@ -269,3 +269,11 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Coach: “Let your child invent the next step.” Spanish/Arabic UI strings use the same neutral prompt.
 - Audited all 133 English and 125 Spanish stories: cap → cat → can is valid; the four-sounds lesson is a blending list, not a claimed ladder. There is no separate Spanish kl3 story in the shipped Spanish library; no other skipped letter-ladder steps found. No new translated story or audio added.
 - Cache lamplight-v70; offline manifest byte totals refreshed.
+
+## v71 — Story first, practice at your own pace
+- Home puts the existing Today's Story card first. Every other existing activity stays in a quieter Explore section; the Library still has its grade filters. Age and optional K–5 story grade can be edited together in each child's profile. Existing unset grades keep their familiar story choice and a gentle link to profile setup.
+- All 16 active Games entries open in untimed, unscored Practice. A clearly labeled, session-only Challenge switch preserves the original levels, timers, speed settings, timing windows, best times, points and stars. Opening another game, switching children or reloading always returns to Practice; changing modes starts a fresh round.
+- Practice keeps unlimited gentle retries, pitch/pad/word order and existing demonstrations, without response deadlines, mistake cutoffs, competing scores or best-record writes. Rhythm call-and-response finishes explicitly rather than after a pause. Free composition and Drum Garden's loop recorder remain intact (a loop's capture length is not a scored game timer).
+- Practice still records intentional skill practice and foreground activity in the existing local journal, explicitly without stars, elapsed speed scores or points. All historical reading logs, notes, profiles, stars, best times, tunes and loops stay unchanged. Retired music and arcade links remain hidden.
+- English and Spanish text; Arabic interface only. Existing art, Bedtime Glow sound design and shipped audio are unchanged. No new requests, services, companion features or audio assets.
+- Cache `lamplight-v71`; `v71.js` is precached and both full-offline manifests are byte-recomputed.

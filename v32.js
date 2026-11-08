@@ -39,8 +39,8 @@ rxRender=function(){const L=GM.custom||rxLvl(),bpm=GM.custom?GM.custom.bpm:(GM.b
 rxDraw=function(taps,lit){const cv=$('grc');if(!cv)return;const x=cv.getContext('2d'),W=cv.width,call=GM.cr&&GM.cr.turn==='call',L=call?{len:8,hits:[]}:(GM.custom||rxLvl()),pads=call?['kick','clap','hat']:rxPads(L),lh=130/pads.length,X0=70,sx=t=>X0+t*(W-X0-20)/L.len;
  x.fillStyle='#14182c';x.fillRect(0,0,W,150);for(let b=0;b<=L.len;b++){x.fillStyle=b%4?'#262c48':'#3a4170';x.fillRect(sx(b),8,2,134)}
  x.font='15px system-ui';x.textBaseline='middle';pads.forEach((p,i)=>{x.fillStyle=PADS[p][1];x.fillText(gT(PADS[p][2]),8,10+lh*(i+.5))});
- if(!(L.once&&GM.played&&!taps&&lit==null))L.hits.forEach(([t,p],i)=>{const y=10+lh*(pads.indexOf(p)+.4),on=lit===i;x.fillStyle=PADS[p][1];x.globalAlpha=lit==null||on?.95:.35;if(on){x.shadowColor=PADS[p][1];x.shadowBlur=22}x.beginPath();x.arc(sx(t),y,on?13:8,0,7);x.fill();x.shadowBlur=0});
- x.globalAlpha=1;(taps||[]).forEach(([t,p,ok])=>{const y=10+lh*(pads.indexOf(p)+.75);x.strokeStyle=ok?'#9dff9d':'#ff8a8a';x.lineWidth=3;x.beginPath();x.arc(sx(t),y,6,0,7);x.stroke()})};
+ if(!(L.once&&GM.played&&!taps&&lit==null&&!(typeof pPractice71==='function'&&pPractice71())))L.hits.forEach(([t,p],i)=>{const y=10+lh*(pads.indexOf(p)+.4),on=lit===i;x.fillStyle=PADS[p][1];x.globalAlpha=lit==null||on?.95:.35;if(on){x.shadowColor=PADS[p][1];x.shadowBlur=22}x.beginPath();x.arc(sx(t),y,on?13:8,0,7);x.fill();x.shadowBlur=0});
+ x.globalAlpha=1;(taps||[]).forEach(([t,p,ok])=>{const y=10+lh*(pads.indexOf(p)+.75);x.strokeStyle=ok?'#9dff9d':'#e9cda2';x.lineWidth=3;x.beginPath();x.arc(sx(t),y,6,0,7);x.stroke()})};
 rxPlay=function(){const L=GM.custom||rxLvl();if(L.once&&GM.played)return;const c=ac();if(!c)return;gStop();if(L.once){const p=$('rxplay');if(p){p.disabled=true;p.textContent='▶ '+gT('Played once')}}
  const bpm=GM.custom?L.bpm:(GM.bpm||L.bpm),b=60/bpm,t0=c.currentTime+.15;for(let i=0;i<4;i++)drumHit('hat',t0+i*b);
  L.hits.forEach(([t,p],i)=>{padSound(p,t0+(4+t)*b);later(()=>rxDraw(null,i),((4+t)*b+.15)*1000)});GM.played=1;GM.taps=[];GM.t0=null;GM.listen=1;GM.turn=0;
