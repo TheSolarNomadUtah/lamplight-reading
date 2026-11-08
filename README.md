@@ -169,3 +169,6 @@ Number Music melody river: newest note glows at the center, older notes drift le
 
 ## v56
 Hides Number Music (Ignacio: needs more work). Code stays, no entry points.
+
+## v57
+Hides "Say the words" and its hint on every song (Ignacio). Play song stays.
