@@ -166,3 +166,6 @@ Hides Star songs, Cymatica, Sound Lab, Hum & match, Make a song, Note Blocks and
 
 ## v55
 Number Music melody river: newest note glows at the center, older notes drift left (was stuck at the right edge).
+
+## v56
+Hides Number Music (Ignacio: needs more work). Code stays, no entry points.
