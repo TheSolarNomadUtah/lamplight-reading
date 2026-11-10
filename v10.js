@@ -143,7 +143,7 @@ function renderPaint(){document.body.classList.add('painting');
  $('paint').innerHTML=`<div id="pstudio"><div class="pbar">
  <button onclick="show('hub')" title="Leave">✖</button>
  ${[['brush','🖌️'],['rainbow','🌈'],['glow','✨'],['stamp','⭐'],['eraser','🧽']].map(t=>`<button class="${PT.tool===t[0]?'on':''}" onclick="PT.tool='${t[0]}';renderPaintBar()" title="${t[0]}">${t[1]}</button>`).join('')}
- <span class="pcols">${PCOL.map(c=>`<button class="pc ${PT.col===c[0]?'on':''}" style="background:${c[0]}" title="${c[1]}" onclick="PT.col='${c[0]}';if(PT.tool==='eraser'||PT.tool==='stamp')PT.tool='brush';renderPaintBar()"></button>`).join('')}</span>
+ <span class="pcols">${PCOL.map(c=>`<button class="pc ${PT.col===c[0]?'on':''}" title="${c[1]}" aria-label="${c[1]}" onclick="PT.col='${c[0]}';if(PT.tool==='eraser'||PT.tool==='stamp')PT.tool='brush';renderPaintBar()"><span class="pc-dot" style="background:${c[0]}"></span><span class="pc-name">${typeof gT==='function'?gT(c[1]):c[1]}</span></button>`).join('')}</span>
  <input type="range" min="3" max="60" value="${PT.size}" style="width:110px" oninput="PT.size=+this.value" title="Brush size">
  <select style="width:auto" onchange="PT.sym=+this.value;guides()">${[[1,'No mirror'],[2,'Mirror ⟷'],[4,'Kaleido 4'],[6,'Kaleido 6'],[8,'Kaleido 8'],[12,'Mandala 12']].map(o=>`<option value="${o[0]}" ${PT.sym===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select>
  ${PT.tool==='stamp'?`<select style="width:auto" onchange="PT.stamp=this.value">${['⭐','🌙','✨','💛','🌸','🦊','A','B','C','a','b','c'].map(s=>`<option ${PT.stamp===s?'selected':''}>${s}</option>`).join('')}</select>`:''}

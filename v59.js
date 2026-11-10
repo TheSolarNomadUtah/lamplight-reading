@@ -2,7 +2,7 @@
 // Cursive font: Playwrite US Trad (SIL Open Font License, fonts/PlaywriteUSTrad-OFL.txt), subset to A-Z, a-z, Ñ/ñ.
 document.head.insertAdjacentHTML('beforeend',`<style>@font-face{font-family:LampCursive;src:url(fonts/cursive.woff2) format('woff2');font-display:block}
 .wkw{display:inline-block;margin:.25rem;padding:.35rem .7rem;border-radius:14px;border:2px solid var(--acc);background:var(--card);font-size:1.5rem;cursor:pointer}
-.wkw.ok{background:#3f9d5a;color:#fff;border-color:#3f9d5a}.wkw.no{opacity:.45}.wkkey span{display:inline-block;margin:.2rem .5rem}</style>`);
+.wkw.ok{background:#2d6a3e;color:#fff;border-color:#1a4a28;position:relative}.wkw.ok::before{content:"";display:inline-block;width:.65em;height:.4em;margin-inline-end:.4em;border-left:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(-45deg) translateY(-12%);vertical-align:middle}.wkw.no{opacity:.45}.wkkey span{display:inline-block;margin:.2rem .5rem}</style>`);
 // ---------- Cursive tracing ----------
 {
 function curSetup(L){const cv=$('trc'),x=cv.getContext('2d'),W=420;TR.cv=cv;TR.done=false;
