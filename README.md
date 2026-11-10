@@ -295,3 +295,10 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Lamp growth is at most one credit per game session and two credits per child per local day. Wick still takes 3 credits and the lantern 8, so the wick usually arrives over about two days and the lantern over about four or more. A child who already reached a stage in v73 keeps it.
 - The growth sentence names the most common moment since the last stage (a rhyme pair, a matching pair, or trying again), using the credit that triggered the stage-up when kinds are tied. Home keeps the older lamp art until the stage-up popup or crossfade reveals the new stage.
 - Cache `lamplight-v74`; `v74.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
+
+## v75 — Look Closer
+- A new Explore activity with nine still-picture illusions, each drawn in SVG in the Lamplight art style. There are no image files, no scores, and no "you were wrong."
+- Every picture has a guess, a reveal the child starts with a tap (600 ms or longer), a short closing line, and the motto "Eyes make smart guesses." Optional finger-measure guides are on the length and size pictures.
+- With reduced motion, every reveal is a crossfade. Motion never flashes, strobes, spins, or uses dense high-contrast stripes.
+- A finished guess-then-reveal can earn one lamp "noticing" credit, with the sentence "Your lamp grew because you looked closer," still limited to one credit per session and two per local day.
+- Full text in English and Spanish; Arabic includes the menus and the short lines. Cache `lamplight-v75`; `v75.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
