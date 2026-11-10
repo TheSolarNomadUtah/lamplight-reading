@@ -309,3 +309,7 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Children who already grew a lamp in v73 keep it: spark stays spark, wick becomes candle, and lantern stays lantern, and a reached stage is never lowered.
 - Each stage-up can play a short full-screen glow on Home only (never mid-game): a dusk hold, the old form breaking into warm motes, the new form assembling, and a soft bloom with one Bedtime Glow chime. The child taps Continue. Reduced motion uses a crossfade or still glow. A Look setting, "Full-screen glow," can turn the spectacle off for a quieter time.
 - All art is original SVG and CSS. Full text in English and Spanish; Arabic includes the UI strings. Cache `lamplight-v76`; `v76.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
+
+## v77 — Lamp credits reach the starlit stage
+- v75 still stopped lamp credits at stage 3 (the old lantern). Credits now follow the v76 thresholds and only stop once the lamp is starlit (stage 6). The one-credit-per-session and two-credits-per-day caps are unchanged, and growth still comes from the same rhyme, memory, retry, and noticing moments.
+- Cache `lamplight-v77`; `v77.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
