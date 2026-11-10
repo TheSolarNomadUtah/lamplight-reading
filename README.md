@@ -302,3 +302,10 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - With reduced motion, every reveal is a crossfade. Motion never flashes, strobes, spins, or uses dense high-contrast stripes.
 - A finished guess-then-reveal can earn one lamp "noticing" credit, with the sentence "Your lamp grew because you looked closer," still limited to one credit per session and two per local day.
 - Full text in English and Spanish; Arabic includes the menus and the short lines. Cache `lamplight-v75`; `v75.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
+
+## v76 — The Lamp becomes a hero light
+- The Lamp sits in its own place above Today's Story, two to three times larger than the avatars, and acts as a real light: a warm radial glow behind the story header that grows at each stage. From the lantern onward, a few slow motes drift by; the last stages add orbiting fireflies and faint stars, especially in the night theme. Story buttons stay clear and tappable.
+- There are six stages: spark, ember, candle, lantern, lantern with fireflies, and starlit lantern. Thresholds are 0, 4, 10, 18, 30 and 48 credits, still at most one credit per session and two per local day, so the final form takes a few weeks of regular play. Growth still comes from the same connection, retry and noticing moments, never from time spent or daily visits.
+- Children who already grew a lamp in v73 keep it: spark stays spark, wick becomes candle, and lantern stays lantern, and a reached stage is never lowered.
+- Each stage-up can play a short full-screen glow on Home only (never mid-game): a dusk hold, the old form breaking into warm motes, the new form assembling, and a soft bloom with one Bedtime Glow chime. The child taps Continue. Reduced motion uses a crossfade or still glow. A Look setting, "Full-screen glow," can turn the spectacle off for a quieter time.
+- All art is original SVG and CSS. Full text in English and Spanish; Arabic includes the UI strings. Cache `lamplight-v76`; `v76.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.

@@ -1133,7 +1133,7 @@
 "Paper": "Papel",
 "Globe": "Globo terráqueo",
 "Microphone": "Micrófono",
-"Spark": "Destello",
+"Spark": "Chispa",
 "Ear": "Oreja",
 "Lock": "Candado",
 "Happy": "Feliz",
@@ -1615,5 +1615,12 @@
 "Measuring guide": "Guía para medir",
 "Guide": "Guía",
 "You chose {x}. Tap Look closer when you are ready.": "Elegiste {x}. Toca Mira de cerca cuando quieras.",
-"Your lamp grew because you looked closer.": "Tu lámpara creció porque miraste de cerca."
+"Your lamp grew because you looked closer.": "Tu lámpara creció porque miraste de cerca.",
+"Continue": "Continuar",
+"Full-screen glow": "Brillo en toda la pantalla",
+"A short glow can play on Home when the lamp grows. You can turn it off for a quieter time. This stays on this device.": "Puede verse un brillo breve en Inicio cuando crece la lámpara. Puedes apagarlo para un momento más tranquilo. Esto se queda en este aparato.",
+"Ember": "Brasa",
+"Lantern": "Farol",
+"Lantern with fireflies": "Farol con luciérnagas",
+"Starlit lantern": "Farol bajo las estrellas"
 }

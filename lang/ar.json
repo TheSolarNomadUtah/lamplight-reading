@@ -1728,5 +1728,12 @@
 "Measuring guide": "دليل القياس",
 "Guide": "دليل",
 "You chose {x}. Tap Look closer when you are ready.": "اخترت {x}. اضغط على انظر عن قرب عندما تكون جاهزاً.",
-"Your lamp grew because you looked closer.": "نمت مصباحك لأنك نظرت عن قرب."
+"Your lamp grew because you looked closer.": "نمت مصباحك لأنك نظرت عن قرب.",
+"Continue": "متابعة",
+"Full-screen glow": "وهج بملء الشاشة",
+"A short glow can play on Home when the lamp grows. You can turn it off for a quieter time. This stays on this device.": "يمكن أن يظهر وهج قصير في الصفحة الرئيسية عندما تنمو المصباح. يمكنك إيقافه لوقت أكثر هدوءاً. يبقى هذا على هذا الجهاز.",
+"Ember": "جمرة",
+"Lantern": "فانوس",
+"Lantern with fireflies": "فانوس مع يراعات",
+"Starlit lantern": "فانوس نجمي"
 }
