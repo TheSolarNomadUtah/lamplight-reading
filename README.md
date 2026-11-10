@@ -289,3 +289,9 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Reading Today's Story still plays its soft glow and breath. Breath is a slow 5-second rise and fall (slower after time away). Growth holds, unfolds, and settles gently; reduced motion uses a crossfade and still plays the chime.
 - Each stage has one quiet WebAudio chime (C4, E4, G4) at the peak of the unfold, ducked under speech, with a Look-page off switch, peaking at or below -1.5 dBTP. No new voice or audio files.
 - Cache `lamplight-v73`; `v73.js` is precached and both offline manifests are byte-recomputed.
+
+## v74 — Challenge stays in scored rounds, and the lamp grows more slowly
+- The Practice/Challenge switch appears only in the timed or scored rounds of the 16 games. It is hidden in open-ended play: Drum Garden free play and the loop recorder, Melody Echo’s Free play & compose, Paint, Echo, Today’s Story, and the Games hub itself. Practice and Challenge remain reachable in every scored or timed round.
+- Lamp growth is at most one credit per game session and two credits per child per local day. Wick still takes 3 credits and the lantern 8, so the wick usually arrives over about two days and the lantern over about four or more. A child who already reached a stage in v73 keeps it.
+- The growth sentence names the most common moment since the last stage (a rhyme pair, a matching pair, or trying again), using the credit that triggered the stage-up when kinds are tied. Home keeps the older lamp art until the stage-up popup or crossfade reveals the new stage.
+- Cache `lamplight-v74`; `v74.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
