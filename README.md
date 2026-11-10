@@ -342,6 +342,14 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Look Closer is hidden in this release, behind `LOOK_CLOSER81` (set to false). The Explore tile and any entry points are removed, including routes from the Look page and `show('closer')`, which returns Home. The v75–v80 code and assets stay in the repo so the feature can be turned back on later. Existing Look Closer lamp credits and night-sky stars are kept. Look Closer is not listed in the Progress log as something kids can still do, and no modern illusion preview was added.
 - Cache `lamplight-v81`; `v81.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
 
+## v85 — Look Up: tap to place, a gentle Earth nudge, and clearer Arabic facts
+- On Planets in order, a child can drag a planet, tap a planet and then a path, or tap the planets in order from the Sun. Keyboard use is Tab, then Enter or Space. A short “Drag or tap” hint is in English, Spanish, and Arabic. Drag still works, and hints stay gentle, with no fail state.
+- On Find Earth, Next waits until Earth itself is tapped (“I read it” no longer skips that). After about six seconds with no tap, Earth gets a soft glow. There is no timer or penalty. Reduced motion keeps the glow still.
+- In Arabic, English fallback fact sentences are wrapped in `bdi dir="ltr"`, so the period sits at the end of the line.
+- The “not to scale” label sits inside the bottom corner of the order diagram, and follows the start edge in both left-to-right and right-to-left layouts.
+- Screen 1 still has no Back button: Home is already there, and Back would not have a previous Look Up screen to return to.
+- Cache `lamplight-v85`; `v85.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
+
 ## v84 — Arabic language file fix
 - `lang/ar.json` was missing its closing `}`, so Arabic could not load. The file now parses, and a pre-ship check (`tools/preship.sh`) JSON-parses every `lang/*.json` and runs `node --check` on `vNN.js` (and `sw.js`) before a push.
 - Cache `lamplight-v84`; both offline manifests are byte-recomputed. No new audio, voices or requests.
