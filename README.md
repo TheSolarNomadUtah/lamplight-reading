@@ -342,6 +342,14 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Look Closer is hidden in this release, behind `LOOK_CLOSER81` (set to false). The Explore tile and any entry points are removed, including routes from the Look page and `show('closer')`, which returns Home. The v75–v80 code and assets stay in the repo so the feature can be turned back on later. Existing Look Closer lamp credits and night-sky stars are kept. Look Closer is not listed in the Progress log as something kids can still do, and no modern illusion preview was added.
 - Cache `lamplight-v81`; `v81.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
 
+## v83 — Look Up, the Solar System, and clearer marks
+- Look Up is a short, five-screen visit to the Sun and the eight planets, opened from a new Explore tile. The child reads (or taps “I read it”) and is asked “What do you notice?” before each explanation. Art is drawn in the app; planet lines follow NASA. A soft Bedtime Glow chime marks each discovery. Reduced motion keeps the sky still. Noticing a pattern in the planets can grow the Lamp, under the usual caps. Look Closer stays hidden.
+- A real click or tap now opens a night-sky star, including stars that sit behind the lantern. Each star has a 44 px target. Resting stars are small, calm, and visible in the warm and Night themes. The popup sits under “Your night sky” and pushes the fox and book down while it is open, so it no longer covers them. Star dates follow the app language (English, Spanish, or Arabic), not the device locale.
+- In Word Kinds, a wrong tap shows an X next to “Try another word.”
+- In Read Together, from the library and from Today’s Story, the heard check, the current-word caret, and the dotted underline for a tricky word actually render.
+- High-contrast primary buttons use black text on the yellow fill. The current-word highlight (`--hi`) is `#c28500`, at least 3:1 against the card, with the ink outline kept.
+- Cache `lamplight-v83`; `v83.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
+
 ## v82 — Star popover, a filled Copper Teal ring, and a clearer Lilac leaf
 - The tapped-star popup now sits above the Lamp, not behind it. It is placed just below the lantern so the Lamp stays visible, and it is kept inside the Home card at 360 and 390 px, in the warm and Night themes, in Spanish, and with reduced motion. Tap outside it or press Esc to close. Screen readers hear the same line through a live status region, and the star keeps aria-expanded.
 - In the glow picker, unlocked Copper Teal keeps its ring shape but now has a visible teal fill and glow inside, so it no longer looks like a hollow locked swatch. Locked swatches stay outline-only.
