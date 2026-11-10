@@ -342,6 +342,10 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Look Closer is hidden in this release, behind `LOOK_CLOSER81` (set to false). The Explore tile and any entry points are removed, including routes from the Look page and `show('closer')`, which returns Home. The v75–v80 code and assets stay in the repo so the feature can be turned back on later. Existing Look Closer lamp credits and night-sky stars are kept. Look Closer is not listed in the Progress log as something kids can still do, and no modern illusion preview was added.
 - Cache `lamplight-v81`; `v81.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
 
+## v84 — Arabic language file fix
+- `lang/ar.json` was missing its closing `}`, so Arabic could not load. The file now parses, and a pre-ship check (`tools/preship.sh`) JSON-parses every `lang/*.json` and runs `node --check` on `vNN.js` (and `sw.js`) before a push.
+- Cache `lamplight-v84`; both offline manifests are byte-recomputed. No new audio, voices or requests.
+
 ## v83 — Look Up, the Solar System, and clearer marks
 - Look Up is a short, five-screen visit to the Sun and the eight planets, opened from a new Explore tile. The child reads (or taps “I read it”) and is asked “What do you notice?” before each explanation. Art is drawn in the app; planet lines follow NASA. A soft Bedtime Glow chime marks each discovery. Reduced motion keeps the sky still. Noticing a pattern in the planets can grow the Lamp, under the usual caps. Look Closer stays hidden.
 - A real click or tap now opens a night-sky star, including stars that sit behind the lantern. Each star has a 44 px target. Resting stars are small, calm, and visible in the warm and Night themes. The popup sits under “Your night sky” and pushes the fox and book down while it is open, so it no longer covers them. Star dates follow the app language (English, Spanish, or Arabic), not the device locale.
