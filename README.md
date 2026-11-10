@@ -282,3 +282,10 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - The notebook now prompts for “questions your child asked” and “funny things your child said,” with corresponding Spanish and Arabic strings.
 - Audited all English/Spanish story coaching and notebook copy. Child references use neutral wording; story characters, story text, quizzes, talk questions and existing notes are untouched. The retained legacy Read Together coach and Spanish story-mode guidance are neutral too.
 - Cache `lamplight-v72`; existing precached files retained and both offline manifests byte-recomputed. No new features, requests, art or audio files.
+
+## v73 — A lamp that grows with connection
+- One Lamp companion with three clear shapes: spark, wick flame, then lantern. It lives on the Today's Story card and in each child's profile, where it can be renamed on this device. Growth is per child, stays if you change the animal picture, never decays, and stops at the lantern.
+- Stage-ups come from a correct Rhyme Match pair, a Memory Match pair, or trying again after a miss. Speed and perfect scores do not count. A short sentence explains why the lamp grew (English, Spanish, and Arabic interface strings). The celebration waits until Home, so it never interrupts a game.
+- Reading Today's Story still plays its soft glow and breath. Breath is a slow 5-second rise and fall (slower after time away). Growth holds, unfolds, and settles gently; reduced motion uses a crossfade and still plays the chime.
+- Each stage has one quiet WebAudio chime (C4, E4, G4) at the peak of the unfold, ducked under speech, with a Look-page off switch, peaking at or below -1.5 dBTP. No new voice or audio files.
+- Cache `lamplight-v73`; `v73.js` is precached and both offline manifests are byte-recomputed.
