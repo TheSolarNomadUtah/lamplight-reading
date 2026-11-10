@@ -312,4 +312,5 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 
 ## v77 — Lamp credits reach the starlit stage
 - v75 still stopped lamp credits at stage 3 (the old lantern). Credits now follow the v76 thresholds and only stop once the lamp is starlit (stage 6). The one-credit-per-session and two-credits-per-day caps are unchanged, and growth still comes from the same rhyme, memory, retry, and noticing moments.
+- Look Closer picture cards now open on a mouse click, a touch tap, and Enter or Space, including on a wide desktop layout. The list had been drawn without binding those handlers.
 - Cache `lamplight-v77`; `v77.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
