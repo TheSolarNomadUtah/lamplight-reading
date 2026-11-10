@@ -342,6 +342,15 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Look Closer is hidden in this release, behind `LOOK_CLOSER81` (set to false). The Explore tile and any entry points are removed, including routes from the Look page and `show('closer')`, which returns Home. The v75–v80 code and assets stay in the repo so the feature can be turned back on later. Existing Look Closer lamp credits and night-sky stars are kept. Look Closer is not listed in the Progress log as something kids can still do, and no modern illusion preview was added.
 - Cache `lamplight-v81`; `v81.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
 
+## v86 — English and Spanish in the language picker
+- The language picker (Home, Look / settings, and a child's "Just {name}" choice) now offers only English and Español. Arabic and the 14 partial languages stay in `lang/*.json` in the repo, but they are hidden behind one allowlist, `window.LANG_OPEN86` in the first script of `index.html` (default `['en','es']`). Add a code there to offer it again, and put its `lang/<code>.json` back in `sw.js` F and the offline manifests.
+- A saved language that is now hidden, per child or for the device, falls back to English on load: `html lang="en"`, `dir="ltr"`, no right-to-left leftovers, and the corrected value is saved so it stays fixed. Browser auto-detect follows the same allowlist (a Spanish device still gets Spanish; Arabic or French starts in English). Progress log rows and other per-child data are left as they are.
+- Hidden language files are out of the service-worker precache and both offline manifests. The service worker will not fetch a `lang/*.json` file unless it is listed in F (currently only `lang/es.json`).
+- On Find Earth, tapping a planet that is not Earth shows a gentle visible reply: the planet's name plus "Find Earth, the blue one." The line is in English, Spanish, and Arabic. There is no buzzer and no fail state.
+- At phone width, when the floating Home button is visible, the Look Up fact card gets start-edge margin so the button does not cover the card or "Hear it."
+- After a planet is placed with the keyboard on Planets in order, focus moves to the next unplaced planet, or to the fact card once all are placed, not to the page header.
+- Cache `lamplight-v86`; `v86.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
+
 ## v85 — Look Up: tap to place, a gentle Earth nudge, and clearer Arabic facts
 - On Planets in order, a child can drag a planet, tap a planet and then a path, or tap the planets in order from the Sun. Keyboard use is Tab, then Enter or Space. A short “Drag or tap” hint is in English, Spanish, and Arabic. Drag still works, and hints stay gentle, with no fail state.
 - On Find Earth, Next waits until Earth itself is tapped (“I read it” no longer skips that). After about six seconds with no tap, Earth gets a soft glow. There is no timer or penalty. Reduced motion keeps the glow still.

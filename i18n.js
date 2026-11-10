@@ -3,17 +3,18 @@
 const LANGS=[['en','English'],['es','Español'],['pt','Português'],['fr','Français'],['zh','中文（简体）'],['hi','हिन्दी'],['ar','العربية'],['vi','Tiếng Việt'],['tl','Tagalog',1],['ko','한국어'],['ja','日本語'],['de','Deutsch'],['it','Italiano'],['ru','Русский'],['nv','Diné bizaad',1],['sw','Kiswahili',1],['uk','Українська']];
 const RTL=['ar','he','ur','fa'],CONTENT=['en','es'];
 PKEYS.push('lamp_lang');
-function curLang(){const ok=c=>LANGS.some(x=>x[0]===c);const k=LS.get('lamp_lang')||RAW.get('lamp_lang_device');if(k&&ok(k))return k;const n=(navigator.language||'en').slice(0,2).toLowerCase();return ok(n)?n:'en'}
+function langOpen86(c){return (window.LANG_OPEN86||['en','es']).indexOf(c)>=0}
+function curLang(){const ok=c=>langOpen86(c)&&LANGS.some(x=>x[0]===c);const k=LS.get('lamp_lang')||RAW.get('lamp_lang_device');if(k&&ok(k))return k;if(LS.get('lamp_lang')&&!ok(LS.get('lamp_lang')))LS.set('lamp_lang','en');if(RAW.get('lamp_lang_device')&&!ok(RAW.get('lamp_lang_device')))RAW.set('lamp_lang_device','en');const n=(navigator.language||'en').slice(0,2).toLowerCase();return ok(n)?n:'en'}
 let DICT={};const LANG=curLang();
 function T(s){return DICT[s]||s}
 function trText(node){const raw=node.nodeValue;if(!raw||!raw.trim())return;const m=raw.match(/^(\s*[^\p{L}]*?)([\p{L}].*?)(\s*)$/su);if(!m)return;
  let core=m[2],out=DICT[core];if(!out){const h=core.match(/^Hi, (.+)!$/);if(h&&DICT.Hi)out=DICT.Hi+', '+h[1]+'!'}if(!out&&/[!?.]$/.test(core)&&DICT[core.slice(0,-1)])out=DICT[core.slice(0,-1)]+core.slice(-1);if(out&&out!==core)node.nodeValue=m[1]+out+m[3]}
 function trTree(root){if(LANG==='en')return;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement&&n.parentElement.closest('.story,.kline,#sst,script,style,textarea')?2:1});let n;while(n=w.nextNode())trText(n)}
-function setLang(c,scope){if(scope==='kid')LS.set('lamp_lang',c);else{RAW.set('lamp_lang_device',c);LS.del('lamp_lang')}location.reload()}
-function langPicker(){const p=curProfile();return `<div class="card" id="langcard"><h3><label for="langsel">🌐 Language</label></h3><select id="langsel" aria-label="Language" style="font-size:1.1rem">${LANGS.map(l=>`<option value="${l[0]}" ${l[0]===LANG?'selected':''}>${l[1]}${l[2]?' (beta, help us improve)':''}</option>`).join('')}</select>
+function setLang(c,scope){if(!langOpen86(c))c='en';if(scope==='kid')LS.set('lamp_lang',c);else{RAW.set('lamp_lang_device',c);LS.del('lamp_lang')}location.reload()}
+function langPicker(){const p=curProfile();return `<div class="card" id="langcard"><h3><label for="langsel">🌐 Language</label></h3><select id="langsel" aria-label="Language" style="font-size:1.1rem">${LANGS.filter(l=>langOpen86(l[0])).map(l=>`<option value="${l[0]}" ${l[0]===LANG?'selected':''}>${l[1]}${l[2]?' (beta, help us improve)':''}</option>`).join('')}</select>
  <button onclick="setLang($('langsel').value,'dev')">Use on this device</button> <button onclick="setLang($('langsel').value,'kid')">Just ${esc(p.name)}</button>
  <p class="soft">Translations are new; tell us if something sounds wrong.${CONTENT.includes(LANG)?'':' Stories and letter games are in English for now; the letter games are hidden in this language.'}</p></div>`}
-document.documentElement.lang=LANG;if(RTL.includes(LANG))document.documentElement.dir='rtl';
+document.documentElement.lang=LANG;document.documentElement.dir=RTL.includes(LANG)?'rtl':'ltr';
 if(LANG==='es'){
  ES_STORIES.forEach(s=>{s.talk=s.talk||['¿Qué parte te gustó más?','¿Qué pasaría después?'];s.coach=s.coach||[];s.words=s.words||[];s.takeaway=s.takeaway||s.hook;s.tags=s.tags||[]});S.splice(0,S.length,...ES_STORIES);ECHO.splice(0,ECHO.length,...ES_ECHO);MUSIC.letters=ES_LETTERS.map(x=>[x[0],x[1]||'(muda)',x[2],x[3]]);
  AB.splice(14,0,'Ñ');CARDS.forEach(c=>{if(ES_CARDS[c[1]]){c[1]=ES_CARDS[c[1]];c[2]=c[1].split('').join('-')}});
