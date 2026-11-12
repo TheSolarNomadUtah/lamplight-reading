@@ -61,7 +61,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=92;
+const APP_VERSION=93;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;const VOLATILE=new Set();
 const RAW={get:k=>{if(VOLATILE.has(k))return Object.hasOwn(MEM,k)?MEM[k]:null;try{const v=window.localStorage.getItem(k);MEM[k]=v;return v}catch(e){STORE_OK=false;return Object.hasOwn(MEM,k)?MEM[k]:null}},
@@ -250,4 +250,5 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="v90.js"></script>
 <script src="v91.js"></script>
 <script src="v92.js"></script>
+<script src="v93.js"></script>
 </body></html>

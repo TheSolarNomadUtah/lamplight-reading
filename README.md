@@ -342,6 +342,12 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Look Closer is hidden in this release, behind `LOOK_CLOSER81` (set to false). The Explore tile and any entry points are removed, including routes from the Look page and `show('closer')`, which returns Home. The v75–v80 code and assets stay in the repo so the feature can be turned back on later. Existing Look Closer lamp credits and night-sky stars are kept. Look Closer is not listed in the Progress log as something kids can still do, and no modern illusion preview was added.
 - Cache `lamplight-v81`; `v81.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
 
+## v93 — Luna lyric highlights follow the singing
+- `lyrics/luna_timings.json` is QA's per-word timing file (seconds from the start of each shipped Luna mix, one time per `.kw` word) for the nine Luna songs. It is loaded as `LUNA_T`, precached, and in both offline manifests, so it works offline.
+- Word *i* lights at `LUNA_T[song][i]`, falling back to the old estimate only if a time is missing. Highlights run on the audio clock from the buffer's real start (`currentTime + 0.08`), not from the tap, so they stay aligned in MP3 and Opus and after the audio context is suspended and resumed. Songs have Play and Stop only (no pause or seek). The old estimate ignored the 2-beat intro, the 0.4 s lead-in, the pads between lines and the mix tempo for Twinkle and Row, and was up to about 2.6 s off.
+- `tools/preship.sh` parses `lyrics/*.json` and checks each song's word count and that times increase. Music-data tempos, audio, voices, and the glow-only songs (Who Says Moo?, Mmm, Moon) are unchanged.
+- Cache `lamplight-v93`; `v93.js` is precached and both offline manifests are byte-recomputed.
+
 ## v92 — Softer smoke, clearer jelly, Spanish Look, flame color, live preview
 - Glowing smoke is a soft ink plume: a canvas larger than the cloud, no overflow clip, and alpha faded to zero before every edge (per-blob and a radial mask). Blobs are larger and lower in opacity, with no additive “lighter” glow, so the edges are not a hard rectangle.
 - Comb-jelly rainbow bands sit on the lamp glass and body, above the bowl, at every stage, in both the warm and Night themes. They stay soft; a new ripple moves only the band position and keeps opacity gently high.
