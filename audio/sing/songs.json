@@ -1,6 +1,86 @@
 {
  "_doc": "One entry per sung song, keyed by MUSIC song id. Files live in audio/sing/ as <slug>_backing[ _m].(opus|mp3) + <slug>_<voice>_vox.(opus|mp3) for stems, or <slug>_<voice>.(opus|mp3) for a full mix. 'backing' maps key -> file stem: f = women's key, m = men's key (-12); omit m if one backing fits both. 'stems' and 'mix' list the voices that have each kind; stems win when both exist.",
  "songs": {
-  "m1": {"slug": "twinkle", "lines": 2, "backing": null, "stems": [], "mix": ["heart","bella","nicole","emma","isabella","nova","michael","liam","adam","puck","george","eric"]}
+  "m1": {
+   "slug": "twinkle",
+   "lines": 6,
+   "backing": null,
+   "stems": [],
+   "mix": [
+    "luna"
+   ]
+  },
+  "m2": {
+   "slug": "row",
+   "lines": 4,
+   "backing": null,
+   "stems": [],
+   "mix": [
+    "luna"
+   ]
+  },
+  "m3": {
+   "slug": "hey_diddle",
+   "lines": 6,
+   "backing": null,
+   "stems": [],
+   "mix": [
+    "luna"
+   ]
+  },
+  "m4": {
+   "slug": "hello",
+   "lines": 4,
+   "backing": null,
+   "stems": [],
+   "mix": [
+    "luna"
+   ]
+  },
+  "m5": {
+   "slug": "clap",
+   "lines": 4,
+   "backing": null,
+   "stems": [],
+   "mix": [
+    "luna"
+   ]
+  },
+  "m8": {
+   "slug": "sam_and_the_cap",
+   "lines": 6,
+   "backing": null,
+   "stems": [],
+   "mix": [
+    "luna"
+   ]
+  },
+  "m9": {
+   "slug": "little_lamp",
+   "lines": 4,
+   "backing": null,
+   "stems": [],
+   "mix": [
+    "luna"
+   ]
+  },
+  "m10": {
+   "slug": "five_little_stars",
+   "lines": 4,
+   "backing": null,
+   "stems": [],
+   "mix": [
+    "luna"
+   ]
+  },
+  "m11": {
+   "slug": "mary",
+   "lines": 4,
+   "backing": null,
+   "stems": [],
+   "mix": [
+    "luna"
+   ]
+  }
  }
 }

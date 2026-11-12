@@ -22,7 +22,10 @@ const MUSIC={
 {"id":"m9","t":"The Little Lamp","band":"K–2","kind":"Lamplight song","bpm":84,
  "lines":["Lit|tle lamp, glow, glow, glow,","read a book, and learn and grow.","One more page, one more word,","sing it soft, like a bird."]},
 {"id":"m10","t":"Five Little Stars","band":"K–2","kind":"Counting chant","bpm":92,
- "lines":["Five lit|tle stars up in the sky,","one fell down and waved good|bye.","Four lit|tle stars up in the sky,","shine, shine, shine, and on we fly!"]}
+ "lines":["Five lit|tle stars up in the sky,","one fell down and waved good|bye.","Four lit|tle stars up in the sky,","shine, shine, shine, and on we fly!"]},
+{"id":"m11","t":"Mary Had a Little Lamb","band":"Pre-K–1","kind":"Classic song","credit":"Traditional","bpm":100,
+ "lines":["Ma|ry had a lit|tle lamb,","lit|tle lamb, lit|tle lamb,","Ma|ry had a lit|tle lamb,","Its fleece was white as snow."],
+ "notes":"64 62 60 62 64 64 64:2 62 62 62:2 64 67 67:2 64 62 60 62 64 64 64:2 64 62 62 64 62 60:3"}
 ],
 "letters":[
 ["A","ah","apple","ant"],["B","buh","ball","bee"],["C","kuh","cat","cup"],["D","duh","dog","drum"],["E","eh","egg","elf"],["F","fff","fish","fan"],["G","guh","goat","gum"],["H","hhh","hat","hen"],["I","ih","insect","igloo"],["J","juh","jam","jet"],["K","kuh","kite","king"],["L","lll","lamp","leaf"],["M","mmm","moon","milk"],["N","nnn","nest","nose"],["O","aw","octopus","ox"],["P","puh","pig","pan"],["Q","kwuh","queen","quilt"],["R","rrr","rain","rug"],["S","sss","sun","sock"],["T","tuh","top","tent"],["U","uh","up","umbrella"],["V","vvv","van","vest"],["W","wuh","web","wind"],["X","ks","box","fox"],["Y","yuh","yak","yarn"],["Z","zzz","zip","zebra"]
@@ -34,3 +37,4 @@ const MUSIC={
 ["Level 4 · mix it up",["wa|ter|mel|on","cat|er|pil|lar","dog","al|li|ga|tor","pan|da","hel|i|cop|ter","kan|ga|roo","frog"]]
 ]
 };
+window.SONGS88=MUSIC.songs.slice();

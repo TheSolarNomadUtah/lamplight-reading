@@ -15,7 +15,7 @@ offList=async function(){const r=await fetch(AFMT==='opus'?'offline-opus.json':'
 try{offSize()}catch(e){}
 // Heart is the one voice kept offline from the start, in this device's format only.
 (async function(){try{if(!('caches' in window)||!navigator.onLine)return;const k='lamp_heart_cached_'+AFMT;if(RAW.get(k)==='v25')return;
- const idx=await (await fetch('audio/heart/index.json')).json();const urls=idx.map(f=>'audio/heart/'+f.replace(/\.mp3$/,'')+AEXT);urls.push('audio/sing/twinkle_heart'+AEXT);
+ const idx=await (await fetch('audio/heart/index.json')).json();const urls=idx.map(f=>'audio/heart/'+f.replace(/\.mp3$/,'')+AEXT);
  const c=await caches.open('lamplight-extra');let todo=[];for(const u of urls)if(!(await c.match(u)))todo.push(u);
  for(let i=0;i<todo.length;i+=12)await Promise.all(todo.slice(i,i+12).map(u=>fetch(u).then(r=>r.ok&&c.put(u,r)).catch(()=>{})));RAW.set(k,'v25')}catch(e){}})();
 // ---------- Singing: stems or full mix, from a small manifest ----------
