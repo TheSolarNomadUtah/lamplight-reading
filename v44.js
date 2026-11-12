@@ -49,7 +49,7 @@ function labMicOff(){LAB.micGen++;try{if(LAB.micStream)LAB.micStream.getTracks()
 function micPitch(){const an=LAB.an;if(!an)return 0;const d=new Float32Array(an.frequencyBinCount);an.getFloatFrequencyData(d);const c=AC,bw=c.sampleRate/an.fftSize;let bi=0,bv=-200;
  for(let i=Math.floor(80/bw);i<Math.min(d.length,1300/bw);i++)if(d[i]>bv){bv=d[i];bi=i}return bv>-70?bi*bw:0}
 document.addEventListener('visibilitychange',()=>{if(document.hidden){labMicOff();labToneOff();feStop()}});
-{const sh=show;show=function(id){if(id!=='lab')labStop();document.body.classList.toggle('inlab',id==='lab');return sh(id)}}
+{if(!show._v97){const sh=show;show=function(id){if(id!=='lab')labStop();document.body.classList.toggle('inlab',id==='lab');return sh(id)}}}
 
 // ---------- Tone for the tube (gentle glow-style sine) ----------
 const LAB_TONE=.05;   // v45: was .32 (the limiter was holding it up); now at or below Für Elise's loudness (see README v45). Fades out by itself after 45 s.

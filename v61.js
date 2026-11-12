@@ -92,4 +92,4 @@ document.head.insertAdjacentHTML('beforeend',`<style>
 </style>`);
 if(CONTENT.includes(LANG))Object.entries(L61.meta).forEach(([k,m])=>GHUB.push([k,`<i class="l61icon">${l61Art(m[2])}</i>`,m[0],m[1],m[3],`l61Start('${k}',1)`]));
 {const rg=RENDER.games;RENDER.games=function(){if(L61.meta[GM.v])return l61Render();l61Clear();return rg.apply(this,arguments)}}
-{const sh=show;show=function(id){if(id!=='games'){l61Clear();if(L61.s&&L61.s.k==='mm'){L61.s.open=[];L61.s.busy=false}}return sh.apply(this,arguments)}}
+{if(!show._v97){const sh=show;show=function(id){if(id!=='games'){l61Clear();if(L61.s&&L61.s.k==='mm'){L61.s.open=[];L61.s.busy=false}}return sh.apply(this,arguments)}}}

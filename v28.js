@@ -54,5 +54,5 @@ RENDER.cymatica=function(){cmStop();$('cymatica').innerHTML=`<div class="card bi
  <p><b>${gT('Tone:')}</b> ${CMTONES.map(([f,l])=>`<button class="${CMA.tone===f?'p':''}" onclick="CMA.tone=${f};RENDER.cymatica()">${l}</button>`).join(' ')}</p>
  <p><b>${gT('Minutes:')}</b> ${[3,5,10].map(m=>`<button class="${CMA.min===m?'p':''}" onclick="CMA.min=${m};RENDER.cymatica()">${m}</button>`).join(' ')}</p>
  <p class="soft" style="color:#bfb8a8;font-size:.85rem">${String('The patterns use the same round-plate (Bessel) physics as Sound Shapes. This is for relaxing, not a medical treatment.')}</p><button class="bigbtn" onclick="cmStop();AR.v=null;show('arcade')">⬅ ${String('Grown-up arcade')}</button></div>`;cmDraw(0)};
-{const sh=show;show=function(id){if(id!=='starsongs')sgStop();if(id!=='cymatica')cmStop();sh(id)}}
+{if(!show._v97){const sh=show;show=function(id){if(id!=='starsongs')sgStop();if(id!=='cymatica')cmStop();sh(id)}}}
 {const ra=RENDER.arcade;RENDER.arcade=function(){ra();if(!AR.v){const g=$('arcade').querySelector('.hubgrid');if(g&&!g.querySelector('[data-cymatica]'))g.insertAdjacentHTML('beforeend',`<button class="hubtile" data-cymatica onclick="show('cymatica')"><span>🌀</span>Cymatica<small>${String('Breathe with sound shapes')}</small></button>`)}}}

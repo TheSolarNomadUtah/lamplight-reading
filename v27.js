@@ -126,7 +126,7 @@ RENDER.games=function(){if(GM.v==='rx')return rxRender();if(GM.v==='mel')return 
  <button class="hubtile" onclick="GM.v='mel';RENDER.games()"><span>🎹</span>Melody Echo<small>${gT('3 to 12 notes')}</small></button>
  <button class="hubtile" onclick="GM.v='lad';RENDER.games()"><span>🪜</span>Word Ladder<small>CAT → DOG</small></button>
  <button class="hubtile" onclick="GM.v='duet';RENDER.games()"><span>👫</span>Duet<small>Kid vs grown-up</small></button></div><p class="soft">${gT('Your stars: {n} ⭐',{n:gNum(n)})}</p><p><button class="bigbtn" onclick="show('hub')">⬅ Home</button></p>`)};
-{const sh=show;show=function(id){if(id!=='games')gStop();return sh.apply(this,arguments)}}
+{if(!show._v97){const sh=show;show=function(id){if(id!=='games')gStop();return sh.apply(this,arguments)}}}
 {const rh=renderHub;renderHub=function(){rh();const g=$('hub').querySelector('.hubgrid');if(g&&!g.querySelector('[data-games]'))g.insertAdjacentHTML('beforeend',`<button class="hubtile" data-games onclick="GM.v=null;show('games')"><span>🎮</span>Games<small>Rhythm, melody, words</small></button>`)};RENDER.hub=renderHub}
 {const ra=RENDER.arcade;RENDER.arcade=function(){ra();if(!AR.v){const g=$('arcade').querySelector('.hubgrid');if(g)g.insertAdjacentHTML('beforeend',`<button class="hubtile" onclick="GM.v=null;show('games')"><span>🎮</span>Games<small>Grown-up tiers inside</small></button>`)}}}
 document.head.insertAdjacentHTML('beforeend',`<style>

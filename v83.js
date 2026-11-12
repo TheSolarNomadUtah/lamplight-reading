@@ -335,7 +335,7 @@ function luBindDrag83(root){
 }
 
 RENDER.lookup=function(){if(typeof pPractice68==='function')pPractice68('logic','Look Up',{},'lookup');if(!LU83._open){luReset83();LU83._open=true}luRender83()};
-{const sh=show;show=function(id){if(id!=='lookup')LU83._open=false;return sh.apply(this,arguments)}}
+{if(!show._v97){const sh=show;show=function(id){if(id!=='lookup')LU83._open=false;return sh.apply(this,arguments)}}}
 {const hub=RENDER.hub;RENDER.hub=renderHub=function(){const r=hub.apply(this,arguments);const h=$('hub');if(!h||h.querySelector('[data-lu83]'))return r;const tile=document.createElement('button');tile.className='hubtile';tile.dataset.lu83='1';tile.setAttribute('onclick',"show('lookup')");tile.innerHTML=`${luTileArt83()}${gT('Look Up')}<small>${gT('The Sun and the planets.')}</small>`;const paint=[...h.querySelectorAll('.hubtile')].find(b=>(b.getAttribute('onclick')||'')==="show('paint')");if(paint)paint.after(tile);else h.querySelector('.explore71 .hubgrid, .hubgrid')?.append(tile);if(typeof artRefresh63==='function')artRefresh63(h);if(typeof lcHideEntry81==='function')lcHideEntry81(h);return r}}
 {if(typeof pTrimSwitch74==='function'){const trim=pTrimSwitch74;pTrimSwitch74=function(){const r=trim.apply(this,arguments);$('lookup')?.querySelectorAll('[data-mode71]').forEach(el=>el.remove());return r}}}
 {if(typeof lampReason73==='function'){const why=lampReason73;lampReason73=function(reason){return reason==='planets'?gT('Your lamp grew because you noticed a pattern in the planets.'):why.apply(this,arguments)}}}

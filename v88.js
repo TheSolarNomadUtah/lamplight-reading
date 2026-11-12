@@ -145,7 +145,7 @@ function bootSongs88(){
   if(typeof SECTIONS!=='undefined'&&SECTIONS.indexOf('songs88')<0)SECTIONS.push('songs88');
   if(!$('songs88')&&document.querySelector('main'))document.querySelector('main').insertAdjacentHTML('afterbegin','<section id="songs88" class="hidden"></section>');
   RENDER.songs88=function(){if(typeof MU==='undefined')window.MU={};if(!MU||typeof MU!=='object')window.MU={};renderSongs88()};
-  if(typeof show==='function'&&!show._v88songs){
+  if(typeof show==='function'&&!show._v88songs&&!show._v97){
     const prev=show;
     show=function(id){
       if(id!=='songs88'&&typeof musicStop==='function'&&$('songs88')&&!$('songs88').classList.contains('hidden'))musicStop();

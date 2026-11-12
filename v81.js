@@ -361,7 +361,7 @@ function lcHideEntry81(root){
 }
 
 {const hub=RENDER.hub;RENDER.hub=renderHub=function(){const r=hub.apply(this,arguments);lcHideEntry81($('hub')||document);return r}}
-{const sh=show;show=function(id){if(id==='closer'&&!lcEnabled81())id='hub';return sh.apply(this,arguments)}}
+{if(!show._v97){const sh=show;show=function(id){if(id==='closer'&&!lcEnabled81())id='hub';return sh.apply(this,arguments)}}}
 {const rc=RENDER.closer;RENDER.closer=function(){if(!lcEnabled81()){show('hub');return}return rc.apply(this,arguments)}}
 if(typeof pRecent68==='function'){const rec=pRecent68;pRecent68=function(reads,events){if(!lcEnabled81())events=(events||[]).filter(e=>!lcIsRecord81(e));return rec(reads,events)}}
 if(typeof pRender68==='function'){const pr=pRender68;pRender68=function(){const r=pr.apply(this,arguments);lcHideEntry81($('log')||document);return r}}

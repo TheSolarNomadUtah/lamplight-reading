@@ -224,7 +224,7 @@ function boot92(){
   tr();
   try{return await prev.apply(this,arguments)}finally{tr();[50,200,800,2000,4000].forEach(ms=>setTimeout(()=>{tr();if(ms>=4000&&obs)obs.disconnect()},ms))}}}
  if(typeof RENDER!=='undefined'&&typeof renderLook==='function')RENDER.look=renderLook;
- if(typeof show==='function'&&!show._v92){
+ if(typeof show==='function'&&!show._v92&&!show._v97){
   const prev=show;
   show=function(id){
    if(id!=='look')document.querySelectorAll('#look .fx89-layer').forEach(n=>lampFxSmokeStop89(n));

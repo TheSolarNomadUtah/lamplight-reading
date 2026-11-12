@@ -18,7 +18,7 @@ const GHUB=[
  <p class="soft">${gT('Your stars: {n} ⭐',{n:gNum(n)})}</p><p><button class="bigbtn" onclick="show('hub')">⬅ ${gT('Home')}</button></p>`)}}
 // The arcade is no longer a separate place: its menu sends you to Games; Scramble and Sprint still play there.
 {const ra=RENDER.arcade;RENDER.arcade=function(){if(!AR.v){GM.v=null;return show('games')}if(AR.v==='syl')return spRender();ra();$('arcade').querySelectorAll('button').forEach(b=>{if(/RENDER\.arcade\(\)/.test(b.getAttribute('onclick')||'')&&/AR\.v=null/.test(b.getAttribute('onclick'))){b.setAttribute('onclick',"AR.v=null;GM.v=null;show('games')");b.textContent='⬅ '+gT('Games')}})}}
-{const sh=show;show=function(id){if(id==='arcade'&&!AR.v){GM.v=null;id='games'}return sh(id)}}
+{if(!show._v97){const sh=show;show=function(id){if(id==='arcade'&&!AR.v){GM.v=null;id='games'}return sh(id)}}}
 {const back=(sec,stop)=>{const b=[...$(sec).querySelectorAll('button.bigbtn')].pop();if(b){b.setAttribute('onclick',stop+";GM.v=null;show('games')");b.textContent='⬅ '+gT('Games')}};
  const rs=RENDER.starsongs;RENDER.starsongs=function(){rs();back('starsongs','sgStop()')};const rc=RENDER.cymatica;RENDER.cymatica=function(){rc();back('cymatica','cmStop()')}}
 

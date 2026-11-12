@@ -61,7 +61,7 @@ if(!CONTENT.includes(LANG)){
  document.head.insertAdjacentHTML('beforeend',`<style>[onclick*="show('trace')"],[onclick*="TR.cur="]{display:none!important}</style>`);
  for(let i=GHUB.length-1;i>=0;i--)if(GHUB[i][0]==='wk')GHUB.splice(i,1);
 }
-{const sh=show;show=function(id){if(id==='trace'&&!CONTENT.includes(LANG))id='hub';return sh.apply(this,[id])}}
+{if(!show._v97){const sh=show;show=function(id){if(id==='trace'&&!CONTENT.includes(LANG))id='hub';return sh.apply(this,[id])}}}
 {const rg=RENDER.games;RENDER.games=function(){if(GM.v==='wk'&&!CONTENT.includes(LANG))GM.v=null;return rg.apply(this,arguments)}}
 // ---------- Syllable words: one spelling, one canonical split ----------
 {const seen=new Set(),words=SPW.filter(w=>{const key=w.replace(/\|/g,'').toLowerCase();if(seen.has(key))return false;seen.add(key);return true}).map(w=>w==='zeb|ra'?'ze|bra':w);SPW.splice(0,SPW.length,...words)}

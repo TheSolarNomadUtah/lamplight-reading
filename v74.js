@@ -27,4 +27,4 @@ function pScoredRound74(section='games'){if(!CONTENT.includes(LANG))return false
 function pTrimSwitch74(){for(const id of ['hub','paint','echo','solo','session','print','look','kids','adults','log','letters','lib','starsongs','cymatica','cymatics','lab','music'])$(id)?.querySelectorAll('[data-mode71]').forEach(el=>el.remove());
  for(const section of ['games','arcade']){const root=$(section);if(!root)continue;if(root.classList.contains('hidden')||!pScoredRound74(section))root.querySelectorAll('[data-mode71]').forEach(el=>el.remove())}}
 {const decorate=pDecorate71;pDecorate71=function(section='games'){const r=decorate.apply(this,arguments);pTrimSwitch74();return r}}
-{const sh=show;show=function(id){const r=sh.apply(this,arguments);pTrimSwitch74();return r}}
+{if(!show._v97){const sh=show;show=function(id){const r=sh.apply(this,arguments);pTrimSwitch74();return r}}}

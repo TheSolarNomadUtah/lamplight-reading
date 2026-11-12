@@ -32,7 +32,7 @@ function dpRender63(){if(!CONTENT.includes(LANG)){GM.v=null;return RENDER.games(
 }
 if(CONTENT.includes(LANG))GHUB.push(['drum63',lampArt63('drum'),'Drum Garden','Free play, loops and copy the beat',4,'dpStart63()']);
 {const rg=RENDER.games;RENDER.games=function(){if(GM.v==='drum63')return dpRender63();if(DP63.s){dpStop63();DP63.s=null}return rg.apply(this,arguments)}}
-{const sh=show;show=function(id){if(id==='music'){GM.v=null;id='games'}if(id!=='games'&&DP63.s){if(DP63.s.recording)dpFinishRecord63();dpStop63()}const result=sh.apply(this,[id]);retiredMusicHide63(document.body);return result}}
+{if(!show._v97){const sh=show;show=function(id){if(id==='music'){GM.v=null;id='games'}if(id!=='games'&&DP63.s){if(DP63.s.recording)dpFinishRecord63();dpStop63()}const result=sh.apply(this,[id]);retiredMusicHide63(document.body);return result}}}
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&DP63.s){if(DP63.s.recording)dpFinishRecord63();dpStop63()}});
 function retiredMusicHide63(root){if(!root?.querySelectorAll)return;root.querySelectorAll('[onclick]').forEach(el=>{const on=el.getAttribute('onclick')||'';if(/show\('music'\)|singPlay\(|MU[.={]/.test(on))el.hidden=true});[...(root.matches?.('.card')?[root]:[]),...root.querySelectorAll('.card')].forEach(card=>{const links=[...card.querySelectorAll('[onclick]')];if(links.length&&links.some(el=>/show\('music'\)|singPlay\(|MU[.={]/.test(el.getAttribute('onclick')||''))&&links.every(el=>el.hidden))card.hidden=true})}
 {const refresh=artRefresh63;artRefresh63=function(root){refresh(root);retiredMusicHide63(root)}}

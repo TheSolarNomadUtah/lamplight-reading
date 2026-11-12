@@ -4,7 +4,7 @@ PKEYS.push('lamp_days','lamp_trace','lamp_cards');
 const SECTIONS=['hub','home','lib','session','log','print','look','about','solo','letters','echo','kids','cards','trace','paint','record','daycare','adults'];
 document.querySelector('main').insertAdjacentHTML('afterbegin',['hub','cards','trace','paint','record','daycare','adults'].map(x=>`<section id="${x}" class="hidden"></section>`).join(''));
 const RENDER={hub:renderHub,lib:renderLib,solo:renderSolo,letters:renderLetters,echo:renderEcho,kids:renderKids,about:renderAbout,cards:renderCards,trace:renderTrace,paint:renderPaint,record:renderRecord,daycare:renderDaycare,adults:renderAdults};
-show=function(id){try{if(id!=='solo')stopRead()}catch(e){}if(id!=='record')recStopAll();if(id!=='paint')document.body.classList.remove('painting');
+if(!show._v97)show=function(id){try{if(id!=='solo')stopRead()}catch(e){}if(id!=='record')recStopAll();if(id!=='paint')document.body.classList.remove('painting');
  SECTIONS.forEach(x=>{const e=$(x);if(e)e.classList.toggle('hidden',x!==id)});render();if(RENDER[id])RENDER[id]();window.scrollTo(0,0)};
 // ---------- Day log + lamp streak ----------
 const dkey=d=>{d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};

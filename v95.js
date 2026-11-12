@@ -169,12 +169,12 @@ function helpTidy95(){
  if(!about.querySelector('#helpGuide95'))about.insertAdjacentHTML('afterbegin',helpGuideHTML95());
 }
 
-{const sh=show;show=function(id){
+{if(!show._v97){const sh=show;show=function(id){
  if(id==='echo'&&!echoEnabled95())id='hub';
  const r=sh.call(this,id);
  afterShow95(id);
  return r;
-}}
+}}}
 function afterShow95(id){
  if(id==='look')lookTrim95();
  if(id==='about'){helpTidy95();hideEcho95($('about'))}

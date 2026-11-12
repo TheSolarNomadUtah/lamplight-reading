@@ -90,7 +90,7 @@ function renderCompose(){if(!NB.g)NB.g=nbParse(NB_START.Twinkle);const S=nbSongs
  <p class="soft" style="color:#bfb8a8">Songs are saved only on this device, for this kid. The notes are a pentatonic scale (C D E G A), used in music all over the world.</p>
  <button class="bigbtn" onclick="nbStop();MU={v:null};renderMusic()">⬅ Music</button></div>`}
 {const rm=renderMusic;renderMusic=function(){nbStop();if(MU.v==='compose'){musicStop();return renderCompose()}rm();if(!MU.v){const g=$('music').querySelector('.hubgrid');if(g)g.insertAdjacentHTML('beforeend',`<button class="hubtile" onclick="MU={v:'compose'};renderMusic()"><span>🧱</span>Note blocks<small>Make a beat</small></button><button class="hubtile" onclick="show('cymatics')"><span>🌀</span>Sound shapes<small>See your voice</small></button>`)}};RENDER.music=renderMusic}
-{const sh=show;show=function(id){if(id!=='cymatics')cyStop();if(id!=='bedtime')btStop();if(id!=='music')nbStop();sh(id)}}
+{if(!show._v97){const sh=show;show=function(id){if(id!=='cymatics')cyStop();if(id!=='bedtime')btStop();if(id!=='music')nbStop();sh(id)}}}
 // ================= 4. OFFLINE =================
 const XC='lamplight-extra';let OFF={msg:'',size:null};
 async function offList(){const r=await fetch('offline.json',{cache:'no-cache'});return r.json()}

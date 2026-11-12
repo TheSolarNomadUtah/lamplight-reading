@@ -139,7 +139,7 @@ function langBoot86(){
   // At phone width, v21 parks #fhome at bottom:56px. While that button is
   // visible, give the Look Up fact and notice cards start-edge margin so the button
   // does not cover them or "Hear it."
-  if(typeof show==='function'&&!show._v86){
+  if(typeof show==='function'&&!show._v86&&!show._v97){
     const prev=show;
     show=function(id){
       const r=prev.apply(this,arguments);

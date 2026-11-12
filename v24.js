@@ -30,7 +30,7 @@ function singerPicker(){const cur=curSinger();return `<div class="card" id="sing
 {const rl=renderLook;renderLook=function(){rl();if(LANG!=='es')$('look').insertAdjacentHTML('beforeend',singerPicker())};RENDER.look=renderLook}
 {const rm=renderMusic;renderMusic=function(){rm.apply(this,arguments);if(MU.v==='sing'&&MU.s==='m1'&&LANG!=='es'){const k=$('music').querySelector('.karaoke');if(k)k.insertAdjacentHTML('beforebegin',`<p id="singmsg" class="soft"></p>`+singerPicker())}}}
 // Home never needs the floating button; clear any leftover inline display.
-{const sh=show;show=function(id){const r=sh.apply(this,arguments);document.body.classList.toggle('onhub',id==='hub');const f=$('fhome');if(f)f.style.removeProperty('display');return r}}
+{if(!show._v97){const sh=show;show=function(id){const r=sh.apply(this,arguments);document.body.classList.toggle('onhub',id==='hub');const f=$('fhome');if(f)f.style.removeProperty('display');return r}}}
 document.head.insertAdjacentHTML('beforeend','<style>body.onhub #fhome{display:none!important}body.singing .karaoke{text-shadow:0 0 18px #ffd97a}</style>');
 // Letter songs: translate the template bits.
 if(LANG!=='en'){const t0=trText;trText=function(n){t0(n);const v=n.nodeValue;if(!v)return;const es=LANG==='es';let o=v

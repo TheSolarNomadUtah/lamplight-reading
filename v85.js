@@ -189,7 +189,7 @@ function luBind83(root){
 
 {const reset=luReset83;luReset83=function(){luClearNudge85();LU83.nudge=false;LU83.earthSince=0;return reset.apply(this,arguments)}}
 {const rend=luRender83;luRender83=function(){const r=rend.apply(this,arguments);luEarthNudge85();return r}}
-{const sh=show;show=function(id){if(id!=='lookup')luClearNudge85();return sh.apply(this,arguments)}}
+{if(!show._v97){const sh=show;show=function(id){if(id!=='lookup')luClearNudge85();return sh.apply(this,arguments)}}}
 
 document.head.insertAdjacentHTML('beforeend',`<style id="lu85-css">
 #lookup .lu85-diagram{position:relative;max-width:420px;width:100%;margin:0 auto}

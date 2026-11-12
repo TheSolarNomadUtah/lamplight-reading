@@ -35,7 +35,7 @@ catch(e){eStop65();E65.failed.add(slot.path);E65.slot=null;eNav65('hub')}}
 ['echoStart','echoHear','echoNext','echoDone'].forEach(k=>{if(typeof window[k]==='function')window[k]=()=>eNav65('hub')});
 function eHide65(root){root?.querySelectorAll?.('[onclick="show(\'echo\')"]').forEach(el=>{if(!CONTENT.includes(LANG))el.hidden=true;else{const small=el.querySelector('small');if(small)small.textContent=gT('Echo, together')}})}
 {const old=artRefresh63;artRefresh63=function(root){old(root);eHide65(root)}}
-{const old=show;show=function(id){eStop65();E65.gen++;E65.slot=null;if(id==='echo'){try{musicStop();stopRead();calmMusic(false)}catch(e){}if(!CONTENT.includes(LANG))return old('hub')}return old.apply(this,arguments)}}
+{if(!show._v97){const old=show;show=function(id){eStop65();E65.gen++;E65.slot=null;if(id==='echo'){try{musicStop();stopRead();calmMusic(false)}catch(e){}if(!CONTENT.includes(LANG))return old('hub')}return old.apply(this,arguments)}}}
 {const old=speak;speak=function(){return !$('echo').classList.contains('hidden')?null:old.apply(this,arguments)}}
 {const old=sfx;sfx=function(){return !$('echo').classList.contains('hidden')?null:old.apply(this,arguments)}}
 document.addEventListener('visibilitychange',()=>{if(document.hidden){eStop65();E65.gen++}});window.addEventListener('pagehide',()=>{eStop65();E65.gen++});eHide65(document.body);

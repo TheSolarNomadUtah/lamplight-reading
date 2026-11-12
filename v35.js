@@ -19,8 +19,8 @@ let GLOW_IN=0;
 {const md=markDay;markDay=function(kind){md(kind);if(GLOW_IN)return;if(kind==='music'){const inGame=['games','arcade'].some(s=>$(s)&&!$(s).classList.contains('hidden'));glowAdd(inGame?'games':'music')}}}
 {const as=arSave;arSave=function(k,v){as(k,v);GLOW_IN=1;try{markDay('games')}finally{GLOW_IN=0}glowAdd('games')}}
 {const sb=sbTap;sbTap=function(el,id){const r=sb(el,id);try{const g=glowGet(),k=dkey(),d=g.day[k]=g.day[k]||{};d.taps=(d.taps||0)+1;glowSet(g);if(d.taps===3){GLOW_IN=1;try{markDay('sounds')}finally{GLOW_IN=0}glowAdd('sounds')}}catch(e){}return r}}
-{let tm=null;const sh=show;show=function(id){sh(id);clearTimeout(tm);if(id==='starsongs'||id==='cymatica'){const kind=id==='starsongs'?'stars':'cym';
- tm=setTimeout(()=>{if($(id)&&!$(id).classList.contains('hidden')){GLOW_IN=1;try{markDay(kind==='cym'?'cymatica':'stars')}finally{GLOW_IN=0}glowAdd(kind)}},30000)}}}
+{let tm=null;if(!show._v97){const sh=show;show=function(id){sh(id);clearTimeout(tm);if(id==='starsongs'||id==='cymatica'){const kind=id==='starsongs'?'stars':'cym';
+ tm=setTimeout(()=>{if($(id)&&!$(id).classList.contains('hidden')){GLOW_IN=1;try{markDay(kind==='cym'?'cymatica':'stars')}finally{GLOW_IN=0}glowAdd(kind)}},30000)}}}}
 
 // Rings: a transparent canvas laid over the Light canvas (same layout), drawn in the reading theme's colors.
 function glowColors(){const L=getLook(),t=THEMES[L.theme]||THEMES.warm,h=hex2rgb,mix=(a,b,f)=>a.map((x,i)=>Math.round(x+(b[i]-x)*f));

@@ -6,7 +6,7 @@
 // soft, especially on the Night hero.
 function boot90(){
  if(boot90._on)return;boot90._on=1;
- if(typeof show==='function'&&!show._v90){
+ if(typeof show==='function'&&!show._v90&&!show._v97){
   const prev=show;
   show=function(id){
    const r=prev.apply(this,arguments);
