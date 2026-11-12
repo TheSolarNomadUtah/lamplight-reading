@@ -61,7 +61,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=97;
+const APP_VERSION=98;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;const VOLATILE=new Set();
 const RAW={get:k=>{if(VOLATILE.has(k))return Object.hasOwn(MEM,k)?MEM[k]:null;try{const v=window.localStorage.getItem(k);MEM[k]=v;return v}catch(e){STORE_OK=false;return Object.hasOwn(MEM,k)?MEM[k]:null}},
@@ -207,10 +207,7 @@ function soloStart(id){const s=S.find(x=>x.id===id);SO={s,qi:0,right:0};let i=0;
  <h2>${s.t}</h2><p class="story" id="sst">${s.text.split('\n').map(line=>line.split(/\s+/).filter(Boolean).map(w=>`<span class="w sw" data-i="${i++}" onclick="speak(this.textContent.replace(/[^\\w']/g,''),0.7)">${w}</span>`).join(' ')).join('<br>')}</p>
  <p style="text-align:center"><button class="bigbtn p" style="font-size:1.8rem" onclick="soloDone()">🌟 I read it!</button></p></div>`}
 function stopRead(){if(readTimer){clearTimeout(readTimer);readTimer=null}try{speechSynthesis.cancel()}catch(e){}document.querySelectorAll('.sw.say').forEach(x=>x.classList.remove('say'));const b=$('rtm');if(b)b.textContent='🔊 Read to me'}
-function readToMe(){if(readTimer||document.querySelector('.sw.say')){stopRead();return}const sp=[...document.querySelectorAll('#sst .sw')];let k=0;$('rtm').textContent='⏹ Stop';
- const step=()=>{sp.forEach(x=>x.classList.remove('say'));if(k>=sp.length||!$('sst')){stopRead();return}const el=sp[k++];el.classList.add('say');if(k%8===1)el.scrollIntoView({block:'center',behavior:'smooth'});const w=el.textContent.replace(/[^\w']/g,'');
-  const u=w?speak(w,0.8):null;let next=false;const go=()=>{if(next)return;next=true;readTimer=setTimeout(step,/[.!?]$/.test(el.textContent)?350:80)};
-  if(u){u.onend=go;u.onerror=go}readTimer=setTimeout(go,u?Math.max(700,w.length*160):550)};step()}
+function readToMe(){try{stopRead()}catch(e){}}
 function soloDone(){stopRead();speak('You read it! Great job!');SO.qs=soloQs(SO.s);SO.qi=0;SO.right=0;soloQ()}
 function soloQ(){if(!SO||(SO.pid68&&SO.pid68!==curPid()))return;const s=SO.s;if(SO.qi>=SO.qs.length){if(SO.saved68)return;SO.saved68=true;const stars=1+(SO.right===SO.qs.length?1:0)+(SO.right>0?1:0);const sv=getSolo();sv[s.id]={stars:Math.max(stars,(sv[s.id]||{}).stars||0),date:Date.now(),right:SO.right,of:SO.qs.length};LS.set('lamp_solo',JSON.stringify(sv));
   $('solo').innerHTML=`<div class="card big" style="text-align:center"><h2>🌟 You read “${s.t}”!</h2><p class="stars" style="font-size:3.5rem">${'⭐'.repeat(stars)}</p><p style="font-size:1.3rem">🔁 ${s.hook||''}</p><button class="bigbtn p" onclick="renderSolo()">Pick another story</button> <button class="bigbtn" onclick="soloStart('${s.id}')">Read it again</button></div>`;speak(stars+' stars!');return}
@@ -252,4 +249,5 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="v95.js"></script>
 <script src="v96.js"></script>
 <script src="v97.js"></script>
+<script src="v98.js"></script>
 </body></html>

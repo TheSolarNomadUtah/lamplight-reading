@@ -1,14 +1,10 @@
 // v24: approved Twinkle singing voices (SoulX-Singer + Kokoro timbres, Apache-2.0). Only Twinkle sings; every other song stays glow-only.
 const SINGERS=[['heart','Heart','f'],['bella','Bella','f'],['nicole','Nicole','f'],['emma','Emma','f'],['isabella','Isabella','f'],['nova','Nova','f'],['michael','Michael','m'],['liam','Liam','m'],['adam','Adam','m'],['puck','Puck','m'],['george','George','m'],['eric','Eric','m']];
 const SING_URL=v=>`audio/sing/twinkle_${v}.mp3`;
-function curSinger(){const s=LS.get('lamp_singer');if(s&&SINGERS.some(x=>x[0]===s))return s;let v='heart';try{v=curVoice()}catch(e){}return SINGERS.some(x=>x[0]===v)?v:'heart'}
+function curSinger(){return 'luna'}
 const SBUF={};
 async function singCached(v){try{return !!(await caches.match(SING_URL(v),{ignoreSearch:true}))}catch(e){return false}}
-async function loadSing(v){if(SBUF[v])return SBUF[v];const c=ac();if(!c)return null;
- if(!navigator.onLine&&!(await singCached(v)))return 'offline';
- try{let r=null;try{r=await caches.match(SING_URL(v),{ignoreSearch:true})}catch(e){}
-  if(!r){r=await fetch(SING_URL(v));if(!r.ok)throw 0;try{const cc=await caches.open('lamplight-extra');await cc.put(SING_URL(v),r.clone())}catch(e){}}
-  const buf=await c.decodeAudioData(await r.arrayBuffer());SBUF[v]=buf;return buf}catch(e){return navigator.onLine?null:'offline'}}
+async function loadSing(v){/* v98 folded: live implementation is in v88.js */}
 // Plays the clip as-is: playbackRate 1, no pitch/stretch/effects, straight into the master bus (AC.destination).
 function playSing(buf){const c=ac(),s=c.createBufferSource();s.buffer=buf;s.playbackRate.value=1;s.connect(c.destination);s.start(c.currentTime+.05);MSRC.push(s);return buf.duration}
 function singMsg(t){const f=$('sfb')||$('singmsg');if(f)f.textContent=t}
@@ -25,8 +21,7 @@ function singMsg(t){const f=$('sfb')||$('singmsg');if(f)f.textContent=t}
 async function singSample(v){musicStop();const b=document.querySelector(`[data-sing="${v}"]`),set=t=>{if(b)b.textContent=t};set('⏳');const buf=await loadSing(v);
  if(buf==='offline'){set('📶 Needs internet');setTimeout(()=>set('▶'),3000);return}if(!buf){set('⚠️');setTimeout(()=>set('▶'),3000);return}
  set('🔊');const c=ac(),s=c.createBufferSource(),g=c.createGain();s.buffer=buf;s.playbackRate.value=1;s.connect(g).connect(c.destination);const t=c.currentTime+.05;s.start(t);g.gain.setValueAtTime(1,t+5.5);g.gain.linearRampToValueAtTime(0,t+6);s.stop(t+6.1);MSRC.push(s);setTimeout(()=>set('▶'),6200)}
-function singerPicker(){const cur=curSinger();return `<div class="card" id="singcard"><h3>🎤 Singing voice (Twinkle)</h3><p class="soft">Used for “Twinkle, Twinkle, Little Star”. Other songs use the glow sound. Heart is saved for offline; others download (about 185 KB) the first time.</p>
- <div id="spick">${SINGERS.map(x=>`<span class="nw" style="margin:3px"><button class="${x[0]===cur?'p':''}" onclick="LS.set('lamp_singer','${x[0]}');document.querySelectorAll('#singcard').forEach(e=>e.outerHTML=singerPicker())">${x[2]==='f'?'👩':'👨'} ${x[1]}</button><button data-sing="${x[0]}" onclick="singSample('${x[0]}')" aria-label="Sample">▶</button></span>`).join('')}</div></div>`}
+function singerPicker(){return''}
 {const rl=renderLook;renderLook=function(){rl();if(LANG!=='es')$('look').insertAdjacentHTML('beforeend',singerPicker())};RENDER.look=renderLook}
 {const rm=renderMusic;renderMusic=function(){rm.apply(this,arguments);if(MU.v==='sing'&&MU.s==='m1'&&LANG!=='es'){const k=$('music').querySelector('.karaoke');if(k)k.insertAdjacentHTML('beforebegin',`<p id="singmsg" class="soft"></p>`+singerPicker())}}}
 // Home never needs the floating button; clear any leftover inline display.

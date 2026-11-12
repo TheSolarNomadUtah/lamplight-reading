@@ -117,29 +117,7 @@ function renderSongs88(){
   root.querySelector('[data-song-back]')?.addEventListener('click',()=>{if(typeof musicStop==='function')musicStop();MU.s=null;renderSongs88()});
   root.querySelector('[data-songs-home]')?.addEventListener('click',()=>{if(typeof musicStop==='function')musicStop();show('hub')});
 }
-async function playSong88(s){
-  if(typeof musicStop==='function')musicStop();
-  const f=t=>{const e=$('sfb');if(e)e.textContent=t};
-  if(isLuna88(s.id)&&typeof loadSingFor==='function'&&(typeof LANG==='undefined'||LANG!=='es')){
-    f('⏳ '+((typeof gT==='function'?gT('Loading…'):'Loading…')));
-    const buf=await loadSingFor(s.id,'luna');
-    if(buf==='offline')return f('📶 '+(typeof gT==='function'?gT('Needs internet: this singing voice is not downloaded yet.'):'Needs internet: this singing voice is not downloaded yet.'));
-    if(!buf)return f('⚠️ '+(typeof gT==='function'?gT('Could not play.'):'Could not play.'));
-    f('🎤 Luna');
-    const d=playSing(buf);
-    const meta=(await (typeof songsSung==='function'?songsSung():Promise.resolve({})))[s.id]||{};
-    const n=meta.lines||s.lines.length,part={...s,lines:s.lines.slice(0,n)};
-    const tl=songTimeline(part,s.bpm),end=tl.length?tl[tl.length-1].end:1,k=d*.92/end;
-    tl.forEach((w,i)=>later(()=>{document.querySelectorAll('.kw.on').forEach(e=>e.classList.remove('on'));const e=$('kw'+i);if(e)e.classList.add('on','was')},(w.t*k+.3)*1000));
-    later(()=>{document.querySelectorAll('.kw.on').forEach(e=>e.classList.remove('on'));try{markDay('music')}catch(e){}f('⭐ '+(typeof gT==='function'?gT('Great singing!'):'Great singing!'))},d*1000+300);
-    return;
-  }
-  // m6, m7, and Spanish: same glow path as before.
-  if(typeof singPlay==='function'){
-    MU.v='sing';MU.s=s.id;
-    return singPlay(false);
-  }
-}
+async function playSong88(s){/* v98 folded: live implementation is in v93.js */}
 
 function bootSongs88(){
   if(typeof SECTIONS!=='undefined'&&SECTIONS.indexOf('songs88')<0)SECTIONS.push('songs88');

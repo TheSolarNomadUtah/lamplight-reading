@@ -65,9 +65,7 @@ function renderCards(){const cnt=safeJSON(LS.get('lamp_cards'),{});
  <div class="cword" onclick="cardSay()">${[...c[1]].map((l,i)=>`<span style="animation-delay:${.6+i*.18}s">${l}</span>`).join('')}</div>
  <p class="soft stretch">${c[2]}</p>
  <button class="bigbtn" onclick="CD.i=(CD.i+deck.length-1)%deck.length;renderCards()">◀</button> <button class="bigbtn p" onclick="cardSay()">🔊 Hear it</button> <button class="bigbtn" onclick="CD.i++;renderCards()">▶</button><br><button onclick="CD.deck=null;renderCards()">All decks</button></div>`}
-function cardSay(){const deck=CARDS.filter(c=>c[0]===CD.deck),c=deck[CD.i%deck.length];document.querySelector('.wcard')?.classList.add('lit');
- try{speechSynthesis.cancel();const a=new SpeechSynthesisUtterance(c[2].replace(/-/g,' '));a.rate=.45;const b=new SpeechSynthesisUtterance(c[1]);b.rate=.8;speechSynthesis.speak(a);speechSynthesis.speak(b)}catch(e){}
- const cnt=safeJSON(LS.get('lamp_cards'),{});cnt[c[1]]=(cnt[c[1]]||0)+1;LS.set('lamp_cards',JSON.stringify(cnt));markDay('cards')}
+function cardSay(){}
 // ---------- Trace a letter ----------
 let TR={L:'A',low:false,cv:null,mask:null,pts:0,hit:null,drawing:false,ink:0,out:0};
 function renderTrace(){const L=TR.low?TR.L.toLowerCase():TR.L,got=safeJSON(LS.get('lamp_trace'),{});

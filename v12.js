@@ -14,9 +14,7 @@ speak=function(t,rate){const k=clipKey(t),idx=VIDX[curVoice()];const fake={onend
   try{speechSynthesis.cancel()}catch(e){}loadClip(k).then(b=>{if(!b){const u=speak0(t,rate);if(u)u.onend=()=>fake.onend&&fake.onend();return}const c=ac(),s=c.createBufferSource();s.buffer=b;s.playbackRate.value=1;s.connect(c.destination);s.start();s.onended=()=>fake.onend&&fake.onend()})});return fake}
  return speak0(t,rate)};
 // Picture cards: stretched sound (device voice) then the word in the family voice.
-const cardSay0=cardSay;cardSay=function(){const deck=CARDS.filter(c=>c[0]===CD.deck),c=deck[CD.i%deck.length];voiceIndex().then(set=>{if(!set.has('w_'+mslug(c[1])+'.mp3')&&!set.has('w_'+mslug(c[1])))return cardSay0();
- document.querySelector('.wcard')?.classList.add('lit');loadClip('w_'+mslug(c[1])).then(b=>{const a=ac();if(!b||!a)return;[[1,0],[1,b.duration+.5]].forEach(([r,d])=>{const s=a.createBufferSource();s.buffer=b;s.playbackRate.value=r;s.connect(a.destination);s.start(a.currentTime+d)})});
- const cnt=safeJSON(LS.get('lamp_cards'),{});cnt[c[1]]=(cnt[c[1]]||0)+1;LS.set('lamp_cards',JSON.stringify(cnt));markDay('cards');lightCheck()})};
+const cardSay0=cardSay;cardSay=function(){};
 // ---------- Voice picker ----------
 let VP={msg:''};
 async function voiceSample(v){musicStop();const b=await loadClip('p_sample',v);if(b)playClip(b,0,1);else speak0('Hi! I can read with you.')}

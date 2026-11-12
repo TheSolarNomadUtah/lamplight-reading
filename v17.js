@@ -11,9 +11,7 @@ singPlay=async function(say){const s=MUSIC.songs.find(x=>x.id===MU.s),tl=songTim
 playLetterSong=function(L){musicStop();const i=MUSIC.letters.findIndex(x=>x[0]===L),r=MUSIC.letters[i],c=ac(),b=60/100;
  loadClip('l_'+L.toLowerCase()).then(buf=>{const t0=(c?c.currentTime:0)+.2;let t=0;letterTune(i).forEach(([m,d])=>{note(m,t0+t,d*b,'glow',.2);t+=d*b});
   playClip(buf,t0+t+.2,1.1,`${L} says ${r[1]}, ${r[1]}, ${r[1]}. ${r[2]} and ${r[3]}!`);const e=$('lsbig');if(e){e.classList.add('pop');later(()=>e.classList.remove('pop'),(t+2)*1000)}})};
-cardSay=function(){const deck=CARDS.filter(c=>c[0]===CD.deck),c=deck[CD.i%deck.length];document.querySelector('.wcard')?.classList.add('lit');
- loadClip('w_'+mslug(c[1])).then(b=>{const a=ac();if(!b||!a){speak(c[1],.7);return}[0,b.duration+.6].forEach(d=>{const s=a.createBufferSource();s.buffer=b;s.connect(a.destination);s.start(a.currentTime+d)})});
- const cnt=safeJSON(LS.get('lamp_cards'),{});cnt[c[1]]=(cnt[c[1]]||0)+1;LS.set('lamp_cards',JSON.stringify(cnt));markDay('cards');try{lightCheck()}catch(e){}};
+cardSay=function(){};
 {const rm=renderMusic;renderMusic=function(){rm();const el=$('music');
  if(MU.v==='sing'&&MU.s){const bs=el.querySelectorAll('button');bs.forEach(b=>{const o=b.getAttribute('onclick')||'';if(o==='singPlay(true)'){b.textContent='🗣 Say the words';b.classList.remove('p')}if(o==='singPlay(false)'){b.textContent='▶ Play song';b.classList.add('p');b.parentNode.prepend(b)}});
   el.querySelector('.karaoke')?.insertAdjacentHTML('afterend','<p class="soft">The tune plays on the warm glow sound. Read or sing the glowing words. Tap “Say the words” to hear them spoken first.</p>')}
