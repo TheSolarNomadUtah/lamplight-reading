@@ -65,7 +65,7 @@ function luSunMark83(cx,cy,r,breathe){
 function luSkySvg83(kind,extra){
  extra=extra||'';
  const dim=kind==='night';
- return `<svg class="lu83-svg" viewBox="0 0 100 72" width="100%" height="auto" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid meet">
+ return `<svg class="lu83-svg" viewBox="0 0 100 72" width="100%" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid meet">
   <defs><linearGradient id="lu83sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--lu-sky1)"/><stop offset="1" stop-color="var(--lu-sky2)"/></linearGradient></defs>
   <rect class="lu83-skyfill" x="0" y="0" width="100" height="72" rx="6" fill="url(#lu83sky)"/>
   <g class="lu83-stars" fill="var(--lu-star)">${luStars83(kind==='sun'?16:26,kind,dim)}</g>
@@ -124,7 +124,7 @@ function luOrderScene83(){
   return `<g>${mark}</g>`
  }).join('');
  const orbits=LU_PLANETS83.map((_,i)=>{const rx=10+i*10.7;return `<path d="M4 38 Q${16+i*10.7} 22 ${16+i*10.7+8} 38" fill="none" stroke="var(--lu-line)" stroke-width=".55" opacity=".45"/>`}).join('');
- return `<svg class="lu83-svg lu83-order-svg" viewBox="0 0 100 56" width="100%" height="auto" aria-hidden="true" focusable="false">
+ return `<svg class="lu83-svg lu83-order-svg" viewBox="0 0 100 56" width="100%" aria-hidden="true" focusable="false">
   <defs><linearGradient id="lu83sky-order" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--lu-sky1)"/><stop offset="1" stop-color="var(--lu-sky2)"/></linearGradient></defs>
   <rect x="0" y="0" width="100" height="56" rx="6" fill="url(#lu83sky-order)"/>
   <g class="lu83-stars" fill="var(--lu-star)">${luStars83(14,'order',LU83.noticed)}</g>
