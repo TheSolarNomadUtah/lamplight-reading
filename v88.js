@@ -159,9 +159,9 @@ function bootSongs88(){
       const r=hub.apply(this,arguments);
       const h=$('hub');if(!h||h.querySelector('[data-songs88]'))return r;
       const tile=document.createElement('button');
-      tile.className='hubtile';tile.dataset.songs88='1';
-      tile.setAttribute('onclick',"MU.s=null;show('songs88')");
-      tile.innerHTML=`🎤 ${gT('Songs')}<small>${gT('Sung by Luna.')}</small>`;
+      tile.className='hubtile';tile.type='button';tile.dataset.songs88='1';
+      tile.innerHTML=`${gT('Songs')}<small>${gT('Sung by Luna.')}</small>`;
+      tile.addEventListener('click',()=>{if(typeof MU!=='undefined')MU.s=null;show('songs88')});
       const lu=h.querySelector('[data-lu83]');
       if(lu)lu.after(tile);
       else{
