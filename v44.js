@@ -147,10 +147,9 @@ function drawMoire(x,cv,t){const W=cv.width,H=cv.height,M=LAB.mo;
  mesh('rgba(38,30,70,.78)',0,1,0,0);mesh('rgba(20,40,80,.78)',M.a,M.s,M.dx,M.dy)}
 
 // ---------- Hub tile (only with the flag), styles ----------
-const LAB_TILE=['lab','','Sound Lab','Experimental: tube, circles, moiré',10,"show('lab')"];if(LAB_ON)GHUB.push(LAB_TILE);
-function labSetOn(on){try{on?localStorage.setItem('lamp_lab','1'):localStorage.removeItem('lamp_lab')}catch(e){}LAB_ON=on;const i=GHUB.indexOf(LAB_TILE);if(on&&i<0)GHUB.push(LAB_TILE);if(!on&&i>=0)GHUB.splice(i,1);if(!on)labStop();RENDER.adults&&RENDER.adults()}
-{const ra=RENDER.adults;if(ra)RENDER.adults=function(){ra.apply(this,arguments);const el=$('adults');if(!el||el.querySelector('.labtoggle'))return;if(!LAB_ON&&!localStorage.getItem('lamp_lab_seen'))return;
- el.insertAdjacentHTML('beforeend',`<div class="card labtoggle"><h3>${gT('Sound Lab')} <b class="labexp">${gT('Experimental')}</b></h3><p class="soft">${LAB_ON?gT('The Sound Lab tile is showing in Games.'):gT('The Sound Lab is hidden.')}</p><button onclick="labSetOn(${!LAB_ON})">${LAB_ON?gT('Hide Sound Lab'):gT('Show Sound Lab')}</button></div>`)}}
+const LAB_TILE=['lab','','Sound Lab','Experimental: tube, circles, moiré',10,"show('lab')"];/* v96: do not push Sound Lab into GHUB; the feature stays retired. The v92 seatbelt also still guards this. */
+function labSetOn(on){try{on?localStorage.setItem('lamp_lab','1'):localStorage.removeItem('lamp_lab')}catch(e){}LAB_ON=on;if(!on)labStop();RENDER.adults&&RENDER.adults()}/* v96: no longer pushes or splices LAB_TILE on GHUB */
+/* v96: do not inject the Grown-ups Sound Lab .labtoggle card. */
 try{if(LAB_ON)localStorage.setItem('lamp_lab_seen','1')}catch(e){}
 {const rg=RENDER.games;RENDER.games=function(){rg();if(!LAB_ON||GM.v)return;const b=document.querySelector('#games .hubtile[data-g="lab"]');if(b){const s=b.querySelector('span');if(s)s.innerHTML=LAB_SVG;b.classList.add('labtile');b.insertAdjacentHTML('beforeend',`<b class="labexp">${gT('Experimental')}</b>`)}}}
 document.head.insertAdjacentHTML('beforeend',`<style>

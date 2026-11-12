@@ -61,7 +61,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=95;
+const APP_VERSION=96;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;const VOLATILE=new Set();
 const RAW={get:k=>{if(VOLATILE.has(k))return Object.hasOwn(MEM,k)?MEM[k]:null;try{const v=window.localStorage.getItem(k);MEM[k]=v;return v}catch(e){STORE_OK=false;return Object.hasOwn(MEM,k)?MEM[k]:null}},
@@ -221,8 +221,8 @@ function soloAns(b,ok){if(!SO||SO.answered68)return;const round=SO,pid=curPid();
 applyLook();renderBar();render();$("home").classList.add("hidden");
 if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navigator.serviceWorker.controller;navigator.serviceWorker.register('sw.js',{scope:'./'}).then(r=>r?.update()).catch(()=>{});let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!rl&&hadSW){rl=1;location.reload()}})}
 </script>
-<script src="v10.js"></script><script src="music-data.js"></script><script src="music.js"></script><script src="v12.js"></script><script src="stories-es.js"></script><script src="v14.js"></script><script src="seq-demos.js"></script><script src="v16-seq.js"></script><script src="v16-art.js"></script><script src="v16.js"></script><script src="v17.js"></script><script src="move.js"></script><script src="v86.js"></script><script src="i18n.js"></script><script src="v19.js"></script>
-<script src="v20.js"></script><script src="v21.js"></script><script src="v22.js"></script><script src="v23.js"></script><script src="v24.js"></script><script src="v25.js"></script><script src="v27.js"></script><script src="v28.js"></script><script src="v29.js"></script><script src="v30.js"></script><script src="v31.js"></script><script src="v32.js"></script><script src="v33.js"></script><script src="v34.js"></script><script src="v35.js"></script><script src="v36.js"></script><script src="v37.js"></script><script src="v38.js"></script><script src="v41.js"></script><script src="v43.js"></script><script src="v44.js"></script><script src="v46.js"></script><script src="v47.js"></script><script src="v48.js"></script><script src="v49.js"></script><script src="v50.js"></script><script src="v51.js"></script><script src="v52.js"></script><script src="v54.js"></script><script src="v55.js"></script><script src="v56.js"></script><script src="v57.js"></script><script src="v58.js"></script><script src="v59.js"></script><script src="v60.js"></script><script src="v61.js"></script><script src="v62.js"></script><script src="art63.js"></script><script src="v63.js"></script><script src="drum63.js"></script><script src="stories64.js"></script><script src="art64.js"></script><script src="v64.js"></script><script src="echo65-data.js"></script>
+<script src="v10.js"></script><script src="music-data.js"></script><script src="music.js"></script><script src="v12.js"></script><script src="stories-es.js"></script><script src="v14.js"></script><script src="v16-seq.js"></script><script src="v16-art.js"></script><script src="v16.js"></script><script src="v17.js"></script><script src="move.js"></script><script src="v86.js"></script><script src="i18n.js"></script><script src="v19.js"></script>
+<script src="v20.js"></script><script src="v21.js"></script><script src="v22.js"></script><script src="v23.js"></script><script src="v24.js"></script><script src="v25.js"></script><script src="v27.js"></script><script src="v28.js"></script><script src="v29.js"></script><script src="v30.js"></script><script src="v31.js"></script><script src="v32.js"></script><script src="v33.js"></script><script src="v34.js"></script><script src="v35.js"></script><script src="v36.js"></script><script src="v37.js"></script><script src="v38.js"></script><script src="v41.js"></script><script src="v43.js"></script><script src="v44.js"></script><script src="v46.js"></script><script src="v47.js"></script><script src="v48.js"></script><script src="v49.js"></script><script src="v51.js"></script><script src="v52.js"></script><script src="v54.js"></script><script src="v55.js"></script><script src="v56.js"></script><script src="v57.js"></script><script src="v58.js"></script><script src="v59.js"></script><script src="v60.js"></script><script src="v61.js"></script><script src="v62.js"></script><script src="art63.js"></script><script src="v63.js"></script><script src="drum63.js"></script><script src="stories64.js"></script><script src="art64.js"></script><script src="v64.js"></script><script src="echo65-data.js"></script>
 <script src="art65.js"></script>
 <script src="v65.js"></script>
 <script src="icons65.js"></script>
@@ -237,9 +237,6 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="v75.js"></script>
 <script src="v76.js"></script>
 <script src="v77.js"></script>
-<script src="v78.js"></script>
-<script src="v79.js"></script>
-<script src="v80.js"></script>
 <script src="v81.js"></script>
 <script src="v82.js"></script>
 <script src="v83.js"></script>
@@ -253,4 +250,5 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="v93.js"></script>
 <script src="v94.js"></script>
 <script src="v95.js"></script>
+<script src="v96.js"></script>
 </body></html>

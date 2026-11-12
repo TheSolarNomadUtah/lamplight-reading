@@ -342,6 +342,17 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Look Closer is hidden in this release, behind `LOOK_CLOSER81` (set to false). The Explore tile and any entry points are removed, including routes from the Look page and `show('closer')`, which returns Home. The v75–v80 code and assets stay in the repo so the feature can be turned back on later. Existing Look Closer lamp credits and night-sky stars are kept. Look Closer is not listed in the Progress log as something kids can still do, and no modern illusion preview was added.
 - Cache `lamplight-v81`; `v81.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
 
+## v96 — Unused proof screenshots removed, dead loads dropped, Sound Lab push cleared, Kids Home button no longer covers the Lamp effect intro
+- Deleted 26 unreferenced root QA screenshots (`*-proof.png`, `light-proof-*.png`, `screenshot.png`; 3,475,430 bytes). They were never loaded by the app, listed in the service-worker precache, or in the offline packs. GitHub Pages no longer serves them.
+- `fonts/PlaywriteUSTrad-OFL.txt` stays in the repo next to the cursive font; it is dropped from both offline "Save everything" lists only (4,393 bytes).
+- `stars.json` stays on disk; it is dropped from the service-worker precache and both offline lists (15,319 bytes). Nothing live fetches it (Star songs is retired).
+- `seq-demos.js` stays on disk with the hidden Note Blocks sequencer (`v16-seq.js` still loads). It is no longer loaded on every visit, precached, or in the offline lists (36,451 bytes).
+- Deleted `v50.js` (Lab-only `LAB.f=343` default) and `v79.js` (Look Closer Duck art fully replaced by `v80.js`).
+- The v44 Sound Lab Games-tile push (`if(LAB_ON)GHUB.push(LAB_TILE)`), the Grown-ups `.labtoggle` card, and `labSetOn`'s GHUB push are removed. The v92 seatbelt stays in full, because it also hides Star songs and Cymatica and guards other retired routes. Sound Lab code and `#lab` stay in the repo.
+- Look Closer art files `v78.js` and `v80.js` stay on disk but are no longer loaded, precached, or in the offline lists, while `LOOK_CLOSER81` is false. `v75.js` and `v77.js` still load: they define live Lamp globals (`LAMP_KINDS75`, `lampMoment73`, `lampCap77`, `lampPickReason74`) used by the Lamp on Home. The `v81` flag and `show('closer')` guard stay.
+- On phone widths, Kids gets start-edge padding on the Lamp glow and Lamp effect intros so the floating Home button no longer covers that text (same 60px clearance as Look Up in v86), and bottom padding so the Save row can scroll clear of the button.
+- Cache `lamplight-v96`; `v96.js` is precached and both offline manifests are byte-recomputed.
+
 ## v95 — Voices in Letters and Trace, Echo and Body cards tucked away, Lamp pickers in Kids, a first-time Help guide
 - Recorded talking voices stay in Letters and Trace. Library and non-daily Solo lose "Read to me" and tap-a-word audio (`#rtm` and `speak` / `readToMe` handlers are stripped; `readToMe` is a no-op; `speak` is quiet on Solo, Picture cards, Read Together, Look Up and Echo). Picture cards lose "Hear it" and word audio (`cardSay` is a no-op). The Grown-ups Reading voice picker (`#vpick`) is removed from Look. No voice or audio files were added, removed or edited.
 - Echo is flagged off (`ECHO95=false`) and filtered from Home, Explore, routes, Kids and Daycare columns, Help and feedback. Opening it returns to Home. The Echo code, art and data stay for later. Rhythm Echo and Melody Echo games are unchanged.
