@@ -166,6 +166,7 @@ function luTuneTab87(){
 const RETIRED92=new Set(['lab','star','cym','cymatics','starsongs','cymatica']);
 const RETIRED_ACT92=/show\('(lab|starsongs|cymatica|cymatics)'\)|pOpen71\('(lab|star|cym|cymatics|starsongs|cymatica)'\)|labSetOn/;
 function ghTrim92(){
+ if(typeof ghTrim100==='function')return ghTrim100();
  if(typeof GHUB==='undefined'||!Array.isArray(GHUB))return;
  for(let i=GHUB.length-1;i>=0;i--){
   const row=GHUB[i],k=row&&row[0],act=String(row&&row[5]||'');
@@ -174,6 +175,7 @@ function ghTrim92(){
  if(typeof P71!=='undefined'&&P71.actions)for(const k of RETIRED92)delete P71.actions[k];
 }
 function retireDom92(root){
+ if(typeof retireDom100==='function')return retireDom100(root);
  if(!root)return;
  root.querySelectorAll('.labtoggle,[data-g="lab"],[data-g="star"],[data-g="cym"],[data-g="cymatics"],[data-stars],[data-starsongs],[data-cymatica],.labtile').forEach(el=>el.remove());
  root.querySelectorAll('[onclick]').forEach(el=>{
@@ -183,7 +185,7 @@ function retireDom92(root){
   (wrap||el).remove();
  });
 }
-function labSetOn(on){ghTrim92();document.querySelectorAll('.labtoggle').forEach(el=>el.remove())}
+function labSetOn(on){if(typeof labSetOn100==='function')return labSetOn100(on);ghTrim92();document.querySelectorAll('.labtoggle').forEach(el=>el.remove())}
 ghTrim92();
 
 function boot92(){

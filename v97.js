@@ -16,6 +16,7 @@ let _showCur29=null;
 let _showTm35=null;
 
 function aboutClean58_97(){
+ if(typeof aboutClean100==='function')return aboutClean100();
  const OLD=/Hum &(amp;)? match|Tararea|همهم/;
  const a=$('about');
  if(a)a.querySelectorAll('p.soft').forEach(p=>{if(OLD.test(p.textContent))p.remove()});
