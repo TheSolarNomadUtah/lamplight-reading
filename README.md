@@ -342,6 +342,11 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Look Closer is hidden in this release, behind `LOOK_CLOSER81` (set to false). The Explore tile and any entry points are removed, including routes from the Look page and `show('closer')`, which returns Home. The v75–v80 code and assets stay in the repo so the feature can be turned back on later. Existing Look Closer lamp credits and night-sky stars are kept. Look Closer is not listed in the Progress log as something kids can still do, and no modern illusion preview was added.
 - Cache `lamplight-v81`; `v81.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
 
+## v91 — Smaller Luna song MP3s (LAME V2)
+- The nine Luna song MP3s are replaced byte-for-byte with QA's LAME VBR V2 encodes (`twinkle`, `row`, `hey_diddle`, `hello`, `clap`, `sam_and_the_cap`, `little_lamp`, `five_little_stars`, `mary`). Filenames stay `<slug>_luna.mp3`. Opus and all other audio are untouched.
+- Cache `lamplight-v91`. Song URLs in MP3 mode use `?v=91`, and both the service worker and the page evict stale 192k copies from `lamplight-extra` so the new bytes play online and offline.
+- `v91.js` is precached and `offline.json` sizes are recomputed. No new requests; no opus or speaking-voice changes.
+
 ## v90 — Lamp-glow ring, effect-fact clearance, clearer jelly bands
 - The flame-color ring on Look keeps an even v82 ring at rest and while it settles. The curl animation now expands along each swatch’s final angle, so the six never cross or pile in the middle.
 - The Lamp-effect fact line gets the same phone-width Home-button clearance as the Look Up cards (`margin-inline-start: 60px` while the floating button is visible).
