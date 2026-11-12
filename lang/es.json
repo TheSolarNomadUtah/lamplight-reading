@@ -1726,5 +1726,19 @@
 "An ember is a small piece of wood or coal that keeps glowing after the flames go down.": "Una brasa es un trocito de madera o carbón que sigue brillando cuando las llamas se apagan.",
 "Comb jellies are sea animals. Tiny rows on their bodies bend light into rainbows, like a soap bubble.": "Los ctenóforos son animales del mar. Unas hileras diminutas en su cuerpo doblan la luz y hacen arcoíris, como una burbuja de jabón.",
 "Some deep-sea animals squirt a glowing cloud of ink, then hide behind it.": "Algunos animales del fondo del mar sueltan una nube de tinta que brilla, y se esconden detrás.",
-"Singing: Luna. Played as recorded, with no pitch changes.": "Canto: Luna. Se reproduce tal como se grabó, sin cambios de tono."
+"Singing: Luna. Played as recorded, with no pitch changes.": "Canto: Luna. Se reproduce tal como se grabó, sin cambios de tono.",
+"The quick fox jumps. Read me to test your settings!": "El zorro rápido salta. ¡Léeme para probar tus ajustes!",
+"Voices: Kokoro-82M (Apache-2.0), recorded ahead of time onto our own site.": "Voces: Kokoro-82M (Apache-2.0), grabadas de antemano en nuestro sitio.",
+"✓ Family": "✓ Familia",
+"📶 Needs internet": "📶 Necesita internet",
+"Needs internet": "Necesita internet",
+"Playing…": "Reproduciendo…",
+"Loading…": "Cargando…",
+"Could not play": "No se pudo reproducir",
+"This voice is not downloaded yet. Connect to the internet once to hear it.": "Esta voz aún no está descargada. Conéctate a internet una vez para oírla.",
+"Getting {name} ready…": "Preparando a {name}…",
+"Downloading {name}: {n}/{total}": "Descargando {name}: {n}/{total}",
+"{name} is ready, and works offline now.": "{name} ya está lista y ahora funciona sin conexión.",
+"Could not download that voice right now. Try again when online.": "No se pudo descargar esa voz ahora. Inténtalo de nuevo cuando estés en línea.",
+"🎨 Look & feel": "🎨 Aspecto"
 }
