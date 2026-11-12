@@ -342,6 +342,12 @@ More levels: Rhythm Echo +7 (27 total), Melody Echo +3, Syllable Sprint Master t
 - Look Closer is hidden in this release, behind `LOOK_CLOSER81` (set to false). The Explore tile and any entry points are removed, including routes from the Look page and `show('closer')`, which returns Home. The v75–v80 code and assets stay in the repo so the feature can be turned back on later. Existing Look Closer lamp credits and night-sky stars are kept. Look Closer is not listed in the Progress log as something kids can still do, and no modern illusion preview was added.
 - Cache `lamplight-v81`; `v81.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
 
+## v90 — Lamp-glow ring, effect-fact clearance, clearer jelly bands
+- The flame-color ring on Look keeps an even v82 ring at rest and while it settles. The curl animation now expands along each swatch’s final angle, so the six never cross or pile in the middle.
+- The Lamp-effect fact line gets the same phone-width Home-button clearance as the Look Up cards (`margin-inline-start: 60px` while the floating button is visible).
+- Comb-jelly rainbow bands on the hero Lamp are clearly visible, still soft, in both themes — including Night with Starfire.
+- Cache `lamplight-v90`; `v90.js` is precached and both offline manifests are byte-recomputed. No new audio, voices or requests.
+
 ## v89 — Five Lamp effects a child can pick
 - On each child’s Look page, next to the flame color picker, a Lamp-effect picker offers six looks: Classic glow (the current look, and the default) plus Sleeping spiral, Bright core, Ember pulses, Comb jelly ripple, and Glowing smoke. Each has a distinct mini preview, a name, and a one-line true kid fact, in English and Spanish. Switching an effect is per child and never changes Lamp progress.
 - Every effect is drawn in code (SVG, CSS, or canvas), in the child’s chosen flame color, slow, with no flicker or flash, and no new images or audio. The sleeping spiral is a golden-angle sunflower-seed pattern that unwinds when the Lamp wakes. Bright core is a hot center in a softer outer shell. Ember pulses travel up the Lamp’s body. Comb-jelly rainbow bands ripple down once on a stage-up and on a slow idle cycle. Glowing smoke is curling canvas-noise ink around the Lamp: it pauses when the tab is hidden, is capped at 30 fps, and falls back to a static version on low-end devices.
