@@ -1740,5 +1740,6 @@
 "Downloading {name}: {n}/{total}": "Descargando {name}: {n}/{total}",
 "{name} is ready, and works offline now.": "{name} ya está lista y ahora funciona sin conexión.",
 "Could not download that voice right now. Try again when online.": "No se pudo descargar esa voz ahora. Inténtalo de nuevo cuando estés en línea.",
-"🎨 Look & feel": "🎨 Aspecto"
+"🎨 Look & feel": "🎨 Aspecto",
+"All six glows now make a ring around your Lamp.": "Los seis brillos ya forman un anillo alrededor de tu lámpara."
 }
