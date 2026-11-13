@@ -86,9 +86,34 @@ Original songs and chants written for Lamplight are CC BY-SA 4.0, with credit to
 
 These are not relicensed here. Unless a source is already documented, their license is to be confirmed by the owner.
 
-- Speech clips in `audio/<voice>/` (including heart, nicole, puck, dora, alex, and the other shipped Kokoro voice folders) were pre-recorded with Kokoro-82M (Apache-2.0), as already documented in the project README.
-- Earlier singing experiments used SoulX-Singer (Apache-2.0) with Kokoro-82M voice timbres, also documented in the README.
-- The nine Luna mixes in the app (Twinkle, Row, Hey Diddle Diddle, Hello, Clap, Sam and the Cap, The Little Lamp, Five Little Stars, and Mary) are QA mixes, played as recorded, and the singer is shown as Luna. The license for these recordings is to be confirmed by the owner.
+- Speech clips in `audio/<voice>/` (including heart, nicole, puck, dora, alex, and the other shipped Kokoro voice folders) were pre-recorded with Kokoro-82M (Apache-2.0), as already documented in the project README. These AI-made clips stay under their own model terms and are not licensed as CC BY-SA 4.0, pending Ignacio’s decision.
+- Earlier singing experiments used SoulX-Singer (Apache-2.0) with Kokoro-82M voice timbres, also documented in the README. Those experiments stay under their own model terms and are not licensed as CC BY-SA 4.0, pending Ignacio’s decision.
+- The nine Luna mixes in the app (Twinkle, Row, Hey Diddle Diddle, Hello, Clap, Sam and the Cap, The Little Lamp, Five Little Stars, and Mary) are QA mixes, played as recorded, and the singer is shown as Luna. These recordings are AI-made audio. They stay under their own model terms and are not licensed as CC BY-SA 4.0, pending Ignacio’s decision.
+
+### Song list (every song in the app)
+
+This table lists each song or sung rhyme the app plays or shows. Origins are taken only from credits already in the repo (`music-data.js`, this file, and in-app credit lines). Where a recording is an AI-made Luna mix, that audio stays under its own model terms and is **not** licensed as CC BY-SA 4.0; Ignacio has not yet decided whether those clips should be under CC BY-SA (“Im not sure,” 13 Nov 2026). The same is true of Kokoro-82M and SoulX-Singer speech clips in `audio/<voice>/`. Until he decides, those recordings keep their model terms, and this is pending his decision.
+
+| Title | Origin | Source file |
+| --- | --- | --- |
+| Twinkle, Twinkle, Little Star | Public domain / traditional tune (words and melody), as already listed in this file. The sung Luna mix is AI-made audio under its own model terms, not CC BY-SA, pending Ignacio’s decision. | `audio/sing/twinkle_luna.mp3`, `audio/sing/twinkle_luna.opus`; words and notes in `music-data.js` (id `m1`); also `audio/sing/songs.json` |
+| Row, Row, Row Your Boat | Public domain / traditional tune (words and melody), as already listed in this file. The sung Luna mix is AI-made audio under its own model terms, not CC BY-SA, pending Ignacio’s decision. | `audio/sing/row_luna.mp3`, `audio/sing/row_luna.opus`; `music-data.js` (id `m2`); also `audio/sing/songs.json` |
+| Hey Diddle Diddle | Public domain / traditional tune (words and melody), as already listed in this file. The sung Luna mix is AI-made audio under its own model terms, not CC BY-SA, pending Ignacio’s decision. | `audio/sing/hey_diddle_luna.mp3`, `audio/sing/hey_diddle_luna.opus`; `music-data.js` (id `m3`); also `audio/sing/songs.json` |
+| Hello, Hello | Original Lamplight chant, listed in this file as CC BY-SA 4.0 for the words. The sung Luna mix is AI-made audio under its own model terms, not CC BY-SA, pending Ignacio’s decision. | `audio/sing/hello_luna.mp3`, `audio/sing/hello_luna.opus`; `music-data.js` (id `m4`); also `audio/sing/songs.json` |
+| Clap, Clap, Pat | Original Lamplight chant, listed in this file as CC BY-SA 4.0 for the words. The sung Luna mix is AI-made audio under its own model terms, not CC BY-SA, pending Ignacio’s decision. | `audio/sing/clap_luna.mp3`, `audio/sing/clap_luna.opus`; `music-data.js` (id `m5`); also `audio/sing/songs.json` |
+| Who Says Moo? | Original Lamplight chant, listed in this file as CC BY-SA 4.0 for the words. There is no Luna mix of this chant in the app. | `music-data.js` (id `m6`); also `echo.js` (id `e3`) |
+| Mmm, Moon | Original Lamplight chant, listed in this file as CC BY-SA 4.0 for the words. There is no Luna mix of this chant in the app. | `music-data.js` (id `m7`) |
+| Sam and the Cap | Original Lamplight chant, listed in this file as CC BY-SA 4.0 for the words. The sung Luna mix is AI-made audio under its own model terms, not CC BY-SA, pending Ignacio’s decision. | `audio/sing/sam_and_the_cap_luna.mp3`, `audio/sing/sam_and_the_cap_luna.opus`; `music-data.js` (id `m8`); also `audio/sing/songs.json` |
+| The Little Lamp | Original Lamplight song, listed in this file as CC BY-SA 4.0 for the words. The sung Luna mix is AI-made audio under its own model terms, not CC BY-SA, pending Ignacio’s decision. | `audio/sing/little_lamp_luna.mp3`, `audio/sing/little_lamp_luna.opus`; `music-data.js` (id `m9`); also `audio/sing/songs.json` |
+| Five Little Stars | Original Lamplight chant, listed in this file as CC BY-SA 4.0 for the words. The sung Luna mix is AI-made audio under its own model terms, not CC BY-SA, pending Ignacio’s decision. | `audio/sing/five_little_stars_luna.mp3`, `audio/sing/five_little_stars_luna.opus`; `music-data.js` (id `m10`); also `audio/sing/songs.json` |
+| Mary Had a Little Lamb | Public domain / traditional tune, credited “Traditional” in the app and already listed in this file. The sung Luna mix is AI-made audio under its own model terms, not CC BY-SA, pending Ignacio’s decision. | `audio/sing/mary_luna.mp3`, `audio/sing/mary_luna.opus`; `music-data.js` (id `m11`); also `audio/sing/songs.json` |
+| Hot Cross Buns | Public domain / traditional tune, as already listed in this file for Melody Echo or Sound Lab. Played from notes in code; no separate audio file. | `v32.js` (id `hcb`) |
+| Frère Jacques | Public domain / traditional tune, as already listed in this file for Melody Echo or Sound Lab. Played from notes in code; no separate audio file. | `v32.js` (id `frere`) |
+| London Bridge | Public domain / traditional tune, as already listed in this file for Melody Echo or Sound Lab. Played from notes in code; no separate audio file. | `v32.js` (id `lon`) |
+| Ode to Joy | Public domain / traditional tune, as already listed in this file for Melody Echo or Sound Lab. Played from notes in code; no separate audio file. | `v32.js` (id `ode`) |
+| Für Elise | Public domain (Beethoven), as already listed in this file for Sound Lab. Played from notes in code (Fourier / Web Audio); no separate audio file. | `v44.js`, `v46.js` (id `elise`) |
+
+No other sung titles are documented in the shipped song lists. If a further tune is found without a credit in the repo, its origin should be written “origin unconfirmed (Ignacio checking)” until he confirms it.
 
 ### Pictures inspired by public-domain works
 
