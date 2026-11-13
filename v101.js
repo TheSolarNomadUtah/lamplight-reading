@@ -19,7 +19,6 @@ document.head.insertAdjacentHTML('beforeend',`<style id="v101css">
 .pbar101 .p101-lab{display:block;font-size:.7rem;line-height:1.1;margin-top:2px}
 .pstamp101{display:flex;flex-wrap:wrap;gap:4px}
 .pstamp101 button{width:40px;height:40px;padding:4px}
-#pstudio.nightsoft101 .pbar101 [data-tool101="rainbow"],
 #pstudio.nightsoft101 .pbar101 [data-tool101="sparkle"],
 #pstudio.nightsoft101 .pbar101 [data-tool101="constellation"]{opacity:.45}
 .luStory101{max-width:40rem;margin:0 auto;padding:8px}
@@ -403,7 +402,7 @@ const PCOLS101={
 };
 
 function paintNightSoft101(){return !!(typeof PT==='object'&&PT.dark)}
-function paintToolIsGlowOnly101(t){return t==='rainbow'||t==='sparkle'||t==='constellation'}
+function paintToolIsGlowOnly101(t){return t==='sparkle'||t==='constellation'}
 
 function paintChalkSeg101(x,a,b){
  const n=Math.max(4,Math.round(Math.hypot(b[0]-a[0],b[1]-a[1])/(3*PT.dpr)));

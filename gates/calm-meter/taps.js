@@ -124,6 +124,85 @@ const SECTIONS=process.env.CALM_SECTIONS
     });
   }catch(e){honeycomb={error:String(e)}}
 
+  let quilt=null;
+  try{
+    await p.evaluate(()=>{show('patterns');if(typeof patOpen106==='function')patOpen106('quilt')});
+    await p.waitForTimeout(300);
+    const foundQ=await p.evaluate(()=>{
+      function isHidden(el){
+        const s=getComputedStyle(el);
+        if(s.display==='none'||s.visibility==='hidden'||s.pointerEvents==='none'||Number(s.opacity)===0) return true;
+        if(el.closest('[hidden],.hidden,noscript,script,style,.sr-only,.visually-hidden')) return true;
+        const r=el.getBoundingClientRect();
+        if(r.width<=0||r.height<=0) return true;
+        if(r.bottom<0||r.top>window.innerHeight||r.right<0||r.left>window.innerWidth) return true;
+        return false;
+      }
+      const sel='#patterns button, #patterns a[href], #patterns [onclick], #patterns [role="button"], #patterns summary, #patterns input, #patterns select, #patterns textarea, #patterns .hubtile, #patterns [data-tap]';
+      const out=[];
+      for(const el of document.querySelectorAll(sel)){
+        if(isHidden(el)) continue;
+        const r=el.getBoundingClientRect();
+        const label=(el.getAttribute('aria-label')||el.getAttribute('title')||el.textContent||'').trim().replace(/\s+/g,' ').slice(0,80);
+        out.push({tag:el.tagName.toLowerCase(),w:Math.round(r.width*10)/10,h:Math.round(r.height*10)/10,label,id:el.id||'',cls:(el.className||'').toString().slice(0,80)});
+      }
+      const svg=document.querySelector('#patterns .quilt130 svg');
+      const title=(document.querySelector('#patterns h2')||{}).textContent||'';
+      const nG=svg?svg.querySelectorAll(':scope > g').length:0;
+      return {out,title,open:!!svg,nSquares:nG,ariaWrap:(document.querySelector('#patterns .quilt130')||{}).getAttribute('aria-label')||''};
+    });
+    quilt={open:foundQ.open,title:foundQ.title,nSquares:foundQ.nSquares,ariaWrap:foundQ.ariaWrap,nTaps:foundQ.out.length};
+    for(const t of foundQ.out){
+      if(t.w<44-0.5||t.h<44-0.5){
+        small.push({section:'quilt',rule:'T1',w:t.w,h:t.h,label:t.label,tag:t.tag,cls:t.cls,id:t.id,family:'quilt'});
+      }
+    }
+    samples.push({section:'quilt',vis:'patterns',n:foundQ.out.length});
+  }catch(e){quilt={error:String(e)}}
+
+  let rainbowNight=null;
+  try{
+    await p.evaluate(()=>{
+      if(typeof show==='function')show('paint');
+      PT.dark=true;PT.tool='rainbow';PT.hue=0;PT.size=12;
+      if(typeof renderPaintBar==='function')renderPaintBar();
+      if(typeof paintBar101==='function')paintBar101();
+    });
+    await p.waitForTimeout(500);
+    rainbowNight=await p.evaluate(()=>{
+      PT.dark=true;PT.tool='rainbow';PT.hue=0;PT.size=12;
+      if(typeof paintBg==='function')paintBg($('pcv').getContext('2d'));
+      const cv=$('pcv');const w=cv.width,h=cv.height,y=h*0.55;
+      let last=[w*0.1,y];
+      for(let i=1;i<=60;i++){
+        const next=[w*0.1+i*(w*0.75/60),y];
+        paintSeg(last,next);last=next;
+      }
+      const x=cv.getContext('2d',{willReadFrequently:true});
+      const cols=[];
+      const yPix=Math.round(y);
+      for(let i=6;i<54;i+=4){
+        const px=Math.round(w*0.1+i*(w*0.75/60));
+        const d=x.getImageData(px,yPix,1,1).data;
+        if(d[0]+d[1]+d[2]<40) continue;
+        cols.push([d[0],d[1],d[2]]);
+      }
+      const buckets=new Set(cols.map(c=>{
+        const [r,g,b]=c,m=Math.max(r,g,b),n=Math.min(r,g,b);
+        if(m-n<20) return 'grey';
+        if(r>=g&&r>=b) return g>=b?'red-orange':'red-violet';
+        if(g>=r&&g>=b) return r>=b?'yellow-green':'green';
+        return g>=r?'blue-green':'blue-violet';
+      }));
+      return {
+        tool:PT.tool,dark:!!PT.dark,hue:PT.hue,
+        glowOnly:typeof paintToolIsGlowOnly101==='function'?paintToolIsGlowOnly101('rainbow'):null,
+        buckets:[...buckets],samples:cols.length
+      };
+    });
+  }catch(e){rainbowNight={error:String(e)}}
+
   await browser.close();
-  process.stdout.write(JSON.stringify({ok:small.length===0&&shapeFails.length===0,small,shapeFails,samples,honeycomb,errors},null,2));
+
+  process.stdout.write(JSON.stringify({ok:small.length===0&&shapeFails.length===0,small,shapeFails,samples,honeycomb,quilt,rainbowNight,errors},null,2));
 })().catch(e=>{console.error(JSON.stringify({ok:false,error:String(e)}));process.exit(1)});

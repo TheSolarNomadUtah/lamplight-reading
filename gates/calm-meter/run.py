@@ -90,6 +90,12 @@ def main():
         fails.append(it)
     if taps.get('honeycomb') and taps['honeycomb'].get('open') and taps['honeycomb'].get('hit') is False:
         fails.append({'rule': 'T3-center-hit', 'section': 'honeycomb', 'detail': 'center tap on a ghost cell missed the cell', **taps['honeycomb']})
+    rn = taps.get('rainbowNight')
+    if rn:
+        if rn.get('error'):
+            fails.append({'rule': 'T-rainbow-night', 'section': 'paint', 'detail': 'rainbow night check error: %s' % rn.get('error')})
+        elif rn.get('glowOnly') is not False or (rn.get('hue') or 0) < 20 or len(rn.get('buckets') or []) < 3:
+            fails.append({'rule': 'T-rainbow-night', 'section': 'paint', 'detail': 'rainbow on night paper did not cycle hue', **{k: rn[k] for k in rn}})
 
     baseline = load_baseline()
     known = set(baseline.get('items') or [])
@@ -128,6 +134,8 @@ def main():
             'tap_samples': taps.get('samples')
         },
         'honeycomb': taps.get('honeycomb'),
+        'quilt': taps.get('quilt'),
+        'rainbowNight': taps.get('rainbowNight'),
         'flash_ok': flash.get('ok'),
         'loudness_raw_ok': loud.get('ok'),
         'shapes_ok': shapes.get('ok')
