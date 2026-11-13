@@ -63,7 +63,9 @@ if(typeof document!=='undefined'&&!document.getElementById('v132css')){
 #math .ff132-cell{cursor:pointer}
 #math .sc132-hit{cursor:pointer}
 #math .sc132-wrap{position:relative}
-#math .sc132-hot{position:absolute;width:56px;height:56px;min-width:56px;min-height:56px;padding:0;margin:0;border:0;border-radius:50%;background:transparent;transform:translate(-50%,-50%);cursor:pointer;box-sizing:border-box}
+#math .sc132-board{position:absolute;inset:0;z-index:2;width:100%;height:100%;padding:0;margin:0;border:0;background:transparent;cursor:pointer;touch-action:manipulation}
+#math .sc132-card .sc132-star{pointer-events:none}
+#math .sc132-hot{position:absolute;width:56px;height:56px;min-width:56px;min-height:56px;padding:0;margin:0;border:0;border-radius:50%;background:transparent;transform:translate(-50%,-50%);cursor:pointer;box-sizing:border-box;pointer-events:none}
 #math details.toy132-grown>summary{
   min-height:56px;display:flex;align-items:center;cursor:pointer;list-style:none}
 #math details.toy132-grown>summary::-webkit-details-marker{display:none}
@@ -272,7 +274,7 @@ function duskInner132(date){
  if(typeof MoonDusk==='undefined'||typeof MoonDusk.svg!=='function'){
   return '<rect width="200" height="200" fill="#120E18"/><ellipse cx="100" cy="200" rx="120" ry="70" fill="#1C1624" opacity=".85"/>';
  }
- const raw=MoonDusk.svg(date||new Date(),{stars:false,lantern:true,name:false,south:south,lang:lang132()==='es'?'es':'en'});
+ const raw=MoonDusk.svg(date||new Date(),{stars:false,lantern:true,name:false,south:south,lang:lang132()==='es'?'es':'en',cx:182,cy:28,r:13,gid:'sc132mg'});
  const m=String(raw).match(/<svg[^>]*>([\s\S]*)<\/svg>/i);
  return m?m[1]:String(raw);
 }
@@ -282,7 +284,69 @@ function composeSky132(date,figureMarkup){
  if(m) return m[1]+m[2]+figureMarkup+m[3];
  return figureMarkup+inner;
 }
-function project132(fig,tonight,jd,city){
+function stageWidth132(){
+ const math=document.getElementById('math');
+ if(math){
+  const card=math.querySelector('.math-card,.card')||math;
+  const r=card.getBoundingClientRect();
+  const cs=getComputedStyle(card);
+  const pad=(parseFloat(cs.paddingLeft)||0)+(parseFloat(cs.paddingRight)||0);
+  const w=r.width-pad;
+  if(w>80) return Math.min(420,w);
+ }
+ return Math.min(420,Math.max(200,(typeof innerWidth==='number'?innerWidth:390)-48));
+}
+/* Enlarge and, at small widths, mildly stretch a figure so star centers
+ * can sit at least 56 CSS px apart when the aspect ratio allows it.
+ * Shape is preserved first (uniform scale); extra stretch is only used
+ * to meet the spacing floor and is capped. */
+function fitStars132(raw,box,opt){
+ opt=opt||{};
+ const pts=(raw||[]).map(p=>({x:+p.x,y:+p.y}));
+ if(!pts.length) return pts;
+ let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+ pts.forEach(p=>{if(p.x<minX)minX=p.x;if(p.x>maxX)maxX=p.x;if(p.y<minY)minY=p.y;if(p.y>maxY)maxY=p.y});
+ const bw=(maxX-minX)||1, bh=(maxY-minY)||1;
+ const pad=6;
+ const availW=Math.max(8,box.w-2*pad), availH=Math.max(8,box.h-2*pad);
+ const displayW=opt.displayW||stageWidth132();
+ const wantSep=opt.minSep!==false;
+ const minCss=56.8;
+ const minVB=minCss*(200/Math.max(120,displayW));
+ /* Uniform scale to fill the box, shape first. */
+ let useX=Math.min(availW/bw,availH/bh), useY=useX;
+ const placed=pts.map(p=>({x:(p.x-minX)*useX,y:(p.y-minY)*useY}));
+ if(wantSep){
+  /* Push any pair closer than 56 CSS px apart, then refit. Close handle
+   * stars need a little extra room the uniform scale cannot give. */
+  for(let iter=0;iter<48;iter++){
+   let moved=false;
+   for(let i=0;i<placed.length;i++){
+    for(let j=i+1;j<placed.length;j++){
+     let dx=placed[j].x-placed[i].x, dy=placed[j].y-placed[i].y;
+     const d=Math.hypot(dx,dy)||0.001;
+     if(d<minVB){
+      const push=(minVB-d)/2;
+      const ux=dx/d, uy=dy/d;
+      placed[i].x-=ux*push; placed[i].y-=uy*push;
+      placed[j].x+=ux*push; placed[j].y+=uy*push;
+      moved=true;
+     }
+    }
+   }
+   if(!moved) break;
+  }
+ }
+ let pMinX=Infinity,pMaxX=-Infinity,pMinY=Infinity,pMaxY=-Infinity;
+ placed.forEach(p=>{if(p.x<pMinX)pMinX=p.x;if(p.x>pMaxX)pMaxX=p.x;if(p.y<pMinY)pMinY=p.y;if(p.y>pMaxY)pMaxY=p.y});
+ const pw=(pMaxX-pMinX)||1, ph=(pMaxY-pMinY)||1;
+ const fit=Math.min(availW/pw,availH/ph,1);
+ const w=pw*fit, h=ph*fit;
+ const x0=box.x0+pad+(availW-w)/2;
+ const y0=box.y0+pad+(availH-h)/2;
+ return placed.map(p=>({x:x0+(p.x-pMinX)*fit,y:y0+(p.y-pMinY)*fit}));
+}
+function projectRaw132(fig,tonight,jd,city){
  const box={x0:22,y0:16,w:156,h:108};
  if(!tonight){
   return fig.stars.map(st=>{
@@ -310,6 +374,12 @@ function project132(fig,tonight,jd,city){
   y: box.y0+pad+((p.y-minY)/sy)*(box.h-2*pad)
  }));
 }
+function project132(fig,tonight,jd,city,opt){
+ opt=opt||{};
+ /* Wide sky box: left of the tucked moon, above the lantern. */
+ const box={x0:6,y0:10,w:188,h:126};
+ return fitStars132(projectRaw132(fig,tonight,jd,city),box,opt);
+}
 function figMarkup132(fig,xy,lit){
  const lines=fig.lines.map(([a,b])=>{
   const A=xy[a],B=xy[b];if(!A||!B)return '';
@@ -318,8 +388,7 @@ function figMarkup132(fig,xy,lit){
  const stars=xy.map((p,i)=>{
   const on=!!lit[i];
   return `<g class="sc132-star" data-i="${i}" role="button" tabindex="0" aria-pressed="${on?'true':'false'}" aria-label="${e132(t132('Star {n}',{n:String(i+1)}))}">
-   <circle class="sc132-hit" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="22" fill="#fff6d8" fill-opacity="${on?0.2:0.07}"/>
-   <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${on?3.4:2.2}" fill="#fff6d8" opacity="${on?1:0.7}"/>
+   <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${on?3.6:2.4}" fill="#fff6d8" opacity="${on?1:0.78}"/>
   </g>`;
  }).join('');
  return `<g class="sc132-fig${lit.filter(Boolean).length>=fig.n?' sc132-done':''}">
@@ -329,7 +398,7 @@ function figMarkup132(fig,xy,lit){
 }
 function miniFig132(id){
  const fig=CORE132[id];
- const xy=project132(fig,false);
+ const xy=project132(fig,false,null,null,{minSep:false,displayW:200});
  const dots=xy.map(p=>`<circle cx="${(p.x).toFixed(1)}" cy="${(p.y).toFixed(1)}" r="3.2" fill="#fff6d8"/>`).join('');
  const lines=fig.lines.map(([a,b])=>{
   const A=xy[a],B=xy[b];if(!A||!B)return '';
@@ -337,13 +406,22 @@ function miniFig132(id){
  }).join('');
  return `<svg viewBox="0 0 200 200" width="56" height="56" aria-hidden="true"><rect width="200" height="200" fill="#120E18"/>${lines}${dots}</svg>`;
 }
+function cities132(){
+ try{if(typeof skyCities112==='function'){const q=skyCities112();if(q&&q.length)return q}}catch(e){}
+ try{
+  const S=(typeof SKY112==='object'&&SKY112)||(typeof SkyTonightUI==='object'&&SkyTonightUI.SKY112);
+  const q=S&&S.cities&&S.cities.q;
+  if(q&&q.length)return q;
+ }catch(e){}
+ return [];
+}
 function citySelect132(){
  const city=city132();
  let opts='';
  try{
-  const list=(typeof SKY112==='object'&&SKY112.cities&&SKY112.cities.q)||[];
+  const list=cities132();
   if(list.length){
-   opts=list.map((q,i)=>`<option value="${i}"${i===city.i?' selected':''}>${e132(q[0])}</option>`).join('');
+   opts=list.map((q,i)=>`<option value="${i}"${i===(city.i||0)?' selected':''}>${e132(q[0])}</option>`).join('');
   }
  }catch(e){}
  if(!opts) opts=`<option value="${city.i||0}" selected>${e132(city.name)}</option>`;
@@ -397,7 +475,8 @@ function scDraw132(){
  const fig=CORE132[SC.id]||CORE132.dipper;
  const jd=jdNow132(SC.date);
  const city=city132();
- const xy=project132(fig,SC.tonight,jd,city);
+ const xy=project132(fig,SC.tonight,jd,city,{displayW:stageWidth132(),minSep:true});
+ SC.xy=xy;
  const date=SC.date||new Date();
  const markup=figMarkup132(fig,xy,SC.lit||[]);
  const inner=composeSky132(date,markup);
@@ -414,19 +493,55 @@ function scDraw132(){
    }).join('')+'</div>';
  }
  const svg=`<svg class="sc132-card" viewBox="0 0 200 200" width="360" height="360" role="img" aria-label="${e132(title)}">${inner}</svg>`;
- const hots=xy.map((p,i)=>{
-  const on=!!(SC.lit&&SC.lit[i]);
-  return `<button type="button" class="sc132-hot" data-i="${i}" style="left:${(p.x/200*100).toFixed(2)}%;top:${(p.y/200*100).toFixed(2)}%" aria-pressed="${on?'true':'false'}" aria-label="${e132(t132('Star {n}',{n:String(i+1)}))}" onclick="StarCount132.tap(${i})"></button>`;
- }).join('');
  el.innerHTML=(typeof mathShell==='function'?mathShell(title,''):`<div class="card math-card"><h2>${e132(title)}</h2>`).replace('</div>',`
   ${fact}${claim}
   ${chooser}
-  <div class="toy132-stage"><div class="sc132-wrap">${svg}${hots}</div></div>
+  <div class="toy132-stage"><div class="sc132-wrap">${svg}<button type="button" class="sc132-board" aria-label="${e132(title)}"></button></div></div>
   <div class="toy132-count" aria-hidden="true">${Array(nLit).fill('<i></i>').join('')}</div>
   <div class="toy132-row">${citySelect132()}</div>
   ${grownNames132(fig)}
  </div>`);
  bindSC132(el);
+}
+function cssToView132(svg,clientX,clientY){
+ if(!svg||!svg.getScreenCTM)return null;
+ const ctm=svg.getScreenCTM();
+ if(!ctm)return null;
+ const pt=svg.createSVGPoint();
+ pt.x=clientX;pt.y=clientY;
+ const loc=pt.matrixTransform(ctm.inverse());
+ return {x:loc.x,y:loc.y};
+}
+function nearestStar132(clientX,clientY){
+ const svg=document.querySelector('#math .sc132-card');
+ const xy=SC.xy||[];
+ if(!svg||!xy.length)return -1;
+ const loc=cssToView132(svg,clientX,clientY);
+ if(!loc)return -1;
+ let best=-1,bestD=Infinity;
+ xy.forEach((p,i)=>{
+  const d=(p.x-loc.x)*(p.x-loc.x)+(p.y-loc.y)*(p.y-loc.y);
+  if(d<bestD){bestD=d;best=i}
+ });
+ if(best<0)return -1;
+ const w=svg.getBoundingClientRect().width||200;
+ const maxVB=56*(200/w);
+ if(Math.sqrt(bestD)>maxVB+0.51)return -1;
+ return best;
+}
+function minSepCss132(){
+ const xy=SC.xy||[];
+ const svg=document.querySelector('#math .sc132-card');
+ const w=svg?svg.getBoundingClientRect().width:0;
+ if(xy.length<2||!w)return 0;
+ let m=Infinity;
+ for(let i=0;i<xy.length;i++){
+  for(let j=i+1;j<xy.length;j++){
+   const d=Math.hypot(xy[i].x-xy[j].x,xy[i].y-xy[j].y)*(w/200);
+   if(d<m)m=d;
+  }
+ }
+ return m;
 }
 function bindSC132(el){
  const svg=el.querySelector('.sc132-card');if(!svg)return;
@@ -435,6 +550,14 @@ function bindSC132(el){
   g.addEventListener('click',go);
   g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});
  });
+ const board=el.querySelector('.sc132-board');
+ if(board&&!board._sc132){
+  board._sc132=1;
+  board.addEventListener('click',function(ev){
+   const i=nearestStar132(ev.clientX,ev.clientY);
+   if(i>=0){ev.preventDefault();scTap132(i)}
+  });
+ }
 }
 function scTap132(i){
  const fig=CORE132[SC.id]||CORE132.dipper;
@@ -523,6 +646,9 @@ window.StarCount132={
   stillLight:stillLight132,
   jdNow:jdNow132,
   core:CORE132,
+  nearest:nearestStar132,
+  minSep:minSepCss132,
+  xy:function(){return (SC.xy||[]).map(p=>({x:p.x,y:p.y}))},
   state:function(){return {id:SC.id,tonight:SC.tonight,lit:(SC.lit||[]).slice(),offer:SC.offer.slice()}},
   setDate:function(d){SC.date=d;SC.lit=null;scOpen132()}
 };

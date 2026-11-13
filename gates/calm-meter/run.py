@@ -125,9 +125,13 @@ def main():
         if sc.get('error'):
             fails.append({'rule': 'T-starcount', 'section': 'starcount', 'detail': 'star count page error: %s' % sc.get('error')})
         elif (not sc.get('open') or sc.get('n') not in (3, 5, 7)
-              or (sc.get('minH') or 0) < 55.5 or (sc.get('minW') or 0) < 55.5
-              or not sc.get('city') or sc.get('namesInKid')):
-            fails.append({'rule': 'T-starcount', 'section': 'starcount', 'detail': 'Star Count missing, hits under 56 px, no city picker, or star names in kid chrome', **{k: sc[k] for k in sc}})
+              or not sc.get('city') or (sc.get('cityN') or 0) < 21
+              or sc.get('namesInKid')):
+            fails.append({'rule': 'T-starcount', 'section': 'starcount', 'detail': 'Star Count missing, city picker is not the 21-city Sky Tonight list, or star names in kid chrome', **{k: sc[k] for k in sc}})
+        elif sc.get('t3') is not None and not sc['t3'].get('ok'):
+            fails.append({'rule': 'T3-star-nearest', 'section': 'starcount', 'detail': 'center tap on a star lit a neighbor, or nearest-star hit-testing failed', **{k: sc[k] for k in ('t3','minSep','n','id','title')}})
+        elif (sc.get('minSep') or 0) < 55.5:
+            fails.append({'rule': 'T3-star-spacing', 'section': 'starcount', 'detail': 'star centers are closer than 56 px at 390', **{k: sc[k] for k in ('minSep','n','id','title','board')}})
     pr = taps.get('printables')
     if pr:
         if pr.get('error'):

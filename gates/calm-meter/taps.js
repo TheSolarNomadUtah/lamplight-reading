@@ -320,45 +320,81 @@ const SECTIONS=process.env.CALM_SECTIONS
   let starCount=null;
   try{
     await p.evaluate(()=>{if(typeof show==='function')show('math');if(typeof mathOpen==='function')mathOpen('stars')});
-    await p.waitForTimeout(600);
+    try{await p.waitForFunction(()=>typeof skyLoad112==='function',{timeout:5000})}catch(e){}
+    await p.evaluate(()=>{try{return (typeof skyLoad112==='function')?skyLoad112():null}catch(e){return null}});
+    try{await p.waitForFunction(()=>typeof skyCities112==='function'&&skyCities112().length>=21,{timeout:8000})}catch(e){}
+    /* Daytime fallback so T3 runs on the tight Big Dipper card QA filed. */
+    await p.evaluate(()=>{if(window.StarCount132&&StarCount132.setDate)StarCount132.setDate(new Date(2026,5,21,12,0,0))});
+    await p.waitForTimeout(400);
     starCount=await p.evaluate(()=>{
-      const hots=[...document.querySelectorAll('#math .sc132-hot')].map(b=>{
-        const r=b.getBoundingClientRect();
-        return {w:Math.round(r.width*10)/10,h:Math.round(r.height*10)/10};
-      });
+      const board=document.querySelector('#math .sc132-board');
+      const br=board?board.getBoundingClientRect():null;
+      const stars=[...document.querySelectorAll('#math .sc132-star')];
       const title=(document.querySelector('#math h2')||{}).textContent||'';
       const fact=(document.querySelector('#math .toy132-fact')||{}).textContent||'';
       const st=window.StarCount132&&StarCount132.state?StarCount132.state():null;
       const city=document.getElementById('starCity132');
+      const cityN=city?city.options.length:0;
       const grown=document.querySelector('#math details.toy132-grown');
       const namesOpen=!!(grown&&grown.open);
       const kidText=[...document.querySelectorAll('#math h2, #math .toy132-fact, #math p.soft, #math .toy132-fig span')].filter(el=>!el.closest('details')).map(el=>el.textContent||'').join(' ');
       const named=['Alnitak','Alnilam','Mintaka','Caph','Schedar','Ruchbah','Segin','Dubhe','Merak','Phecda','Megrez','Alioth','Mizar','Alkaid'];
       const namesInKid=named.filter(n=>kidText.indexOf(n)>=0);
+      const minSep=window.StarCount132&&StarCount132.minSep?Math.round(StarCount132.minSep()*10)/10:0;
       return {
-        open:hots.length>=3 && !!(document.querySelector('#math .sc132-card')),
+        open:!!(document.querySelector('#math .sc132-card')&&board) && stars.length>=3,
         title,
         fact,
-        n:hots.length,
+        n:stars.length,
         tonight:st?!!st.tonight:null,
         id:st&&st.id,
         offer:st&&st.offer,
-        cells:hots,
-        minH:hots.length?Math.min(...hots.map(c=>c.h)):0,
-        minW:hots.length?Math.min(...hots.map(c=>c.w)):0,
+        board:{w:br?Math.round(br.width*10)/10:0,h:br?Math.round(br.height*10)/10:0},
+        minH:br?br.height:0,
+        minW:br?br.width:0,
         city:!!city,
+        cityN,
+        cities:city?[...city.options].map(o=>o.textContent):[],
         grown:!!grown,
         namesOpen,
         namesInKid,
+        minSep,
         countdown:/days until|countdown/i.test((document.querySelector('#math')||{}).innerText||'')
       };
     });
-    for(const c of starCount.cells||[]){
-      if(c.w<56-0.5||c.h<56-0.5){
-        small.push({section:'starcount',rule:'T1',w:c.w,h:c.h,label:'star',tag:'button',cls:'sc132-hot',id:'',family:'starcount'});
+    /* T3: a center tap on stars 1, 3 and 4 (the v133 overlap misses) must light that star, not a neighbor. */
+    const t3={hits:[],ok:false};
+    try{
+      const n=starCount.n||7;
+      const idx=[...new Set([1,3,4,...Array.from({length:n},(_,i)=>i)])];
+      for(const i of idx){
+        await p.evaluate(()=>{if(window.StarCount132&&StarCount132.pick)StarCount132.pick('dipper',false)});
+        await p.waitForTimeout(80);
+        const pos=await p.evaluate((i)=>{
+          const svg=document.querySelector('#math .sc132-card');
+          const xy=StarCount132.xy&&StarCount132.xy();
+          if(!svg||!xy||!xy[i]||!svg.getScreenCTM)return null;
+          const pt=svg.createSVGPoint();pt.x=xy[i].x;pt.y=xy[i].y;
+          const loc=pt.matrixTransform(svg.getScreenCTM());
+          return {x:loc.x,y:loc.y};
+        },i);
+        if(!pos){t3.hits.push({i,ok:false,error:'no-pos'});continue}
+        await p.mouse.click(pos.x,pos.y);
+        await p.waitForTimeout(80);
+        const lit=await p.evaluate(()=>StarCount132.state().lit.slice());
+        const ok=!!lit[i] && lit.filter(Boolean).length===1 && lit.every((v,j)=>j===i?v:!v);
+        t3.hits.push({i,ok,lit});
       }
+      t3.ok=t3.hits.length>0 && t3.hits.every(h=>h.ok);
+      const qa=t3.hits.filter(h=>[1,3,4].includes(h.i));
+      t3.qa=qa;
+      t3.qaOk=qa.length===3 && qa.every(h=>h.ok);
+    }catch(e){t3.error=String(e);t3.ok=false}
+    starCount.t3=t3;
+    if(starCount.minSep==null){
+      starCount.minSep=await p.evaluate(()=>window.StarCount132&&StarCount132.minSep?Math.round(StarCount132.minSep()*10)/10:0);
     }
-    samples.push({section:'starcount',vis:'math',n:(starCount.cells||[]).length});
+    samples.push({section:'starcount',vis:'math',n:starCount.n||0});
   }catch(e){starCount={error:String(e)}}
 
   let printables=null;

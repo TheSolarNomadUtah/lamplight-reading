@@ -94,6 +94,9 @@ function skyCityIdx112(){
  const len=(SKY112.cities&&SKY112.cities.q&&SKY112.cities.q.length)||21;
  return (isFinite(n)&&n>=0&&n<len)?n:0;
 }
+function skyCities112(){
+ return (SKY112.cities && SKY112.cities.q) || [];
+}
 function skyCity112(){
  const i=skyCityIdx112();
  UI112.city=i;
@@ -1055,5 +1058,7 @@ window.skyPrecess112=skyPrecess112;
 window.skyTitle112=skyTitle112;
 window.skyCivilToJD112=skyCivilToJD112;
 window.skyRedraw112=skyRedraw112;
+window.skyCities112=skyCities112;
+window.SKY112=SKY112;
 
 })();
