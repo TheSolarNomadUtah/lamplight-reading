@@ -1,21 +1,26 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-/* v129-breathing: Lamp Breathing — end-of-Candle-mode offer (Studio).
-   The lamp glow and a warm sine hum follow a slow breath: about 4 s in and
-   6 s out, slowing slightly, then fading to night. Optional "breathe in" /
-   "breathe out" cues (en, es, ar). One tap stops. No flash; Calm Meter
-   gated. Missing AudioContext is a no-op for sound (glow still runs).
-   No mic, no network, no files. Does not wrap show(). Inert until
-   LampBreathing.start(). Shipped with Candle mode (v129), not as v128.js.
+/* Lamp Breathing upgrade — drop-in replacement for v129-breathing.js.
+   Same public API, --lb-k / --lb-dim, and i18n keys as the live v129 module.
+   start() with no args is still a normal (about 2 min) session.
+   Upgrades (Ignacio, 13 Nov 2026, 3:52 PM MT: "Yes lets try the upgrades"):
+     1. The hum steps through a low C D E G A pentatonic, gliding softly,
+        and settles back down in the final fade-to-night cycles.
+     2. A very quiet sine 'ting' at the top of each in-breath, which goes
+        quieter and drops out in the last cycles.
+     3. start({length:'short'|'normal'|'long'}) for about 1 / 2 / 3 min.
+        duration still wins if passed (so today's v129.js duration:120 is safe).
    Drive the existing lamp with paint:false and --lb-k / --lb-dim; do not
-   repaint it. Not added to Bedtime Glow.
-
-   Keep the PARAM constants in sync with render_previews.py. */
+   repaint it. Not added to Bedtime Glow. Inert until start(). No mic,
+   no network, no files. Keep PARAM in sync with render_previews.py. */
 (function(root){
 'use strict';
 
 var IN0=4, OUT0=6, SLOW=.2, FADE_CYCLES=3, FADE_IN=2.8, STOP_FADE=1.2;
-var DUR=120, F0=55, F_LIFT=.016, G_SWELL=.3, MASTER=.032, LP_LO=380, LP_HI=540, LP_Q=.7;
+var DUR=120, F0=55, F_LIFT=.016, G_SWELL=.3, MASTER=.028, LP_LO=380, LP_HI=540, LP_Q=.7;
 var PARTS=[[1,1],[1.5,.32],[2,.2],[3,.07],[4,.035]];
+var LENGTHS={short:60,normal:120,long:180};
+var LADDER=[36,38,40,43,45,48]; /* C2 D2 E2 G2 A2 C3 — gentle low register */
+var CHIME_G=.003, CHIME_ATT=.05, CHIME_REL=1.08, CHIME_OCT=24;
 var GLOW_TROUGH=.26, GLOW_AMP=.12, GLOW_SCALE=.04, SPILL_TROUGH=.16, SPILL_AMP=.08;
 var REDUCE_GLOW=.32, REDUCE_SPILL=.2;
 
@@ -29,7 +34,11 @@ var STR={
   'Hide words':'Hide words',
   'Show words':'Show words',
   'Tap the lamp or Done to stop.':'Tap the lamp or Done to stop.',
-  'A slow wind-down. The lamp breathes with you, then the light goes to night.':'A slow wind-down. The lamp breathes with you, then the light goes to night.'
+  'A slow wind-down. The lamp breathes with you, then the light goes to night.':'A slow wind-down. The lamp breathes with you, then the light goes to night.',
+  'How long?':'How long?',
+  'About 1 minute':'About 1 minute',
+  'About 2 minutes':'About 2 minutes',
+  'About 3 minutes':'About 3 minutes'
  },
  es:{
   'Lamp Breathing':'Respira con la lámpara',
@@ -40,7 +49,11 @@ var STR={
   'Hide words':'Ocultar palabras',
   'Show words':'Mostrar palabras',
   'Tap the lamp or Done to stop.':'Toca la lámpara o Listo para terminar.',
-  'A slow wind-down. The lamp breathes with you, then the light goes to night.':'Un cierre lento. La lámpara respira contigo, y luego la luz se va a la noche.'
+  'A slow wind-down. The lamp breathes with you, then the light goes to night.':'Un cierre lento. La lámpara respira contigo, y luego la luz se va a la noche.',
+  'How long?':'¿Cuánto tiempo?',
+  'About 1 minute':'Cerca de 1 minuto',
+  'About 2 minutes':'Cerca de 2 minutos',
+  'About 3 minutes':'Cerca de 3 minutos'
  },
  ar:{
   'Lamp Breathing':'تنفّس مع المصباح',
@@ -51,7 +64,11 @@ var STR={
   'Hide words':'إخفاء الكلمات',
   'Show words':'إظهار الكلمات',
   'Tap the lamp or Done to stop.':'المس المصباح أو «تم» للتوقف.',
-  'A slow wind-down. The lamp breathes with you, then the light goes to night.':'ختام هادئ. المصباح يتنفّس معك، ثم يهدأ الضوء إلى الليل.'
+  'A slow wind-down. The lamp breathes with you, then the light goes to night.':'ختام هادئ. المصباح يتنفّس معك، ثم يهدأ الضوء إلى الليل.',
+  'How long?':'كم المدة؟',
+  'About 1 minute':'حوالي دقيقة',
+  'About 2 minutes':'حوالي دقيقتين',
+  'About 3 minutes':'حوالي 3 دقائق'
  }
 };
 
@@ -95,10 +112,45 @@ function ac128(){
 }
 
 /* ---- timeline (shared with the Python renderer) ---- */
+function resolveDuration(opt){
+  opt=opt||{};
+  if(opt.duration>0)return opt.duration;
+  var L=String(opt.length||'').toLowerCase();
+  if(LENGTHS[L])return LENGTHS[L];
+  return LENGTHS.normal;
+}
+function mtofLB(m){
+  try{if(typeof mtof==='function')return mtof(m)}catch(e){}
+  return 440*Math.pow(2,(m-69)/12);
+}
+function ladderIndex(i){
+  var n=LADDER.length, period=(n-1)*2, x=((i%period)+period)%period;
+  return x<n?x:period-x;
+}
+function assignNotes(cycles,fadeStart){
+  var fadeI=cycles.length,i,j,prev,idx;
+  for(i=0;i<cycles.length;i++){
+    if(cycles[i].t0>=fadeStart-1e-9){fadeI=i;break}
+  }
+  for(i=0;i<cycles.length;i++){
+    if(i<fadeI)idx=ladderIndex(i);
+    else{
+      prev=i>0?cycles[i-1].midi:LADDER[0];
+      idx=0;
+      for(j=0;j<LADDER.length;j++){if(LADDER[j]<prev)idx=j}
+      if(prev<=LADDER[0])idx=0;
+    }
+    cycles[i].midi=LADDER[idx];
+    cycles[i].i=i;
+    cycles[i].fade=i>=fadeI;
+  }
+  for(i=0;i<cycles.length;i++)cycles[i].prevMidi=i>0?cycles[i-1].midi:cycles[i].midi;
+  return fadeI;
+}
 function makeTimeline(duration){
   var cycles=[], t=0, i, p, s, inn, out;
   duration=duration>0?duration:DUR;
-  for(i=0;i<48;i++){
+  for(i=0;i<64;i++){
     p=duration>0?Math.min(1,t/duration):0;
     s=1+SLOW*p;
     inn=IN0*s; out=OUT0*s;
@@ -108,11 +160,13 @@ function makeTimeline(duration){
   }
   var n=Math.min(FADE_CYCLES,cycles.length);
   var fadeStart=cycles[Math.max(0,cycles.length-n)].t0;
-  return {cycles:cycles,fadeStart:fadeStart,end:cycles[cycles.length-1].t1,duration:duration};
+  var fadeI=assignNotes(cycles,fadeStart);
+  return {cycles:cycles,fadeStart:fadeStart,fadeI:fadeI,end:cycles[cycles.length-1].t1,duration:duration};
 }
 function ease01(x){x=x<0?0:x>1?1:x;return .5-.5*Math.cos(Math.PI*x)}
 function stateAt(tl,t){
-  if(t>=tl.end)return {k:0,phase:'out',dim:0,cue:'',done:true,t:t};
+  var rest=mtofLB(LADDER[0]);
+  if(t>=tl.end)return {k:0,phase:'out',dim:0,cue:'',done:true,t:t,midi:LADDER[0],hz:rest,i:-1,fade:true};
   var dim=1;
   if(t>=tl.fadeStart){
     var fd=tl.end-tl.fadeStart;
@@ -120,16 +174,32 @@ function stateAt(tl,t){
   }
   var cy=null,i;
   for(i=0;i<tl.cycles.length;i++){if(t<tl.cycles[i].t1){cy=tl.cycles[i];break}}
-  if(!cy)return {k:0,phase:'out',dim:0,cue:'',done:true,t:t};
-  var k,phase;
-  if(t<cy.mid){phase='in';k=ease01((t-cy.t0)/cy.inn)}
-  else{phase='out';k=1-ease01((t-cy.mid)/cy.out)}
-  return {k:k,phase:phase,dim:dim,cue:phase==='in'?'breathe in…':'breathe out…',done:false,t:t};
+  if(!cy)return {k:0,phase:'out',dim:0,cue:'',done:true,t:t,midi:LADDER[0],hz:rest,i:-1,fade:true};
+  var k,phase,midi;
+  if(t<cy.mid){
+    phase='in';k=ease01((t-cy.t0)/cy.inn);
+    midi=cy.prevMidi+(cy.midi-cy.prevMidi)*k;
+  }else{
+    phase='out';k=1-ease01((t-cy.mid)/cy.out);
+    midi=cy.midi;
+  }
+  var hz=mtofLB(midi)*(1+F_LIFT*k);
+  return {k:k,phase:phase,dim:dim,cue:phase==='in'?'breathe in…':'breathe out…',done:false,t:t,midi:midi,hz:hz,i:cy.i,fade:!!cy.fade};
 }
 function fadeInAt(t){return t<=0?0:t>=FADE_IN?1:ease01(t/FADE_IN)}
 function gainAt(s,t){return MASTER*(1+G_SWELL*s.k)*s.dim*fadeInAt(t)}
-function freqAt(s){return F0*(1+F_LIFT*s.k)}
+function freqAt(s){return (s&&s.hz)?s.hz:(F0*(1+F_LIFT*((s&&s.k)||0)))}
 function lpAt(s){return LP_LO+(LP_HI-LP_LO)*s.k}
+function chimeGainAt(tl,cy){
+  if(!cy)return 0;
+  if(cy.fade){
+    var i=cy.i, fadeI=tl.fadeI;
+    if(i>fadeI)return 0; /* drop out after the first fade cycle */
+    var s=stateAt(tl,cy.mid);
+    return CHIME_G*s.dim*s.dim*.45;
+  }
+  return CHIME_G;
+}
 
 /* ---- CSS ---- */
 function css128(){
@@ -172,7 +242,12 @@ function css128(){
 '.lb128-root.lb-still .lb128-spill,.lb128-root.reduce73 .lb128-spill{transform:translate(-50%,-50%)!important;background:radial-gradient(ellipse at 50% 50%,rgba(230,180,84,calc(.2*var(--lb-dim,1))) 0%,rgba(230,180,84,0) 72%)}'+
 '.lb128-root.lb-still .lb128-halo,.lb128-root.reduce73 .lb128-halo{transform:translate(-50%,-50%)!important;background:radial-gradient(circle at 50% 48%,rgba(255,246,216,calc(.32*var(--lb-dim,1))) 0%,rgba(230,180,84,calc(.18*var(--lb-dim,1))) 38%,rgba(230,180,84,0) 70%)}'+
 '.lb128-root.lb-still .lb128-bloom,.lb128-root.reduce73 .lb128-bloom{transform:translate(-50%,-50%)!important;background:radial-gradient(ellipse at 50% 50%,rgba(255,246,216,calc(.36*var(--lb-dim,1))) 0%,rgba(255,228,164,calc(.16*var(--lb-dim,1))) 46%,rgba(255,228,164,0) 74%)}'+
-'.lb128-root.lb-still .lb128-flame,.lb128-root.reduce73 .lb128-flame{opacity:.95!important}';
+'.lb128-root.lb-still .lb128-flame,.lb128-root.reduce73 .lb128-flame{opacity:.95!important}'+
+'.lb128-picker{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;margin:.35rem 0}'+
+'.lb128-picker button{min-width:56px;min-height:56px;padding:10px 16px;border-radius:16px;border:1px solid rgba(230,180,84,.35);'+
+ 'background:rgba(28,22,36,.86);color:#FFF6D8;font:700 1rem/1.2 system-ui,sans-serif;cursor:pointer}'+
+'.lb128-picker button.on,.lb128-picker button[aria-checked="true"]{background:#E6B454;color:#120E18;border-color:#E6B454}'+
+'.lb128-picker button:focus-visible{outline:3px solid #E6B454;outline-offset:3px}';
   (document.documentElement||document.head).appendChild(s);
   cssOn=true;
 }
@@ -257,7 +332,43 @@ function buildAudio(c,tl){
     if(s.done)break;
   }
   try{master.gain.linearRampToValueAtTime(0,t0+tl.end)}catch(e){}
-  return {master:master,lp:lp,parts:parts,t0:t0,nodes:parts.map(function(p){return p.o})}
+
+  /* Quiet 'ting' at the top of each in-breath, on a fixed gain (not the breath swell). */
+  var chimeBus=c.createGain(); chimeBus.gain.value=1;
+  try{chimeBus.connect(c.destination)}catch(e){}
+  var chimeNodes=[];
+  for(i=0;i<tl.cycles.length;i++){
+    var cy=tl.cycles[i], cg=chimeGainAt(tl,cy)*vol;
+    if(cg>0.00012){
+      var nn=scheduleChime(c,chimeBus,t0+cy.mid,mtofLB(cy.midi+CHIME_OCT),cg);
+      if(nn)chimeNodes=chimeNodes.concat(nn);
+    }
+  }
+  return {master:master,lp:lp,parts:parts,t0:t0,chimeBus:chimeBus,
+    nodes:parts.map(function(p){return p.o}).concat(chimeNodes)}
+}
+function scheduleChime(c,dest,tAbs,hz,gain){
+  if(!c||!(gain>0)||!(hz>0))return [];
+  try{
+    var o=c.createOscillator(), o2=c.createOscillator(), g=c.createGain(), g2=c.createGain();
+    var lp=c.createBiquadFilter();
+    o.type='sine'; o2.type='sine';
+    o.frequency.setValueAtTime(hz,tAbs);
+    o2.frequency.setValueAtTime(hz*2.003,tAbs);
+    g2.gain.value=.18;
+    lp.type='lowpass'; lp.frequency.value=1800; lp.Q.value=.55;
+    g.gain.setValueAtTime(0,tAbs);
+    g.gain.linearRampToValueAtTime(gain,tAbs+CHIME_ATT);
+    g.gain.setValueAtTime(Math.max(1e-5,gain),tAbs+CHIME_ATT+.01);
+    try{g.gain.exponentialRampToValueAtTime(0.00008,tAbs+CHIME_ATT+CHIME_REL)}catch(e){
+      g.gain.linearRampToValueAtTime(0,tAbs+CHIME_ATT+CHIME_REL)
+    }
+    o.connect(g); o2.connect(g2).connect(g); g.connect(lp);
+    if(dest)lp.connect(dest); else lp.connect(c.destination);
+    o.start(tAbs); o2.start(tAbs);
+    o.stop(tAbs+CHIME_ATT+CHIME_REL+.3); o2.stop(tAbs+CHIME_ATT+CHIME_REL+.3);
+    return [o,o2];
+  }catch(e){return []}
 }
 function killAudio(sess,fade){
   if(!sess||!sess.audio)return;
@@ -277,6 +388,7 @@ function killAudio(sess,fade){
   setTimeout(function(){
     try{a.master&&a.master.disconnect()}catch(e){}
     try{a.lp&&a.lp.disconnect()}catch(e){}
+    try{a.chimeBus&&a.chimeBus.disconnect()}catch(e){}
   },(d+.4)*1000);
   sess.audio=null;
 }
@@ -386,7 +498,7 @@ function start(opt){
   if(st)stop({fade:.2,silent:true});
   installI18n(opt);
   css128();
-  var duration=opt.duration>0?opt.duration:DUR;
+  var duration=resolveDuration(opt);
   var tl=makeTimeline(duration);
   var reduced=isReduced(opt.reduced);
   var cues=opt.cues!==false;
@@ -500,7 +612,64 @@ function setVolume(v){
 
 function isRunning(){return !!st}
 
-/* public */
+var PICKER_LABELS={short:'About 1 minute',normal:'About 2 minutes',long:'About 3 minutes'};
+function mountPicker(parent,opt){
+  opt=opt||{};
+  if(!parent||typeof document==='undefined')return null;
+  css128();
+  var existing=parent.querySelector('.lb128-picker');
+  if(existing)existing.parentNode.removeChild(existing);
+  var sel=opt.selected||opt.length||'normal';
+  if(!LENGTHS[sel])sel='normal';
+  var group=document.createElement('div');
+  group.className='lb128-picker';
+  group.setAttribute('role','radiogroup');
+  group.setAttribute('aria-label',t128('How long?',opt));
+  ['short','normal','long'].forEach(function(L){
+    var b=document.createElement('button');
+    b.type='button';
+    b.setAttribute('role','radio');
+    b.setAttribute('data-lb-length',L);
+    b.setAttribute('aria-checked',L===sel?'true':'false');
+    if(L===sel)b.classList.add('on');
+    b.textContent=t128(PICKER_LABELS[L],opt);
+    b.addEventListener('click',function(e){
+      if(e){e.preventDefault();e.stopPropagation()}
+      sel=L;
+      group.querySelectorAll('button').forEach(function(x){
+        var on=x.getAttribute('data-lb-length')===sel;
+        x.setAttribute('aria-checked',on?'true':'false');
+        x.classList.toggle('on',on);
+      });
+      if(typeof opt.onPick==='function')try{opt.onPick(L)}catch(err){}
+    });
+    group.appendChild(b);
+  });
+  parent.appendChild(group);
+  return {
+    el:group,
+    get:function(){return sel},
+    set:function(L){
+      if(!LENGTHS[L])return sel;
+      sel=L;
+      group.querySelectorAll('button').forEach(function(x){
+        var on=x.getAttribute('data-lb-length')===sel;
+        x.setAttribute('aria-checked',on?'true':'false');
+        x.classList.toggle('on',on);
+      });
+      return sel;
+    },
+    relabel:function(o){
+      group.setAttribute('aria-label',t128('How long?',o||opt));
+      group.querySelectorAll('button').forEach(function(x){
+        var L=x.getAttribute('data-lb-length');
+        x.textContent=t128(PICKER_LABELS[L],o||opt);
+      });
+    }
+  };
+}
+
+/* public — same surface as v128 / live v129-breathing, plus length helpers */
 var API={
   start:start,
   stop:stop,
@@ -519,10 +688,14 @@ var API={
   gainAt:gainAt,
   freqAt:freqAt,
   lpAt:lpAt,
+  resolveDuration:resolveDuration,
+  mountPicker:mountPicker,
+  LENGTHS:LENGTHS,
   PARAM:{IN0:IN0,OUT0:OUT0,SLOW:SLOW,FADE_CYCLES:FADE_CYCLES,FADE_IN:FADE_IN,STOP_FADE:STOP_FADE,
     DUR:DUR,F0:F0,F_LIFT:F_LIFT,G_SWELL:G_SWELL,MASTER:MASTER,LP_LO:LP_LO,LP_HI:LP_HI,LP_Q:LP_Q,
     PARTS:PARTS,GLOW_TROUGH:GLOW_TROUGH,GLOW_AMP:GLOW_AMP,GLOW_SCALE:GLOW_SCALE,
-    SPILL_TROUGH:SPILL_TROUGH,SPILL_AMP:SPILL_AMP,REDUCE_GLOW:REDUCE_GLOW,REDUCE_SPILL:REDUCE_SPILL},
+    SPILL_TROUGH:SPILL_TROUGH,SPILL_AMP:SPILL_AMP,REDUCE_GLOW:REDUCE_GLOW,REDUCE_SPILL:REDUCE_SPILL,
+    LENGTHS:LENGTHS,LADDER:LADDER,CHIME_G:CHIME_G,CHIME_ATT:CHIME_ATT,CHIME_REL:CHIME_REL,CHIME_OCT:CHIME_OCT},
   version:129,
   css:css128,
   mount:mountUI

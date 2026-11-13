@@ -202,7 +202,75 @@ const SECTIONS=process.env.CALM_SECTIONS
     });
   }catch(e){rainbowNight={error:String(e)}}
 
+  let moon=null;
+  try{
+    await p.evaluate(()=>{show('patterns');if(typeof patOpen106==='function')patOpen106('moon')});
+    await p.waitForTimeout(300);
+    moon=await p.evaluate(()=>{
+      function isHidden(el){
+        const s=getComputedStyle(el);
+        if(s.display==='none'||s.visibility==='hidden'||s.pointerEvents==='none'||Number(s.opacity)===0) return true;
+        if(el.closest('[hidden],.hidden,noscript,script,style,.sr-only,.visually-hidden')) return true;
+        const r=el.getBoundingClientRect();
+        if(r.width<=0||r.height<=0) return true;
+        return false;
+      }
+      const taps=[];
+      for(const el of document.querySelectorAll('#patterns button')){
+        if(isHidden(el)) continue;
+        const r=el.getBoundingClientRect();
+        taps.push({w:Math.round(r.width*10)/10,h:Math.round(r.height*10)/10,label:(el.textContent||'').trim().slice(0,60),id:el.id||''});
+      }
+      const svg=document.querySelector('#patterns .moon131 svg');
+      const title=(document.querySelector('#patterns h2')||{}).textContent||'';
+      const line=(document.querySelector('#patterns .moon-line131')||{}).textContent||'';
+      const long=!!document.querySelector('#patterns .moon-long131, #moonLong131');
+      const countdown=/\d+\s*(day|days|día|días)/i.test((document.querySelector('#patterns')||document.body).innerText||'');
+      return {open:!!svg,title,line,long,countdown,taps,aria:svg?svg.getAttribute('aria-label'):''};
+    });
+    for(const t of moon.taps||[]){
+      if(t.w<44-0.5||t.h<44-0.5){
+        small.push({section:'moon',rule:'T1',w:t.w,h:t.h,label:t.label,tag:'button',cls:'',id:t.id,family:'moon'});
+      }
+    }
+    samples.push({section:'moon',vis:'patterns',n:(moon.taps||[]).length});
+  }catch(e){moon={error:String(e)}}
+
+  let candlePicker=null;
+  try{
+    await p.evaluate(()=>{
+      try{if(window.LampCandle129&&LampCandle129.save){const s=LampCandle129.load?LampCandle129.load():{fade:180};LampCandle129.save({on:true,fade:s.fade||180});if(LampCandle129.apply)LampCandle129.apply()}}catch(e){}
+      if(typeof show==='function')show('candle');
+      if(window.LampCandle129&&LampCandle129.offer)LampCandle129.offer();
+    });
+    await p.waitForTimeout(300);
+    candlePicker=await p.evaluate(()=>{
+      const host=document.getElementById('candlePicker131');
+      const group=document.querySelector('#candlePicker131 .lb128-picker, .lb128-picker');
+      const btns=[...document.querySelectorAll('.lb128-picker button')].map(b=>{
+        const r=b.getBoundingClientRect();
+        return {label:(b.textContent||'').trim(),w:Math.round(r.width*10)/10,h:Math.round(r.height*10)/10,checked:b.getAttribute('aria-checked')==='true',len:b.getAttribute('data-lb-length')};
+      });
+      const selected=(btns.find(b=>b.checked)||{}).len||null;
+      const offer=document.getElementById('candleOffer129');
+      return {
+        mounted:!!(host&&group),
+        n:btns.length,
+        selected,
+        buttons:btns,
+        offerVisible:!!(offer&&!offer.hidden),
+        minH:btns.length?Math.min(...btns.map(b=>b.h)):0,
+        minW:btns.length?Math.min(...btns.map(b=>b.w)):0
+      };
+    });
+    for(const b of candlePicker.buttons||[]){
+      if(b.w<56-0.5||b.h<56-0.5){
+        small.push({section:'candle',rule:'T1',w:b.w,h:b.h,label:b.label,tag:'button',cls:'lb128-picker',id:'',family:'lb-picker'});
+      }
+    }
+  }catch(e){candlePicker={error:String(e)}}
+
   await browser.close();
 
-  process.stdout.write(JSON.stringify({ok:small.length===0&&shapeFails.length===0,small,shapeFails,samples,honeycomb,quilt,rainbowNight,errors},null,2));
+  process.stdout.write(JSON.stringify({ok:small.length===0&&shapeFails.length===0,small,shapeFails,samples,honeycomb,quilt,rainbowNight,moon,candlePicker,errors},null,2));
 })().catch(e=>{console.error(JSON.stringify({ok:false,error:String(e)}));process.exit(1)});

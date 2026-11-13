@@ -23,7 +23,10 @@ function candleCss129(){
     '.reduce73 .ll-candle .il-h,.reduce73 .ll-candle .il-c,.reduce73.ll-candle .il-h,.reduce73.ll-candle .il-c,.reduce73 .ll-wind .ll-dim{animation:none!important}',
     '.reduce73 .ll-wind .ll-dim{opacity:.55}',
     '@media (prefers-reduced-motion:reduce){#candle .lamp73-shell{filter:brightness(.96);opacity:.7}}',
-    '.reduce73 #candle .lamp73-shell{filter:brightness(.96);opacity:.7}'
+    '.reduce73 #candle .lamp73-shell{filter:brightness(.96);opacity:.7}',
+    'html.ll-candle,html.ll-candle body{background:var(--bg);color:var(--ink)}',
+    '#candleHideWords129{min-width:56px;min-height:56px;padding:12px 16px;margin:0}',
+    '#candle .lamp73-shell.candle-tappable129{cursor:pointer}'
   ].join('');
   document.head.appendChild(st);
 }
@@ -48,12 +51,16 @@ function candleApply129(){
   st.setProperty('--ll-fade',s.fade+'s');
   st.setProperty('--ll-breath','10s');
   if(s.on){
-    st.setProperty('--bg','#E8D4A8');
+    const bg='#E8D4A8', ink='#2A2218';
+    st.setProperty('--bg',bg);
     st.setProperty('--card','#F0E0B8');
-    st.setProperty('--ink','#2A2218');
+    st.setProperty('--ink',ink);
     st.setProperty('--soft','#6A5A40');
     st.setProperty('--acc','#5A6A48');
     st.setProperty('--hi','#C47A00');
+    /* applyLook writes inline html/body backgrounds; replace those so Home warms too. */
+    html.style.background=bg;
+    if(document.body){document.body.style.backgroundColor=bg;document.body.style.color=ink}
   }else{
     try{if(typeof applyLook==='function')applyLook()}catch(e){}
     candleStopWind129(true);
@@ -67,8 +74,73 @@ function candleReduced129(){
   return false;
 }
 
+function candleLampEl129(){return document.querySelector('#candle .lamp73-shell')||$('candleLamp129')}
+
+function candleTickCues129(s){
+  const line=$('candleLine129');if(!line)return;
+  const show=window._candleCues129!==false, reduced=candleReduced129();
+  if(s&&s.done){line.textContent=candleT129('Good night');return}
+  if(!show||reduced){line.textContent='';return}
+  line.textContent=candleT129((s&&s.cue)||'breathe in…');
+}
+
+function candleToggleCues129(){
+  const on=window._candleCues129!==false;
+  window._candleCues129=!on;
+  try{if(typeof LampBreathing!=='undefined'&&LampBreathing.setCues)LampBreathing.setCues(!on)}catch(e){}
+  const btn=$('candleHideWords129');
+  if(btn)btn.textContent=candleT129(!on?'Hide words':'Show words');
+  const line=$('candleLine129');
+  if(line&&on)line.textContent='';
+}
+
+function candleAttachBreathUI129(){
+  const lamp=candleLampEl129();
+  if(lamp&&!lamp._tap129){
+    const go=function(e){if(e){e.preventDefault();e.stopPropagation()}try{if(typeof LampBreathing!=='undefined')LampBreathing.stop({reason:'tap'})}catch(err){}};
+    const key=function(e){if(e&&(e.key==='Enter'||e.key===' '))go(e)};
+    lamp._tap129=go;lamp._key129=key;
+    lamp.addEventListener('click',go);
+    lamp.addEventListener('keydown',key);
+    if(!lamp.hasAttribute('tabindex'))lamp.setAttribute('tabindex','0');
+    lamp.setAttribute('role','button');
+    lamp.setAttribute('aria-label',candleT129('Tap the lamp or Done to stop.'));
+    lamp.classList.add('candle-tappable129');
+  }
+  let btn=$('candleHideWords129');
+  if(!btn){
+    btn=document.createElement('button');
+    btn.type='button';
+    btn.id='candleHideWords129';
+    btn.textContent=candleT129('Hide words');
+    const line=$('candleLine129');
+    if(line&&line.parentNode)line.parentNode.insertBefore(btn,line.nextSibling);
+    else{const stage=$('candleStage129');if(stage)stage.appendChild(btn)}
+    btn.onclick=function(e){if(e)e.stopPropagation();candleToggleCues129()};
+  }
+  btn.hidden=false;
+  window._candleCues129=true;
+  const line=$('candleLine129');
+  if(line)line.textContent=candleReduced129()?'':candleT129('breathe in…');
+}
+
+function candleDetachBreathUI129(){
+  const lamp=candleLampEl129();
+  if(lamp&&lamp._tap129){
+    lamp.removeEventListener('click',lamp._tap129);
+    if(lamp._key129)lamp.removeEventListener('keydown',lamp._key129);
+    lamp.classList.remove('candle-tappable129');
+    lamp.removeAttribute('role');
+    lamp.removeAttribute('aria-label');
+    delete lamp._tap129;delete lamp._key129;
+  }
+  const btn=$('candleHideWords129');
+  if(btn)btn.hidden=true;
+}
+
 function candleStopBreath129(){
   try{if(typeof LampBreathing!=='undefined')LampBreathing.stop({fade:0.08})}catch(e){}
+  try{candleDetachBreathUI129()}catch(e){}
 }
 
 function candleStopWind129(silent){
@@ -172,12 +244,14 @@ function candleStartBreath129(){
     cues:true,
     tapToStop:true,
     sound:true,
-    duration:120,
+    length:(function(){const h=document.getElementById('candlePicker131');return (h&&h._lbPicker&&h._lbPicker.get())||'normal'})(),
     reduced:candleReduced129()?true:null,
-    onDone:function(){candleGoodNight129()},
-    onStop:function(){/* one tap; stay on the candle screen */}
+    onTick:candleTickCues129,
+    onDone:function(){try{candleDetachBreathUI129()}catch(e){}candleGoodNight129()},
+    onStop:function(){try{candleDetachBreathUI129()}catch(e){}}
   });
   if(!ok)candleGoodNight129();
+  else candleAttachBreathUI129();
 }
 
 function candleGoodNight129(){

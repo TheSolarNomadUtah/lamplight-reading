@@ -96,6 +96,20 @@ def main():
             fails.append({'rule': 'T-rainbow-night', 'section': 'paint', 'detail': 'rainbow night check error: %s' % rn.get('error')})
         elif rn.get('glowOnly') is not False or (rn.get('hue') or 0) < 20 or len(rn.get('buckets') or []) < 3:
             fails.append({'rule': 'T-rainbow-night', 'section': 'paint', 'detail': 'rainbow on night paper did not cycle hue', **{k: rn[k] for k in rn}})
+    moon = taps.get('moon')
+    if moon:
+        if moon.get('error'):
+            fails.append({'rule': 'T-moon', 'section': 'moon', 'detail': 'moon page error: %s' % moon.get('error')})
+        elif not moon.get('open'):
+            fails.append({'rule': 'T-moon', 'section': 'moon', 'detail': 'moon-phase dusk page did not open', **{k: moon[k] for k in moon}})
+        elif moon.get('countdown'):
+            fails.append({'rule': 'T-moon', 'section': 'moon', 'detail': 'longest-night copy looks like a countdown', **{k: moon[k] for k in moon}})
+    cp = taps.get('candlePicker')
+    if cp:
+        if cp.get('error'):
+            fails.append({'rule': 'T-breath-picker', 'section': 'candle', 'detail': 'picker check error: %s' % cp.get('error')})
+        elif not cp.get('mounted') or cp.get('n') != 3 or cp.get('selected') != 'normal' or (cp.get('minH') or 0) < 55.5:
+            fails.append({'rule': 'T-breath-picker', 'section': 'candle', 'detail': 'Lamp Breathing picker missing, not default normal, or under 56 px', **{k: cp[k] for k in cp}})
 
     baseline = load_baseline()
     known = set(baseline.get('items') or [])
@@ -136,6 +150,8 @@ def main():
         'honeycomb': taps.get('honeycomb'),
         'quilt': taps.get('quilt'),
         'rainbowNight': taps.get('rainbowNight'),
+        'moon': taps.get('moon'),
+        'candlePicker': taps.get('candlePicker'),
         'flash_ok': flash.get('ok'),
         'loudness_raw_ok': loud.get('ok'),
         'shapes_ok': shapes.get('ok')
