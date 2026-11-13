@@ -1,0 +1,171 @@
+#!/usr/bin/env python3
+"""Calm Meter entry point. QA thresholds from FAMILY_VOICE_AND_CALM_METER.md."""
+import json, os, subprocess, sys, time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[1]
+OUT_DIR = Path(os.environ.get('OUT') or os.environ.get('CALM_OUT') or ROOT / 'gates' / 'calm-meter' / 'out')
+BASELINE_PATH = HERE / 'baseline.json'
+APP = os.environ.get('CALM_APP') or os.environ.get('APP') or 'http://127.0.0.1:8765'
+
+
+def load_baseline():
+    if not BASELINE_PATH.exists():
+        return {'items': []}
+    return json.loads(BASELINE_PATH.read_text())
+
+
+def key_of(item):
+    """Stable identity for a leftover or new fail. Families, not every instance."""
+    rule = item.get('rule') or ''
+    if rule in ('S-loudness',) or item.get('rel'):
+        return 'loudness|' + (item.get('rel') or '')
+    if rule == 'T1':
+        return 'T1|' + (item.get('family') or item.get('cls') or item.get('id') or (item.get('tag') + '|' + (item.get('label') or '')[:40]))
+    if rule == 'T1-css':
+        return 'T1-css|%s|%s|%s' % (item.get('file'), item.get('selector'), item.get('prop'))
+    if rule == 'T3-fill-none':
+        return 'T3|%s|%s' % (item.get('file'), item.get('line'))
+    if 'file' in item and 'line' in item:
+        return '%s|%s|%s' % (rule, item.get('file'), item.get('line'))
+    if item.get('section') and rule:
+        return '%s|%s|%s' % (rule, item.get('section'), item.get('cls', ''))
+    return json.dumps(item, sort_keys=True)[:200]
+
+
+def run_py(mod):
+    r = subprocess.run([sys.executable, str(HERE / mod)], cwd=str(ROOT), capture_output=True, text=True)
+    if r.returncode != 0 and not r.stdout.strip():
+        return {'ok': False, 'fails': [{'detail': r.stderr[-800:] or 'exit %s' % r.returncode}], 'warns': []}
+    try:
+        return json.loads(r.stdout)
+    except Exception:
+        return {'ok': False, 'fails': [{'detail': 'bad json from %s: %s' % (mod, r.stdout[-400:] or r.stderr[-400:])}], 'warns': []}
+
+
+def run_taps():
+    env = os.environ.copy()
+    env['ROOT'] = APP
+    r = subprocess.run(['node', str(HERE / 'taps.js')], cwd=str(ROOT), capture_output=True, text=True, env=env)
+    if r.returncode != 0 and not r.stdout.strip():
+        return {'ok': False, 'small': [], 'shapeFails': [], 'error': r.stderr[-800:]}
+    try:
+        return json.loads(r.stdout)
+    except Exception:
+        return {'ok': False, 'small': [], 'shapeFails': [], 'error': r.stdout[-400:] or r.stderr[-400:]}
+
+
+def main():
+    t0 = time.time()
+    flash = run_py('flash_scan.py')
+    shapes = run_py('shapes.py')
+    css = run_py('css_taps.py')
+    loud = run_py('loudness.py')
+    taps = run_taps()
+
+    fails = []
+    warns = []
+    # flash
+    for it in flash.get('fails') or []:
+        fails.append(it)
+    for it in flash.get('warns') or []:
+        warns.append(it)
+    # shapes static
+    for it in shapes.get('fails') or []:
+        fails.append(it)
+    for it in css.get('fails') or []:
+        fails.append(it)
+    # loudness
+    for it in loud.get('fails') or []:
+        fails.append({'rule': 'S-loudness', **it})
+    for it in loud.get('warns') or []:
+        warns.append({'rule': 'S-loudness', **it})
+    # taps
+    if taps.get('error'):
+        fails.append({'rule': 'T-headless', 'detail': taps['error']})
+    for it in taps.get('small') or []:
+        fails.append(it)
+    for it in taps.get('shapeFails') or []:
+        fails.append(it)
+    if taps.get('honeycomb') and taps['honeycomb'].get('open') and taps['honeycomb'].get('hit') is False:
+        fails.append({'rule': 'T3-center-hit', 'section': 'honeycomb', 'detail': 'center tap on a ghost cell missed the cell', **taps['honeycomb']})
+
+    baseline = load_baseline()
+    known = set(baseline.get('items') or [])
+    known_hits, new_fails = [], []
+    for it in fails:
+        k = key_of(it)
+        it['key'] = k
+        if k in known:
+            it['baseline'] = True
+            known_hits.append(it)
+        else:
+            it['baseline'] = False
+            new_fails.append(it)
+
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    report = {
+        'ok': len(new_fails) == 0,
+        'when': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
+        'elapsed_s': round(time.time() - t0, 2),
+        'app': APP,
+        'thresholds': {
+            'flash_cycle_ms': 333,
+            'S1': 'voice/song integrated -19 LUFS ±1.5, true peak ≤ -1.0 dBTP',
+            'S2': 'UI/toy short-term max ≤ -18 LUFS, true peak ≤ -3.0 dBTP',
+            'T1': 'tap targets ≥ 44×44 CSS px at 390',
+            'T3': 'tappable SVG shapes need a fill-area hit'
+        },
+        'new_fails': new_fails,
+        'baseline_fails': known_hits,
+        'warns': warns,
+        'counts': {
+            'new_fails': len(new_fails),
+            'baseline_fails': len(known_hits),
+            'warns': len(warns),
+            'audio': loud.get('n'),
+            'tap_samples': taps.get('samples')
+        },
+        'honeycomb': taps.get('honeycomb'),
+        'flash_ok': flash.get('ok'),
+        'loudness_raw_ok': loud.get('ok'),
+        'shapes_ok': shapes.get('ok')
+    }
+    (OUT_DIR / 'calm-report.json').write_text(json.dumps(report, indent=2) + '\n')
+    md = []
+    md.append('# Calm Meter\n')
+    md.append('Status: **%s**  \nElapsed: %ss\n' % ('PASS' if report['ok'] else 'FAIL', report['elapsed_s']))
+    if new_fails:
+        md.append('## New FAILs (block the release)\n')
+        for it in new_fails:
+            md.append('- `%s` %s\n' % (it.get('rule') or it.get('key'), it.get('detail') or it))
+    if known_hits:
+        md.append('## Known leftovers (reported, not blocking)\n')
+        seen=set()
+        for it in known_hits:
+            k=it.get('key')
+            if k in seen: continue
+            seen.add(k)
+            extra=it.get('detail') or it.get('rel') or it.get('label') or ''
+            md.append('- `%s` %s\n' % (k, extra if isinstance(extra,str) else extra))
+        md.append('(%d unique families, %d instances)\n' % (len(seen), len(known_hits)))
+    if warns:
+        quiet=sum(1 for it in warns if 'quieter' in str(it.get('detail') or ''))
+        md.append('## WARN (%d; %d too-quiet short voice clips)\n' % (len(warns), quiet))
+        shown=0
+        for it in warns:
+            if 'quieter' in str(it.get('detail') or ''):
+                continue
+            md.append('- `%s` %s\n' % (it.get('rule'), it.get('detail') or it.get('rel') or it))
+            shown+=1
+        if quiet:
+            md.append('- S1 too-quiet short clips: %d (measurement artifact on short words; not re-encoded)\n' % quiet)
+    (OUT_DIR / 'SUMMARY.md').write_text(''.join(md))
+    print(''.join(md))
+    print('Wrote', OUT_DIR / 'calm-report.json')
+    return 0 if report['ok'] else 1
+
+
+if __name__ == '__main__':
+    sys.exit(main())

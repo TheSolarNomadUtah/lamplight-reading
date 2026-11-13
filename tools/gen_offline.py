@@ -16,7 +16,7 @@ for d,_,n in os.walk(R):
   if is_hidden(rel):
     continue
   top=(rel.replace('\\','/').split('/')[0] if rel!='.' else '')
-  if top=='tools':
+  if top in ('tools','gates'):
     continue
   for f in n:
     if is_hidden(f):

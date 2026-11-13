@@ -205,6 +205,14 @@ print("OK  every manifest and precache URL exists and is not a hidden path")
 PYCHK
 then :; else echo "FAIL manifest and precache path check"; fail=1; fi
 
+echo "== calm meter =="
+if python3 "$ROOT/gates/calm-meter/run.py"; then
+  echo "OK  calm meter"
+else
+  echo "FAIL calm meter"
+  fail=1
+fi
+
 if ((fail)); then
   echo "preship FAILED"
   exit 1
