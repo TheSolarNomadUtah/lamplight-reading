@@ -39,9 +39,9 @@ These keep their own licenses. Credits already shown in the app stay as they are
 ### Star and sky data
 
 - `stars.json` (Star songs light curves): NASA Kepler mission, Quarter 1 long-cadence PDCSAP flux, from the Mikulski Archive for Space Telescopes (MAST). Courtesy of NASA and the Kepler Science Team. Downloaded 2026-10-24, then normalized and averaged. This is U.S. government data kept under its own terms; it is not relicensed as CC BY-SA 4.0.
-- Look Up star places and brightness (`sky/stars.min.json` and related figures): a small copy of the HYG Star Database (v4.4, Astronomy Nexus), used under CC BY-SA 4.0. Positions are for the year 2000. Already credited in the app.
-- Stick-figure constellation lines follow Stellarium’s modern star pictures, as already credited in the app. Stellarium keeps its own license.
-- Sky math is Professor Pi’s, with Moon and planet paths in the style of Schlyter, only for nights near our own time (already credited in Look Up).
+- Look Up star places and brightness (`sky/stars.min.json` and related figures): a small copy of the HYG Star Database (v4.4, Astronomy Nexus, codeberg.org/astronexus/hyg), used under CC BY-SA 4.0. Positions are for the year 2000. Already credited in the app.
+- Stick-figure constellation lines follow Stellarium's modern sky culture data (skycultures/modern), Text and data CC BY-SA 4.0. Stellarium's illustrations (Free Art License) are not used.
+- Sky math (`sky/sky.min.js`) is original Lamplight code by Professor Pi, under the project's GPL-3.0-or-later. Sun, Moon and planet positions follow Paul Schlyter's published method, "How to compute planetary positions" (stjarnhimlen.se); no code was copied.
 - Planet facts in Look Up follow NASA, as already credited in the app.
 - Official constellation and star names follow the International Astronomical Union, including the IAU WGSN 2024 name Solitaire.
 - The Noctua note in Look Up cites Jamieson, *A Celestial Atlas* (1822), Burritt’s 19th-century atlases, Ian Ridpath, *Star Tales*, HYG v4.4, and the IAU. Jamieson and Burritt are public-domain atlases. Ridpath’s *Star Tales* is a modern work that keeps its own rights and is cited only as a source.
