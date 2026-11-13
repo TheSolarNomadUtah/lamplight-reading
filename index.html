@@ -1,5 +1,5 @@
 <!doctype html><html translate="no" lang="en"><head><meta charset="utf-8">
-<meta name="google" content="notranslate"><script>window.LANG_OPEN86=['en','es'];(function(){try{var OPEN=window.LANG_OPEN86||['en','es'],L=localStorage,k=null;for(var i=0;i<L.length;i++){var n=L.key(i);if(/^lamp_lang(@|$)/.test(n)&&L.getItem(n))k=L.getItem(n)}k=k||L.getItem('lamp_lang_device')||(navigator.language||'en').slice(0,2);if(k&&OPEN.indexOf(k)<0)k='en';if(k&&k!=='en'){document.documentElement.classList.add('prewait');setTimeout(function(){document.documentElement.classList.remove('prewait')},3000)}}catch(e){}})()</script><style>html.prewait body{visibility:hidden}/* v66 reward surface first-paint guard */
+<meta name="google" content="notranslate"><script>window.LANG_OPEN86=['en','es'];(function(){try{var packs=JSON.parse(localStorage.getItem('lamp_packs')||'[]');if(Array.isArray(packs)){for(var i=0;i<packs.length;i++){var c=packs[i];if(typeof c==='string'&&/^[a-z]{2,8}$/.test(c)&&window.LANG_OPEN86.indexOf(c)<0)window.LANG_OPEN86.push(c)}}var OPEN=window.LANG_OPEN86||['en','es'],L=localStorage,k=null;for(var i=0;i<L.length;i++){var n=L.key(i);if(/^lamp_lang(@|$)/.test(n)&&L.getItem(n))k=L.getItem(n)}k=k||L.getItem('lamp_lang_device')||(navigator.language||'en').slice(0,2);if(k&&OPEN.indexOf(k)<0)k='en';if(k&&k!=='en'){document.documentElement.classList.add('prewait');setTimeout(function(){document.documentElement.classList.remove('prewait')},3000)}}catch(e){}})()</script><style>html.prewait body{visibility:hidden}/* v66 reward surface first-paint guard */
 .lcele{opacity:1!important;animation:none!important;transition:none!important;background:var(--card,#fff9ec)!important;color:var(--ink,#30261d)!important;top:50%!important;transform:translate(-50%,-50%)!important;width:min(340px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;max-height:calc(100vh - 32px);overflow:auto;z-index:10001!important}
 </style><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="manifest" href="manifest.webmanifest"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#4e6b5c"><link rel="icon" href="icon.svg"><title>Lamplight Learning: a calm nightly session</title><meta name="description" content="Lamplight Learning: free, calm reading, music and word games for kids. Works offline, no accounts, zero data collected.">
@@ -61,7 +61,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=117;
+const APP_VERSION=118;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;const VOLATILE=new Set();
 const RAW={get:k=>{if(VOLATILE.has(k))return Object.hasOwn(MEM,k)?MEM[k]:null;try{const v=window.localStorage.getItem(k);MEM[k]=v;return v}catch(e){STORE_OK=false;return Object.hasOwn(MEM,k)?MEM[k]:null}},
@@ -268,4 +268,5 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="v117.js"></script>
 <script src="pack.js"></script>
 <script src="math.js"></script>
+<script src="v118.js"></script>
 </body></html>

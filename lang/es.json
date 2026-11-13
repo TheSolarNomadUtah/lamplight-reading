@@ -2017,5 +2017,19 @@
   "Sky Tonight is ready in Look Up: a quiet window into the stars, tonight or far away in time. You can pick a city (nothing is sent away), see which animal figures are up, and keep a small sky diary on this device. The Moon and the wandering stars are drawn only for nights near our own time.": "El cielo esta noche ya está en Mira arriba: una ventana quieta a las estrellas, esta noche o en un tiempo lejano. Puedes elegir una ciudad (no se envía nada), ver qué figuras de animales están arriba y guardar un diario pequeño del cielo en este aparato. La Luna y los astros errantes se dibujan solo en noches cercanas a nuestro tiempo.",
   "More animal figures from the same quiet catalog.": "Más figuras de animales del mismo catálogo callado.",
   "Sky Tonight now names the closest well-known pole star, including Alderamin around the year 7500, and the all-time slider moves more smoothly across long ages.": "El cielo esta noche ahora nombra la estrella polar conocida más cercana, incluida Alderamin hacia el año 7500, y la barra de todo el tiempo se mueve con más suavidad a lo largo de las edades.",
-  "The Patterns Everywhere tile now uses the same label size as the other Explore tiles. On Sky Tonight’s all-time slider, from about 1590 BCE to 380 CE, it says there was no bright North Star then, and that Kochab was nearest (about 6.4 degrees at its closest).": "La ficha Patrones por todas partes ahora usa el mismo tamaño de texto que las otras fichas de Explorar. En la barra de todo el tiempo de El cielo esta noche, desde unos 1590 a. e. c. hasta 380 e. c., dice que entonces no había una Estrella Polar brillante, y que Kochab era la más cercana (unos 6,4 grados en su momento más cercano)."
+  "The Patterns Everywhere tile now uses the same label size as the other Explore tiles. On Sky Tonight’s all-time slider, from about 1590 BCE to 380 CE, it says there was no bright North Star then, and that Kochab was nearest (about 6.4 degrees at its closest).": "La ficha Patrones por todas partes ahora usa el mismo tamaño de texto que las otras fichas de Explorar. En la barra de todo el tiempo de El cielo esta noche, desde unos 1590 a. e. c. hasta 380 e. c., dice que entonces no había una Estrella Polar brillante, y que Kochab era la más cercana (unos 6,4 grados en su momento más cercano).",
+  "Downloads": "Descargas",
+  "No extra downloads yet": "Aún no hay descargas extras",
+  "This pack stays on this device.": "Este paquete queda en este aparato.",
+  "Remove this pack from this device.": "Quitar este paquete de este aparato.",
+  "Add {name}": "Añadir {name}",
+  "About {size}": "Unos {size}",
+  "A language pack for the buttons and labels.": "Un paquete de idioma para los botones y las etiquetas.",
+  "A language pack with letter games, after a review.": "Un paquete de idioma con juegos de letras, después de una revisión.",
+  "This pack is too big to add.": "Este paquete es demasiado grande para añadirlo.",
+  "Adding this pack would take more room than this app can keep.": "Añadir este paquete ocuparía más espacio del que esta app puede guardar.",
+  "There is not enough room on this device.": "No hay suficiente espacio en este aparato.",
+  "This pack is not on this device yet.": "Este paquete aún no está en este aparato.",
+  "Download {name} ({size})? It stays on this device.": "¿Descargar {name} ({size})? Queda en este aparato.",
+  "This pack could not be added.": "No se pudo añadir este paquete."
 }

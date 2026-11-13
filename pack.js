@@ -1,6 +1,7 @@
 // Optional language packs. The core stays English and Spanish.
 // Extra languages live in packs/<code>/ and are listed in packs/index.json.
-// The picker only offers a pack once it is present. The core opens with none.
+// The picker only offers a pack once it is installed in its own cache.
+// A catalog listing is not an install. The core opens with none.
 // This file does not wrap show(), so the v99 Back wrap stays outermost.
 
 window.LAMP_PACKS=window.LAMP_PACKS||[];
@@ -34,37 +35,47 @@ function packRemembered(){
  }catch(e){return []}
 }
 
+function packCatalogItem(item){
+ if(typeof item==='string')item={code:item};
+ if(!item||!item.code||packCoreLang(item.code)||!/^[a-z]{2,8}$/.test(item.code))return null;
+ const bytes=Number(item.bytes);
+ return {
+  code:item.code,
+  name:typeof item.name==='string'&&item.name?item.name:item.code,
+  hasPhonics:!!item.hasPhonics,
+  bytes:Number.isFinite(bytes)&&bytes>0?bytes:null,
+  ui:'packs/'+item.code+'/ui.json',
+  dir:'packs/'+item.code+'/'
+ };
+}
+
 async function packDiscover(){
- const found=[];
+ const catalog=[];
  try{
   const r=await fetch('packs/index.json',{cache:'no-cache'});
   if(!r.ok)throw 0;
   const data=await r.json();
   const list=Array.isArray(data)?data:(data&&Array.isArray(data.packs)?data.packs:[]);
   for(const item of list){
-   const code=typeof item==='string'?item:(item&&item.code);
-   if(!code||packCoreLang(code)||!/^[a-z]{2,8}$/.test(code))continue;
-   try{
-    const pr=await fetch('packs/'+code+'/pack.json',{cache:'no-cache'});
-    if(!pr.ok)continue;
-    const meta=await pr.json();
-    if(!meta||meta.code!==code||meta.reviewed!==true)continue;
-    found.push({
-     code:code,
-     name:typeof meta.name==='string'&&meta.name?meta.name:code,
-     hasPhonics:!!meta.hasPhonics,
-     ui:'packs/'+code+'/ui.json',
-     dir:'packs/'+code+'/'
-    });
-   }catch(e){}
+   const row=packCatalogItem(item);
+   if(row)catalog.push(row);
   }
  }catch(e){}
- window.LAMP_PACKS=found;
- packRemember(found.map(p=>p.code));
+ try{
+  const test=window.LAMP_PACK_TEST;
+  if(test&&Array.isArray(test.catalog)){
+   for(const item of test.catalog){
+    const row=packCatalogItem(item);
+    if(row&&!catalog.some(p=>p.code===row.code))catalog.push(row);
+   }
+  }
+ }catch(e){}
+ window.LAMP_PACK_CATALOG=catalog;
+ // Catalog listings are not installed. Do not write them to lamp_packs or LAMP_PACKS.
  packInstallOpen();
  packHookLang();
  packRefreshPicker();
- return found;
+ return catalog;
 }
 
 function packHookLang(){
@@ -78,7 +89,9 @@ function packHookLang(){
     else{RAW.set('lamp_lang_device',c);LS.del('lamp_lang')}
     location.reload();
    };
-   fetch(packUiUrl(c)).then(r=>r.json()).then(d=>{
+   const url=packUiUrl(c);
+   const fromCache=(!('caches' in window))?Promise.resolve(null):caches.open('lamplight-pack-'+c).then(cache=>cache.match(url,{ignoreSearch:true})).then(r=>r?r.json():null).catch(()=>null);
+   fromCache.then(d=>d||fetch(url,{cache:'no-cache',credentials:'same-origin'}).then(r=>{if(!r.ok)throw 0;return r.json()})).then(d=>{
     try{RAW.set('lamp_dict_'+c,JSON.stringify(d))}catch(e){}
    }).catch(()=>{}).then(go);
   };
@@ -101,14 +114,6 @@ function packRefreshPicker(){
 }
 
 packInstallOpen();
-// A remembered pack list lets curLang() accept a pack language on the next visit,
-// after the pack was discovered once. First discovery still happens below.
-(function(){
- const remembered=packRemembered();
- if(remembered.length){
-  window.LAMP_PACKS=remembered.map(code=>({code:code,name:code,hasPhonics:false,ui:'packs/'+code+'/ui.json',dir:'packs/'+code+'/'}));
-  packInstallOpen();
- }
-})();
-
+window.LAMP_PACK_CATALOG=window.LAMP_PACK_CATALOG||[];
+window.LAMP_PACKS=window.LAMP_PACKS||[];
 window.LAMP_PACKS_READY=packDiscover();
