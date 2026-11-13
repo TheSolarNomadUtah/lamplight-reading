@@ -88,6 +88,52 @@ print('OK  core offline save: only lang/es.json, under 15 MiB, no language packs
 PYCHK
 then :; else echo "FAIL core offline lang list"; fail=1; fi
 
+echo "== manifest and precache paths exist in the deploy tree =="
+if python3 - <<'PYCHK'
+import json,os,re,sys
+
+def is_hidden(rel):
+    for part in str(rel).replace("\\","/").split("/"):
+        if part in ("", ".", ".."):
+            continue
+        if part.startswith("."):
+            return True
+    return False
+
+def exists(p):
+    if p in ("./", ".", "", "/"):
+        return os.path.isfile("index.html")
+    return os.path.isfile(p)
+
+bad=[]
+for name in ("offline.json","offline-opus.json"):
+    d=json.load(open(name,encoding="utf-8"))
+    for path,_ in d["files"]:
+        if is_hidden(path):
+            bad.append(f"{name}: hidden path {path!r}")
+        elif not exists(path):
+            bad.append(f"{name}: missing {path!r}")
+
+sw=open("sw.js",encoding="utf-8").read()
+m=re.search(r"const F=\[(.*?)\];",sw,re.S)
+if not m:
+    bad.append("sw.js: could not parse precache list F")
+else:
+    urls=re.findall(r"'([^']*)'",m.group(1))
+    if not urls:
+        bad.append("sw.js: precache list F is empty")
+    for path in urls:
+        if is_hidden(path):
+            bad.append(f"sw.js: hidden path {path!r}")
+        elif not exists(path):
+            bad.append(f"sw.js: missing {path!r}")
+
+if bad:
+    print("\n".join(bad)); sys.exit(1)
+print("OK  every manifest and precache URL exists and is not a hidden path")
+PYCHK
+then :; else echo "FAIL manifest and precache path check"; fail=1; fi
+
 if ((fail)); then
   echo "preship FAILED"
   exit 1

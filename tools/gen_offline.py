@@ -1,12 +1,32 @@
 # Writes offline.json (MP3 audio) and offline-opus.json (Opus audio). Non-audio files are in both; each device downloads only its own format.
 import os,json
 R=os.path.dirname(os.path.dirname(os.path.abspath(__file__)));fs=[]
+
+def is_hidden(rel):
+  """True if any path component is a dotfile or dotdir (.git, .gitignore, ...). The walk root '.' is not hidden."""
+  for part in str(rel).replace('\\','/').split('/'):
+    if part in ('', '.', '..'):
+      continue
+    if part.startswith('.'):
+      return True
+  return False
+
 for d,_,n in os.walk(R):
   rel=os.path.relpath(d,R)
-  if rel.startswith(('.git','tools')):continue
+  if is_hidden(rel):
+    continue
+  top=(rel.replace('\\','/').split('/')[0] if rel!='.' else '')
+  if top=='tools':
+    continue
   for f in n:
+    if is_hidden(f):
+      continue
     p=os.path.normpath(os.path.join(rel,f)).replace('\\','/')
-    if f.endswith('.png') or (rel=='.' and f.endswith('.mp3')) or f in('offline.json','offline-opus.json','.nojekyll','CNAME','.gitignore') or f.endswith('.md'):continue
+    if p.startswith('./'):
+      p=p[2:]
+    if is_hidden(p):
+      continue
+    if f.endswith('.png') or (rel=='.' and f.endswith('.mp3')) or f in('offline.json','offline-opus.json','CNAME') or f.endswith('.md'):continue
     # Core save is English + Spanish only. Hidden lang stubs and optional
     # language packs stay out of the 15 MiB bundle (packs/index.json stays,
     # so the app can see that no packs are installed).
