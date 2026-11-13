@@ -41,11 +41,23 @@ function reduced124(){
  return false;
 }
 function earnKey124(){return 'lamp_earn124@'+pid124()}
+function earnPlain124(o){
+ const out={};
+ if(!o||typeof o!=='object')return out;
+ for(const k of Object.keys(o)){
+  const v=o[k];
+  if(v===true||(v&&typeof v==='object'&&(v.at||v.again))||v)out[k]=true;
+ }
+ return out;
+}
 function earnLoad124(){
  try{
   const raw=typeof RAW!=='undefined'?RAW.get(earnKey124()):null;
   const o=raw?(typeof safeJSON==='function'?safeJSON(raw,null):JSON.parse(raw)):null;
-  return o&&typeof o==='object'?o:{};
+  const out=earnPlain124(o);
+  const stale=!!(o&&typeof o==='object'&&Object.keys(o).some(k=>o[k]!==true));
+  if(stale)earnSave124(out);
+  return out;
  }catch(e){return {}}
 }
 function earnSave124(o){
@@ -53,8 +65,7 @@ function earnSave124(o){
 }
 function earn124(id){
  const o=earnLoad124();
- if(!o[id])o[id]={at:Date.now()};
- else o[id].again=Date.now();
+ o[id]=true;
  earnSave124(o);
  return o;
 }
@@ -68,6 +79,13 @@ function sunPts124(n){
  }
  return pts;
 }
+function sunDiscR124(n){
+ const N=Math.max(0,n|0);
+ if(N<=13)return 68;
+ const far=C124*Math.sqrt((N-1)+0.6);
+ const pad=DOT124/2+1.1/2;
+ return Math.min(92,Math.max(68,far+pad));
+}
 function sunSVG124(n,opts){
  opts=opts||{};
  const cap=opts.cap||13;
@@ -75,6 +93,7 @@ function sunSVG124(n,opts){
  const pts=sunPts124(N);
  const glow=N>=13;
  const fade=reduced124()||opts.still;
+ const disc=sunDiscR124(N),mid=58*(disc/68);
  const seeds=pts.map((p,i)=>{
   const cls='toy124-seed'+(fade||i<N-1?'':' toy124-in');
   return `<circle class="${cls}" cx="${p[0].toFixed(2)}" cy="${p[1].toFixed(2)}" r="${(DOT124/2).toFixed(2)}" fill="#FFE4A4" stroke="#E6B454" stroke-width="1.1"/>`;
@@ -82,8 +101,8 @@ function sunSVG124(n,opts){
  return `<svg class="toy124-sun${glow?' toy124-glow':''}" viewBox="0 0 200 200" width="${opts.w||360}" height="${opts.h||360}" role="img" aria-hidden="${opts.thumb?'true':'false'}" ${opts.thumb?'':'aria-label="'+e124(t124('Sunflower Garden'))+'"'}>
   <defs><filter id="toy124glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
   <rect width="200" height="200" fill="#120E18"/>
-  <ellipse class="toy124-disc" cx="100" cy="92" rx="68" ry="68" fill="#2A3A28"/>
-  <ellipse cx="100" cy="92" rx="58" ry="58" fill="#3A4A30"/>
+  <ellipse class="toy124-disc" cx="100" cy="92" rx="${disc.toFixed(2)}" ry="${disc.toFixed(2)}" fill="#2A3A28"/>
+  <ellipse cx="100" cy="92" rx="${mid.toFixed(2)}" ry="${mid.toFixed(2)}" fill="#3A4A30"/>
   <ellipse cx="100" cy="92" rx="22" ry="22" fill="#855A00" stroke="#72583F" stroke-width="1.4"/>
   <ellipse cx="100" cy="92" rx="12" ry="12" fill="#E6B454"/>
   <g fill="#6F8F4A" stroke="#4A6A38" stroke-width="1">${[0,72,144,216,288].map((a,i)=>{
@@ -140,16 +159,18 @@ function hexSVG124(filled,opts){
   const on=filled.has(k);
   const ghost=ghosts.some(([qq,rr])=>qq===q&&rr===r);
   if(!on&&!ghost)return;
-  const cls=(on?'toy124-hex-on':'toy124-hex-ghost')+(fade?'':' toy124-in');
-  const fill=on?'#E6B454': 'none';
-  const op=on?'.92':'.7';
+  const last=opts.last!==undefined?opts.last:HEX124.last;
+  const fresh=on&&last&&k===last;
+  const cls=(on?'toy124-hex-on':'toy124-hex-ghost')+(fade||!fresh?'':' toy124-in');
+  const fill=on?'#E6B454':'transparent';
+  const op=on?'.92':'0';
   const sw=on?'1.8':'1.6';
   const stroke=on?'#855A00':'#C4A07A';
-  parts.push(`<path class="${cls}" data-q="${q}" data-r="${r}" d="${hexD124(cx+dx,cy+dy,size*.98)}" fill="${fill}" fill-opacity="${op}" stroke="${stroke}" stroke-width="${sw}" stroke-linejoin="round"/>`);
+  parts.push(`<path class="${cls}" data-q="${q}" data-r="${r}" d="${hexD124(cx+dx,cy+dy,size*.98)}" fill="${fill}" fill-opacity="${op}" stroke="${stroke}" stroke-width="${sw}" stroke-linejoin="round" pointer-events="all"/>`);
  });
  return `<svg class="toy124-hex${glow?' toy124-glow':''}" viewBox="0 0 200 200" width="${opts.w||360}" height="${opts.h||360}" role="img" aria-hidden="${opts.thumb?'true':'false'}" ${opts.thumb?'':'aria-label="'+e124(t124('Honeycomb Builder'))+'"'}>
   <defs><filter id="toy124glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-  <rect width="200" height="200" fill="#120E18"/>
+  <rect width="200" height="200" fill="#120E18" pointer-events="none"/>
   ${parts.join('')}
  </svg>`;
 }
@@ -174,7 +195,7 @@ function cleanup124(){
 }
 
 const SUN124={n:0};
-const HEX124={filled:null};
+const HEX124={filled:null,last:null};
 
 function sunOpen124(){
  cleanup124();
@@ -227,6 +248,7 @@ function sunKeep124(){
 function hexOpenToy124(){
  cleanup124();
  HEX124.filled=new Set(['0,0']);
+ HEX124.last=null;
  if(typeof PAT106==='object')PAT106.unit='honeycomb';
  hexDraw124();
 }
@@ -235,7 +257,7 @@ function hexDraw124(){
  const filled=HEX124.filled||new Set(['0,0']);
  el.innerHTML=patShell(t124('Honeycomb Builder'),`
   <p class="soft toy124-fact">${e124(t124(FACT_HEX))}</p>
-  <div class="toy124-stage" id="toy124hex">${hexSVG124(filled)}${maybeTurtle124()}</div>
+  <div class="toy124-stage" id="toy124hex">${hexSVG124(filled,{last:HEX124.last})}${maybeTurtle124()}</div>
   ${countRow124(filled.size)}
   <div class="pat-row">
    <button type="button" class="p" onclick="window.IL124.hexKeep()">${e124(t124('Keep'))}</button>
@@ -252,8 +274,10 @@ function hexDraw124(){
    p.addEventListener('click',ev=>{
     ev.preventDefault();ev.stopPropagation();
     const q=+p.getAttribute('data-q'),r=+p.getAttribute('data-r');
-    filled.add(hexKey124(q,r));
+    const k=hexKey124(q,r);
+    filled.add(k);
     HEX124.filled=filled;
+    HEX124.last=k;
     if(filled.size===19)earn124('hex');
     hexDraw124();
    });
@@ -393,7 +417,8 @@ window.IL124={
  sunOpen:sunOpen124,hexOpen:hexOpenToy124,
  sunKeep:sunKeep124,hexKeep:hexKeep124,
  earn:earn124,earned:earnLoad124,
- sunPts:sunPts124,hexCells:hexCells124,hexRing:hexRing124,
+ sunPts:sunPts124,sunDiscR:sunDiscR124,sunSVG:sunSVG124,
+ hexCells:hexCells124,hexRing:hexRing124,
  FACT_SUN,FACT_HEX
 };
 })();

@@ -189,10 +189,15 @@ function editorShell125(){
  const root=root125();if(!root)return;
  const d=load125();
  root.setAttribute('data-yours-open','edit');
- root.innerHTML=`<div class="card yours-wrap125 yours-in125" data-yours-editor125="1"><p><button type="button" data-yours-back125="1">${e125(t125('Back to Grown-ups'))}</button></p><h2 class="kline">${e125(t125('Make it yours'))}</h2><p class="soft">${e125(t125(NOTE125))}</p><p class="soft">${e125(t125(STAY125))}</p>${metaBar125(d)}<div class="yours-tabs125"><button type="button" class="p" data-yours-tab125="stories">${e125(t125('Stories'))}</button><button type="button" data-yours-tab125="ui">${e125(t125('Menu words'))}</button></div><p class="yours-find125"><label>${e125(t125('Search'))}<input type="search" data-yours-find125="1" value="${e125(find125)}"></label></p><div data-yours-body125="1"></div><p><button class="p" type="button" data-yours-export125="1">${e125(t125('Export language pack'))}</button></p></div>`;
+ root.innerHTML=`<div class="card yours-wrap125 yours-in125" data-yours-editor125="1"><p><button type="button" data-yours-back125="1">${e125(t125('Back to Grown-ups'))}</button></p><h2 class="kline">${e125(t125('Make it yours'))}</h2><p class="soft">${e125(t125(NOTE125))}</p><p class="soft">${e125(t125(STAY125))}</p>${metaBar125(d)}<div class="yours-tabs125"><button type="button" class="p" data-yours-tab125="stories">${e125(t125('Stories'))}</button><button type="button" data-yours-tab125="ui">${e125(t125('Menu words'))}</button></div><p class="yours-find125"><label>${e125(t125('Search'))}<input type="search" data-yours-find125="1" value="${e125(find125)}"></label></p><div data-yours-body125="1"></div><p><button class="p" type="button" data-yours-export125="1">${e125(t125('Export language pack'))}</button> <button type="button" data-yours-clear125="1">${e125(t125('Clear all'))}</button></p><p class="soft" data-yours-clearask125="1" hidden>${e125(t125('Clear all the translations saved on this device? This cannot be undone.'))} <button type="button" class="p" data-yours-clearyes125="1">${e125(t125('Yes'))}</button> <button type="button" data-yours-clearno125="1">${e125(t125('Not now'))}</button></p></div>`;
  maybeTurtle125(root.querySelector('[data-yours-editor125]'));
  root.querySelector('[data-yours-back125]').addEventListener('click',()=>{touch125();save125();leave125()});
  root.querySelector('[data-yours-export125]').addEventListener('click',()=>{touch125();save125();export125()});
+ const ask=root.querySelector('[data-yours-clearask125]');
+ root.querySelector('[data-yours-clear125]').addEventListener('click',()=>{if(ask)ask.hidden=false});
+ root.querySelector('[data-yours-clearno125]').addEventListener('click',()=>{if(ask)ask.hidden=true});
+ root.querySelector('[data-yours-clearyes125]').addEventListener('click',()=>clearAll125());
+
  root.querySelector('[data-yours-lang125]').addEventListener('input',touch125);
  root.querySelector('[data-yours-by125]').addEventListener('input',touch125);
  root.querySelector('[data-yours-find125]').addEventListener('input',ev=>{find125=ev.target.value||'';paintBody125()});
@@ -275,6 +280,12 @@ function slug125(s){
  return String(s||'').trim().toLowerCase().replace(/[^\p{L}\p{N}]+/gu,'-').replace(/^-|-$/g,'').slice(0,40)||'language';
 }
 
+function clearAll125(){
+ clearTimeout(saveTimer125);
+ try{if(typeof RAW!=='undefined')RAW.del(KEY125)}catch(e){}
+ find125='';storyId125=null;uiFrom125=0;tab125='stories';
+ editorShell125();
+}
 function export125(){
  const d=load125();
  const cat=catalog125();
@@ -333,7 +344,7 @@ function hookAdults125(){
 hookAdults125();
 window.IL125={
  attach:attach125,open:openEditor125,gate:openGate125,leave:leave125,
- catalog:catalog125,pages:pages125,load:load125,save:save125,exportPack:export125,
+ catalog:catalog125,pages:pages125,load:load125,save:save125,clear:clearAll125,exportPack:export125,
  KEY:KEY125,NOTE:NOTE125,STAY:STAY125
 };
 })();
