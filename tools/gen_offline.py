@@ -7,6 +7,8 @@ for d,_,n in os.walk(R):
   for f in n:
     p=os.path.normpath(os.path.join(rel,f)).replace('\\','/')
     if f.endswith('.png') or (rel=='.' and f.endswith('.mp3')) or f in('offline.json','offline-opus.json','.nojekyll','CNAME','.gitignore') or f.endswith('.md'):continue
+    # Only English (built-in) and Spanish UI packs ship; leftover lang/*.json 404 at save time.
+    if rel=='lang' and f!='es.json':continue
     fs.append([p,os.path.getsize(os.path.join(d,f))])
 fs.sort();fs.insert(0,['./',os.path.getsize(os.path.join(R,'index.html'))])
 for name,skip in (('offline.json','.opus'),('offline-opus.json','.mp3')):
