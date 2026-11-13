@@ -42,6 +42,20 @@ function mathCredit(reason){
  }
 }
 
+function mathArtTurtle(){
+ if(typeof turtleArt105==='function')return turtleArt105('count',72,80).replace('class="turtleArt105"','class="turtleArt105 math-turtle"');
+ const ink='#72583f';
+ return `<svg class="math-turtle" viewBox="0 0 80 90" width="72" height="80" aria-hidden="true" focusable="false">
+  <ellipse cx="40" cy="82" rx="18" ry="5" fill="#e8d4b0" stroke="none" opacity=".55"/>
+  <ellipse cx="40" cy="50" rx="22" ry="16" fill="#6f9a7a" stroke="${ink}" stroke-width="1.8"/>
+  <polygon points="40,38 50,50 40,58 30,50" fill="#c5ddd0" stroke="${ink}" stroke-width="1"/>
+  <ellipse cx="40" cy="28" rx="8" ry="7" fill="#e8c894" stroke="${ink}" stroke-width="1.5"/>
+  <circle cx="37" cy="27" r="1.2" fill="${ink}" stroke="none"/>
+  <circle cx="43" cy="27" r="1.2" fill="${ink}" stroke="none"/>
+ </svg>`;
+}
+function mathCountKind(){return MATH.countKind==='turtle'?'turtle':'lamp'}
+function mathCountArt(){return mathCountKind()==='turtle'?mathArtTurtle():mathArtLamp()}
 function mathArtLamp(kind){
  const ink='#72583f';
  const added=kind==='added';
@@ -117,7 +131,7 @@ function renderMath(){
   <h2>${mathT('Numbers')}</h2>
   <p class="soft">${mathT('Count, add, and notice. There is no timer. You can take your time and try again.')}</p></div>
   <div class="hubgrid math-units">
-   <button type="button" class="hubtile" data-math="count" onclick="mathOpen('count')">${mathArtLamp()}<span>${mathT('Counting')}</span><small>${mathT('How many lamps?')}</small></button>
+   <button type="button" class="hubtile" data-math="count" onclick="mathOpen('count')">${mathArtLamp()}<span>${mathT('Counting')}</span><small>${mathT('How many lamps or turtles?')}</small></button>
    <button type="button" class="hubtile" data-math="shapes" onclick="mathOpen('shapes')">${mathArtShape('triangle',{size:72})}<span>${mathT('Shapes')}</span><small>${mathT('Circles, triangles, squares, and rectangles.')}</small></button>
    <button type="button" class="hubtile" data-math="ten" onclick="mathOpen('ten')">${mathTileArt()}<span>${mathT('Adding to 10')}</span><small>${mathT('Make ten at your own pace.')}</small></button>
   </div>`;
@@ -127,18 +141,21 @@ function renderMath(){
 function mathCountNew(){
  MATH.n=1+Math.floor(Math.random()*10);
  MATH.tapped=Array(MATH.n).fill(0);
- MATH.missed=false;MATH.credited=false;MATH.msg=mathT('Tap each lamp, then choose how many you see.');
+ MATH.countKind=MATH.countKind==='turtle'?'lamp':'turtle';
+ MATH.missed=false;MATH.credited=false;
+ MATH.msg=mathCountKind()==='turtle'?mathT('Tap each turtle, then choose how many you see.'):mathT('Tap each lamp, then choose how many you see.');
  mathCountDraw();
 }
 function mathCountDraw(){
  const el=$('math');if(!el)return;
  const n=MATH.n,tapped=MATH.tapped||[];
+ const turtle=mathCountKind()==='turtle';
  const row=n>=6?' math-lamps-5':'';
- let lamps='<div class="math-lamps'+row+'" role="group" aria-label="'+esc(mathT('Lamps'))+'">';
+ let lamps='<div class="math-lamps'+row+'" role="group" aria-label="'+esc(turtle?mathT('Turtles'):mathT('Lamps'))+'">';
  for(let i=0;i<n;i++){
   const ord=tapped[i]||0;
-  const label=ord?mathT('Lamp {n}',{n:String(ord)}):mathT('Lamp');
-  lamps+=`<button type="button" class="math-lamp-btn${ord?' on':''}" data-i="${i}" aria-pressed="${ord?'true':'false'}" aria-label="${esc(label)}" onclick="mathCountTap(${i})">${mathArtLamp()}${ord?`<span class="math-count">${ord}</span>`:''}</button>`;
+  const label=ord?(turtle?mathT('Turtle {n}',{n:String(ord)}):mathT('Lamp {n}',{n:String(ord)})):(turtle?mathT('Turtle'):mathT('Lamp'));
+  lamps+=`<button type="button" class="math-lamp-btn${ord?' on':''}" data-i="${i}" aria-pressed="${ord?'true':'false'}" aria-label="${esc(label)}" onclick="mathCountTap(${i})">${mathCountArt()}${ord?`<span class="math-count">${ord}</span>`:''}</button>`;
  }
  lamps+='</div>';
  let nums='<div class="math-nums" role="group" aria-label="'+esc(mathT('How many?'))+'">';
@@ -166,7 +183,7 @@ function mathCountPick(n){
   mathCredit('notice');
  }else{
   MATH.missed=true;
-  MATH.msg=mathT('Try again. Count slowly, one lamp at a time.');
+  MATH.msg=mathCountKind()==='turtle'?mathT('Try again. Count slowly, one turtle at a time.'):mathT('Try again. Count slowly, one lamp at a time.');
   mathHmm();
  }
  mathCountDraw();
