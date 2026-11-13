@@ -110,6 +110,22 @@ def main():
             fails.append({'rule': 'T-breath-picker', 'section': 'candle', 'detail': 'picker check error: %s' % cp.get('error')})
         elif not cp.get('mounted') or cp.get('n') != 3 or cp.get('selected') != 'normal' or (cp.get('minH') or 0) < 55.5:
             fails.append({'rule': 'T-breath-picker', 'section': 'candle', 'detail': 'Lamp Breathing picker missing, not default normal, or under 56 px', **{k: cp[k] for k in cp}})
+    ff = taps.get('fireflies')
+    if ff:
+        if ff.get('error'):
+            fails.append({'rule': 'T-fireflies', 'section': 'fireflies', 'detail': 'fireflies page error: %s' % ff.get('error')})
+        elif (not ff.get('open') or ff.get('n') != 10 or (ff.get('cols') or 0) != 5
+              or (ff.get('k') or 0) < 1 or (ff.get('k') or 0) > 9 or ff.get('sum') != 10
+              or (ff.get('minH') or 0) < 55.5 or (ff.get('minW') or 0) < 55.5):
+            fails.append({'rule': 'T-fireflies', 'section': 'fireflies', 'detail': 'Fireflies Make Ten missing, not a 2×5 ten-frame, or spots under 56 px', **{k: ff[k] for k in ff}})
+    sc = taps.get('starCount')
+    if sc:
+        if sc.get('error'):
+            fails.append({'rule': 'T-starcount', 'section': 'starcount', 'detail': 'star count page error: %s' % sc.get('error')})
+        elif (not sc.get('open') or sc.get('n') not in (3, 5, 7)
+              or (sc.get('minH') or 0) < 55.5 or (sc.get('minW') or 0) < 55.5
+              or not sc.get('city') or sc.get('namesInKid')):
+            fails.append({'rule': 'T-starcount', 'section': 'starcount', 'detail': 'Star Count missing, hits under 56 px, no city picker, or star names in kid chrome', **{k: sc[k] for k in sc}})
 
     baseline = load_baseline()
     known = set(baseline.get('items') or [])
@@ -152,6 +168,8 @@ def main():
         'rainbowNight': taps.get('rainbowNight'),
         'moon': taps.get('moon'),
         'candlePicker': taps.get('candlePicker'),
+        'fireflies': taps.get('fireflies'),
+        'starCount': taps.get('starCount'),
         'flash_ok': flash.get('ok'),
         'loudness_raw_ok': loud.get('ok'),
         'shapes_ok': shapes.get('ok')

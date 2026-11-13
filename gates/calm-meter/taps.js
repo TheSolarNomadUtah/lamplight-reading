@@ -270,7 +270,91 @@ const SECTIONS=process.env.CALM_SECTIONS
     }
   }catch(e){candlePicker={error:String(e)}}
 
+  let fireflies=null;
+  try{
+    await p.evaluate(()=>{if(typeof show==='function')show('math');if(typeof mathOpen==='function')mathOpen('fireflies')});
+    await p.waitForTimeout(300);
+    fireflies=await p.evaluate(()=>{
+      const cells=[...document.querySelectorAll('#math .ff132-cell')].map(b=>{
+        const r=b.getBoundingClientRect();
+        return {w:Math.round(r.width*10)/10,h:Math.round(r.height*10)/10,pressed:b.getAttribute('aria-pressed')==='true'};
+      });
+      const title=(document.querySelector('#math h2')||{}).textContent||'';
+      const fact=(document.querySelector('#math .toy132-fact')||{}).textContent||'';
+      const grid=document.querySelector('#math .ff132-grid');
+      const cs=grid?getComputedStyle(grid):null;
+      const st=window.Fireflies132&&Fireflies132.state?Fireflies132.state():null;
+      const txt=(document.querySelector('#math')||{}).innerText||'';
+      return {
+        open:cells.length===10 && /Fireflies Make Ten/i.test(title),
+        title,
+        fact,
+        n:cells.length,
+        cells,
+        minH:cells.length?Math.min(...cells.map(c=>c.h)):0,
+        minW:cells.length?Math.min(...cells.map(c=>c.w)):0,
+        cols:cs?cs.gridTemplateColumns.split(' ').filter(Boolean).length:0,
+        k:st&&st.k,
+        lit:st&&st.lit,
+        sum:st?st.lit+(10-st.lit):null,
+        numsOff:st?st.nums===false:false,
+        eqHidden:!(document.querySelector('#math .toy132-eq')||{}).textContent,
+        countdown:/days until|countdown/i.test(txt)
+      };
+    });
+    for(const c of fireflies.cells||[]){
+      if(c.w<56-0.5||c.h<56-0.5){
+        small.push({section:'fireflies',rule:'T1',w:c.w,h:c.h,label:'firefly',tag:'button',cls:'ff132-cell',id:'',family:'fireflies'});
+      }
+    }
+    samples.push({section:'fireflies',vis:'math',n:(fireflies.cells||[]).length});
+  }catch(e){fireflies={error:String(e)}}
+
+  let starCount=null;
+  try{
+    await p.evaluate(()=>{if(typeof show==='function')show('math');if(typeof mathOpen==='function')mathOpen('stars')});
+    await p.waitForTimeout(600);
+    starCount=await p.evaluate(()=>{
+      const hots=[...document.querySelectorAll('#math .sc132-hot')].map(b=>{
+        const r=b.getBoundingClientRect();
+        return {w:Math.round(r.width*10)/10,h:Math.round(r.height*10)/10};
+      });
+      const title=(document.querySelector('#math h2')||{}).textContent||'';
+      const fact=(document.querySelector('#math .toy132-fact')||{}).textContent||'';
+      const st=window.StarCount132&&StarCount132.state?StarCount132.state():null;
+      const city=document.getElementById('starCity132');
+      const grown=document.querySelector('#math details.toy132-grown');
+      const namesOpen=!!(grown&&grown.open);
+      const kidText=[...document.querySelectorAll('#math h2, #math .toy132-fact, #math p.soft, #math .toy132-fig span')].filter(el=>!el.closest('details')).map(el=>el.textContent||'').join(' ');
+      const named=['Alnitak','Alnilam','Mintaka','Caph','Schedar','Ruchbah','Segin','Dubhe','Merak','Phecda','Megrez','Alioth','Mizar','Alkaid'];
+      const namesInKid=named.filter(n=>kidText.indexOf(n)>=0);
+      return {
+        open:hots.length>=3 && !!(document.querySelector('#math .sc132-card')),
+        title,
+        fact,
+        n:hots.length,
+        tonight:st?!!st.tonight:null,
+        id:st&&st.id,
+        offer:st&&st.offer,
+        cells:hots,
+        minH:hots.length?Math.min(...hots.map(c=>c.h)):0,
+        minW:hots.length?Math.min(...hots.map(c=>c.w)):0,
+        city:!!city,
+        grown:!!grown,
+        namesOpen,
+        namesInKid,
+        countdown:/days until|countdown/i.test((document.querySelector('#math')||{}).innerText||'')
+      };
+    });
+    for(const c of starCount.cells||[]){
+      if(c.w<56-0.5||c.h<56-0.5){
+        small.push({section:'starcount',rule:'T1',w:c.w,h:c.h,label:'star',tag:'button',cls:'sc132-hot',id:'',family:'starcount'});
+      }
+    }
+    samples.push({section:'starcount',vis:'math',n:(starCount.cells||[]).length});
+  }catch(e){starCount={error:String(e)}}
+
   await browser.close();
 
-  process.stdout.write(JSON.stringify({ok:small.length===0&&shapeFails.length===0,small,shapeFails,samples,honeycomb,quilt,rainbowNight,moon,candlePicker,errors},null,2));
+  process.stdout.write(JSON.stringify({ok:small.length===0&&shapeFails.length===0,small,shapeFails,samples,honeycomb,quilt,rainbowNight,moon,candlePicker,fireflies,starCount,errors},null,2));
 })().catch(e=>{console.error(JSON.stringify({ok:false,error:String(e)}));process.exit(1)});

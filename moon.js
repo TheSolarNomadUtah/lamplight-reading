@@ -53,7 +53,8 @@
   function dateToJD(date) {
     if (typeof date === "number") return date;
     var d = date instanceof Date ? date : new Date(date);
-    return julianDate(d.getFullYear(), d.getMonth() + 1, d.getDate(), 19, 0, 0);
+    var dusk = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 19, 0, 0);
+    return 2440587.5 + dusk.getTime() / 86400000;
   }
 
   function wrap01(x) {
