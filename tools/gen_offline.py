@@ -7,8 +7,11 @@ for d,_,n in os.walk(R):
   for f in n:
     p=os.path.normpath(os.path.join(rel,f)).replace('\\','/')
     if f.endswith('.png') or (rel=='.' and f.endswith('.mp3')) or f in('offline.json','offline-opus.json','.nojekyll','CNAME','.gitignore') or f.endswith('.md'):continue
-    # Only English (built-in) and Spanish UI packs ship; leftover lang/*.json 404 at save time.
-    if rel=='lang' and f!='es.json':continue
+    # Core save is English + Spanish only. Hidden lang stubs and optional
+    # language packs stay out of the 15 MiB bundle (packs/index.json stays,
+    # so the app can see that no packs are installed).
+    if p.startswith('lang/') and p!='lang/es.json':continue
+    if p.startswith('packs/') and p!='packs/index.json':continue
     fs.append([p,os.path.getsize(os.path.join(d,f))])
 fs.sort();fs.insert(0,['./',os.path.getsize(os.path.join(R,'index.html'))])
 for name,skip in (('offline.json','.opus'),('offline-opus.json','.mp3')):

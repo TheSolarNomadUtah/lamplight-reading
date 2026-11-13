@@ -23,6 +23,7 @@ done
 
 echo "== node --check (vNN.js, sw.js) =="
 js_files=(v[0-9]*.js)
+for extra in pack.js math.js; do if [[ -f $extra ]]; then js_files+=("$extra"); fi; done
 if [[ -f sw.js ]]; then js_files+=(sw.js); fi
 if ((${#js_files[@]}==0)); then
   echo "FAIL: no vNN.js files found"
@@ -38,7 +39,7 @@ for f in "${js_files[@]}"; do
 done
 
 echo "== other JSON manifests =="
-for f in version.json offline.json offline-opus.json manifest.webmanifest lyrics/*.json; do
+for f in version.json offline.json offline-opus.json manifest.webmanifest packs/index.json lyrics/*.json; do
   if [[ -f $f ]]; then
     if python3 -c "import json,sys; json.load(open(sys.argv[1],encoding='utf-8'))" "$f"; then
       echo "OK  $f"
@@ -67,6 +68,25 @@ if bad:
 print('OK  lyrics/luna_timings.json (9 songs, counts and order)')
 PYCHK
 then :; else echo "FAIL lyrics/luna_timings.json shape"; fail=1; fi
+
+
+
+echo "== core offline lang list =="
+if python3 - <<'PYCHK'
+import json,sys
+for name in ('offline.json','offline-opus.json'):
+    d=json.load(open(name,encoding='utf-8'))
+    langs=sorted(p for p,_ in d['files'] if p.startswith('lang/'))
+    if langs!=['lang/es.json']:
+        print(name,'expected only lang/es.json, got',langs);sys.exit(1)
+    if d['bytes']>=15728640:
+        print(name,'over 15 MiB cap',d['bytes']);sys.exit(1)
+    packs=[p for p,_ in d['files'] if p.startswith('packs/')]
+    if packs not in (['packs/index.json'],[]):
+        print(name,'unexpected pack files',packs);sys.exit(1)
+print('OK  core offline save: only lang/es.json, under 15 MiB, no language packs')
+PYCHK
+then :; else echo "FAIL core offline lang list"; fail=1; fi
 
 if ((fail)); then
   echo "preship FAILED"
