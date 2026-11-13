@@ -5,7 +5,7 @@ const {chromium}=require('playwright-core');
 const ROOT=process.env.ROOT||'http://127.0.0.1:8765';
 const SECTIONS=process.env.CALM_SECTIONS
   ? process.env.CALM_SECTIONS.split(',')
-  : ['hub','lib','games','look','kids','letters','paint','patterns','math','music','about','adults'];
+  : ['hub','lib','games','look','kids','letters','paint','patterns','math','music','about','adults','candle'];
 
 (async()=>{
   const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--autoplay-policy=no-user-gesture-required']});
@@ -29,6 +29,14 @@ const SECTIONS=process.env.CALM_SECTIONS
       if(id==='patterns'){
         try{await p.evaluate(()=>{if(typeof renderPatterns106==='function')renderPatterns106()})}catch(e){}
         await p.waitForTimeout(200);
+      }
+      if(id==='candle'){
+        try{await p.evaluate(()=>{
+          try{if(window.LampCandle129&&LampCandle129.save){const s=LampCandle129.load?LampCandle129.load():{fade:180};LampCandle129.save({on:true,fade:s.fade||180});if(LampCandle129.apply)LampCandle129.apply()}}catch(e){}
+          if(typeof show==='function')show('candle');
+          if(window.LampCandle129&&LampCandle129.offer)LampCandle129.offer();
+        })}catch(e){}
+        await p.waitForTimeout(300);
       }
       const found=await p.evaluate(()=>{
         function familyOf(el){

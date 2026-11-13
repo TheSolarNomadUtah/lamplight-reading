@@ -1,0 +1,46 @@
+/* Lamplight candle tokens. Class ll-candle on html or a root. Eye pupil, rim and catchlight stay classic so contrast stays ≥3:1. Fade: --ll-fade 120s–300s (default 180s). */
+.ll-candle{
+--ll-night:#140C08;
+--ll-dusk:#22180C;
+--ll-warm:#F3E0B8;
+--ll-line:#E0C890;
+--ll-paper:#E8D4A8;
+--ll-card:#F0E0B8;
+--ll-plate:#E8D09A;
+--ll-ink:#2A2218;
+--ll-soft:#6A5A40;
+--ll-acc:#5A6A48;
+--ll-hi:#C47A00;
+--ll-border:#D4C298;
+--ll-glow:#E8A840;
+--ll-core:#F0C878;
+--ll-tip:#FFF6D8;
+--ll-deep:#855A00;
+--ll-hearth:#D49A40;
+--ll-hearth-core:#E8B058;
+--ll-hearth-tip:#F4D09A;
+--ll-clay:#D0A06A;
+--ll-bowl:#E0B878;
+--ll-art-ink:#72583F;
+--ll-muzzle:#F4E4C4;
+--ll-cream:#F3E0B8;
+--ll-sage:#6A8A5A;
+--ll-sage-fit:#5A6A48;
+--ll-shell:#C8D0B0;
+--ll-foot:#A87850;
+--ll-blush:#C07058;
+--ll-glass-hi:#8A9A5A;
+--ll-glass-lo:#1E2E1C;
+--ll-glass-rim:#1A2A1C;
+--ll-accent-cool:#B89890;
+--ll-accent-cool-tip:#E4D4C8;
+--ll-fade:180s;
+--ll-breath:10s
+}
+.ll-candle .il-h,.ll-candle .il-c{animation:il-breath var(--ll-breath,10s) ease-in-out infinite}
+.ll-wind .ll-dim{animation:ll-dim var(--ll-fade,180s) ease-in-out 1 both}
+@keyframes ll-dim{0%,55%{opacity:1}100%{opacity:.42}}
+@media (prefers-reduced-motion:reduce){
+.ll-candle .il-h,.ll-candle .il-c,.ll-candle .ll-breathe,.ll-wind .ll-dim{animation:none}
+.ll-wind .ll-dim{opacity:.55}
+}

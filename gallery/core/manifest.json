@@ -83,8 +83,22 @@
     "year": "2024",
     "license": "CC0",
     "source_url": "https://polyhaven.com/a/rogland_clear_night",
-    "credit": "Greg Zaal (Poly Haven), 2024, CC0, credit appreciated, not required. Tone-mapped from the CC0 HDRI; the site's example-render preview is not used.",
+    "credit": "Greg Zaal / Poly Haven (polyhaven.com). CC0, credit appreciated, not required. Tone-mapped from the CC0 HDRI; the site's example-render preview is not used.",
     "alt_en": "A wide panoramic photograph of a clear night in Rogland: a rocky, scrubby landscape under a star-filled sky, with the Milky Way arching overhead.",
     "alt_es": "Fotografía panorámica de una noche despejada en Rogland: un paisaje rocoso y de matorrales bajo un cielo lleno de estrellas, con la Vía Láctea en arco."
+  },
+  {
+    "file": "images/merian-surinam-plate-11.webp",
+    "title": "Metamorphosis insectorum Surinamensium, Plate 11",
+    "artist": "Maria Sibylla Merian",
+    "year": "1705",
+    "license": "PD",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Maria_Merian_Metamorphosis_Insectorum_Surinamensium_MIA_P18717.jpg",
+    "credit": "Maria Sibylla Merian, Metamorphosis insectorum Surinamensium, 1705. Scan: Minneapolis Institute of Art / Wikimedia Commons.",
+    "alt_en": "A hand-colored 1705 engraving of a coral-tree branch with yellow and red flowers and green leaves, with striped caterpillars eating the leaves, a dark chrysalis, and two large tan moths with scalloped wings.",
+    "alt_es": "Grabado coloreado a mano de 1705: una rama de árbol de coral con flores amarillas y rojas y hojas verdes, orugas rayadas comiendo las hojas, una crisálida oscura y dos grandes polillas color canela con alas festoneadas.",
+    "caption_en": "A moth grows slowly: first a little caterpillar, then a quiet chrysalis, then wings. Maria Sibylla Merian painted all of it on one page in 1705.",
+    "caption_es": "Una polilla crece despacio: primero una pequeña oruga, luego una crisálida tranquila y después las alas. Maria Sibylla Merian lo pintó todo en una sola página en 1705.",
+    "pairs_with": "moth"
   }
 ]

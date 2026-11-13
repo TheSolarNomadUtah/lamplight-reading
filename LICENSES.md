@@ -30,6 +30,7 @@ These keep their own licenses. Credits already shown in the app stay as they are
 - Entdeckungen über die Theorie des Klanges, Tab. VIII, IX, and X. Ernst Florens Friedrich Chladni, 1787. Public domain. Scan: e-rara / Wikimedia Commons.
 - Bark 014. ambientCG (Lennart Demes / ambientCG.com), 2024. CC0 — credit appreciated, not required.
 - Rogland Clear Night. Greg Zaal (Poly Haven), 2024. CC0, credit appreciated, not required. Tone-mapped from the CC0 HDRI; the site's example-render preview is not used.
+- Metamorphosis insectorum Surinamensium, Plate 11 (moth life cycle). Maria Sibylla Merian, 1705. Public domain. Scan: Minneapolis Institute of Art / Wikimedia Commons.
 
 ### Quiet Gallery — app pack (`gallery/app-pack/manifest.json`)
 
