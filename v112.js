@@ -173,9 +173,12 @@ function skyJDToDate112(jd){
 function skyYearOf112(jd){
  const d=skyJDToDate112(jd);
  const y=d.getUTCFullYear();
- const start=Date.UTC(y,0,1);
- const next=Date.UTC(y+1,0,1);
- const frac=(next>start)?(d.getTime()-start)/(next-start):0;
+ const start=new Date(Date.UTC(2000,0,1));
+ start.setUTCFullYear(y,0,1);
+ const next=new Date(Date.UTC(2000,0,1));
+ next.setUTCFullYear(y+1,0,1);
+ const span=next.getTime()-start.getTime();
+ const frac=span>0?(d.getTime()-start.getTime())/span:0;
  return y+frac;
 }
 function skyYearLabel112(y){
@@ -202,8 +205,23 @@ function skyInPlanetEra112(jd){
 }
 function skyPrecess112(ra,dec,jd){
  const y=skyYearOf112(jd);
- if(Math.abs(y-2000)<=PRECESS_YEARS112)return SkyTonight.precess(ra,dec,SkyTonight.J2000,jd);
- return SkyTonight.precessLong(ra,dec,SkyTonight.J2000,jd);
+ const d=Math.abs(y-2000);
+ const near=SkyTonight.precess(ra,dec,SkyTonight.J2000,jd);
+ const far=SkyTonight.precessLong(ra,dec,SkyTonight.J2000,jd);
+ const lo=PRECESS_YEARS112-200, hi=PRECESS_YEARS112+200;
+ if(d<=lo)return near;
+ if(d>=hi)return far;
+ const t=(d-lo)/(hi-lo);
+ const toVec=p=>{
+  const r=p.ra*Math.PI/180, de=p.dec*Math.PI/180, c=Math.cos(de);
+  return [c*Math.cos(r), c*Math.sin(r), Math.sin(de)];
+ };
+ const A=toVec(near), B=toVec(far);
+ const x=A[0]+t*(B[0]-A[0]), yy=A[1]+t*(B[1]-A[1]), z=A[2]+t*(B[2]-A[2]);
+ const len=Math.hypot(x,yy,z)||1;
+ const dec2=Math.asin(z/len)*180/Math.PI;
+ let ra2=Math.atan2(yy/len,x/len)*180/Math.PI; if(ra2<0)ra2+=360;
+ return {ra:ra2, dec:dec2};
 }
 function skyEnsureJD112(){
  if(UI112.jd==null)UI112.jd=skyCivilToJD112(new Date().getFullYear(),new Date().getMonth()+1,new Date().getDate(),21,0,0);
@@ -252,9 +270,12 @@ function skyNamed112(idx){return (SKY112.names&&SKY112.names[idx])||''}
 
 function skyNorthCopy112(jd){
  const ns=SkyTonight.northStar(jd);
- const name=ns&&ns.name||'Polaris';
- const dist=ns&&isFinite(ns.dist)?ns.dist:0;
- const y=skyYearOf112(jd);
+ const ALD={name:'Alderamin',ra:319.6449,dec:62.5856};
+ const ap=SkyTonight.precessLong(ALD.ra,ALD.dec,SkyTonight.J2000,jd);
+ const aldDist=90-ap.dec;
+ let name=ns&&ns.name||'Polaris';
+ let dist=ns&&isFinite(ns.dist)?ns.dist:0;
+ if(aldDist<dist){name='Alderamin';dist=aldDist;}
  if(name==='Vega'){
   return {
    short:skyT112('Vega','Vega'),
@@ -268,8 +289,8 @@ function skyNorthCopy112(jd){
   return {
    short:skyT112('Thuban','Thuban'),
    long:skyT112(
-    'The North Star is Thuban, in the Dragon. Around 2700 BCE it stood about 0.75 degrees from the pole — closer than Polaris is today.',
-    'La Estrella Polar es Thuban, en el Dragón. Hacia el 2700 a. e. c. estuvo a unos 0,75 grados del polo, más cerca de lo que está Polaris hoy.'
+    'The North Star is Thuban, in the Dragon. Around 2700 BCE it stood about 0.75 degrees from the pole.',
+    'La Estrella Polar es Thuban, en el Dragón. Hacia el 2700 a. e. c. estuvo a unos 0,75 grados del polo.'
    )
   };
  }
@@ -278,6 +299,15 @@ function skyNorthCopy112(jd){
  }
  if(name==='Deneb'){
   return {short:'Deneb',long:skyT112('The North Star is Deneb, in the Swan.','La Estrella Polar es Deneb, en el Cisne.')};
+ }
+ if(name==='Alderamin'){
+  return {
+   short:skyT112('Alderamin','Alderamin'),
+   long:skyT112(
+    'The North Star is Alderamin, in Cepheus. Around the year 7500 it comes close to the pole.',
+    'La Estrella Polar es Alderamin, en Cefeo. Hacia el año 7500 se acerca al polo.'
+   )
+  };
  }
  return {
   short:skyT112('Polaris','Polaris'),
@@ -962,6 +992,8 @@ window.skyDraw112=skyDraw112;
 window.skyCity112=skyCity112;
 window.skyAnimalsUp112=skyAnimalsUp112;
 window.skyNorthCopy112=skyNorthCopy112;
+window.skyYearOf112=skyYearOf112;
+window.skyPrecess112=skyPrecess112;
 window.skyTitle112=skyTitle112;
 window.skyCivilToJD112=skyCivilToJD112;
 window.skyRedraw112=skyRedraw112;
