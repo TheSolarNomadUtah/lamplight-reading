@@ -3,7 +3,10 @@
    Sound Draws Shapes, Half and Quarter, and a deep fractal explorer.
    v105 QA fixes (Shell hydration, Bedtime breathe-guide, Sound cards turtle, swim sound)
    now live in v101.js / v102.js / v105.js (v115 fold).
-   No network, no new voices, original art, bedtime-safe. Do not wrap show(). */
+   No network, no new voices, original art, bedtime-safe. Do not wrap show(). 
+   v117: live unit helpers from v107 (jar, Grow cap, share, scale line,
+   Koch/Sierpinski, snowflake, twist sign) now live in this file.
+*/
 (function(){
  const s=document.createElement('style');
  s.id='v106css';
@@ -290,18 +293,53 @@ function patGrowSet106(k,v){
 }
 function patGrowStep106(){
  const g=PAT106.grow;
- if(g.depth>=6){g.msg=patT('That is as far as this seed grows.');patGrowDraw106();return}
- const go=()=>{g.depth++;patGrowTone106(g.depth-1);patGrowDraw106()};
- if(patReduced())return go();
+ const capMsg=()=>{g.q=[];g.msg=patT('That is as far as this seed grows.');};
+ const apply=()=>{
+  if((g.depth||0)>=6){capMsg();patGrowDraw106();return}
+  g.depth=Math.min(6,(g.depth||0)+1);
+  patGrowTone106(g.depth-1);
+  if(g.depth>=6){capMsg();if(typeof patGrowPlayScale107==='function')patGrowPlayScale107()}
+  patGrowDraw106();
+ };
+ if((g.depth||0)>=6){capMsg();patGrowDraw106();return}
+ if(typeof patReduced==='function'&&patReduced())return apply();
  g.q=g.q||[];
- g.q.push(go);
+ if((g.depth||0)+g.q.length>=6)return;
+ g.q.push(apply);
  if(!g.busy){
   g.busy=true;
-  const tick=()=>{const fn=g.q.shift();if(!fn){g.busy=false;return}fn();setTimeout(tick,420)};
+  const tick=()=>{
+   const fn=g.q.shift();
+   if(!fn){g.busy=false;return}
+   fn();
+   setTimeout(tick,420);
+  };
   tick();
  }
 }
+function patGrowPlayScale107(){
+ try{
+  if(typeof lampSfxOn73==='function'&&!lampSfxOn73())return;
+  const c=typeof ac==='function'?ac():null;if(!c)return;
+  const bedtime=!!(document.body&&document.body.classList.contains('bedtime'));
+  const night=typeof patNight==='function'&&patNight();
+  const vol=(night||bedtime)?.06:.12,t0=c.currentTime+.04,step=.75;
+  const freq=[261.63,293.66,329.63,392,440,523.25];
+  freq.forEach((f,i)=>{
+   const t=t0+i*step;
+   const o=c.createOscillator(),o2=c.createOscillator(),g=c.createGain(),g2=c.createGain();
+   o.type='sine';o.frequency.value=f;o2.type='sine';o2.frequency.value=f/2;
+   g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.05);g.gain.exponentialRampToValueAtTime(.0001,t+.7);
+   g2.gain.setValueAtTime(0,t);g2.gain.linearRampToValueAtTime(vol*.45,t+.06);g2.gain.exponentialRampToValueAtTime(.0001,t+1.15);
+   o.connect(g);g.connect(c.destination);o2.connect(g2);g2.connect(c.destination);
+   o.start(t);o.stop(t+.75);o2.start(t);o2.stop(t+1.2);
+  });
+ }catch(e){}
+}
+
+
 function patGrowTwist106(d){
+ d=-d;
  const g=PAT106.grow;
  if(g.shape==='sunflower')g.angle=Math.max(120,Math.min(150,+(g.angle+d/2).toFixed(1)));
  else g.angle=Math.max(8,Math.min(70,g.angle+d));
@@ -396,7 +434,7 @@ function patPairArt106(id){
  if(id==='honey')return g(`<rect width="120" height="120" rx="12" fill="#fff6df"/>${[[40,40],[70,40],[25,66],[55,66],[85,66],[40,92],[70,92]].map(([x,y])=>`<polygon points="${x-12},${y} ${x-6},${y-10} ${x+6},${y-10} ${x+12},${y} ${x+6},${y+10} ${x-6},${y+10}" fill="#eac77d" stroke="${ink}"/>`).join('')}`);
  if(id==='shellhex')return g(`<rect width="120" height="120" rx="12" fill="#fff2d8"/><ellipse cx="64" cy="62" rx="30" ry="22" fill="#6f9a7a" stroke="${ink}" stroke-width="1.6"/><path d="M50 58 L64 48 L78 58 L64 72Z" fill="#c5ddd0" stroke="${ink}"/><ellipse cx="34" cy="64" rx="10" ry="7" fill="#e8c894" stroke="${ink}"/>`);
  if(id==='causeway')return g(`<rect width="120" height="120" rx="12" fill="#e8d4b0"/>${[[30,80],[54,70],[78,82],[42,96],[66,98]].map(([x,y],i)=>`<polygon points="${x-12},${y} ${x-6},${y-28-i*2} ${x+6},${y-28-i*2} ${x+12},${y}" fill="#9a9288" stroke="${ink}"/>`).join('')}`);
- if(id==='flake')return g(`<rect width="120" height="120" rx="12" fill="#1b2838"/><g stroke="#e0fbfc" fill="none" stroke-width="2" stroke-linecap="round">${[0,60,120].map(a=>`<path d="M60 60 L60 28" transform="rotate(${a} 60 60)"/><path d="M60 36 L52 28 M60 36 L68 28" transform="rotate(${a} 60 60)"/>`).join('')}</g>`);
+ if(id==='flake')return g(`<rect width="120" height="120" rx="12" fill="#1b2838"/><g stroke="#e0fbfc" fill="none" stroke-width="2" stroke-linecap="round">${[0,60,120,180,240,300].map(a=>`<path d="M60 60 L60 28" transform="rotate(${a} 60 60)"/><path d="M60 36 L52 28 M60 36 L68 28" transform="rotate(${a} 60 60)"/>`).join('')}</g>`);
  if(id==='ocean')return g(`<rect width="120" height="120" rx="12" fill="#1a3048"/><path d="M8 50 Q28 36 48 50 T88 50 T128 50" fill="none" stroke="#7ba9ba" stroke-width="3"/><path d="M8 70 Q28 56 48 70 T88 70 T128 70" fill="none" stroke="#7ba9ba" stroke-width="3"/><path d="M8 90 Q28 76 48 90 T88 90 T128 90" fill="none" stroke="#7ba9ba" stroke-width="3"/>`);
  if(id==='ripples')return g(`<rect width="120" height="120" rx="12" fill="#e8c894"/><path d="M8 44 Q28 34 48 44 T88 44 T128 44 M8 64 Q28 54 48 64 T88 64 T128 64 M8 84 Q28 74 48 84 T88 84 T128 84" fill="none" stroke="${ink}" stroke-width="2"/>`);
  if(id==='soundw')return g(`<rect width="120" height="120" rx="12" fill="#fff2d8"/><path d="M36 50 V70 L50 62 V58Z" fill="#c4a07a" stroke="${ink}"/><path d="M58 46 Q72 60 58 74 M68 38 Q90 60 68 82" fill="none" stroke="${ink}" stroke-width="2"/>`);
@@ -470,26 +508,38 @@ function patSoundRun106(){
  st.parts=Array.from({length:N},()=>({x:Math.random(),y:Math.random()}));
  patSoundTone106(n,m);
  if(st.raf)cancelAnimationFrame(st.raf);
- const night=patNight(),start=performance.now(),dur=patReduced()?0:2400;
- const tick=(t)=>{
-  const k=dur?Math.min(1,(t-start)/dur):1;
+ const night=patNight(),start=performance.now();
+ const stepOnce=(stepK)=>{
+  st.parts.forEach(p=>{
+   const v=patChladni106(p.x,p.y,n,m),a=Math.abs(v);
+   if(a>0.08){
+    const gx=-((Math.abs(patChladni106(p.x+0.01,p.y,n,m))-a)/0.01);
+    const gy=-((Math.abs(patChladni106(p.x,p.y+0.01,n,m))-a)/0.01);
+    const len=Math.hypot(gx,gy)||1;
+    p.x=Math.max(0.02,Math.min(0.98,p.x+0.018*stepK*gx/len));
+    p.y=Math.max(0.02,Math.min(0.98,p.y+0.018*stepK*gy/len));
+   }
+  });
+ };
+ const paint=()=>{
   x.fillStyle=night?'#0d0f1a':'#e8c894';x.fillRect(0,0,W,H);
   x.fillStyle=night?'#d8c8a4':'#5a4632';
-  st.parts.forEach(p=>{
-   const v=patChladni106(p.x,p.y,n,m);
-   if(Math.abs(v)>0.08){
-    const gx=-((patChladni106(p.x+0.01,p.y,n,m)-v)/0.01);
-    const gy=-((patChladni106(p.x,p.y+0.01,n,m)-v)/0.01);
-    const len=Math.hypot(gx,gy)||1;
-    p.x=Math.max(0.02,Math.min(0.98,p.x+0.018*k*gx/len));
-    p.y=Math.max(0.02,Math.min(0.98,p.y+0.018*k*gy/len));
-   }
-   x.beginPath();x.arc(p.x*W,p.y*H,1.6,0,Math.PI*2);x.fill();
-  });
+  st.parts.forEach(p=>{x.beginPath();x.arc(p.x*W,p.y*H,1.6,0,Math.PI*2);x.fill()});
+ };
+ if(patReduced()){
+  for(let i=0;i<80;i++)stepOnce(1);
+  paint();
+  return;
+ }
+ const dur=2400;
+ const tick=(t)=>{
+  const k=Math.min(1,(t-start)/dur);
+  stepOnce(k);paint();
   if(k<1)st.raf=requestAnimationFrame(tick);
  };
  tick(start);
 }
+
 
 function patFracHome106(){
  const el=$('patterns');if(!el)return;
@@ -513,8 +563,8 @@ function patShareDraw106(){
  const names={2:patT('two'),3:patT('three'),4:patT('four')};
  const word=n===2?patT('half'):n===4?patT('quarter'):patT('one part for each');
  const turtles=Array.from({length:n},(_,i)=>{
-  const got=given[i];
-  return `<button type="button" class="hubtile" ${got?'disabled':''} onclick="patShareGive106(${i})" aria-label="${patEsc(patT('Give a part to a turtle'))}">
+  const got=given.includes(i);
+  return `<button type="button" class="hubtile" data-turtle="${i}" ${got?'disabled':''} onclick="patShareGive106(${i})" aria-label="${patEsc(patT('Give a part to a turtle'))}">
     ${typeof turtleArt105==='function'?turtleArt105('tuck',72,80):(typeof friendArtInner101==='function'?friendArtInner101('turtle',1):'')}
     <small>${got?word:patT('waiting')}</small>
    </button>`;
@@ -538,10 +588,9 @@ function patShareDraw106(){
  `);
  if(typeof turtlePlace105==='function')turtlePlace105('patterns');
 }
+
 function patShareGive106(i){
  const f=PAT106.frac;if(f.given.includes(i))return;
- const next=Array.from({length:f.n},(_,k)=>k).find(k=>!f.given.includes(k)&&k!==undefined);
- if(next==null)return;
  f.given.push(i);
  if(f.given.length===f.n){
   f.ok=true;
@@ -549,12 +598,20 @@ function patShareGive106(i){
  }
  patShareDraw106();
 }
+
 function patJarNew106(){PAT106.frac={fill:0,goal:'half'};patJarDraw106()}
+function patJarGeom107(fill){
+ const top=16,height=108,bottom=top+height;
+ const n=Math.max(0,Math.min(4,Math.round(Number(fill)||0)));
+ const waterH=n*(height/4);
+ return {top,height,bottom,fill:n,waterH,waterY:bottom-waterH,pct:n*25,halfY:bottom-height/2,quarterY:bottom-height/4};
+}
 function patJarDraw106(){
  const el=$('patterns');if(!el)return;
  const f=PAT106.frac,goal=f.goal,fill=f.fill;
  const target=goal==='half'?2:1,ok=fill===target;
- const h=16+fill*28;
+ const g=patJarGeom107(fill);
+ const water=g.waterH>0?`<rect class="pat-jar-water" data-fill="${g.fill}" data-pct="${g.pct}" x="18" y="${g.waterY}" width="44" height="${g.waterH}" fill="#5b7ea8"/>`:'';
  el.innerHTML=patShell(patT('Fill a jar'),`
   <p class="soft">${goal==='half'?patT('Fill the jar halfway.'):patT('Fill the jar a quarter of the way.')}</p>
   <div class="pat-row">
@@ -562,10 +619,10 @@ function patJarDraw106(){
    <button type="button" class="${goal==='quarter'?'on':''}" onclick="PAT106.frac={fill:0,goal:'quarter'};patJarDraw106()">${patT('a quarter of the way')}</button>
   </div>
   <svg class="pat-jar" viewBox="0 0 80 140" aria-label="${patEsc(patT('A jar'))}">
-   <rect x="16" y="16" width="48" height="108" rx="8" fill="#fff8ec" stroke="${patInk()}" stroke-width="2"/>
-   <rect x="18" y="${124-h}" width="44" height="${h}" fill="#5b7ea8"/>
-   <line x1="16" y1="70" x2="64" y2="70" stroke="${patInk()}" stroke-dasharray="3 3"/>
-   <line x1="16" y1="97" x2="64" y2="97" stroke="${patInk()}" stroke-dasharray="2 4" opacity=".6"/>
+   <rect class="pat-jar-glass" x="16" y="${g.top}" width="48" height="${g.height}" rx="8" fill="#fff8ec" stroke="${patInk()}" stroke-width="2"/>
+   ${water}
+   <line class="pat-jar-half" x1="16" y1="${g.halfY}" x2="64" y2="${g.halfY}" stroke="${patInk()}" stroke-dasharray="3 3"/>
+   <line class="pat-jar-quarter" x1="16" y1="${g.quarterY}" x2="64" y2="${g.quarterY}" stroke="${patInk()}" stroke-dasharray="2 4" opacity=".6"/>
   </svg>
   <div class="pat-row">
    <button type="button" onclick="patJarPour106(1)">${patT('Pour a little')}</button>
@@ -577,6 +634,7 @@ function patJarDraw106(){
  if(ok)try{if(!f.grew&&typeof lampMoment73==='function'){lampMoment73('notice');f.grew=true}}catch(e){}
  if(typeof turtlePlace105==='function')turtlePlace105('patterns');
 }
+
 function patJarPour106(d){
  const f=PAT106.frac;f.fill=Math.max(0,Math.min(4,f.fill+d));patJarDraw106();
 }
@@ -607,7 +665,7 @@ const PAT_ZOOM_MAX106=1e13,PAT_ZOOM_HOME106=3.5,PAT_MIN_PX106=2e-16,PAT_ITER_CAP
 function patExKindHome106(kind){
  if(kind==='julia1')return {kind:'julia1',cx:0,cy:0,span:3.2,jr:-.745,ji:.113};
  if(kind==='julia2')return {kind:'julia2',cx:0,cy:0,span:3.2,jr:-.4,ji:.6};
- if(kind==='koch')return {kind:'koch',cx:.5,cy:.35,span:1.4};
+ if(kind==='koch')return {kind:'koch',cx:.5,cy:Math.sqrt(3)/6,span:1.5};
  if(kind==='sierp')return {kind:'sierp',cx:.5,cy:.45,span:1.3};
  return {kind:'mandel',cx:-.5,cy:0,span:PAT_ZOOM_HOME106};
 }
@@ -626,10 +684,12 @@ function patExScaleLine106(zoom){
  if(zoom<2e4)return patT('Deeper than an ant compared with a bus.');
  if(zoom<2e5)return patT('Deeper than a grain of sand compared with a room.');
  if(zoom<2e6)return patT('Deeper than a grain of sand compared with a long path.');
- if(zoom<2e8)return patT('Deeper than a grain of sand compared with a mountain.');
- if(zoom<2e11)return patT('Deeper than a grain of sand compared with Earth.');
+ if(zoom<1e9)return patT('Deeper than a grain of sand compared with a mountain.');
+ if(zoom<1e10)return patT('Deeper than a grain of sand compared with a whole country.');
+ if(zoom<3e12)return patT('Deeper than a grain of sand compared with Earth.');
  return patT('Deeper than a tiny living cell compared with Earth.');
 }
+
 function patExHash106(s){
  let h=2166136261;
  for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}
@@ -641,7 +701,66 @@ function patExCaption106(kind){
  if(kind==='sierp')return patT('Each triangle in a Sierpinski pattern is a smaller copy of the whole.');
  return patT('The Mandelbrot set is made by repeating a simple rule. The edge stays detailed no matter how close you look, until this lamp cannot follow the numbers any farther.');
 }
+/* Koch / Sierpinski keep detail through the 10^13 zoom cap (folded from v107/v108). */
+const PAT_GEOM_MAXD108=52;
+function patExKindOf107(rec){
+ return (rec&&rec.kind==='zoom'?rec.fractal:rec&&rec.kind)||'mandel';
+}
+function patExGeomRender107(cv,rec,opts){
+ const o=opts||{},x=cv.getContext('2d'),W=cv.width,H=cv.height;
+ const span=rec.span,cx=rec.cx,cy=rec.cy,kind=patExKindOf107(rec);
+ const night=patNight(),px=span/Math.max(W,H);
+ if(px<PAT_MIN_PX106)return false;
+ const zoom=patExZoomOf106(span);
+ const pal=night?['#0d0f1a','#1c2a3a','#3a4e3f','#6f9a7a','#eac77d','#fff6d8']:['#fff8ec','#e8c894','#c45a3a','#5b7ea8','#6f9a7a','#3a2a1a'];
+ const xmin=cx-span/2,ymin=cy-span*H/W/2,dx=span/W,dy=(span*H/W)/H;
+ const xmax=xmin+span,ymax=ymin+span*H/W;
+ const toX=v=>(v-xmin)/dx,toY=v=>(v-ymin)/dy;
+ const minLen=span/Math.max(W,1);
+ const maxD=PAT_GEOM_MAXD108;
+ x.fillStyle=pal[0];x.fillRect(0,0,W,H);
+ if(kind==='koch'){
+  x.strokeStyle=pal[4]||pal[pal.length-1];
+  x.lineWidth=Math.max(1.1,2.2-(Math.log10(Math.max(1,zoom))*0.15));
+  x.lineCap='round';x.lineJoin='round';
+  const peak=(ax,ay,bx,by)=>{
+   const ux=(bx-ax)/3,uy=(by-ay)/3;
+   return {mx:ax+ux,my:ay+uy,nx:ax+2*ux,ny:ay+2*uy,
+    px:ax+ux+(ux/2+uy*Math.sqrt(3)/2),py:ay+uy+(uy/2-ux*Math.sqrt(3)/2)};
+  };
+  const side=function(ax,ay,bx,by,d){
+   const len=Math.hypot(bx-ax,by-ay),pad=len*0.45;
+   if(Math.max(ax,bx)+pad<xmin||Math.min(ax,bx)-pad>xmax||Math.max(ay,by)+pad<ymin||Math.min(ay,by)-pad>ymax)return;
+   if(d>=maxD||len<=minLen){
+    x.beginPath();x.moveTo(toX(ax),toY(ay));x.lineTo(toX(bx),toY(by));x.stroke();
+    return;
+   }
+   const k=peak(ax,ay,bx,by);
+   side(ax,ay,k.mx,k.my,d+1);side(k.mx,k.my,k.px,k.py,d+1);side(k.px,k.py,k.nx,k.ny,d+1);side(k.nx,k.ny,bx,by,d+1);
+  };
+  const h=Math.sqrt(3)/2;
+  side(0,0,1,0,0);side(1,0,.5,h,0);side(.5,h,0,0,0);
+ }else{
+  const h=Math.sqrt(3)/2;
+  (function tri(ax,ay,bx,by,cx,cy,d){
+   const minx=Math.min(ax,bx,cx),maxx=Math.max(ax,bx,cx),miny=Math.min(ay,by,cy),maxy=Math.max(ay,by,cy);
+   if(maxx<xmin||minx>xmax||maxy<ymin||miny>ymax)return;
+   const size=Math.max(maxx-minx,maxy-miny);
+   if(d>=maxD||size<=minLen){
+    x.fillStyle=pal[4]||pal[pal.length-1];
+    x.beginPath();x.moveTo(toX(ax),toY(ay));x.lineTo(toX(bx),toY(by));x.lineTo(toX(cx),toY(cy));x.closePath();x.fill();
+    return;
+   }
+   const mx=(ax+bx)/2,my=(ay+by)/2,nx=(bx+cx)/2,ny=(by+cy)/2,px=(cx+ax)/2,py=(cy+ay)/2;
+   tri(ax,ay,mx,my,px,py,d+1);tri(mx,my,bx,by,nx,ny,d+1);tri(px,py,nx,ny,cx,cy,d+1);
+  })(0,0,1,0,.5,h,0);
+ }
+ if(!o.noTurtle)patExMaybeTurtle106(x,cv,rec,zoom);
+ return true;
+}
 function patExRender106(cv,rec,opts){
+ rec=Object.assign({},rec,{kind:patExKindOf107(rec)});
+ if(rec.kind==='koch'||rec.kind==='sierp')return patExGeomRender107(cv,rec,opts);
  const o=opts||{},x=cv.getContext('2d'),W=cv.width,H=cv.height;
  const span=rec.span,cx=rec.cx,cy=rec.cy,kind=rec.kind||'mandel';
  const night=patNight(),px=span/Math.max(W,H);
@@ -650,52 +769,28 @@ function patExRender106(cv,rec,opts){
  const pal=night?['#0d0f1a','#1c2a3a','#3a4e3f','#6f9a7a','#eac77d','#fff6d8']:['#fff8ec','#e8c894','#c45a3a','#5b7ea8','#6f9a7a','#3a2a1a'];
  const xmin=cx-span/2,ymin=cy-span*H/W/2,dx=span/W,dy=(span*H/W)/H;
  const jr=rec.jr||0,ji=rec.ji||0;
- const toX=v=>(v-xmin)/dx,toY=v=>(v-ymin)/dy;
- if(kind==='koch'){
-  x.fillStyle=pal[0];x.fillRect(0,0,W,H);
-  x.strokeStyle=pal[4]||pal[pal.length-1];x.lineWidth=Math.max(1.2,2.2-(Math.log10(Math.max(1,zoom))*0.15));x.lineCap='round';x.lineJoin='round';
-  const depth=Math.min(7,2+Math.floor(Math.log2(Math.max(2,iters/20))));
-  (function koch(ax,ay,bx,by,d){
-   if(d<=0){x.beginPath();x.moveTo(toX(ax),toY(ay));x.lineTo(toX(bx),toY(by));x.stroke();return}
-   const ux=(bx-ax)/3,uy=(by-ay)/3,mx=ax+ux,my=ay+uy,nx=ax+2*ux,ny=ay+2*uy;
-   const px=ax+ux+(ux/2-uy*Math.sqrt(3)/2),py=ay+uy+(uy/2+ux*Math.sqrt(3)/2);
-   koch(ax,ay,mx,my,d-1);koch(mx,my,px,py,d-1);koch(px,py,nx,ny,d-1);koch(nx,ny,bx,by,d-1);
-  })(0,0,1,0,depth);
- }else if(kind==='sierp'){
-  x.fillStyle=pal[0];x.fillRect(0,0,W,H);
-  const depth=Math.min(7,2+Math.floor(Math.log2(Math.max(2,iters/16))));
-  (function tri(ax,ay,bx,by,cx,cy,d){
-   if(d>=depth){
-    x.fillStyle=pal[4]||pal[pal.length-1];
-    x.beginPath();x.moveTo(toX(ax),toY(ay));x.lineTo(toX(bx),toY(by));x.lineTo(toX(cx),toY(cy));x.closePath();x.fill();
-    return;
+ const img=x.createImageData(W,H),d=img.data;
+ for(let j=0;j<H;j++){
+  const y0=ymin+j*dy;
+  for(let i=0;i<W;i++){
+   const x0=xmin+i*dx;
+   let zr,zi,cr,ci;
+   if(kind==='mandel'){zr=0;zi=0;cr=x0;ci=y0}
+   else{zr=x0;zi=y0;cr=jr;ci=ji}
+   let k=0;
+   while(k<iters&&zr*zr+zi*zi<=4){
+    const nz=zr*zr-zi*zi+cr;zi=2*zr*zi+ci;zr=nz;k++;
    }
-   const mx=(ax+bx)/2,my=(ay+by)/2,nx=(bx+cx)/2,ny=(by+cy)/2,px=(cx+ax)/2,py=(cy+ay)/2;
-   tri(ax,ay,mx,my,px,py,d+1);tri(mx,my,bx,by,nx,ny,d+1);tri(px,py,nx,ny,cx,cy,d+1);
-  })(0,0,1,0,.5,Math.sqrt(3)/2,0);
- }else{
-  const img=x.createImageData(W,H),d=img.data;
-  for(let j=0;j<H;j++){
-   const y0=ymin+j*dy;
-   for(let i=0;i<W;i++){
-    const x0=xmin+i*dx;
-    let zr,zi,cr,ci;
-    if(kind==='mandel'){zr=0;zi=0;cr=x0;ci=y0}
-    else{zr=x0;zi=y0;cr=jr;ci=ji}
-    let k=0;
-    while(k<iters&&zr*zr+zi*zi<=4){
-     const nz=zr*zr-zi*zi+cr;zi=2*zr*zi+ci;zr=nz;k++;
-    }
-    const n=k/iters;
-    const c=patExColor106(pal,n,kind==='mandel'&&n>=.999);
-    const p=(j*W+i)*4;d[p]=c[0];d[p+1]=c[1];d[p+2]=c[2];d[p+3]=255;
-   }
+   const n=k/iters;
+   const c=patExColor106(pal,n,kind==='mandel'&&n>=.999);
+   const p=(j*W+i)*4;d[p]=c[0];d[p+1]=c[1];d[p+2]=c[2];d[p+3]=255;
   }
-  x.putImageData(img,0,0);
  }
-  if(!o.noTurtle)patExMaybeTurtle106(x,cv,rec,zoom);
+ x.putImageData(img,0,0);
+ if(!o.noTurtle)patExMaybeTurtle106(x,cv,rec,zoom);
  return true;
 }
+
 function patExColor106(pal,n,inside){
  if(inside)return [20,16,28];
  const t=Math.max(0,Math.min(.999,n))*(pal.length-1),i=t|0,f=t-i;

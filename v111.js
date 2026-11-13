@@ -427,33 +427,8 @@ ${starStory111(id)?`<p class="kline">${esc(starStory111(id))}</p>`:''}
 </div>`;
 }
 
-{if(typeof luRender83==='function'){
- const prev=luRender83;
- luRender83=function(){
-  if(typeof LU83==='object'&&LU83.star111){
-   const root=$('lookup');if(!root)return prev.apply(this,arguments);
-   root.innerHTML=luStarHTML111(LU83.star111);
-   root.classList.add('luGrander101');
-   return;
-  }
-  const r=prev.apply(this,arguments);
-  const root=$('lookup');if(!root)return r;
-  if(!root.querySelector('[data-lustars111]')){
-   const host=root.querySelector('[data-lustories101], .lu83-nav, .lu83-credit, .card:last-child')||root;
-   host.insertAdjacentHTML('afterend',luStarNav111());
-  }
-  return r;
- };
-}}
-{if(typeof showImpl97==='function'){
- const prev=showImpl97;
- showImpl97=function(id){
-  try{if(id!=='lookup'&&typeof LU83==='object')LU83.star111=null}catch(e){}
-  const r=prev.apply(this,arguments);
-  try{if(id==='adults')whatsNewAttach111()}catch(e){}
-  return r;
- };
-}}
+/* v117: luRender83 star composition now lives in v112.js. */
+/* v117: showImpl97 star/adults hook now lives in v112.js. */
 {if(typeof afterShow95==='function'){
  const prev=afterShow95;
  afterShow95=function(id){
@@ -462,12 +437,7 @@ ${starStory111(id)?`<p class="kline">${esc(starStory111(id))}</p>`:''}
   return r;
  };
 }}
-{const ra=typeof renderAdults==='function'?renderAdults:(typeof RENDER==='object'&&RENDER.adults);
- if(typeof ra==='function'){
-  renderAdults=function(){const r=ra.apply(this,arguments);try{whatsNewAttach111()}catch(e){}return r};
-  if(typeof RENDER==='object')RENDER.adults=renderAdults;
- }
-}
+/* v117: renderAdults What's-new hook now lives in v112.js. */
 
 /* ---------- Lamp effects: richer and calmer, same names, still fully open ---------- */
 {if(typeof lampFxSpiralSVG89==='function'){
