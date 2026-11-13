@@ -253,6 +253,10 @@ const SECTIONS=process.env.CALM_SECTIONS
       });
       const selected=(btns.find(b=>b.checked)||{}).len||null;
       const offer=document.getElementById('candleOffer129');
+      const lab=document.querySelector('#candlePicker131 .lb128-picker-label, .lb128-picker-label');
+      const lr=lab?lab.getBoundingClientRect():null;
+      const st=lab?getComputedStyle(lab):null;
+      const headingText=lab?(lab.textContent||'').trim():'';
       return {
         mounted:!!(host&&group),
         n:btns.length,
@@ -260,7 +264,10 @@ const SECTIONS=process.env.CALM_SECTIONS
         buttons:btns,
         offerVisible:!!(offer&&!offer.hidden),
         minH:btns.length?Math.min(...btns.map(b=>b.h)):0,
-        minW:btns.length?Math.min(...btns.map(b=>b.w)):0
+        minW:btns.length?Math.min(...btns.map(b=>b.w)):0,
+        heading:headingText,
+        headingVisible:!!(lab&&st&&st.display!=='none'&&st.visibility!=='hidden'&&(st.position!=='absolute'||((lr.width*lr.height)>0))&&lr&&lr.height>8),
+        headingH:lr?Math.round(lr.height*10)/10:0
       };
     });
     for(const b of candlePicker.buttons||[]){
@@ -354,7 +361,37 @@ const SECTIONS=process.env.CALM_SECTIONS
     samples.push({section:'starcount',vis:'math',n:(starCount.cells||[]).length});
   }catch(e){starCount={error:String(e)}}
 
+  let printables=null;
+  try{
+    await p.evaluate(()=>{if(typeof show==='function')show('adults')});
+    await p.waitForTimeout(200);
+    const card=await p.evaluate(()=>{
+      const c=document.querySelector('#adults [data-print133]');
+      const btn=document.querySelector('#adults [data-print133] .print133-open, #adults [data-print133] button');
+      const r=btn?btn.getBoundingClientRect():null;
+      return {card:!!c,title:c?((c.querySelector('h3')||{}).textContent||''):'',btn:!!btn,w:r?r.width:0,h:r?r.height:0};
+    });
+    await p.evaluate(()=>{if(typeof show==='function')show('printables');if(window.Printables133)Printables133.hub()});
+    await p.waitForTimeout(300);
+    printables=await p.evaluate((card)=>{
+      const tiles=[...document.querySelectorAll('#printables .print133-hub .hubtile, #printables [data-print-id].hubtile')].map(b=>{
+        const r=b.getBoundingClientRect();
+        return {id:b.getAttribute('data-print-id'),label:(b.textContent||'').trim(),w:Math.round(r.width*10)/10,h:Math.round(r.height*10)/10};
+      });
+      const title=(document.querySelector('#printables h2')||{}).textContent||'';
+      return {card:card,open:/Print/i.test(title),title,n:tiles.length,tiles,ids:tiles.map(t=>t.id),
+        minH:tiles.length?Math.min(...tiles.map(t=>t.h)):0,minW:tiles.length?Math.min(...tiles.map(t=>t.w)):0};
+    },card);
+    for(const b of printables.tiles||[]){
+      if(b.w<56-0.5||b.h<56-0.5){
+        small.push({section:'printables',rule:'T1',w:b.w,h:b.h,label:b.label,tag:'button',cls:'hubtile',id:b.id,family:'printables'});
+      }
+    }
+    samples.push({section:'printables',vis:'printables',n:(printables.tiles||[]).length});
+  }catch(e){printables={error:String(e)}}
+
   await browser.close();
 
-  process.stdout.write(JSON.stringify({ok:small.length===0&&shapeFails.length===0,small,shapeFails,samples,honeycomb,quilt,rainbowNight,moon,candlePicker,fireflies,starCount,errors},null,2));
+
+  process.stdout.write(JSON.stringify({ok:small.length===0&&shapeFails.length===0,small,shapeFails,samples,honeycomb,quilt,rainbowNight,moon,candlePicker,fireflies,starCount,printables,errors},null,2));
 })().catch(e=>{console.error(JSON.stringify({ok:false,error:String(e)}));process.exit(1)});

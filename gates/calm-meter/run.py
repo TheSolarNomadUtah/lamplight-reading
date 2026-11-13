@@ -108,8 +108,10 @@ def main():
     if cp:
         if cp.get('error'):
             fails.append({'rule': 'T-breath-picker', 'section': 'candle', 'detail': 'picker check error: %s' % cp.get('error')})
-        elif not cp.get('mounted') or cp.get('n') != 3 or cp.get('selected') != 'normal' or (cp.get('minH') or 0) < 55.5:
-            fails.append({'rule': 'T-breath-picker', 'section': 'candle', 'detail': 'Lamp Breathing picker missing, not default normal, or under 56 px', **{k: cp[k] for k in cp}})
+        elif (not cp.get('mounted') or cp.get('n') != 3 or cp.get('selected') != 'normal'
+              or (cp.get('minH') or 0) < 55.5
+              or not cp.get('headingVisible') or cp.get('heading') not in ('How long?', '¿Cuánto tiempo?')):
+            fails.append({'rule': 'T-breath-picker', 'section': 'candle', 'detail': 'Lamp Breathing picker missing, not default normal, under 56 px, or How long? heading not visible', **{k: cp[k] for k in cp}})
     ff = taps.get('fireflies')
     if ff:
         if ff.get('error'):
@@ -126,6 +128,13 @@ def main():
               or (sc.get('minH') or 0) < 55.5 or (sc.get('minW') or 0) < 55.5
               or not sc.get('city') or sc.get('namesInKid')):
             fails.append({'rule': 'T-starcount', 'section': 'starcount', 'detail': 'Star Count missing, hits under 56 px, no city picker, or star names in kid chrome', **{k: sc[k] for k in sc}})
+    pr = taps.get('printables')
+    if pr:
+        if pr.get('error'):
+            fails.append({'rule': 'T-printables', 'section': 'printables', 'detail': 'printables page error: %s' % pr.get('error')})
+        elif (not pr.get('open') or pr.get('n') != 4
+              or (pr.get('minH') or 0) < 55.5 or not (pr.get('card') or {}).get('card')):
+            fails.append({'rule': 'T-printables', 'section': 'printables', 'detail': 'Print card or four print pages missing, or tiles under 56 px', **{k: pr[k] for k in pr}})
 
     baseline = load_baseline()
     known = set(baseline.get('items') or [])
@@ -170,6 +179,7 @@ def main():
         'candlePicker': taps.get('candlePicker'),
         'fireflies': taps.get('fireflies'),
         'starCount': taps.get('starCount'),
+        'printables': taps.get('printables'),
         'flash_ok': flash.get('ok'),
         'loudness_raw_ok': loud.get('ok'),
         'shapes_ok': shapes.get('ok')

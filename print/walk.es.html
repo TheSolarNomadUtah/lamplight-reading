@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paseo de patrones — Lamplight Learning</title>
+<style>*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff;color:#222;font-family:sans-serif}
+.noprint{padding:12px 16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.noprint button,.noprint a{
+  min-width:56px;min-height:56px;display:inline-flex;align-items:center;justify-content:center;
+  padding:8px 14px;border-radius:14px;border:1px solid #ccc;background:#fff;color:#222;
+  text-decoration:none;font:inherit;cursor:pointer}
+.sheet{max-width:8.5in;margin:0 auto}
+.sheet svg{display:block;width:100%;height:auto}
+.hub{max-width:40rem;margin:0 auto;padding:16px 16px 48px}
+.hub h1{font-size:1.6rem;margin:.4em 0}
+.hub p{line-height:1.4}
+.hubgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin:16px 0}
+.hubtile{display:flex;flex-direction:column;align-items:center;gap:8px;min-height:120px;padding:16px 8px;
+  border:2px solid #e4dccb;border-radius:20px;text-decoration:none;color:#222;text-align:center}
+.hubtile small{font-size:.85rem;color:#666}
+@page{size:letter portrait;margin:10mm}
+@media print{
+  .noprint{display:none!important}
+  html,body{background:#fff}
+  .sheet{max-width:none;margin:0;page-break-after:always;break-after:page}
+  .sheet:last-child{page-break-after:auto;break-after:auto}
+  a{color:inherit}
+}</style>
+<body>
+<p class="noprint">
+  <button type="button" onclick="window.print()">Imprimir esta página</button>
+  <a href="index.es.html">Todas las páginas</a>
+  <a href="walk.html" hreflang="en" lang="en">English</a>
+</p>
+<div class="sheet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 816 1056" width="816" height="1056" role="img" aria-label="Paseo de patrones"><rect width="816" height="1056" fill="#fff"/><text x="408" y="64" text-anchor="middle" font-family="sans-serif" font-size="28" font-weight="700" fill="#222222">Paseo de patrones</text><text x="80" y="110" font-family="sans-serif" font-size="20" font-weight="700" fill="#222222">Busca afuera:</text><rect x="80" y="160" width="656" height="130" rx="14" fill="none" stroke="#222222" stroke-width="1.4"/><rect x="100" y="200" width="44" height="44" rx="6" fill="none" stroke="#222222" stroke-width="2"/><g transform="translate(190 222)"><path d="M2 0L2.41 0.83L2.45 1.9L2 3.05L1.04 4.07L-0.37 4.74L-2.1 4.86L-3.94 4.33L-5.61 3.08L-6.85 1.19L-7.41 -1.17L-7.11 -3.77L-5.89 -6.27L-3.77 -8.34L-0.91 -9.66L2.39 -9.97L5.79 -9.12L8.86 -7.1L11.2 -4.03L12.45 -0.2L12.36 4.02L10.84 8.14L7.93 11.66L3.87 14.13L-0.95 15.17L-6.03 14.55L-10.78 12.23L-14.64 8.35L-17.09 3.26L-17.77 -2.53L-16.48 -8.4L-13.26 -13.68L-8.35 -17.73L-2.21 -20.03L4.52 -20.2L11.1 -18.12L16.8 -13.9L20.91 -7.9L22.89 -0.72L22.41 6.9L19.42 14.11" fill="none" stroke="#222222" stroke-width="1.6" stroke-linecap="round"/></g><text x="240" y="202" font-family="sans-serif" font-size="20" font-weight="700" fill="#222222">una espiral</text><text x="240" y="230" text-anchor="start" font-family="sans-serif" font-size="15" fill="#222222">Las semillas del girasol crecen en espirales.</text><rect x="80" y="310" width="656" height="130" rx="14" fill="none" stroke="#222222" stroke-width="1.4"/><rect x="100" y="350" width="44" height="44" rx="6" fill="none" stroke="#222222" stroke-width="2"/><g transform="translate(190 372)"><path d="M17.32 10L0 20L-17.32 10L-17.32 -10L-0 -20L17.32 -10Z" fill="none" stroke="#222222" stroke-width="1.6" stroke-linejoin="round"/></g><text x="240" y="352" font-family="sans-serif" font-size="20" font-weight="700" fill="#222222">un hexágono</text><text x="240" y="380" text-anchor="start" font-family="sans-serif" font-size="15" fill="#222222">Las abejas hacen panales con hexágonos. Encajan sin dejar</text><text x="240" y="400.25" text-anchor="start" font-family="sans-serif" font-size="15" fill="#222222">huecos.</text><rect x="80" y="460" width="656" height="130" rx="14" fill="none" stroke="#222222" stroke-width="1.4"/><rect x="100" y="500" width="44" height="44" rx="6" fill="none" stroke="#222222" stroke-width="2"/><g transform="translate(190 522)"><path d="M0 22L0 0M0 2L-14 -14M0 2L14 -14M-7 -6L-16 -2M7 -6L16 -2" fill="none" stroke="#222222" stroke-width="1.6" stroke-linecap="round"/></g><text x="240" y="502" font-family="sans-serif" font-size="20" font-weight="700" fill="#222222">una rama que se divide</text><text x="240" y="530" text-anchor="start" font-family="sans-serif" font-size="15" fill="#222222">Los árboles se dividen en ramas cada vez más pequeñas.</text><rect x="80" y="610" width="656" height="130" rx="14" fill="none" stroke="#222222" stroke-width="1.4"/><rect x="100" y="650" width="44" height="44" rx="6" fill="none" stroke="#222222" stroke-width="2"/><g transform="translate(190 672)"><ellipse cx="0" cy="-14" rx="7" ry="11" transform="rotate(-90 0 -14)" fill="none" stroke="#222222" stroke-width="1.5"/><ellipse cx="13.31" cy="-4.33" rx="7" ry="11" transform="rotate(-18 13.31 -4.33)" fill="none" stroke="#222222" stroke-width="1.5"/><ellipse cx="8.23" cy="11.33" rx="7" ry="11" transform="rotate(54 8.23 11.33)" fill="none" stroke="#222222" stroke-width="1.5"/><ellipse cx="-8.23" cy="11.33" rx="7" ry="11" transform="rotate(126 -8.23 11.33)" fill="none" stroke="#222222" stroke-width="1.5"/><ellipse cx="-13.31" cy="-4.33" rx="7" ry="11" transform="rotate(198 -13.31 -4.33)" fill="none" stroke="#222222" stroke-width="1.5"/><circle cx="0" cy="0" r="5" fill="none" stroke="#222222" stroke-width="1.5"/></g><text x="240" y="652" font-family="sans-serif" font-size="20" font-weight="700" fill="#222222">algo con 5 pétalos</text><text x="240" y="680" text-anchor="start" font-family="sans-serif" font-size="15" fill="#222222">Cada pétalo gira lo mismo, y la flor se ve igual por todos</text><text x="240" y="700.25" text-anchor="start" font-family="sans-serif" font-size="15" fill="#222222">lados.</text><rect x="80" y="760" width="656" height="130" rx="14" fill="none" stroke="#222222" stroke-width="1.4"/><rect x="100" y="800" width="44" height="44" rx="6" fill="none" stroke="#222222" stroke-width="2"/><g transform="translate(190 822)"><path d="M-18 16L-18 -16L-4 16ZM18 16L18 -16L4 16Z" fill="none" stroke="#222222" stroke-width="1.6" stroke-linejoin="round"/><line x1="0" y1="-20" x2="0" y2="20" stroke="#222222" stroke-width="1.2" stroke-dasharray="3 3"/></g><text x="240" y="802" font-family="sans-serif" font-size="20" font-weight="700" fill="#222222">un gemelo en el espejo</text><text x="408" y="980" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#666666">Luego puedes encontrar esos patrones en la app.</text><text x="408" y="1036" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#666666">Lamplight Learning</text></svg></div>
+</body>
+</html>

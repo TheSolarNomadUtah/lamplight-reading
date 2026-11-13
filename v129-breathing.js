@@ -243,7 +243,7 @@ function css128(){
 '.lb128-root.lb-still .lb128-halo,.lb128-root.reduce73 .lb128-halo{transform:translate(-50%,-50%)!important;background:radial-gradient(circle at 50% 48%,rgba(255,246,216,calc(.32*var(--lb-dim,1))) 0%,rgba(230,180,84,calc(.18*var(--lb-dim,1))) 38%,rgba(230,180,84,0) 70%)}'+
 '.lb128-root.lb-still .lb128-bloom,.lb128-root.reduce73 .lb128-bloom{transform:translate(-50%,-50%)!important;background:radial-gradient(ellipse at 50% 50%,rgba(255,246,216,calc(.36*var(--lb-dim,1))) 0%,rgba(255,228,164,calc(.16*var(--lb-dim,1))) 46%,rgba(255,228,164,0) 74%)}'+
 '.lb128-root.lb-still .lb128-flame,.lb128-root.reduce73 .lb128-flame{opacity:.95!important}'+
-'.lb128-picker{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;margin:.35rem 0}'+
+'.lb128-picker-wrap{margin:.35rem 0}'+'.lb128-picker-label{display:block;text-align:center;margin:0 0 .35rem;font-weight:700;font-size:1.05rem;color:inherit}'+'.lb128-picker{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;margin:0}'+
 '.lb128-picker button{min-width:56px;min-height:56px;padding:10px 16px;border-radius:16px;border:1px solid rgba(230,180,84,.35);'+
  'background:rgba(28,22,36,.86);color:#FFF6D8;font:700 1rem/1.2 system-ui,sans-serif;cursor:pointer}'+
 '.lb128-picker button.on,.lb128-picker button[aria-checked="true"]{background:#E6B454;color:#120E18;border-color:#E6B454}'+
@@ -617,13 +617,20 @@ function mountPicker(parent,opt){
   opt=opt||{};
   if(!parent||typeof document==='undefined')return null;
   css128();
-  var existing=parent.querySelector('.lb128-picker');
+  var existing=parent.querySelector('.lb128-picker-wrap')||parent.querySelector('.lb128-picker');
   if(existing)existing.parentNode.removeChild(existing);
   var sel=opt.selected||opt.length||'normal';
   if(!LENGTHS[sel])sel='normal';
+  var wrap=document.createElement('div');
+  wrap.className='lb128-picker-wrap';
+  var heading=document.createElement('div');
+  heading.className='lb128-picker-label';
+  heading.id='lb128-how-long';
+  heading.textContent=t128('How long?',opt);
   var group=document.createElement('div');
   group.className='lb128-picker';
   group.setAttribute('role','radiogroup');
+  group.setAttribute('aria-labelledby','lb128-how-long');
   group.setAttribute('aria-label',t128('How long?',opt));
   ['short','normal','long'].forEach(function(L){
     var b=document.createElement('button');
@@ -645,9 +652,11 @@ function mountPicker(parent,opt){
     });
     group.appendChild(b);
   });
-  parent.appendChild(group);
+  wrap.appendChild(heading);
+  wrap.appendChild(group);
+  parent.appendChild(wrap);
   return {
-    el:group,
+    el:group, wrap:wrap, label:heading,
     get:function(){return sel},
     set:function(L){
       if(!LENGTHS[L])return sel;
@@ -660,7 +669,9 @@ function mountPicker(parent,opt){
       return sel;
     },
     relabel:function(o){
-      group.setAttribute('aria-label',t128('How long?',o||opt));
+      var lab=t128('How long?',o||opt);
+      heading.textContent=lab;
+      group.setAttribute('aria-label',lab);
       group.querySelectorAll('button').forEach(function(x){
         var L=x.getAttribute('data-lb-length');
         x.textContent=t128(PICKER_LABELS[L],o||opt);
