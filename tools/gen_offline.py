@@ -26,7 +26,7 @@ for d,_,n in os.walk(R):
       p=p[2:]
     if is_hidden(p):
       continue
-    if f.endswith('.png') or (rel=='.' and f.endswith('.mp3')) or f in('offline.json','offline-opus.json','CNAME') or f.endswith('.md'):continue
+    if f.endswith('.png') or (rel=='.' and f.endswith('.mp3')) or f in('offline.json','offline-opus.json','CNAME') or (f.endswith('.md') and f!='LICENSES.md'):continue
     # Core save is English + Spanish only. Hidden lang stubs and optional
     # language packs stay out of the 15 MiB bundle (packs/index.json stays,
     # so the app can see that no packs are installed).

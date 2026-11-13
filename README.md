@@ -4,6 +4,15 @@ Learn, play, and glow. A free, offline-capable early learning app (reading, soun
 
 Live: https://lamplightlearn.org
 
+## License
+
+App code is licensed under the GNU General Public License, version 3 or later ([LICENSE](LICENSE)). Copyright (C) 2026 Ignacio Valero / Lamplight Learning.
+
+Original stories, art (including code-drawn companions and patterns), lessons, and lyrics written for Lamplight are licensed under CC BY-SA 4.0 ([LICENSE-CONTENT](LICENSE-CONTENT)). Please credit Lamplight Learning (lamplightlearn.org).
+
+Some pictures, data, fonts, songs, and audio keep their own licenses. See [LICENSES.md](LICENSES.md) for the plain-language map and the full exception list.
+
+
 ## Credits
 - Speech voices: Kokoro-82M (Apache-2.0), pre-recorded into `audio/<voice>/`.
 - Singing voices (Twinkle, `audio/sing/twinkle_<voice>.mp3`, 12 voices): sung with SoulX-Singer (Apache-2.0) using Kokoro-82M voice timbres (Apache-2.0). No third-party recordings; no pitch shifting after synthesis.

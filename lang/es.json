@@ -2050,5 +2050,8 @@
   "rosette": "roseta",
   "Rosette": "Roseta",
   "A Moth, an Owl, a Turtle named Shell, a Dragon, and a Phoenix would like to sit with you, if you want. You can pick one, or keep your Lamp.": "Una Polilla, un Búho, una tortuga llamada Concha, un Dragón y un Fénix quisieran sentarse contigo, si tú quieres. Puedes elegir uno, o quedarte con tu Lámpara.",
-  "More friends in {section}": "Más amigos en {section}"
+  "More friends in {section}": "Más amigos en {section}",
+  "Licenses": "Licencias",
+  "The app's code is licensed under GPL-3.0. The original stories, art, and lessons are licensed under CC BY-SA 4.0. Some pictures and data keep their own licenses, shown with the credits already in the app.": "El código de la app tiene licencia GPL-3.0. Los cuentos, el arte y las lecciones originales tienen licencia CC BY-SA 4.0. Algunas imágenes y datos conservan sus propias licencias, que aparecen junto a los créditos que ya hay en la app.",
+  "License map": "Mapa de licencias"
 }
