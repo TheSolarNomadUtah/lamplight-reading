@@ -268,7 +268,26 @@ function skyStillLight112(jd,city){return skySunAlt112(jd,city)>-6}
 
 function skyNamed112(idx){return (SKY112.names&&SKY112.names[idx])||''}
 
+function skyAgesLabel112(ns){
+ if(ns&&ns.label)return ns.label;
+ const name=(ns&&ns.short)||'Polaris';
+ return skyT112('Year — the North Star is '+name,'Año — la Estrella Polar es '+name);
+}
 function skyNorthCopy112(jd){
+ const year=typeof skyYearOf112==='function'?skyYearOf112(jd):null;
+ // 1590 BCE is astronomical year -1589; 380 CE is 380.
+ // skyYearOf112 is fractional; use the calendar year so mid-year 380 still counts.
+ const yi=year==null?null:Math.floor(year);
+ if(yi!=null&&yi>=-1589&&yi<=380){
+  return {
+   short:skyT112('none then','ninguna entonces'),
+   label:skyT112('Year — there was no bright North Star then','Año — entonces no había una Estrella Polar brillante'),
+   long:skyT112(
+    'There was no bright North Star then. Kochab, in the Little Bear, was nearest — about 6.4 degrees from the pole at its closest.',
+    'Entonces no había una Estrella Polar brillante. Kochab, en la Osa Menor, era la más cercana: a unos 6,4 grados del polo en su momento más cercano.'
+   )
+  };
+ }
  const ns=SkyTonight.northStar(jd);
  const ALD={name:'Alderamin',ra:319.6449,dec:62.5856};
  const ap=SkyTonight.precessLong(ALD.ra,ALD.dec,SkyTonight.J2000,jd);
@@ -641,7 +660,7 @@ function skyHTML112(){
  <p class="kline" data-skynorth112="1">${skyEsc112(ns.long)}</p>
  ${!planets?`<p class="soft" data-skyhide112="1">${skyT112('The Moon and the wandering stars are drawn only for nights near our own time. For this faraway night, we just draw the stars.','La Luna y los astros errantes se dibujan solo en noches cercanas a nuestro tiempo. En esta noche lejana, solo dibujamos las estrellas.')}</p>`:''}
  ${UI112.span==='night'?`<label class="soft">${skyT112('Time tonight','Hora de esta noche')}<input class="skySlide112" id="skySlide112" type="range" min="16" max="32" step="0.05" value="${skyNightVal112(jd)}" oninput="skySlideNight112(this.value)"></label>`:
- `<label class="soft">${skyT112('Year — the North Star is '+ns.short,'Año — la Estrella Polar es '+ns.short)}<input class="skySlide112" id="skySlide112" type="range" min="-4000" max="16000" step="10" value="${agesVal}" oninput="skySlideAges112(this.value)"></label>`}
+ `<label class="soft"><span data-skyslidelab112="1">${skyEsc112(skyAgesLabel112(ns))}</span><input class="skySlide112" id="skySlide112" type="range" min="-4000" max="16000" step="10" value="${agesVal}" oninput="skySlideAges112(this.value)"></label>`}
  <div class="skyToolbar112">
   <button type="button" onclick="skyPreset112('evening')">${skyT112('Tonight evening','Esta noche, al anochecer')}</button>
   <button type="button" onclick="skyPreset112('midnight')">${skyT112('Midnight','Medianoche')}</button>
@@ -763,7 +782,10 @@ function skyPatch112(){
  const lab=document.querySelector('[data-skylabel112]');
  if(lab)lab.textContent=skyDateLabel112(jd);
  const north=document.querySelector('[data-skynorth112]');
- if(north)north.textContent=skyNorthCopy112(jd).long;
+ const ns=skyNorthCopy112(jd);
+ if(north)north.textContent=ns.long;
+ const slideLab=document.querySelector('[data-skyslidelab112]');
+ if(slideLab)slideLab.textContent=skyAgesLabel112(ns);
  const city=skyCity112();
  const still=skyStillLight112(jd,city);
  let stillEl=document.querySelector('[data-still112]');
@@ -971,7 +993,7 @@ function skyAdultNote112(){
 try{if(typeof requestIdleCallback==='function')requestIdleCallback(()=>skyLoad112().catch(()=>{}));else setTimeout(()=>skyLoad112().catch(()=>{}),800)}catch(e){}
 
 // Expose a few helpers for seatbelt and the tour.
-window.SkyTonightUI={UI112,SKY112,skyLoad112,skyOpen112,skyAnimalsUp112,skyNorthCopy112,skyPrecess112,skyInPlanetEra112,skyStillLight112,skyCivilToJD112,skyYearOf112,skyFigSVG112,skyDraw112,META112,ANIMAL_IDS112,whatsNewText112};
+window.SkyTonightUI={UI112,SKY112,skyLoad112,skyOpen112,skyAnimalsUp112,skyNorthCopy112,skyAgesLabel112,skyPrecess112,skyInPlanetEra112,skyStillLight112,skyCivilToJD112,skyYearOf112,skyFigSVG112,skyDraw112,META112,ANIMAL_IDS112,whatsNewText112};
 window.skyOpen112=skyOpen112;
 window.skyClose112=skyClose112;
 window.skySetCity112=skySetCity112;
@@ -992,6 +1014,7 @@ window.skyDraw112=skyDraw112;
 window.skyCity112=skyCity112;
 window.skyAnimalsUp112=skyAnimalsUp112;
 window.skyNorthCopy112=skyNorthCopy112;
+window.skyAgesLabel112=skyAgesLabel112;
 window.skyYearOf112=skyYearOf112;
 window.skyPrecess112=skyPrecess112;
 window.skyTitle112=skyTitle112;

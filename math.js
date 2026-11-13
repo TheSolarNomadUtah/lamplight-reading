@@ -131,9 +131,9 @@ function renderMath(){
   <h2>${mathT('Numbers')}</h2>
   <p class="soft">${mathT('Count, add, and notice. There is no timer. You can take your time and try again.')}</p></div>
   <div class="hubgrid math-units">
-   <button type="button" class="hubtile" data-math="count" onclick="mathOpen('count')">${mathArtLamp()}<span>${mathT('Counting')}</span><small>${mathT('How many lamps or turtles?')}</small></button>
-   <button type="button" class="hubtile" data-math="shapes" onclick="mathOpen('shapes')">${mathArtShape('triangle',{size:72})}<span>${mathT('Shapes')}</span><small>${mathT('Circles, triangles, squares, and rectangles.')}</small></button>
-   <button type="button" class="hubtile" data-math="ten" onclick="mathOpen('ten')">${mathTileArt()}<span>${mathT('Adding to 10')}</span><small>${mathT('Make ten at your own pace.')}</small></button>
+   <button type="button" class="hubtile" data-math="count" onclick="mathOpen('count')">${mathArtLamp()}${mathT('Counting')}<small>${mathT('How many lamps or turtles?')}</small></button>
+   <button type="button" class="hubtile" data-math="shapes" onclick="mathOpen('shapes')">${mathArtShape('triangle',{size:72})}${mathT('Shapes')}<small>${mathT('Circles, triangles, squares, and rectangles.')}</small></button>
+   <button type="button" class="hubtile" data-math="ten" onclick="mathOpen('ten')">${mathTileArt()}${mathT('Adding to 10')}<small>${mathT('Make ten at your own pace.')}</small></button>
   </div>`;
  if(typeof artRefresh63==='function')artRefresh63(el);
 }

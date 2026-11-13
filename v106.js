@@ -214,14 +214,14 @@ function renderPatterns106(){
   const art=typeof lampSvg73==='function'?lampSvg73(1,'',false):'';
   if(typeof FRIEND_ART_CTX101!=='undefined')FRIEND_ART_CTX101=prev;
   lamp=`<div class="pat-lamp-look${PAT106.lampZoom?' zoom':''}" id="patLamp106">
-    <button type="button" class="hubtile" style="min-height:auto;width:auto;padding:12px 18px" onclick="patLampLook106()">${art}<span>${patT('Look closer')}</span></button>
+    <button type="button" class="hubtile" style="min-height:auto;width:auto;padding:12px 18px" onclick="patLampLook106()">${art}${patT('Look closer')}</button>
     <p class="soft" id="patLampMsg106">${PAT106.lampZoom?patT('Even a small glow has a soft swirl. Looking closer is how patterns show up.'):patT('Tap the Lamp to look closer at its glow.')}</p>
    </div>`;
  }catch(e){lamp=''}
  el.innerHTML=`<div class="card"><button type="button" onclick="show('hub')">${patT('Home')}</button>
   <h2>${patT('Patterns Everywhere')}</h2>
   <p class="soft">${patT('The same kinds of patterns show up in the sky, in a leaf, in a shell, and in a song. There is no timer. You can look as long as you like.')}</p></div>
-  <div class="hubgrid pat-units">${units.map(([id,t,s])=>`<button type="button" class="hubtile" data-pat="${id}" onclick="patOpen106('${id}')">${patUnitArt106(id)}<span>${t}</span><small>${s}</small></button>`).join('')}</div>
+  <div class="hubgrid pat-units">${units.map(([id,t,s])=>`<button type="button" class="hubtile" data-pat="${id}" onclick="patOpen106('${id}')">${patUnitArt106(id)}${t}<small>${s}</small></button>`).join('')}</div>
   ${lamp}`;
  if(typeof turtlePlace105==='function')turtlePlace105('patterns');
  if(typeof artRefresh63==='function')artRefresh63(el);
@@ -474,7 +474,7 @@ function patSameDraw106(fam){
    <p class="soft">${patT('Pick a pattern. You will see it in more than one place and size.')}</p>
    <div class="hubgrid pat-units">${Object.keys(PAT_PAIRS106).map(k=>{
      const f=PAT_PAIRS106[k],L=(LANG==='es')?1:0;
-     return `<button type="button" class="hubtile" onclick="patSameDraw106('${k}')">${patPairArt106(f.items[0].id)}<span>${patEsc(f.title[L])}</span></button>`;
+     return `<button type="button" class="hubtile" onclick="patSameDraw106('${k}')">${patPairArt106(f.items[0].id)}${patEsc(f.title[L])}</button>`;
    }).join('')}</div>`);
   if(typeof turtlePlace105==='function')turtlePlace105('patterns');
   return;
@@ -558,9 +558,9 @@ function patFracHome106(){
  el.innerHTML=patShell(patT('Half and Quarter'),`
   <p class="soft">${patT('You can share, fill, and fold. The words are half and quarter. There are no fraction marks.')}</p>
   <div class="hubgrid pat-units">
-   <button type="button" class="hubtile" onclick="patShareNew106()">${patUnitArt106('frac')}<span>${patT('Share a pie')}</span></button>
-   <button type="button" class="hubtile" onclick="patJarNew106()"><svg class="lamp-art63" data-original-art="pat-jar" viewBox="0 0 100 100" width="100" height="100" aria-hidden="true"><circle class="art-plate63" cx="50" cy="50" r="47" fill="#fff2d8" stroke="${patInk()}" stroke-width="2"/><rect x="34" y="24" width="32" height="54" rx="6" fill="#c2dce2" stroke="${patInk()}"/><rect x="36" y="50" width="28" height="26" fill="#5b7ea8"/></svg><span>${patT('Fill a jar')}</span></button>
-   <button type="button" class="hubtile" onclick="patFoldNew106()"><svg class="lamp-art63" data-original-art="pat-fold" viewBox="0 0 100 100" width="100" height="100" aria-hidden="true"><circle class="art-plate63" cx="50" cy="50" r="47" fill="#fff2d8" stroke="${patInk()}" stroke-width="2"/><rect x="22" y="30" width="56" height="40" fill="#f4e4c4" stroke="${patInk()}"/><path d="M50 30 V70" stroke="${patInk()}"/></svg><span>${patT('Fold a paper')}</span></button>
+   <button type="button" class="hubtile" onclick="patShareNew106()">${patUnitArt106('frac')}${patT('Share a pie')}</button>
+   <button type="button" class="hubtile" onclick="patJarNew106()"><svg class="lamp-art63" data-original-art="pat-jar" viewBox="0 0 100 100" width="100" height="100" aria-hidden="true"><circle class="art-plate63" cx="50" cy="50" r="47" fill="#fff2d8" stroke="${patInk()}" stroke-width="2"/><rect x="34" y="24" width="32" height="54" rx="6" fill="#c2dce2" stroke="${patInk()}"/><rect x="36" y="50" width="28" height="26" fill="#5b7ea8"/></svg>${patT('Fill a jar')}</button>
+   <button type="button" class="hubtile" onclick="patFoldNew106()"><svg class="lamp-art63" data-original-art="pat-fold" viewBox="0 0 100 100" width="100" height="100" aria-hidden="true"><circle class="art-plate63" cx="50" cy="50" r="47" fill="#fff2d8" stroke="${patInk()}" stroke-width="2"/><rect x="22" y="30" width="56" height="40" fill="#f4e4c4" stroke="${patInk()}"/><path d="M50 30 V70" stroke="${patInk()}"/></svg>${patT('Fold a paper')}</button>
   </div>
  `);
  if(typeof turtlePlace105==='function')turtlePlace105('patterns');
@@ -1036,7 +1036,7 @@ function patTile106(){
  const btn=document.createElement('button');
  btn.type='button';btn.className='hubtile';btn.setAttribute('data-patterns106','1');
  btn.setAttribute('onclick',"show('patterns')");
- btn.innerHTML=patTileArt106()+'<span>'+patT('Patterns Everywhere')+'</span>';
+ btn.innerHTML=patTileArt106()+patT('Patterns Everywhere');
  if(paint&&paint.parentNode===grid)paint.after(btn);else grid.appendChild(btn);
  if(typeof artRefresh63==='function')artRefresh63(btn);
 }
