@@ -321,11 +321,12 @@ document.head.insertAdjacentHTML('beforeend',`<style id="mathcss">
 #math .math-card h2{margin:.2em 0 .4em}
 #math .math-units .hubtile{min-height:140px}
 #math .math-lamps,#math .math-shapes,#math .math-nums{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:16px 0}
-#math .math-ten{display:grid;grid-template-columns:repeat(5,72px);gap:10px;justify-content:center;margin:16px 0}
-#math .math-lamp-btn,#math .math-shape-btn,#math .math-nest{background:var(--card,#fffdf8);border:2px solid #e4dccb;border-radius:18px;padding:8px;min-width:72px;min-height:88px;position:relative;cursor:pointer}
+#math .math-ten{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;justify-content:center;margin:16px auto;width:100%;max-width:calc(5 * 72px + 4 * 8px);box-sizing:border-box}
+#math .math-lamp-btn,#math .math-shape-btn{background:var(--card,#fffdf8);border:2px solid #e4dccb;border-radius:18px;padding:8px;min-width:72px;min-height:88px;position:relative;cursor:pointer;box-sizing:border-box}
+#math .math-nest{background:var(--card,#fffdf8);border:2px solid #e4dccb;border-radius:14px;padding:4px;min-width:0;width:100%;max-width:72px;height:auto;aspect-ratio:72 / 88;min-height:0;position:relative;cursor:pointer;display:grid;place-items:center;justify-self:center;box-sizing:border-box}
 #math .math-lamp-btn.on,#math .math-shape-btn.on,#math .math-nest.on{border-color:var(--acc,#4e6b5c);box-shadow:inset 0 0 0 2px var(--acc,#4e6b5c);background:#fff6df}
-#math .math-nest{width:72px;height:88px;display:grid;place-items:center}
 #math .math-nest.given{cursor:default}
+#math .math-nest .math-lamp{width:100%;height:auto;max-width:100%;max-height:100%;display:block}
 #math .math-count{position:absolute;right:6px;bottom:4px;font-size:1.05rem;color:var(--acc,#4e6b5c)}
 #math .math-nums .tile{min-width:56px;min-height:56px;font-size:1.35rem}
 #math .math-msg{min-height:1.6em;font-size:1.15rem}
