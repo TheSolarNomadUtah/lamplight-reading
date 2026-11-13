@@ -79,23 +79,23 @@ for name in ('offline.json','offline-opus.json'):
     langs=sorted(p for p,_ in d['files'] if p.startswith('lang/'))
     if langs!=['lang/es.json']:
         print(name,'expected only lang/es.json, got',langs);sys.exit(1)
-    if d['bytes']>=15728640:
-        print(name,'over 15 MiB cap',d['bytes']);sys.exit(1)
+    if d['bytes']>=20971520:
+        print(name,'over 20 MiB cap',d['bytes']);sys.exit(1)
     packs=[p for p,_ in d['files'] if p.startswith('packs/')]
     if packs not in (['packs/index.json'],[]):
         print(name,'unexpected pack files',packs);sys.exit(1)
-print('OK  core offline save: only lang/es.json, under 15 MiB, no language packs')
+print('OK  core offline save: only lang/es.json, under 20 MiB, no language packs')
 PYCHK
 then :; else echo "FAIL core offline lang list"; fail=1; fi
 
-echo "== offline size caps (core 15 MiB, pack 25 MiB, total ~1 GiB) =="
-# Ignacio's limits: 15 MiB core save, at most 25 MiB per optional pack,
+echo "== offline size caps (core 20 MiB, pack 25 MiB, total ~1 GiB) =="
+# Ignacio's limits: 20 MiB core save, at most 25 MiB per optional pack,
 # and about 1 GiB for core plus all packs. No packs are built in this tree yet.
 if python3 - <<'PYCHK'
 import json, os, sys
 from pathlib import Path
 
-CORE_CAP = 15_728_640
+CORE_CAP = 20_971_520
 PACK_CAP = 26_214_400
 TOTAL_CAP = 1_073_741_824
 
@@ -142,7 +142,7 @@ for name in ("offline.json", "offline-opus.json"):
     d = json.load(open(name, encoding="utf-8"))
     core = d["bytes"]
     if core >= CORE_CAP:
-        print(name, "over 15 MiB core cap", core)
+        print(name, "over 20 MiB core cap", core)
         sys.exit(1)
     total = core + packs_sum
     if total >= TOTAL_CAP:

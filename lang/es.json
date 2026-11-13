@@ -2031,5 +2031,7 @@
   "There is not enough room on this device.": "No hay suficiente espacio en este aparato.",
   "This pack is not on this device yet.": "Este paquete aún no está en este aparato.",
   "Download {name} ({size})? It stays on this device.": "¿Descargar {name} ({size})? Queda en este aparato.",
-  "This pack could not be added.": "No se pudo añadir este paquete."
+  "This pack could not be added.": "No se pudo añadir este paquete.",
+  "The Shell, Owl, and Moth pictures take a little inspiration from two public-domain works: Ernst Haeckel, Kunstformen der Natur (1904), and John James Audubon, The Birds of America, plate 171, “Barn Owl” (1833, engraved by Robert Havell Jr.). The marks are original, drawn from code, not traced from those plates.": "Los dibujos de Concha, el Búho y la Polilla toman un poco de inspiración de dos obras de dominio público: Ernst Haeckel, Kunstformen der Natur (1904), y John James Audubon, The Birds of America, lámina 171, “Barn Owl” (1833, grabada por Robert Havell Jr.). Las marcas son originales, dibujadas con código, no calcadas de esas láminas.",
+  "Noctua, a historical owl constellation.": "Noctua, una constelación histórica del búho."
 }
