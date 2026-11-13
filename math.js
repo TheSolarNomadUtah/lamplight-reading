@@ -10,7 +10,7 @@ if(!$('math')&&document.querySelector('main'))document.querySelector('main').ins
 
 const MATH={unit:null,round:0,missed:false,credited:false,n:0,tapped:null,want:'',mode:'',filled:0,start:0,msg:'',shapes:null};
 const MATH_SHAPES=['circle','triangle','square','rectangle'];
-const MATH_SCALE=[261.63,293.66,329.63,392.00,440.00,523.25];
+const MATH_SCALE=[261.63,293.66,329.63,349.23,392.00,440.00,493.88,523.25,587.33,659.25];
 
 function mathT(s,o){return typeof gT==='function'?gT(s,o):s}
 function mathStop(){
@@ -28,7 +28,7 @@ function mathTone(freq,dur,vol){
   o.connect(g).connect(c.destination);o.start(t);o.stop(t+(dur||.32)+.06);
  }catch(e){}
 }
-function mathCountTone(i){mathTone(MATH_SCALE[i%MATH_SCALE.length],.28,.11)}
+function mathCountTone(i){mathTone(MATH_SCALE[Math.max(0,Math.min(i,MATH_SCALE.length-1))],.28,.11)}
 function mathYes(){mathTone(392,.22,.1);setTimeout(()=>mathTone(523.25,.4,.12),140)}
 function mathHmm(){mathTone(196,.35,.07)}
 
@@ -42,18 +42,25 @@ function mathCredit(reason){
  }
 }
 
-function mathArtLamp(){
+function mathArtLamp(kind){
  const ink='#72583f';
- return `<svg class="math-lamp" viewBox="0 0 80 90" width="72" height="80" aria-hidden="true" focusable="false">
-  <ellipse cx="40" cy="82" rx="18" ry="5" fill="#e8d4b0" stroke="none" opacity=".55"/>
-  <path d="M28 70 H52 L48 78 H32Z" fill="#c4a07a" stroke="${ink}" stroke-width="1.8" stroke-linejoin="round"/>
-  <path d="M34 40 Q26 58 32 70 H48 Q54 58 46 40Z" fill="#f4e0b0" stroke="${ink}" stroke-width="1.8" stroke-linejoin="round"/>
-  <ellipse cx="40" cy="36" rx="16" ry="8" fill="#efc77a" stroke="${ink}" stroke-width="1.8"/>
+ const added=kind==='added';
+ const base=added?'#6f8f7c':'#c4a07a';
+ const body=added?'#cfe3d6':'#f4e0b0';
+ const cap=added?'#7eaa88':'#efc77a';
+ const glow=added?'#c5d9cc':'#e8d4b0';
+ return `<svg class="math-lamp${added?' added':''}" viewBox="0 0 80 90" width="72" height="80" aria-hidden="true" focusable="false">
+  <ellipse cx="40" cy="82" rx="18" ry="5" fill="${glow}" stroke="none" opacity=".55"/>
+  <path d="M28 70 H52 L48 78 H32Z" fill="${base}" stroke="${ink}" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M34 40 Q26 58 32 70 H48 Q54 58 46 40Z" fill="${body}" stroke="${ink}" stroke-width="1.8" stroke-linejoin="round"/>
+  <ellipse cx="40" cy="36" rx="16" ry="8" fill="${cap}" stroke="${ink}" stroke-width="1.8"/>
   <path d="M40 28 Q42 18 40 12" fill="none" stroke="${ink}" stroke-width="1.6" stroke-linecap="round"/>
  </svg>`;
 }
 function mathArtShape(kind,opt){
  const ink='#72583f';
+ const size=(opt&&opt.size)||88;
+ const rot=(opt&&opt.rot)||0;
  const fill={circle:'#eac77d',triangle:'#8fbb92',square:'#96bfd5',rectangle:'#e8c894'}[kind]||'#f4e4c4';
  const inner={
   circle:`<circle cx="50" cy="50" r="28" fill="${fill}" stroke="${ink}" stroke-width="2.2"/>`,
@@ -61,7 +68,20 @@ function mathArtShape(kind,opt){
   square:`<rect x="22" y="22" width="56" height="56" rx="4" fill="${fill}" stroke="${ink}" stroke-width="2.2"/>`,
   rectangle:`<rect x="14" y="30" width="72" height="40" rx="5" fill="${fill}" stroke="${ink}" stroke-width="2.2"/>`
  }[kind];
- return `<svg class="math-shape" viewBox="0 0 100 100" width="${(opt&&opt.size)||88}" height="${(opt&&opt.size)||88}" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="47" fill="#fff2d8" stroke="${ink}" stroke-width="2"/>${inner}</svg>`;
+ return `<svg class="math-shape" viewBox="0 0 100 100" width="${size}" height="${size}" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="47" fill="#fff2d8" stroke="${ink}" stroke-width="2"/><g transform="rotate(${rot} 50 50)">${inner}</g></svg>`;
+}
+function mathShapePool(want){
+ const all=MATH_SHAPES.slice();
+ if(want==='rectangle')return all.filter(s=>s!=='square');
+ if(want==='square')return all.filter(s=>s!=='rectangle');
+ return all;
+}
+function mathShapeStamp(){
+ const art=[];
+ (MATH.shapes||[]).forEach(()=>{
+  art.push({rot:Math.round((Math.random()*36-18)*10)/10,size:70+Math.floor(Math.random()*20)});
+ });
+ MATH.shapeArt=art;
 }
 function mathTileArt(){
  const ink='#72583f';
@@ -106,17 +126,19 @@ function renderMath(){
 
 function mathCountNew(){
  MATH.n=1+Math.floor(Math.random()*10);
- MATH.tapped=Array(MATH.n).fill(false);
+ MATH.tapped=Array(MATH.n).fill(0);
  MATH.missed=false;MATH.credited=false;MATH.msg=mathT('Tap each lamp, then choose how many you see.');
  mathCountDraw();
 }
 function mathCountDraw(){
  const el=$('math');if(!el)return;
  const n=MATH.n,tapped=MATH.tapped||[];
- const done=tapped.every(Boolean);
- let lamps='<div class="math-lamps" role="group" aria-label="'+esc(mathT('Lamps'))+'">';
+ const row=n>=6?' math-lamps-5':'';
+ let lamps='<div class="math-lamps'+row+'" role="group" aria-label="'+esc(mathT('Lamps'))+'">';
  for(let i=0;i<n;i++){
-  lamps+=`<button type="button" class="math-lamp-btn${tapped[i]?' on':''}" data-i="${i}" aria-pressed="${tapped[i]?'true':'false'}" aria-label="${esc(mathT('Lamp {n}',{n:String(i+1)}))}" onclick="mathCountTap(${i})">${mathArtLamp()}${tapped[i]?`<span class="math-count">${i+1}</span>`:''}</button>`;
+  const ord=tapped[i]||0;
+  const label=ord?mathT('Lamp {n}',{n:String(ord)}):mathT('Lamp');
+  lamps+=`<button type="button" class="math-lamp-btn${ord?' on':''}" data-i="${i}" aria-pressed="${ord?'true':'false'}" aria-label="${esc(label)}" onclick="mathCountTap(${i})">${mathArtLamp()}${ord?`<span class="math-count">${ord}</span>`:''}</button>`;
  }
  lamps+='</div>';
  let nums='<div class="math-nums" role="group" aria-label="'+esc(mathT('How many?'))+'">';
@@ -130,8 +152,8 @@ function mathCountDraw(){
 function mathCountTap(i){
  if(!MATH.tapped||MATH.credited)return;
  if(!MATH.tapped[i]){
-  MATH.tapped[i]=true;
-  const soFar=MATH.tapped.filter(Boolean).length;
+  const soFar=MATH.tapped.filter(Boolean).length+1;
+  MATH.tapped[i]=soFar;
   mathCountTone(soFar-1);
  }
  mathCountDraw();
@@ -182,24 +204,25 @@ function mathShapeNew(){
  MATH.missed=false;MATH.credited=false;
  if(MATH.mode==='name'){
   MATH.want=MATH_SHAPES[Math.floor(Math.random()*MATH_SHAPES.length)];
-  MATH.shapes=MATH_SHAPES.slice().sort(()=>Math.random()-.5);
+  MATH.shapes=mathShapePool(MATH.want).slice().sort(()=>Math.random()-.5);
   MATH.msg=mathShapeMsg('Tap the {shape}.',MATH.want);
  }else if(MATH.mode==='odd'){
   MATH.want=MATH_SHAPES[Math.floor(Math.random()*MATH_SHAPES.length)];
-  let other=MATH_SHAPES.filter(s=>s!==MATH.want);
-  other=other[Math.floor(Math.random()*other.length)];
-  const arr=[MATH.want,other,other,other].sort(()=>Math.random()-.5);
-  MATH.shapes=arr;
+  const otherPool=mathShapePool(MATH.want).filter(s=>s!==MATH.want);
+  const other=otherPool[Math.floor(Math.random()*otherPool.length)];
+  MATH.shapes=[MATH.want,other,other,other].sort(()=>Math.random()-.5);
   MATH.msg=mathT('Which one is different?');
  }else{
   MATH.want=MATH_SHAPES[Math.floor(Math.random()*MATH_SHAPES.length)];
+  const pool=mathShapePool(MATH.want);
   const arr=[];
-  for(let i=0;i<6;i++)arr.push(Math.random()<.45?MATH.want:MATH_SHAPES[Math.floor(Math.random()*MATH_SHAPES.length)]);
+  for(let i=0;i<6;i++)arr.push(Math.random()<.45?MATH.want:pool[Math.floor(Math.random()*pool.length)]);
   if(!arr.includes(MATH.want))arr[0]=MATH.want;
   MATH.shapes=arr;
   MATH.tapped=Array(arr.length).fill(false);
   MATH.msg=mathT('Find every {shape}. Then you can go on.',{shape:mathShapeName(MATH.want)});
  }
+ mathShapeStamp();
  mathShapeDraw();
 }
 function mathShapeDraw(){
@@ -208,7 +231,7 @@ function mathShapeDraw(){
  let grid='<div class="math-shapes" role="group">';
  shapes.forEach((s,i)=>{
   const on=MATH.mode==='find'&&MATH.tapped&&MATH.tapped[i];
-  grid+=`<button type="button" class="math-shape-btn${on?' on':''}" data-s="${s}" aria-label="${esc(mathShapeName(s))}" onclick="mathShapeTap(${i})">${mathArtShape(s)}</button>`;
+  grid+=`<button type="button" class="math-shape-btn${on?' on':''}" data-s="${s}" aria-label="${esc(mathShapeName(s))}" onclick="mathShapeTap(${i})">${mathArtShape(s,(MATH.shapeArt&&MATH.shapeArt[i])||null)}</button>`;
  });
  grid+='</div>';
  const next=MATH.credited?`<p><button type="button" class="p" onclick="MATH.round++;mathShapeNew()">${mathT('Another shape')}</button></p>`:'';
@@ -265,12 +288,19 @@ function mathTenDraw(){
  for(let i=0;i<10;i++){
   const on=i<MATH.filled;
   const given=i<MATH.start;
-  frame+=`<button type="button" class="math-nest${on?' on':''}${given?' given':''}" data-i="${i}" aria-pressed="${on?'true':'false'}" aria-label="${esc(mathT('Space {n}',{n:String(i+1)}))}" onclick="mathTenTap(${i})">${on?mathArtLamp():''}</button>`;
+  frame+=`<button type="button" class="math-nest${on?' on':''}${given?' given':''}${on&&!given?' added':''}" data-i="${i}" aria-pressed="${on?'true':'false'}" aria-label="${esc(mathT('Space {n}',{n:String(i+1)}))}" onclick="mathTenTap(${i})">${on?mathArtLamp(given?'given':'added'):''}</button>`;
  }
  frame+='</div>';
  const again=MATH.credited?`<p><button type="button" class="p" onclick="mathTenNew()">${mathT('Make 10 again')}</button></p>`:'';
  el.innerHTML=mathShell(mathT('Adding to 10'),`<p class="soft">${mathT('There is no timer.')}</p>${frame}
-  <p class="math-eq" dir="ltr">${typeof gNum==='function'?gNum(MATH.filled):MATH.filled} / 10</p>${mathMsg()}${again}`);
+  <p class="math-eq" dir="ltr">${mathTenEq()}</p>${mathMsg()}${again}`);
+}
+function mathTenEq(){
+ const n=typeof gNum==='function'?gNum:String;
+ const a=n(MATH.start), added=MATH.filled-MATH.start;
+ if(MATH.filled>=10)return a+' + '+n(added)+' = '+n(10);
+ if(added<=0)return a;
+ return a+' + '+n(added);
 }
 function mathTenTap(i){
  if(MATH.credited)return;
@@ -346,11 +376,13 @@ document.head.insertAdjacentHTML('beforeend',`<style id="mathcss">
 #math .math-card h2{margin:.2em 0 .4em}
 #math .math-units .hubtile{min-height:140px}
 #math .math-lamps,#math .math-shapes,#math .math-nums{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:16px 0}
-#math .math-ten{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;justify-content:center;margin:16px auto;width:100%;max-width:calc(5 * 72px + 4 * 8px);box-sizing:border-box}
+#math .math-ten,#math .math-lamps-5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;justify-content:center;margin:16px auto;width:100%;max-width:calc(5 * 72px + 4 * 8px);box-sizing:border-box}
+#math .math-lamps-5 .math-lamp-btn{min-width:0;width:100%;max-width:72px;height:auto;aspect-ratio:72 / 88;padding:4px;justify-self:center}
 #math .math-lamp-btn,#math .math-shape-btn{background:var(--card,#fffdf8);border:2px solid #e4dccb;border-radius:18px;padding:8px;min-width:72px;min-height:88px;position:relative;cursor:pointer;box-sizing:border-box}
 #math .math-nest{background:var(--card,#fffdf8);border:2px solid #e4dccb;border-radius:14px;padding:4px;min-width:0;width:100%;max-width:72px;height:auto;aspect-ratio:72 / 88;min-height:0;position:relative;cursor:pointer;display:grid;place-items:center;justify-self:center;box-sizing:border-box}
-#math .math-lamp-btn.on,#math .math-shape-btn.on,#math .math-nest.on{border-color:var(--acc,#4e6b5c);box-shadow:inset 0 0 0 2px var(--acc,#4e6b5c);background:#fff6df}
-#math .math-nest.given{cursor:default}
+#math .math-lamp-btn.on,#math .math-shape-btn.on{border-color:var(--acc,#4e6b5c);box-shadow:inset 0 0 0 2px var(--acc,#4e6b5c);background:#fff6df}
+#math .math-nest.given{cursor:default;background:#fff6df;border-color:#c9a56e;box-shadow:inset 0 0 0 2px #c9a56e}
+#math .math-nest.added{background:#e7f2ea;border-color:var(--acc,#4e6b5c);box-shadow:inset 0 0 0 2px var(--acc,#4e6b5c)}
 #math .math-nest .math-lamp{width:100%;height:auto;max-width:100%;max-height:100%;display:block}
 #math .math-count{position:absolute;right:6px;bottom:4px;font-size:1.05rem;color:var(--acc,#4e6b5c)}
 #math .math-nums .tile{min-width:56px;min-height:56px;font-size:1.35rem}
