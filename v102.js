@@ -18,7 +18,8 @@
 /* ---------------- 6. Spanish story wording ---------------- */
 function storiesFix102(){
  const reps=[
-  ['d101_es_4_01','Formaron un rocío suelto','Formaron un rociado suelto'],
+  ['d101_es_4_01','Formaron un rocío suelto','Quedaron esparcidas'],
+  ['d101_es_4_01','Formaron un rociado suelto','Quedaron esparcidas'],
   ['d101_es_5_03','y las piezas suaves costaban de oír','y costaba oír las piezas suaves'],
   ['d101_es_5_03','Midiaron el volumen a tres horas del día','Midieron el volumen en tres momentos del día'],
   ['d101_es_1_05','una por el abrigo, y la otra por la compañía','una por cubrirla, y la otra por la compañía'],

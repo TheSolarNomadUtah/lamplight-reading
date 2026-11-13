@@ -151,6 +151,31 @@ function mathCountPick(n){
 }
 
 function mathShapeName(k){return mathT({circle:'circle',triangle:'triangle',square:'square',rectangle:'rectangle'}[k]||k)}
+function mathShapeGender(k){
+ const g=(typeof DICT==='object'&&DICT[k+'.gender'])||'m';
+ return g==='f'?'f':'m';
+}
+function mathShapeLex(kind,g){
+ const key='shape-art-'+kind+'-'+g;
+ if(typeof DICT==='object'&&DICT[key])return DICT[key];
+ return ({a:{m:'a',f:'a'},the:{m:'the',f:'the'},dem:{m:'That one is a',f:'That one is a'}})[kind][g];
+}
+function mathShapeMsg(en,shapeKey,wantKey){
+ const o={};
+ if(shapeKey){
+  const g=mathShapeGender(shapeKey);
+  o.shape=mathShapeName(shapeKey);
+  o.a=mathShapeLex('a',g);
+  o.dem=mathShapeLex('dem',g);
+  if(!wantKey)o.the=mathShapeLex('the',g);
+ }
+ if(wantKey){
+  const g=mathShapeGender(wantKey);
+  o.want=mathShapeName(wantKey);
+  o.the=mathShapeLex('the',g);
+ }
+ return mathT(en,o);
+}
 function mathShapeNew(){
  const modes=['name','odd','find'];
  MATH.mode=modes[MATH.round%3];
@@ -158,7 +183,7 @@ function mathShapeNew(){
  if(MATH.mode==='name'){
   MATH.want=MATH_SHAPES[Math.floor(Math.random()*MATH_SHAPES.length)];
   MATH.shapes=MATH_SHAPES.slice().sort(()=>Math.random()-.5);
-  MATH.msg=mathT('Tap the {shape}.',{shape:mathShapeName(MATH.want)});
+  MATH.msg=mathShapeMsg('Tap the {shape}.',MATH.want);
  }else if(MATH.mode==='odd'){
   MATH.want=MATH_SHAPES[Math.floor(Math.random()*MATH_SHAPES.length)];
   let other=MATH_SHAPES.filter(s=>s!==MATH.want);
@@ -206,7 +231,7 @@ function mathShapeTap(i){
    }
   }else{
    MATH.missed=true;
-   MATH.msg=mathT('That one is a {shape}. Look for the {want}.',{shape:mathShapeName(s),want:mathShapeName(MATH.want)});
+   MATH.msg=mathShapeMsg('That one is a {shape}. Look for the {want}.',s,MATH.want);
    mathHmm();
   }
   mathShapeDraw();
@@ -215,13 +240,13 @@ function mathShapeTap(i){
  if(MATH.credited)return;
  const ok=(MATH.mode==='name'&&s===MATH.want)||(MATH.mode==='odd'&&s===MATH.want);
  if(ok){
-  MATH.msg=MATH.mode==='odd'?mathT('You found the one that is different. It is a {shape}.',{shape:mathShapeName(s)}):mathT('Yes, that is a {shape}.',{shape:mathShapeName(s)});
+  MATH.msg=MATH.mode==='odd'?mathShapeMsg('You found the one that is different. It is a {shape}.',s):mathShapeMsg('Yes, that is a {shape}.',s);
   mathYes();
   if(MATH.missed)mathCredit('retry');
   mathCredit('notice');
  }else{
   MATH.missed=true;
-  MATH.msg=mathT('That one is a {shape}. Try again.',{shape:mathShapeName(s)});
+  MATH.msg=mathShapeMsg('That one is a {shape}. Try again.',s);
   mathHmm();
  }
  mathShapeDraw();
