@@ -276,31 +276,7 @@ function starStageArt111(fig,kind){
 if(typeof FRIENDS101!=='undefined'){
  ['dragon','phoenix'].forEach(k=>{if(FRIENDS101.indexOf(k)<0)FRIENDS101.push(k)});
 }
-friendsLoad101=function(pid){
- const id=pid||(typeof curPid==='function'?curPid():'');
- const raw=typeof RAW!=='undefined'&&typeof safeJSON==='function'?safeJSON(RAW.get('lamp_friends101@'+id),null):null;
- const def=typeof friendDefault101==='function'?friendDefault101():{moments:0,stage:1,shown:1};
- const norm=typeof friendNorm101==='function'?friendNorm101:(x=>x||def);
- const f={active:'lamp',offered:false,moth:norm(def),owl:norm(def),turtle:norm(def),dragon:norm(def),phoenix:norm(def)};
- if(raw&&typeof raw==='object'){
-  if(typeof FRIENDS101!=='undefined'&&FRIENDS101.includes(raw.active))f.active=raw.active;
-  f.offered=!!raw.offered;
-  ['moth','owl','turtle','dragon','phoenix'].forEach(k=>{f[k]=norm(raw[k])});
- }
- return f;
-};
-friendsPut101=function(f,pid){
- const id=pid||(typeof curPid==='function'?curPid():'');
- if(typeof getProfiles==='function'&&!getProfiles().list.some(p=>p.id===id))return;
- if(typeof RAW==='undefined')return;
- const norm=typeof friendNorm101==='function'?friendNorm101:(x=>x||{});
- RAW.set('lamp_friends101@'+id,JSON.stringify({
-  active:(typeof FRIENDS101!=='undefined'&&FRIENDS101.includes(f.active))?f.active:'lamp',
-  offered:!!f.offered,
-  moth:norm(f.moth),owl:norm(f.owl),turtle:norm(f.turtle),
-  dragon:norm(f.dragon),phoenix:norm(f.phoenix)
- }));
-};
+/* v115 folded: friendsLoad101 / friendsPut101 live in v101.js. */
 {const prev=typeof friendKindName101==='function'?friendKindName101:null;
  friendKindName101=function(kind){
   if(kind==='dragon')return gT('Dragon');

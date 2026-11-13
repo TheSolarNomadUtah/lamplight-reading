@@ -165,6 +165,8 @@ patShareGive106=function(i){
 function patExKindOf107(rec){
  return (rec&&rec.kind==='zoom'?rec.fractal:rec&&rec.kind)||'mandel';
 }
+/* Koch / Sierpinski keep detail through the 10^13 zoom cap (folded from v108). */
+const PAT_GEOM_MAXD108=52;
 function patExGeomRender107(cv,rec,opts){
  const o=opts||{},x=cv.getContext('2d'),W=cv.width,H=cv.height;
  const span=rec.span,cx=rec.cx,cy=rec.cy,kind=patExKindOf107(rec);
@@ -176,7 +178,7 @@ function patExGeomRender107(cv,rec,opts){
  const xmax=xmin+span,ymax=ymin+span*H/W;
  const toX=v=>(v-xmin)/dx,toY=v=>(v-ymin)/dy;
  const minLen=span/Math.max(W,1);
- const maxD=14;
+ const maxD=PAT_GEOM_MAXD108;
  x.fillStyle=pal[0];x.fillRect(0,0,W,H);
  if(kind==='koch'){
   x.strokeStyle=pal[4]||pal[pal.length-1];
@@ -253,11 +255,15 @@ patExScaleLine106=function(zoom){
  };
 }
 
+/* Soft sounds and Bedtime mute the Grow ending (folded from v108). */
 function patGrowPlayScale107(){
  try{
+  if(typeof lampSfxOn73==='function'&&!lampSfxOn73())return;
   const c=typeof ac==='function'?ac():null;if(!c)return;
+  const bedtime=!!(document.body&&document.body.classList.contains('bedtime'));
+  const night=typeof patNight==='function'&&patNight();
+  const vol=(night||bedtime)?.06:.12,t0=c.currentTime+.04,step=.75;
   const freq=[261.63,293.66,329.63,392,440,523.25];
-  const vol=patNight()?.06:.12,t0=c.currentTime+.04,step=.75;
   freq.forEach((f,i)=>{
    const t=t0+i*step;
    const o=c.createOscillator(),o2=c.createOscillator(),g=c.createGain(),g2=c.createGain();

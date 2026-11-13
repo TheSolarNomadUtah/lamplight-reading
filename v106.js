@@ -1,16 +1,13 @@
 /* v106: Patterns Everywhere / Patrones por todas partes.
    Calm, untimed Explore section: Grow a Fractal, Same Shape Big and Small,
    Sound Draws Shapes, Half and Quarter, and a deep fractal explorer.
-   Also fixes v105 QA: Shell growth hydration, Bedtime breathe-guide at 390,
-   Sound cards tucked turtle off the Home label, and a clearer turtle swim sound.
+   v105 QA fixes (Shell hydration, Bedtime breathe-guide, Sound cards turtle, swim sound)
+   now live in v101.js / v102.js / v105.js (v115 fold).
    No network, no new voices, original art, bedtime-safe. Do not wrap show(). */
 (function(){
  const s=document.createElement('style');
  s.id='v106css';
  s.textContent=[
-  '#btword{z-index:6;text-shadow:0 1px 10px rgba(3,4,10,.6)}',
-  '@media (max-width:700px){body.bedtime #btword{top:18%;bottom:auto}}',
-  '#soundcards>.turtle105{left:auto;right:14px;top:8px}',
   '#patterns{position:relative}',
   '#patterns>.turtle105{right:12px;top:8px;left:auto}',
   '#patterns .pat-units{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}',
@@ -44,68 +41,9 @@
  document.head.appendChild(s);
 })();
 
-friendsLoad101=function(pid){
- const id=pid||(typeof curPid==='function'?curPid():'');
- const raw=typeof RAW!=='undefined'&&typeof safeJSON==='function'?safeJSON(RAW.get('lamp_friends101@'+id),null):null;
- const def=typeof friendDefault101==='function'?friendDefault101():{moments:0,stage:1,shown:1};
- const f={active:'lamp',offered:false,moth:friendNorm101(def),owl:friendNorm101(def),turtle:friendNorm101(def)};
- if(raw&&typeof raw==='object'){
-  if(typeof FRIENDS101!=='undefined'&&FRIENDS101.includes(raw.active))f.active=raw.active;
-  f.offered=!!raw.offered;
-  f.moth=friendNorm101(raw.moth);
-  f.owl=friendNorm101(raw.owl);
-  f.turtle=friendNorm101(raw.turtle);
- }
- return f;
-};
+/* v115 folded: friendsLoad101 lives in v101.js. */
 
-(function(){
- if(typeof SCARDS101!=='undefined'){
-  const c=SCARDS101.find(x=>x.id==='turtle');
-  if(c){c.en='A turtle swims';c.es='Una tortuga nada'}
- }
- if(typeof SCGAIN102==='object')SCGAIN102.turtle=2.1;
- const prev=typeof scPlay101==='function'?scPlay101:null;
- if(!prev)return;
- scPlay101=function(kind){
-  if(kind!=='turtle')return prev(kind);
-  scStop101();
-  const c=typeof ac==='function'?ac():null;if(!c)return;
-  const dest=scBus101(c),t=c.currentTime+.02;
-  const gk=SCGAIN102&&SCGAIN102.turtle!=null?SCGAIN102.turtle:2.1;
-  try{SC101.master.gain.cancelScheduledValues(t)}catch(e){}
-  SC101.master.gain.setValueAtTime(.22*gk,t);
-  const W=typeof scWhite102==='function'?()=>scWhite102(c,2.8,22050):()=>scNoise101(c,2.8,22050);
-  const wash=c.createBufferSource(),lp=c.createBiquadFilter(),wg=c.createGain();
-  wash.buffer=W();wash.loop=true;
-  lp.type='lowpass';lp.frequency.value=1100;lp.Q.value=.6;
-  wash.connect(lp);lp.connect(wg);wg.connect(dest);
-  wg.gain.setValueAtTime(.0001,t);
-  wg.gain.linearRampToValueAtTime(.07,t+.45);
-  wg.gain.setValueAtTime(.07,t+3.6);
-  wg.gain.linearRampToValueAtTime(.0001,t+4.4);
-  wash.start(t);wash.stop(t+4.5);SC101.nodes.push(wash,wg);
-  const pl=c.createOscillator(),pg=c.createGain(),plp=c.createBiquadFilter();
-  pl.type='sine';pl.frequency.setValueAtTime(420,t+.08);pl.frequency.exponentialRampToValueAtTime(140,t+.28);
-  plp.type='lowpass';plp.frequency.value=900;
-  if(typeof scEnv101==='function')scEnv101(pg,t+.08,.01,0,.2,.16);
-  else{pg.gain.setValueAtTime(.0001,t+.08);pg.gain.linearRampToValueAtTime(.16,t+.1);pg.gain.exponentialRampToValueAtTime(.0001,t+.32)}
-  pl.connect(plp);plp.connect(pg);pg.connect(dest);
-  pl.start(t+.08);pl.stop(t+.36);SC101.nodes.push(pl);
-  const paddles=[.55,1.45,2.35,3.25];
-  paddles.forEach((off,i)=>{
-   const dt=t+off,src=c.createBufferSource(),bp=c.createBiquadFilter(),g=c.createGain();
-   src.buffer=typeof scNoise101==='function'?scNoise101(c,.22,18000):W();
-   bp.type='bandpass';bp.frequency.value=180+i*18;bp.Q.value=1.1;
-   if(typeof scEnv101==='function')scEnv101(g,dt,.03,.04,.16,.12);
-   else{g.gain.setValueAtTime(.0001,dt);g.gain.linearRampToValueAtTime(.12,dt+.04);g.gain.exponentialRampToValueAtTime(.0001,dt+.22)}
-   src.connect(bp);bp.connect(g);g.connect(dest);
-   src.start(dt);src.stop(dt+.26);SC101.nodes.push(src);
-  });
-  SC101.playing='turtle';
-  SC101.t=setTimeout(()=>{if(SC101.playing==='turtle')scStop101()},5200);
- };
-})();
+/* v115 folded: turtle card copy, gain, and swim sound live in v105.js / v102.js. */
 
 if(typeof LIVE99!=='undefined'&&LIVE99.indexOf('patterns')<0)LIVE99.push('patterns');
 if(typeof SECTIONS!=='undefined'&&SECTIONS.indexOf('patterns')<0)SECTIONS.push('patterns');

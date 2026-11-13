@@ -88,6 +88,77 @@ print('OK  core offline save: only lang/es.json, under 15 MiB, no language packs
 PYCHK
 then :; else echo "FAIL core offline lang list"; fail=1; fi
 
+echo "== offline size caps (core 15 MiB, pack 25 MiB, total ~1 GiB) =="
+# Ignacio's limits: 15 MiB core save, at most 25 MiB per optional pack,
+# and about 1 GiB for core plus all packs. No packs are built in this tree yet.
+if python3 - <<'PYCHK'
+import json, os, sys
+from pathlib import Path
+
+CORE_CAP = 15_728_640
+PACK_CAP = 26_214_400
+TOTAL_CAP = 1_073_741_824
+
+def is_hidden(rel):
+    for part in str(rel).replace("\\", "/").split("/"):
+        if part in ("", ".", ".."):
+            continue
+        if part.startswith("."):
+            return True
+    return False
+
+def dir_size(root: Path) -> int:
+    total = 0
+    if not root.is_dir():
+        return 0
+    for f in root.rglob("*"):
+        if not f.is_file():
+            continue
+        rel = f.relative_to(root).as_posix()
+        if is_hidden(rel):
+            continue
+        total += f.stat().st_size
+    return total
+
+packs_root = Path("packs")
+pack_dirs = []
+if packs_root.is_dir():
+    pack_dirs = sorted(
+        p for p in packs_root.iterdir()
+        if p.is_dir() and not p.name.startswith(".")
+    )
+
+pack_sizes = {}
+for pdir in pack_dirs:
+    pack_sizes[pdir.name] = dir_size(pdir)
+
+over = [f"{name} {size} (cap {PACK_CAP})" for name, size in pack_sizes.items() if size >= PACK_CAP]
+if over:
+    print("optional pack over 25 MiB cap:", "; ".join(over))
+    sys.exit(1)
+
+packs_sum = sum(pack_sizes.values())
+for name in ("offline.json", "offline-opus.json"):
+    d = json.load(open(name, encoding="utf-8"))
+    core = d["bytes"]
+    if core >= CORE_CAP:
+        print(name, "over 15 MiB core cap", core)
+        sys.exit(1)
+    total = core + packs_sum
+    if total >= TOTAL_CAP:
+        print(name, "core + packs over 1 GiB cap", total, "core", core, "packs", packs_sum)
+        sys.exit(1)
+
+n = len(pack_sizes)
+print(
+    f"OK  size caps: core under {CORE_CAP}, "
+    f"{n} optional pack(s) each under {PACK_CAP}, "
+    f"core + packs under {TOTAL_CAP}"
+    + (f" (packs total {packs_sum})" if n else " (no optional packs built)")
+)
+PYCHK
+then :; else echo "FAIL offline size caps"; fail=1; fi
+
 echo "== manifest and precache paths exist in the deploy tree =="
 if python3 - <<'PYCHK'
 import json,os,re,sys

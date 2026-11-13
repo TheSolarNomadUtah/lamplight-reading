@@ -978,13 +978,14 @@ function friendNorm101(raw){
 }
 function friendsLoad101(pid){
  const id=pid||(typeof curPid==='function'?curPid():'');
- const raw=typeof RAW!=='undefined'?safeJSON(RAW.get('lamp_friends101@'+id),null):null;
- const f={active:'lamp',offered:false,moth:friendDefault101(),owl:friendDefault101()};
+ const raw=typeof RAW!=='undefined'&&typeof safeJSON==='function'?safeJSON(RAW.get('lamp_friends101@'+id),null):null;
+ const def=typeof friendDefault101==='function'?friendDefault101():{moments:0,stage:1,shown:1};
+ const norm=typeof friendNorm101==='function'?friendNorm101:(x=>x||def);
+ const f={active:'lamp',offered:false,moth:norm(def),owl:norm(def),turtle:norm(def),dragon:norm(def),phoenix:norm(def)};
  if(raw&&typeof raw==='object'){
-  if(FRIENDS101.includes(raw.active))f.active=raw.active;
+  if(typeof FRIENDS101!=='undefined'&&FRIENDS101.includes(raw.active))f.active=raw.active;
   f.offered=!!raw.offered;
-  f.moth=friendNorm101(raw.moth);
-  f.owl=friendNorm101(raw.owl);
+  ['moth','owl','turtle','dragon','phoenix'].forEach(k=>{f[k]=norm(raw[k])});
  }
  return f;
 }
@@ -992,11 +993,12 @@ function friendsPut101(f,pid){
  const id=pid||(typeof curPid==='function'?curPid():'');
  if(typeof getProfiles==='function'&&!getProfiles().list.some(p=>p.id===id))return;
  if(typeof RAW==='undefined')return;
+ const norm=typeof friendNorm101==='function'?friendNorm101:(x=>x||{});
  RAW.set('lamp_friends101@'+id,JSON.stringify({
-  active:FRIENDS101.includes(f.active)?f.active:'lamp',
+  active:(typeof FRIENDS101!=='undefined'&&FRIENDS101.includes(f.active))?f.active:'lamp',
   offered:!!f.offered,
-  moth:friendNorm101(f.moth),
-  owl:friendNorm101(f.owl)
+  moth:norm(f.moth),owl:norm(f.owl),turtle:norm(f.turtle),
+  dragon:norm(f.dragon),phoenix:norm(f.phoenix)
  }));
 }
 function friendActive101(pid){return friendsLoad101(pid).active||'lamp'}

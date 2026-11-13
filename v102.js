@@ -153,10 +153,35 @@ function scBus101(c){
 }
 // Per-kind gain into the leveled bus. Tuned against OfflineAudioContext measurements.
 const SCGAIN102={
- cat:1.35,dog:2.4,cow:1.55,duck:2.6,bird:1.45,bee:.95,frog:2.2,owl:.55,
+ cat:1.35,dog:2.4,cow:1.55,duck:2.6,bird:1.45,bee:.95,frog:2.2,owl:.55,turtle:2.1,
  rain:1.7,thunder:.14,wind:.48,waves:.38,
  drip:.85,bell:.55,drum:1.2,bike:.95,train:.32,horn:.55
 };
+function scDogYap103(c,dest,dt,spec){
+ const o=c.createOscillator(),f=c.createBiquadFilter(),g=c.createGain();
+ o.type='sawtooth';
+ o.frequency.setValueAtTime(spec.f0,dt);
+ o.frequency.exponentialRampToValueAtTime(spec.f1,dt+.045);
+ f.type='bandpass';f.frequency.value=spec.form;f.Q.value=2.4;
+ scEnv101(g,dt,.002,0,.055,spec.amp);
+ o.connect(f);f.connect(g);g.connect(dest);
+ o.start(dt);o.stop(dt+.09);
+ SC101.nodes.push(o);
+ const click=c.createBufferSource(),hp=c.createBiquadFilter(),cg=c.createGain();
+ click.buffer=(typeof scWhite102==='function'?scWhite102:scNoise101)(c,.03,22050);
+ hp.type='highpass';hp.frequency.value=1800;hp.Q.value=.8;
+ scEnv101(cg,dt,.001,0,.02,spec.amp*.7);
+ click.connect(hp);hp.connect(cg);cg.connect(dest);
+ click.start(dt);click.stop(dt+.035);
+ SC101.nodes.push(click);
+ const body=c.createBufferSource(),bp=c.createBiquadFilter(),bg=c.createGain();
+ body.buffer=scNoise101(c,.07,22050);
+ bp.type='bandpass';bp.frequency.value=spec.body;bp.Q.value=1.8;
+ scEnv101(bg,dt,.002,0,.045,spec.amp*.45);
+ body.connect(bp);bp.connect(bg);bg.connect(dest);
+ body.start(dt);body.stop(dt+.08);
+ SC101.nodes.push(body);
+}
 function scPlay101(kind){
  scStop101();
  const c=typeof ac==='function'?ac():null;if(!c)return;
@@ -321,26 +346,9 @@ function scPlay101(kind){
     scEnv101(g,t2,.04,.08,.22,i?0.06:.11);o.connect(f);f.connect(g);g.connect(dest);o.start(t2);o.stop(t2+.4);SC101.nodes.push(o);
    });
   }else if(kind==='dog'){
-   // Sharper, higher bark bursts: fast drop, clicky onset, two short yaps.
-   [0,.22].forEach((off,i)=>{
-    const dt=t+off,o=c.createOscillator(),f=c.createBiquadFilter(),g=c.createGain();
-    o.type='sawtooth';
-    o.frequency.setValueAtTime(i?780:880,dt);
-    o.frequency.exponentialRampToValueAtTime(i?310:360,dt+.07);
-    f.type='bandpass';f.frequency.value=i?1200:1450;f.Q.value=1.6;
-    scEnv101(g,dt,.004,0,.1,.22);o.connect(f);f.connect(g);g.connect(dest);
-    o.start(dt);o.stop(dt+.16);SC101.nodes.push(o);
-    const src=c.createBufferSource(),hp=c.createBiquadFilter(),ng=c.createGain();
-    src.buffer=scWhite102(c,.08,22050);
-    hp.type='bandpass';hp.frequency.value=2200;hp.Q.value=1.8;
-    scEnv101(ng,dt,.001,0,.05,.16);src.connect(hp);hp.connect(ng);ng.connect(dest);
-    src.start(dt);src.stop(dt+.08);SC101.nodes.push(src);
-    const mid=c.createBufferSource(),mbp=c.createBiquadFilter(),mg=c.createGain();
-    mid.buffer=scNoise101(c,.12,22050);
-    mbp.type='bandpass';mbp.frequency.value=900;mbp.Q.value=1.4;
-    scEnv101(mg,dt,.003,0,.08,.1);mid.connect(mbp);mbp.connect(mg);mg.connect(dest);
-    mid.start(dt);mid.stop(dt+.14);SC101.nodes.push(mid);
-   });
+   // Two short, separated yaps (about 80ms each, 0.28s apart) so they do not smear into one burst.
+   scDogYap103(c,dest,t,{f0:980,f1:360,form:1600,body:850,amp:.26});
+   scDogYap103(c,dest,t+.28,{f0:820,f1:300,form:1400,body:780,amp:.22});
   }else if(kind==='cow'){
    const o=c.createOscillator(),g=c.createGain(),f=c.createBiquadFilter();
    o.type='sawtooth';o.frequency.setValueAtTime(180,t);o.frequency.linearRampToValueAtTime(130,t+.35);o.frequency.linearRampToValueAtTime(160,t+.9);
@@ -413,9 +421,37 @@ function scPlay101(kind){
     scEnv101(g,dt,.05,.12,.22,.16);o.connect(g);g.connect(dest);
     o.start(dt);lfo.start(dt);o.stop(dt+.45);lfo.stop(dt+.45);SC101.nodes.push(o,lfo);
    });
+  }else if(kind==='turtle'){
+   const wash=c.createBufferSource(),lp=c.createBiquadFilter(),wg=c.createGain();
+   wash.buffer=(typeof scWhite102==='function'?scWhite102:scNoise101)(c,2.8,22050);wash.loop=true;
+   lp.type='lowpass';lp.frequency.value=1100;lp.Q.value=.6;
+   wash.connect(lp);lp.connect(wg);wg.connect(dest);
+   wg.gain.setValueAtTime(.0001,t);
+   wg.gain.linearRampToValueAtTime(.07,t+.45);
+   wg.gain.setValueAtTime(.07,t+3.6);
+   wg.gain.linearRampToValueAtTime(.0001,t+4.4);
+   wash.start(t);wash.stop(t+4.5);SC101.nodes.push(wash,wg);
+   const pl=c.createOscillator(),pg=c.createGain(),plp=c.createBiquadFilter();
+   pl.type='sine';pl.frequency.setValueAtTime(420,t+.08);pl.frequency.exponentialRampToValueAtTime(140,t+.28);
+   plp.type='lowpass';plp.frequency.value=900;
+   if(typeof scEnv101==='function')scEnv101(pg,t+.08,.01,0,.2,.16);
+   else{pg.gain.setValueAtTime(.0001,t+.08);pg.gain.linearRampToValueAtTime(.16,t+.1);pg.gain.exponentialRampToValueAtTime(.0001,t+.32)}
+   pl.connect(plp);plp.connect(pg);pg.connect(dest);
+   pl.start(t+.08);pl.stop(t+.36);SC101.nodes.push(pl);
+   const paddles=[.55,1.45,2.35,3.25];
+   paddles.forEach((off,i)=>{
+    const dt=t+off,src=c.createBufferSource(),bp=c.createBiquadFilter(),g=c.createGain();
+    src.buffer=typeof scNoise101==='function'?scNoise101(c,.22,18000):W();
+    bp.type='bandpass';bp.frequency.value=180+i*18;bp.Q.value=1.1;
+    if(typeof scEnv101==='function')scEnv101(g,dt,.03,.04,.16,.12);
+    else{g.gain.setValueAtTime(.0001,dt);g.gain.linearRampToValueAtTime(.12,dt+.04);g.gain.exponentialRampToValueAtTime(.0001,dt+.22)}
+    src.connect(bp);bp.connect(g);g.connect(dest);
+    src.start(dt);src.stop(dt+.26);SC101.nodes.push(src);
+   });
   }
   SC101.playing=kind;
-  SC101.t=setTimeout(()=>{if(SC101.playing===kind)scStop101()},5600);
+  const hold=kind==='dog'?1200:kind==='turtle'?5200:5600;
+  SC101.t=setTimeout(()=>{if(SC101.playing===kind)scStop101()},hold);
  }catch(e){scStop101()}
 }
 

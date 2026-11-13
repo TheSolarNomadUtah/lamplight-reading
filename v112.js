@@ -943,27 +943,28 @@ if(typeof starFigureSVG111==='function'){
 }}
 
 function whatsNewText112(){
- return (typeof gT==='function'?gT: (s=>s))("Sky Tonight is ready in Look Up: a quiet window into the stars, tonight or far away in time. You can pick a city (nothing is sent away), see which animal figures are up, and keep a small sky diary on this device. The Moon and the wandering stars are drawn only for nights near our own time.");
+ return (typeof gT==='function'?gT: (s=>s))("The Patterns Everywhere tile now uses the same label size as the other Explore tiles. On Sky Tonight’s all-time slider, from about 1590 BCE to 380 CE, it says there was no bright North Star then, and that Kochab was nearest (about 6.4 degrees at its closest).");
 }
 function whatsNewAttach112(){
  const root=typeof $==='function'?$('adults'):document.getElementById('adults');
  if(!root)return;
- const old=root.querySelector('[data-whatsnew101], [data-whatsnew111]');
+ const old=root.querySelector('[data-whatsnew101], [data-whatsnew111], [data-whatsnew112], [data-whatsnew113], [data-whatsnew114]');
  if(old){
   const p=old.querySelector('p');
   if(p)p.textContent=whatsNewText112();
+  old.setAttribute('data-whatsnew114','1');
   return;
  }
- if(root.querySelector('[data-whatsnew112]'))return;
- try{if(typeof LS==='object'&&LS.get&&LS.get('lamp_whatsnew112'))return}catch(e){}
- const html=`<div class="card whatsnew101" data-whatsnew112="1"><h2>${(typeof gT==='function'?gT("What's new"):"What's new")}</h2>
+ if(root.querySelector('[data-whatsnew114]'))return;
+ try{if(typeof LS==='object'&&LS.get&&(LS.get('lamp_whatsnew114')||LS.get('lamp_whatsnew113')||LS.get('lamp_whatsnew112')))return}catch(e){}
+ const html=`<div class="card whatsnew101" data-whatsnew114="1"><h2>${(typeof gT==='function'?gT("What's new"):"What's new")}</h2>
  <p>${whatsNewText112()}</p>
  <p><button type="button" class="p" onclick="whatsNewDismiss112()">${typeof gT==='function'?gT('OK'):'OK'}</button></p></div>`;
  root.insertAdjacentHTML('afterbegin',html);
 }
 function whatsNewDismiss112(){
- try{if(typeof LS==='object'&&LS.set)LS.set('lamp_whatsnew112','1')}catch(e){}
- const el=document.querySelector('[data-whatsnew112], [data-whatsnew111], [data-whatsnew101]');
+ try{if(typeof LS==='object'&&LS.set)LS.set('lamp_whatsnew114','1')}catch(e){}
+ const el=document.querySelector('[data-whatsnew114], [data-whatsnew113], [data-whatsnew112], [data-whatsnew111], [data-whatsnew101]');
  if(el)el.remove();
 }
 {if(typeof showImpl97==='function'){
@@ -971,7 +972,7 @@ function whatsNewDismiss112(){
  showImpl97=function(id){
   try{if(id!=='lookup'&&typeof LU83==='object')LU83.sky112=false}catch(e){}
   const r=prev.apply(this,arguments);
-  try{if(id==='adults')whatsNewAttach112()}catch(e){}
+  try{if(id==='adults'){whatsNewAttach112();skyAdultNote112()}}catch(e){}
   return r;
  };
 }}
@@ -983,10 +984,33 @@ function whatsNewDismiss112(){
 }
 function skyAdultNote112(){
  const root=typeof $==='function'?$('adults'):document.getElementById('adults');
- if(!root||root.querySelector('[data-skyhelp112]'))return;
- const html=`<div class="card" data-skyhelp112="1"><h3>${skyT112('Sky Tonight','El cielo esta noche')}</h3>
+ if(!root)return;
+ if(!root.querySelector('[data-skyhelp112]')){
+  const html=`<div class="card" data-skyhelp112="1"><h3>${skyT112('Sky Tonight','El cielo esta noche')}</h3>
  <p class="soft">${skyT112('Sky Tonight lives in Look Up. A city list is stored only on this device — there is no GPS, and the app does not go online for stars. The Moon and planets are hidden, with a gentle note, when the time slider leaves the years around our own era. Vega, at its closest around 14,000 CE, stays about 5 degrees from the pole and is not as close as Polaris is today. Scorpius is only partly visible from Utah. Zodiac figures are sky pictures only, not signs. The optional sky diary is a local list; clearing this site’s storage clears it.','El cielo esta noche vive en Mira arriba. La lista de ciudades se guarda solo en este aparato: no hay GPS, y la app no sale a la red a buscar estrellas. La Luna y los planetas se ocultan, con una nota suave, cuando la barra de tiempo deja los años de nuestra era. Vega, en su momento más cercano hacia el año 14 000, se queda a unos 5 grados del polo y no llega tan cerca como Polaris hoy. El Escorpión solo se ve en parte desde Utah. Las figuras del zodiaco son dibujos del cielo, no signos. El diario del cielo es una lista local; si se borra el almacenamiento de este sitio, también se borra.')}</p></div>`;
- root.insertAdjacentHTML('beforeend',html);
+  root.insertAdjacentHTML('beforeend',html);
+ }
+ const card=root.querySelector('[data-skyhelp112]');
+ if(card&&!card.querySelector('[data-skyhelp113]')){
+  const p=document.createElement('p');
+  p.className='soft';
+  p.setAttribute('data-skyhelp113','1');
+  p.textContent=skyT112(
+   'Around the year 7500, the closest well-known pole star is Alderamin, in Cepheus, about 2.36 degrees from the pole — closer than Deneb then. Thuban, around 2700 BCE, stood about 0.75 degrees from the pole.',
+   'Hacia el año 7500, la estrella polar conocida más cercana es Alderamin, en Cefeo, a unos 2,36 grados del polo, más cerca que Deneb en esa época. Thuban, hacia el 2700 a. e. c., estuvo a unos 0,75 grados del polo.'
+  );
+  card.appendChild(p);
+ }
+ if(card&&!card.querySelector('[data-skyhelp114]')){
+  const p=document.createElement('p');
+  p.className='soft';
+  p.setAttribute('data-skyhelp114','1');
+  p.textContent=skyT112(
+   'From about 1590 BCE to 380 CE there was no bright North Star. Kochab, in the Little Bear, was nearest — about 6.4 degrees from the pole at its closest.',
+   'Desde unos 1590 a. e. c. hasta 380 e. c. no hubo una Estrella Polar brillante. Kochab, en la Osa Menor, era la más cercana: a unos 6,4 grados del polo en su momento más cercano.'
+  );
+  card.appendChild(p);
+ }
 }
 
 // Preload the packs once the page is idle so the first open is quick.

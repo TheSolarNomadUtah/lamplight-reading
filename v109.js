@@ -11,10 +11,15 @@ function patWindNight109(){
 function patWindCredit109(it){
  const credit=String((it&&it.credit)||[it&&it.artist,it&&it.year,it&&it.license].filter(Boolean).join(', ')).trim();
  const lic=String(it&&it.license||'').trim();
- if(/^CC BY(?!-)/i.test(lic)&&!/CC\s*BY/i.test(credit)){
-  return (credit?credit.replace(/[.\s]+$/,'')+'. ':'')+lic+'.';
- }
- return credit;
+ if(!/^CC BY(?!-)/i.test(lic))return credit;
+ const name='CC BY 4.0';
+ const URL40='https://creativecommons.org/licenses/by/4.0/';
+ let out=credit
+  .replace(/\s*https?:\/\/creativecommons\.org\/licenses\/by\/4\.0\/?\s*/ig,' ')
+  .replace(/\s*CC BY(?:\s*4\.0)?\.?\s*$/i,'')
+  .replace(/[.\s]+$/,'');
+ const line=(out?out+'. ':'')+name+'. '+URL40;
+ return line.replace(/\s+/g,' ').trim();
 }
 function patWindSrc109(it){
  const base=it&&it.base?it.base:'gallery/core/';

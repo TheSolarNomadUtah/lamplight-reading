@@ -26,7 +26,9 @@
   '#games>.turtle105{right:10px;top:8px}',
   '#lib>.turtle105{left:10px;top:8px}',
   '#math>.turtle105{right:8px;top:8px}',
-  '#soundcards>.turtle105{left:10px;top:8px}',
+  '#soundcards>.turtle105{left:auto;right:14px;top:8px}',
+  '#btword{z-index:6;text-shadow:0 1px 10px rgba(3,4,10,.6)}',
+  '@media (max-width:700px){body.bedtime #btword{top:18%;bottom:auto}}',
   '#bedtime{position:relative}',
   '#bedtime>.turtle105{position:fixed;width:34px;height:38px;right:14px;top:16px;z-index:20;pointer-events:none}',
   '.luTurtleArt105{display:flex;justify-content:center;margin:.4rem 0 1rem}',
@@ -400,25 +402,7 @@ function luTurtleNav105(){
 
 /* ---------------- Companion: Shell / Concha, open from the start ---------------- */
 if(typeof FRIENDS101!=='undefined'&&FRIENDS101.indexOf('turtle')<0)FRIENDS101.push('turtle');
-{const prev=typeof friendsLoad101==='function'?friendsLoad101:null;
- if(prev)friendsLoad101=function(pid){
-  const f=prev(pid);
-  f.turtle=friendNorm101(f.turtle);
-  return f;
- };
-}
-friendsPut101=function(f,pid){
- const id=pid||(typeof curPid==='function'?curPid():'');
- if(typeof getProfiles==='function'&&!getProfiles().list.some(p=>p.id===id))return;
- if(typeof RAW==='undefined')return;
- RAW.set('lamp_friends101@'+id,JSON.stringify({
-  active:FRIENDS101.includes(f.active)?f.active:'lamp',
-  offered:!!f.offered,
-  moth:friendNorm101(f.moth),
-  owl:friendNorm101(f.owl),
-  turtle:friendNorm101(f.turtle)
- }));
-};
+/* v115 folded: friendsLoad101 / friendsPut101 live in v101.js (includes Shell, Dragon, and Phoenix). */
 {const prev=typeof friendKindName101==='function'?friendKindName101:null;
  if(prev)friendKindName101=function(kind){return kind==='turtle'?gT('Shell'):prev(kind)};
 }
@@ -490,43 +474,13 @@ friendsPut101=function(f,pid){
 
 /* ---------------- Sound card: honest water and soft steps, not a voice ---------------- */
 if(typeof SCARDS101!=='undefined'&&!SCARDS101.some(c=>c.id==='turtle')){
- SCARDS101.push({id:'turtle',cat:'water',en:'A turtle in the water',es:'Una tortuga en el agua',play:'turtle'});
+ SCARDS101.push({id:'turtle',cat:'water',en:'A turtle swims',es:'Una tortuga nada',play:'turtle'});
 }
 if(typeof SCART101==='object'){
  SCART101.turtle=()=>ag101(turtleInner105('water'),'#7ba9ba');
 }
-if(typeof SCGAIN102==='object')SCGAIN102.turtle=.7;
-{const prev=typeof scPlay101==='function'?scPlay101:null;
- if(prev)scPlay101=function(kind){
-  if(kind!=='turtle')return prev(kind);
-  scStop101();
-  const c=typeof ac==='function'?ac():null;if(!c)return;
-  const dest=scBus101(c),t=c.currentTime+.02;
-  const gk=SCGAIN102&&SCGAIN102.turtle!=null?SCGAIN102.turtle:.7;
-  try{SC101.master.gain.cancelScheduledValues(t)}catch(e){}
-  SC101.master.gain.setValueAtTime(.2*gk,t);
-  const W=typeof scWhite102==='function'?()=>scWhite102(c,2.8,22050):()=>scNoise101(c,2.8,22050);
-  const wash=c.createBufferSource(),bp=c.createBiquadFilter(),wg=c.createGain();
-  wash.buffer=W();wash.loop=true;
-  bp.type='lowpass';bp.frequency.value=900;bp.Q.value=.6;
-  wash.connect(bp);bp.connect(wg);wg.connect(dest);
-  wg.gain.setValueAtTime(.0001,t);
-  wg.gain.linearRampToValueAtTime(.045,t+.5);
-  wg.gain.setValueAtTime(.045,t+3.4);
-  wg.gain.linearRampToValueAtTime(.0001,t+4.2);
-  wash.start(t);wash.stop(t+4.2);SC101.nodes.push(wash,wg);
-  const steps=[.7,1.25,1.85,2.5,3.1];
-  steps.forEach((off,i)=>{
-   const dt=t+off,src=c.createBufferSource(),lp=c.createBiquadFilter(),g=c.createGain();
-   src.buffer=typeof scNoise101==='function'?scNoise101(c,.12,18000):W();
-   lp.type='lowpass';lp.frequency.value=280+i*20;
-   if(typeof scEnv101==='function')scEnv101(g,dt,.01,0,.1,.07);
-   else {g.gain.setValueAtTime(.0001,dt);g.gain.linearRampToValueAtTime(.07,dt+.02);g.gain.exponentialRampToValueAtTime(.0001,dt+.12)}
-   src.connect(lp);lp.connect(g);g.connect(dest);
-   src.start(dt);src.stop(dt+.14);SC101.nodes.push(src);
-  });
- };
-}
+if(typeof SCGAIN102==='object')SCGAIN102.turtle=2.1;
+/* v115 folded: turtle swim sound lives in v102.js scPlay101. */
 
 /* ---------------- Hooks: place turtles after shows and redraws, never wrap show() ---------------- */
 {const prev=typeof afterShow95==='function'?afterShow95:null;
