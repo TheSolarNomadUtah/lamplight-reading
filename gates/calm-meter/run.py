@@ -148,12 +148,13 @@ def main():
             names = [(s.get('n'), s.get('name')) for s in (poly.get('steps') or [])]
             want_early = {3: 'Triangle', 4: 'Square', 5: 'Pentagon', 6: 'Hexagon'}
             bad_name = False
-            # steps are recorded after each add, so first step is n=4
             for s in (poly.get('steps') or []):
                 nn, nm = s.get('n'), s.get('name') or ''
                 if nn in want_early and nm != want_early[nn]:
                     bad_name = True
-                if nn and nn > 6 and 'looks round' not in nm.lower():
+                if nn in (7, 8, 9) and nm != ('%s corners' % nn):
+                    bad_name = True
+                if nn and nn >= 10 and 'looks round' not in nm.lower():
                     bad_name = True
             if (end.get('n') or 0) != 16 or not end.get('addGone') or 'looks round' not in (end.get('name') or '').lower() or bad_name:
                 fails.append({'rule': 'T-polygon', 'section': 'polygon', 'detail': 'did not stop at 16 sides, kept adding, or used the wrong shape name', **{'end': end, 'names': names}})

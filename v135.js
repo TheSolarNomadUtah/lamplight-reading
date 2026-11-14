@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 /* v135: Polygon to circle (The Council fit check #4) and the Star Count
- * 56 px spacing floor after the final fit (in v132.js). Uses Pi's wording,
- * stops at 16 sides, slow morph, Curator's Kepler corner art. Does not
- * wrap show(). */
+ * 56 px spacing floor after the final fit (in v132.js). v136: side-split
+ * morph, even-n flat-side orientation, and "looks round" from 10 sides.
+ * Does not wrap show(). */
 (function(){
 'use strict';
 
@@ -31,7 +31,14 @@ if(typeof document!=='undefined'&&!document.getElementById('v135css')){
  (document.documentElement||document.head).appendChild(s);
 }
 
-function t135(s,v){return typeof mathT==='function'?mathT(s,v):(typeof gT==='function'?gT(s,v):s)}
+function fill135(s,v){
+ if(!v||typeof s!=='string')return s;
+ return s.replace(/\{(\w+)\}/g,function(_,k){return v[k]!=null?String(v[k]):'{'+k+'}'});
+}
+function t135(s,v){
+ const raw=typeof mathT==='function'?mathT(s,v):(typeof gT==='function'?gT(s,v):s);
+ return fill135(raw,v);
+}
 function e135(s){return typeof esc==='function'?esc(String(s==null?'':s)):String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function reduced135(){
  try{if(typeof lampReduced73==='function'&&lampReduced73())return true}catch(e){}
@@ -42,27 +49,48 @@ function name135(n){
  if(n===4)return t135('Square');
  if(n===5)return t135('Pentagon');
  if(n===6)return t135('Hexagon');
- return t135('So many corners, it looks round.');
+ if(n>=10)return t135('So many corners, it looks round.');
+ return t135('{n} corners',{n:String(n)});
 }
-function rGon135(n,th){
- const slice=2*Math.PI/n;
- const rot=-Math.PI/2;
- let x=((th-rot)%(2*Math.PI)+2*Math.PI)%(2*Math.PI);
- const local=x%slice-slice/2;
- const c=Math.cos(local);
- const den=Math.abs(c)<1e-6?(c<0?-1e-6:1e-6):c;
- return R*Math.cos(Math.PI/n)/den;
+/* Odd n: point-up (−π/2). Even n: rotate by π/n so a side sits on the bottom
+ * (the square is axis-aligned, not a diamond; the hexagon is flat-topped). */
+function rot135(n){
+ return (n%2===0)?(-Math.PI/2+Math.PI/n):(-Math.PI/2);
 }
-function verts135(n,nEff){
- const count=Math.max(3,Math.round(nEff!=null?nEff:n));
- const use=nEff!=null?nEff:n;
- const pts=[];
- for(let i=0;i<count;i++){
-  const th=-Math.PI/2+2*Math.PI*i/count;
-  const r=rGon135(use,th);
-  pts.push({x:CX+r*Math.cos(th),y:CY+r*Math.sin(th)});
+function verts135(n){
+ const rot=rot135(n), pts=[];
+ for(let i=0;i<n;i++){
+  const th=rot+2*Math.PI*i/n;
+  pts.push({x:CX+R*Math.cos(th),y:CY+R*Math.sin(th)});
  }
  return pts;
+}
+/* Side-split start: n old vertices plus a new corner at the midpoint of the
+ * first side (vertex 0 → 1). Count is n+1 from the first morph frame. */
+function splitStart135(n){
+ const old=verts135(n);
+ const mid={x:(old[0].x+old[1].x)/2,y:(old[0].y+old[1].y)/2};
+ return [old[0],mid].concat(old.slice(1));
+}
+function pairEnds135(start,end){
+ const N=start.length;
+ let bestK=0,best=Infinity;
+ for(let k=0;k<N;k++){
+  let s=0;
+  for(let i=0;i<N;i++){
+   const e=end[(i+k)%N];
+   const dx=start[i].x-e.x, dy=start[i].y-e.y;
+   s+=dx*dx+dy*dy;
+  }
+  if(s<best){best=s;bestK=k}
+ }
+ return start.map(function(_,i){return end[(i+bestK)%N]});
+}
+function morphVerts135(from,t,eased){
+ const e=eased!=null?eased:(t<=0?0:t>=1?1:ease135(t));
+ const start=splitStart135(from);
+ const end=pairEnds135(start,verts135(from+1));
+ return start.map(function(p,i){return {x:p.x+e*(end[i].x-p.x),y:p.y+e*(end[i].y-p.y)}});
 }
 function path135(pts){
  return pts.map((p,i)=>(i?'L':'M')+p.x.toFixed(2)+' '+p.y.toFixed(2)).join(' ')+' Z';
@@ -77,14 +105,14 @@ function stopMorph135(){
 }
 function ease135(t){return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
 
-function drawShape135(n,nEff){
+function applyShape135(pts){
  const el=document.getElementById('poly135path');
  const dots=document.getElementById('poly135dots');
- if(!el)return;
- const pts=verts135(n,nEff);
+ if(!el||!pts||!pts.length)return;
  el.setAttribute('d',path135(pts));
  if(dots) dots.innerHTML=dots135(pts);
 }
+function drawShape135(n){applyShape135(verts135(n))}
 
 function polyThumb135(){
  const pts=verts135(6);
@@ -132,19 +160,17 @@ function startMorph135(){
  const to=Math.min(P135.target||from,from+1);
  if(to<=from){P135.morph=null;return}
  const t0=(typeof performance!=='undefined'?performance.now():Date.now());
+ const start=splitStart135(from);
+ const end=pairEnds135(start,verts135(to));
  P135.n=to;
- /* Labels show the shape we are becoming; the outline morphs slowly. */
+ /* Labels show the shape we are becoming; the outline morphs slowly
+  * from a side-split (new corner at a midpoint) to the settled n+1-gon. */
  polyDraw135();
- const path=document.getElementById('poly135path');
- const dots=document.getElementById('poly135dots');
- if(!path){P135.morph=null;return}
+ applyShape135(start);
  function tick(now){
   const t=Math.min(1,((now!=null?now:(typeof performance!=='undefined'?performance.now():Date.now()))-t0)/MORPH_MS);
   const e=ease135(t);
-  const nEff=from+e*(to-from);
-  const pts=verts135(to,nEff);
-  path.setAttribute('d',path135(pts));
-  if(dots) dots.innerHTML=dots135(pts);
+  applyShape135(start.map(function(p,i){return {x:p.x+e*(end[i].x-p.x),y:p.y+e*(end[i].y-p.y)}}));
   if(t<1){
    P135.morph={id:requestAnimationFrame(tick)};
   }else{
@@ -161,7 +187,7 @@ function polyDraw135(){
  const n=P135.n;
  const title=t135('Polygon to circle');
  const name=name135(n);
- const count=n<=6?'':`<p class="soft">${e135(t135('{n} corners',{n:String(n)}))}</p>`;
+ const count=n>=10?`<p class="soft">${e135(t135('{n} corners',{n:String(n)}))}</p>`:'';
  const intro=`<p class="soft">${e135(t135('Add one corner at a time.'))}</p>`;
  const fact=`<h3 class="kline" id="poly135name">${e135(name)}</h3>${count}`;
  const pts=verts135(n);
@@ -214,6 +240,13 @@ window.Polygon135={
   open:polyOpen135,
   max:MAX135,
   min:MIN135,
+  R:R, CX:CX, CY:CY,
+  rot:rot135,
+  verts:verts135,
+  splitStart:splitStart135,
+  morphVerts:morphVerts135,
+  name:name135,
+  ease:ease135,
   state:function(){return {n:P135.n,target:P135.target,morphing:!!P135.morph}},
   setN:function(n){
     stopMorph135();
