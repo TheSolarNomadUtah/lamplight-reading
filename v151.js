@@ -125,7 +125,7 @@ function applyCode(rec){
   if(typeof patGrowDraw106==='function')patGrowDraw106();
   if(g.shape==='fern'&&g.depth>0)runFern(curCv(),g,0,Math.min(20000,g.depth*4000),true);
 }
-var DIM_MS=360,DIM_A=.35;
+var DIM_MS=600,DIM_A=.35;
 function fadeDim(cv,on){
   cv=cv||curCv();
   if(!cv||rd())return;
