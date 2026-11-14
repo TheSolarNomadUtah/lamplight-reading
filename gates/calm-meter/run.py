@@ -180,9 +180,9 @@ def main():
     if pr:
         if pr.get('error'):
             fails.append({'rule': 'T-printables', 'section': 'printables', 'detail': 'printables page error: %s' % pr.get('error')})
-        elif (not pr.get('open') or pr.get('n') != 4
+        elif (not pr.get('open') or pr.get('n') < 5 or 'seed' not in (pr.get('ids') or [])
               or (pr.get('minH') or 0) < 55.5 or not (pr.get('card') or {}).get('card')):
-            fails.append({'rule': 'T-printables', 'section': 'printables', 'detail': 'Print card or four print pages missing, or tiles under 56 px', **{k: pr[k] for k in pr}})
+            fails.append({'rule': 'T-printables', 'section': 'printables', 'detail': 'Print card or print pages missing, or tiles under 56 px', **{k: pr[k] for k in pr}})
 
     cb = taps.get('companionBlink')
     if cb:

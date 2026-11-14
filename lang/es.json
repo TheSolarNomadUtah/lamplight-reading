@@ -2186,5 +2186,22 @@
   "A paper cut-out picture of Night, Night: a dusk-blue sky, sage hills, a sun, a tree, a sitting cat, a child waving to the moon, and a clay lantern.": "Un recorte de papel de Night, Night: un cielo azul de atardecer, colinas de salvia, un sol, un árbol, un gato sentado, un niño que saluda a la luna y un farol de barro.",
   "A woodblock print of Night, Night: a carved sun, a pine tree, a sitting cat, a child waving to the moon, and a clay lantern.": "Un grabado en madera de Night, Night: un sol tallado, un pino, un gato sentado, un niño que saluda a la luna y un farol de barro.",
   "A chalk pastel picture of Night, Night: a dusk sky, a sun, a tree, a sitting cat, a child waving to the moon, and a glowing clay lantern.": "Un dibujo de tiza pastel de Night, Night: un cielo de anochecer, un sol, un árbol, un gato sentado, un niño que saluda a la luna y un farol de barro encendido.",
-  "Chalk ember": "Ascua"
+  "Chalk ember": "Ascua",
+  "Five ink-light pages to print and use offline.": "Cinco páginas de tinta ligera para imprimir y usar sin conexión.",
+  "Print all five": "Imprimir las cinco",
+  "Checking what is saved for offline…": "Comprobando lo que está guardado para usar sin conexión…",
+  "All {n} files saved, works offline.": "Los {n} archivos están guardados; funciona sin conexión.",
+  "{have} of {need} files saved. Tap Save everything so it works in the car or on a plane.": "{have} de {need} archivos guardados. Toca Guardar todo para que funcione en el coche o en un avión.",
+  "The app already opens offline after a first visit. Tap Save everything for every voice, song and language.": "Después de la primera visita, la app ya abre sin conexión. Toca Guardar todo para cada voz, canción e idioma.",
+  "Keep the Seed forever": "Guarda la Semilla para siempre",
+  "The Seed is this app, kept as ordinary files on your device. Tap Save everything above so every voice, song and language works without internet — in the car, on a plane, or years from now.": "La Semilla es esta app, guardada como archivos normales en tu dispositivo. Toca Guardar todo arriba para que cada voz, canción e idioma funcione sin internet: en el coche, en un avión, o dentro de muchos años.",
+  "You can copy that saved folder and share it with another family. Nothing is uploaded. Each child’s lamp and progress stay on their own device.": "Puedes copiar esa carpeta guardada y compartirla con otra familia. No se sube nada. La lámpara y el progreso de cada niño se quedan en su propio dispositivo.",
+  "The code is free under the GPL. Our stories, pictures and songs are free to share and adapt under CC BY-SA, as long as you credit Lamplight Learning and share alike. Anyone may copy and improve it.": "El código es libre bajo la GPL. Nuestros cuentos, dibujos y canciones se pueden compartir y adaptar bajo CC BY-SA, si das crédito a Lamplight Learning y compartes igual. Cualquiera puede copiarlo y mejorarlo.",
+  "Where the art comes from": "De dónde viene el arte",
+  "The stained glass look follows Daniel Cottier’s flower window (Metropolitan Museum of Art, CC0).": "El aspecto de vitral sigue la ventana de flores de Daniel Cottier (Museo Metropolitano de Arte, CC0).",
+  "The constellation look follows Sidney Hall’s Urania’s Mirror star cards (1824, public domain).": "El aspecto de constelación sigue las cartas de estrellas de Urania’s Mirror de Sidney Hall (1824, dominio público).",
+  "The sky chart follows Andreas Cellarius’s 1660 planisphere (public domain).": "El mapa del cielo sigue el planisferio de Andreas Cellarius de 1660 (dominio público).",
+  "We draw our own lines. The old plates are the models, not copies pasted in.": "Nosotros dibujamos nuestras propias líneas. Las láminas antiguas son el modelo, no copias pegadas.",
+  "Read the licenses": "Leer las licencias",
+  "Share a Seed": "Comparte una Semilla"
 }

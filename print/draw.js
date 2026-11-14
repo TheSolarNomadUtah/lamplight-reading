@@ -30,12 +30,16 @@
       esLink: "Español",
       enLink: "English",
       pages: "Print",
-      intro: "Four ink-light pages to print and use offline.",
-      all: "Print all four",
+      intro: "Five ink-light pages to print and use offline.",
+      all: "Print all five",
       honeycomb: "Honeycomb to color",
       dragon: "Dragon-curve fold strip",
       moon: "Moon-phase wheel",
       walk: "Pattern Walk",
+      seed: "Share a Seed",
+      seedLine: "A free, calm bedtime app. No accounts. It works offline. Hand this to a family you would like to share it with.",
+      seedUrl: "lamplightlearn.org",
+      seedCut: "Cut along the dotted line.",
       factHex: "Bees build honeycomb from hexagons. They fit together with no gaps.",
       factDragon: "Fold a paper strip in half again and again. Open it, and its edge draws this dragon.",
       look: "Look outside",
@@ -64,12 +68,16 @@
       esLink: "Español",
       enLink: "English",
       pages: "Imprimir",
-      intro: "Cuatro páginas de tinta ligera para imprimir y usar sin conexión.",
-      all: "Imprimir las cuatro",
+      intro: "Cinco páginas de tinta ligera para imprimir y usar sin conexión.",
+      all: "Imprimir las cinco",
       honeycomb: "Panal para colorear",
       dragon: "Tira para doblar el dragón",
       moon: "Rueda de las fases de la luna",
       walk: "Paseo de patrones",
+      seed: "Comparte una Semilla",
+      seedLine: "Una app gratuita y tranquila para la noche. Sin cuentas. Funciona sin conexión. Entrega esta tarjeta a otra familia.",
+      seedUrl: "lamplightlearn.org",
+      seedCut: "Corta por la línea de puntos.",
       factHex: "Las abejas hacen panales con hexágonos. Encajan sin dejar huecos.",
       factDragon: "Dobla una tira de papel por la mitad una y otra vez. Al abrirla, su borde dibuja este dragón.",
       look: "Mira afuera",
@@ -302,12 +310,49 @@
     return sheetOpen(copy.walk) + parts.join("") + sheetClose(copy);
   }
 
-  var DRAW = { honeycomb: honeycombSVG, dragon: dragonSVG, moon: moonSVG, walk: walkSVG };
-  var IDS = ["honeycomb", "dragon", "moon", "walk"];
+
+  /* Share a Seed: two ink-light cards on one letter sheet, QR for the site. */
+  var SEED_QR = "M2 2h7v1h-7zM11 2h1v1h-1zM14 2h4v1h-4zM20 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM10 3h1v1h-1zM15 3h3v1h-3zM20 3h1v1h-1zM26 3h1v1h-1zM2 4h1v1h-1zM4 4h3v1h-3zM8 4h1v1h-1zM11 4h1v1h-1zM13 4h1v1h-1zM16 4h1v1h-1zM20 4h1v1h-1zM22 4h3v1h-3zM26 4h1v1h-1zM2 5h1v1h-1zM4 5h3v1h-3zM8 5h1v1h-1zM12 5h2v1h-2zM16 5h3v1h-3zM20 5h1v1h-1zM22 5h3v1h-3zM26 5h1v1h-1zM2 6h1v1h-1zM4 6h3v1h-3zM8 6h1v1h-1zM10 6h5v1h-5zM16 6h2v1h-2zM20 6h1v1h-1zM22 6h3v1h-3zM26 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM11 7h3v1h-3zM15 7h3v1h-3zM20 7h1v1h-1zM26 7h1v1h-1zM2 8h7v1h-7zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM18 8h1v1h-1zM20 8h7v1h-7zM14 9h4v1h-4zM2 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM13 10h3v1h-3zM17 10h2v1h-2zM22 10h1v1h-1zM25 10h1v1h-1zM5 11h1v1h-1zM7 11h1v1h-1zM9 11h1v1h-1zM12 11h1v1h-1zM14 11h2v1h-2zM18 11h3v1h-3zM26 11h1v1h-1zM5 12h2v1h-2zM8 12h2v1h-2zM11 12h1v1h-1zM14 12h1v1h-1zM16 12h1v1h-1zM20 12h1v1h-1zM22 12h1v1h-1zM24 12h3v1h-3zM2 13h1v1h-1zM11 13h1v1h-1zM13 13h1v1h-1zM15 13h2v1h-2zM18 13h1v1h-1zM22 13h1v1h-1zM25 13h1v1h-1zM2 14h2v1h-2zM5 14h11v1h-11zM18 14h3v1h-3zM23 14h1v1h-1zM25 14h2v1h-2zM3 15h2v1h-2zM6 15h2v1h-2zM9 15h1v1h-1zM11 15h1v1h-1zM13 15h1v1h-1zM15 15h2v1h-2zM18 15h3v1h-3zM23 15h1v1h-1zM26 15h1v1h-1zM2 16h1v1h-1zM5 16h1v1h-1zM7 16h3v1h-3zM12 16h1v1h-1zM15 16h2v1h-2zM19 16h1v1h-1zM21 16h1v1h-1zM24 16h3v1h-3zM3 17h2v1h-2zM6 17h2v1h-2zM10 17h3v1h-3zM14 17h2v1h-2zM17 17h1v1h-1zM22 17h1v1h-1zM25 17h1v1h-1zM2 18h1v1h-1zM4 18h1v1h-1zM6 18h1v1h-1zM8 18h2v1h-2zM12 18h1v1h-1zM14 18h2v1h-2zM17 18h7v1h-7zM10 19h1v1h-1zM14 19h1v1h-1zM17 19h2v1h-2zM22 19h2v1h-2zM25 19h2v1h-2zM2 20h7v1h-7zM12 20h1v1h-1zM14 20h2v1h-2zM17 20h2v1h-2zM20 20h1v1h-1zM22 20h2v1h-2zM25 20h2v1h-2zM2 21h1v1h-1zM8 21h1v1h-1zM15 21h1v1h-1zM18 21h1v1h-1zM22 21h2v1h-2zM25 21h2v1h-2zM2 22h1v1h-1zM4 22h3v1h-3zM8 22h1v1h-1zM10 22h3v1h-3zM15 22h2v1h-2zM18 22h6v1h-6zM2 23h1v1h-1zM4 23h3v1h-3zM8 23h1v1h-1zM11 23h2v1h-2zM14 23h1v1h-1zM17 23h1v1h-1zM21 23h4v1h-4zM2 24h1v1h-1zM4 24h3v1h-3zM8 24h1v1h-1zM10 24h3v1h-3zM15 24h1v1h-1zM17 24h1v1h-1zM19 24h1v1h-1zM22 24h1v1h-1zM26 24h1v1h-1zM2 25h1v1h-1zM8 25h1v1h-1zM11 25h2v1h-2zM14 25h2v1h-2zM17 25h3v1h-3zM22 25h2v1h-2zM25 25h1v1h-1zM2 26h7v1h-7zM10 26h1v1h-1zM12 26h4v1h-4zM17 26h2v1h-2zM20 26h2v1h-2zM25 26h2v1h-2z";
+  var SEED_QR_N = 29;
+  function lanternInk(x, y, s) {
+    /* Simplified hanging lantern + seed-tree, stroke only, for print. */
+    return '<g fill="none" stroke="' + INK + '" stroke-linecap="round" stroke-linejoin="round" transform="translate(' + x + " " + y + ") scale(" + s + ') translate(-100 -100)">' +
+      '<circle cx="100" cy="24" r="8" stroke-width="2.6"/>' +
+      '<path d="M100 32v10" stroke-width="2"/>' +
+      '<path d="M64 48c18-10 54-10 72 0c8 4 10 12 8 20H56c-2-8 0-16 8-20z" stroke-width="1.8"/>' +
+      '<path d="M48 70c0-10 14-18 52-18s52 8 52 18v90c0 20-16 32-52 32s-52-12-52-32z" stroke-width="2.1"/>' +
+      '<path d="M100 148L98.5 124M98.5 124L89.7 109.2M98.5 124L107.9 109.6M89.7 109.2L79 102.8M89.7 109.2L90.3 96.8M107.9 109.6L109.6 97.2M107.9 109.6L119 103.8" stroke-width="2"/>' +
+      '<ellipse cx="100" cy="152" rx="11" ry="8" stroke-width="1.4"/>' +
+      '</g>';
+  }
+  function seedOne(copy, y0) {
+    var qx = 500, qy = y0 + 200, qs = 180 / SEED_QR_N;
+    var lines = wrapText(copy.seedLine, 640, 16);
+    return [
+      '<rect x="60" y="' + y0 + '" width="696" height="470" rx="18" fill="none" stroke="' + INK + '" stroke-width="1.8"/>',
+      '<text x="408" y="' + (y0 + 52) + '" text-anchor="middle" font-family="sans-serif" font-size="26" font-weight="700" fill="' + INK + '">' + esc(copy.seed) + "</text>",
+      tspans(lines, 408, y0 + 86, 16, INK, "middle"),
+      lanternInk(220, y0 + 310, 0.9),
+      '<g transform="translate(' + qx + " " + qy + ") scale(" + qs.toFixed(4) + ')"><path d="' + SEED_QR + '" fill="' + INK + '"/></g>',
+      '<text x="' + (qx + 90) + '" y="' + (qy + 200) + '" text-anchor="middle" font-family="sans-serif" font-size="15" fill="' + INK + '">' + esc(copy.seedUrl) + "</text>"
+    ].join("");
+  }
+  function seedSVG(lang) {
+    var copy = T(lang);
+    return sheetOpen(copy.seed) +
+      seedOne(copy, 36) +
+      '<line x1="60" y1="528" x2="756" y2="528" stroke="' + MID + '" stroke-width="1" stroke-dasharray="5 6"/>' +
+      '<text x="408" y="542" text-anchor="middle" font-family="sans-serif" font-size="11" fill="' + MID + '">' + esc(copy.seedCut) + "</text>" +
+      seedOne(copy, 548) +
+      sheetClose(copy);
+  }
+
+  var DRAW = { honeycomb: honeycombSVG, dragon: dragonSVG, moon: moonSVG, walk: walkSVG, seed: seedSVG };
+  var IDS = ["honeycomb", "dragon", "moon", "walk", "seed"];
 
   function titleOf(id, lang) {
     var c = T(lang);
-    return ({ honeycomb: c.honeycomb, dragon: c.dragon, moon: c.moon, walk: c.walk })[id] || id;
+    return ({ honeycomb: c.honeycomb, dragon: c.dragon, moon: c.moon, walk: c.walk, seed: c.seed })[id] || id;
   }
   function page(id, lang) {
     if (!DRAW[id]) return null;
@@ -320,6 +365,7 @@
     if (id === "honeycomb") return '<svg viewBox="0 0 72 72" width="56" height="56" aria-hidden="true"><rect width="72" height="72" rx="12" fill="#fff" stroke="' + INK + '" stroke-width="1.4"/><g transform="translate(36 38) scale(.7)">' + hexRing(0).concat(hexRing(1)).map(function (c) { var xy = hexXY(c[0], c[1], 14); return '<path d="' + hexD(xy[0], xy[1], 13) + '" fill="none" stroke="' + INK + '" stroke-width="1.6"/>'; }).join("") + "</g></svg>";
     if (id === "dragon") return '<svg viewBox="0 0 72 72" width="56" height="56" aria-hidden="true"><rect width="72" height="72" rx="12" fill="#fff" stroke="' + INK + '" stroke-width="1.4"/><path d="' + pathOf(fit(hwy(5), 10, 14, 62, 58)) + '" fill="none" stroke="' + INK + '" stroke-width="1.6" stroke-linecap="round"/></svg>';
     if (id === "moon") return '<svg viewBox="0 0 72 72" width="56" height="56" aria-hidden="true"><rect width="72" height="72" rx="12" fill="#fff" stroke="' + INK + '" stroke-width="1.4"/>' + litMoon(36, 36, 18, 0.25) + "</svg>";
+    if (id === "seed") return '<svg viewBox="0 0 72 72" width="56" height="56" aria-hidden="true"><rect width="72" height="72" rx="12" fill="#fff" stroke="' + INK + '" stroke-width="1.4"/>' + lanternInk(36, 40, 0.26) + "</svg>";
     return '<svg viewBox="0 0 72 72" width="56" height="56" aria-hidden="true"><rect width="72" height="72" rx="12" fill="#fff" stroke="' + INK + '" stroke-width="1.4"/><rect x="16" y="24" width="16" height="16" rx="2" fill="none" stroke="' + INK + '" stroke-width="1.8"/>' + iconSpiral(48, 36) + "</svg>";
   }
 

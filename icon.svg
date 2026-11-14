@@ -1,1 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="96" fill="#5b7a6a"/><path d="M256 110c40 60 60 95 60 130a60 60 0 0 1-120 0c0-35 20-70 60-130z" fill="#f3e2b3"/><rect x="176" y="320" width="160" height="90" rx="16" fill="#f6f1e7"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="A clay lantern. Inside, a small glowing seed with a tree growing from it.">
+<defs>
+<radialGradient id="iconStH" cx="50%" cy="50%" r="54%"><stop offset="0" stop-color="#FFF6D8" stop-opacity=".5"/><stop offset=".45" stop-color="#E6B454" stop-opacity=".2"/><stop offset="1" stop-color="#E6B454" stop-opacity="0"/></radialGradient>
+<radialGradient id="iconStS" cx="40%" cy="40%" r="60%"><stop offset="0" stop-color="#FFF6D8"/><stop offset=".45" stop-color="#E6B454"/><stop offset="1" stop-color="#B8894A"/></radialGradient>
+<radialGradient id="iconStW" cx="50%" cy="70%" r="60%"><stop offset="0" stop-color="#E6B454" stop-opacity=".22"/><stop offset="1" stop-color="#1A1620" stop-opacity="1"/></radialGradient>
+<clipPath id="iconStWin"><rect x="52" y="72" width="96" height="100" rx="14"/></clipPath>
+</defs>
+<rect width="200" height="200" fill="#120E18"/>
+<g transform="translate(100 108) scale(.84) translate(-100 -100)">
+<ellipse cx="100" cy="118" rx="82" ry="82" fill="url(#iconStH)"/>
+<circle cx="100" cy="24" r="8" fill="none" stroke="#5B7A6A" stroke-width="2.6"/>
+<path d="M100 32v10" stroke="#5B7A6A" stroke-width="2" stroke-linecap="round"/>
+<path d="M64 48c18-10 54-10 72 0c8 4 10 12 8 20H56c-2-8 0-16 8-20z" fill="#5B7A6A" stroke="#72583F" stroke-width="1.7" stroke-linejoin="round"/><path d="M48 70c0-10 14-18 52-18s52 8 52 18v90c0 20-16 32-52 32s-52-12-52-32z" fill="#C4A882" stroke="#72583F" stroke-width="2.1" stroke-linejoin="round"/><g clip-path="url(#iconStWin)">
+<rect x="52" y="72" width="96" height="100" rx="14" fill="url(#iconStW)"/>
+<path d="M100.0 148.0L98.5 124.0" fill="none" stroke="#855A00" stroke-width="2.92" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"/><path d="M98.5 124.0L89.7 109.2M98.5 124.0L107.9 109.6" fill="none" stroke="#855A00" stroke-width="2.44" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M89.7 109.2L79.0 102.8M89.7 109.2L90.3 96.8M107.9 109.6L109.6 97.2M107.9 109.6L119.0 103.8" fill="none" stroke="#E6B454" stroke-width="1.96" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M79.0 102.8L70.0 102.9M79.0 102.8L75.1 94.8M90.3 96.8L85.9 89.0M90.3 96.8L96.1 89.9M109.6 97.2L106.4 88.8M109.6 97.2L115.5 90.6M119.0 103.8L123.8 96.3M119.0 103.8L127.9 104.5" fill="none" stroke="#FFE4A4" stroke-width="1.48" stroke-linecap="round" stroke-linejoin="round" opacity="0.86"/><path d="M70.0 102.9L64.7 106.6M70.0 102.9L64.2 100.1M75.1 94.8L70.0 90.8M75.1 94.8L76.6 88.5M85.9 89.0L80.3 85.7M85.9 89.0L85.5 82.6M96.1 89.9L97.9 83.7M96.1 89.9L102.3 87.9M106.4 88.8L101.6 84.6M106.4 88.8L106.9 82.4M115.5 90.6L117.1 84.3M115.5 90.6L121.9 89.2M123.8 96.3L124.7 89.9M123.8 96.3L129.4 93.0M127.9 104.5L133.9 102.2M127.9 104.5L133.5 107.6" fill="none" stroke="#FFF6D8" stroke-width="1.00" stroke-linecap="round" stroke-linejoin="round" opacity="0.82"/>
+<ellipse cx="100" cy="152" rx="11" ry="8" fill="url(#iconStS)" stroke="#72583F" stroke-width="1.3"/>
+<path d="M100 145v14" fill="none" stroke="#FFF6D8" stroke-width="1.1" stroke-linecap="round"/>
+<ellipse cx="96" cy="150" rx="3" ry="2" fill="#FFF6D8" opacity=".6"/>
+</g>
+<ellipse cx="100" cy="188" rx="34" ry="5" fill="#E6B454" opacity=".26"/>
+</g></svg>

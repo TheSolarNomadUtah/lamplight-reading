@@ -5,8 +5,11 @@
    and chimes, never story or game voices. show() is not wrapped. */
 (function(root){
 'use strict';
-var CEIL=-6; /* dBFS: 6 dB under full scale, same cap as the Sound Cards bus */
+var CEIL=-6; /* dBFS: 6 dB under full scale, the promised true-peak cap */
 var PEAK=Math.pow(10,CEIL/20);
+/* Hard-clip 1.2 dB under the cap so 2× oversample + reconstruction stays ≤ −6 dBTP.
+   A clip at exactly PEAK still produced −5.1 dBTP on a five-tone stack. */
+var CLIP=Math.pow(10,(CEIL-1.2)/20);
 var prevBus=typeof busInstall==='function'?busInstall:null;
 
 function isOffline(c){
@@ -18,10 +21,16 @@ function isOffline(c){
 }
 
 function ceiling(c){
-  var sh=c.createWaveShaper(),n=2048,curve=new Float32Array(n),k=1.15,den=Math.tanh(k);
+  var sh=c.createWaveShaper(),n=2048,curve=new Float32Array(n);
   for(var i=0;i<n;i++){
-    var x=i/(n-1)*2-1,y=Math.tanh(x*k)/den;
-    curve[i]=Math.max(-PEAK,Math.min(PEAK,y*PEAK));
+    var x=i/(n-1)*2-1,ax=Math.abs(x),s=x<0?-1:1,y;
+    if(ax<=CLIP){
+      y=x; /* already under the cap — do not change loudness */
+    }else{
+      /* fold overshoot into ±CLIP (true-peak headroom below PEAK) */
+      y=s*CLIP;
+    }
+    curve[i]=y;
   }
   sh.curve=curve;
   try{sh.oversample='2x'}catch(e){}
@@ -40,13 +49,9 @@ function install(c){
   if(c._bus143&&c._bus143.ceil)return c;
   try{if(prevBus)prevBus(c)}catch(e){}
   if(c._bus&&c._bus.lim&&c._bus.real){
-    try{
-      c._bus.lim.threshold.value=CEIL;
-      c._bus.lim.ratio.value=20;
-      c._bus.lim.knee.value=0;
-      c._bus.lim.attack.value=.002;
-      c._bus.lim.release.value=.08;
-    }catch(e){}
+    /* Keep the v19/v141 limiter at −1 dB. A −6 dB compressor threshold
+       applies makeup gain and would make single sources several LU louder.
+       The waveshaper below is the −6 dB ceiling. */
     if(!c._bus.ceil){
       try{c._bus.ceil=attachCeil(c,c._bus.lim,c._bus.real)}catch(e){}
     }
@@ -57,7 +62,7 @@ function install(c){
     var real=c.destination,g=c.createGain(),cp=c.createDynamicsCompressor(),lim=c.createDynamicsCompressor();
     g.gain.value=.8;
     cp.threshold.value=-18;cp.ratio.value=3;cp.knee.value=6;cp.attack.value=.01;cp.release.value=.2;
-    lim.threshold.value=CEIL;lim.ratio.value=20;lim.knee.value=0;lim.attack.value=.002;lim.release.value=.08;
+    lim.threshold.value=-1;lim.ratio.value=20;lim.knee.value=0;lim.attack.value=.002;lim.release.value=.08;
     var sh=ceiling(c);
     g.connect(cp).connect(lim).connect(sh).connect(real);
     Object.defineProperty(c,'destination',{value:g,configurable:true});

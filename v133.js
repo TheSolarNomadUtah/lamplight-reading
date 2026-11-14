@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-/* v133: Grown-ups Print card — four ink-light SVG pages, window.print,
+/* v133: Grown-ups Print card — five ink-light SVG pages, window.print,
  * plus the same pages at /print/. Also relies on the visible “How long?”
  * heading added to the Lamp Breathing picker. Does not wrap show(). */
 (function(){
@@ -54,7 +54,7 @@ function attachCard133(){
  const root=typeof $==='function'?$('adults'):document.getElementById('adults');
  if(!root||root.querySelector('[data-print133]'))return;
  if(root.querySelector('[data-yours-editor125],[data-yours-gate125]')||root.getAttribute('data-yours-open'))return;
- const html=`<div class="card" data-print133="1"><h3 class="kline">${e133(t133('Print'))}</h3>${art133()}<p class="soft">${e133(t133('Four ink-light pages to print and use offline.'))}</p><p><button type="button" class="p print133-open" onclick="show('printables')">${e133(t133('Open'))}</button></p></div>`;
+ const html=`<div class="card" data-print133="1"><h3 class="kline">${e133(t133('Print'))}</h3>${art133()}<p class="soft">${e133(t133('Five ink-light pages to print and use offline.'))}</p><p><button type="button" class="p print133-open" onclick="show('printables')">${e133(t133('Open'))}</button></p></div>`;
  root.insertAdjacentHTML('beforeend',html);
 }
 
@@ -97,7 +97,7 @@ function renderPrint133(){
  if(ST133.id==='all'&&P){
   const sheets=P.pages(L).map(p=>`<div class="print133-sheet" data-print-id="${e133(p.id)}">${p.svg}</div>`).join('');
   el.innerHTML=`<div class="card noprint"><button type="button" onclick="Printables133.hub()">${e133(t133('Back'))}</button>
-    <h2>${e133(t133('Print all four'))}</h2>
+    <h2>${e133(t133('Print all five'))}</h2>
     <div class="print133-row">
       <button type="button" class="p print133-btn" onclick="Printables133.print()">${e133(t133('Print this page'))}</button>
       <a class="print133-static" href="${e133(file133('all',L))}">${e133(t133('Open as a page'))}</a>
@@ -121,9 +121,9 @@ function renderPrint133(){
  }).join(''):'';
  el.innerHTML=`<div class="card"><button type="button" onclick="show('adults')">${e133(t133('Grown-ups'))}</button>
   <h2>${e133(t133('Print'))}</h2>
-  <p class="soft">${e133(t133('Four ink-light pages to print and use offline.'))}</p>
+  <p class="soft">${e133(t133('Five ink-light pages to print and use offline.'))}</p>
   <div class="print133-hub">${tiles}</div>
-  <p><button type="button" class="p print133-btn" onclick="Printables133.open('all')">${e133(t133('Print all four'))}</button>
+  <p><button type="button" class="p print133-btn" onclick="Printables133.open('all')">${e133(t133('Print all five'))}</button>
      <a class="print133-static" href="${e133(file133('index',L))}">${e133(t133('Open as a page'))}</a></p>
  </div>`;
 }
