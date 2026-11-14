@@ -521,8 +521,65 @@ const SECTIONS=process.env.CALM_SECTIONS
     samples.push({section:'printables',vis:'printables',n:(printables.tiles||[]).length});
   }catch(e){printables={error:String(e)}}
 
+  let companionBlink=null;
+  try{
+    const c2=await browser.newContext({viewport:{width:390,height:800},reducedMotion:'reduce',serviceWorkers:'block'});
+    const p2=await c2.newPage();
+    await p2.goto(ROOT+'/?cmblink='+Date.now(),{waitUntil:'domcontentloaded',timeout:30000});
+    await p2.waitForFunction(()=>typeof friendArtInner101==='function'&&typeof IL!=='undefined',{timeout:20000});
+    await p2.evaluate(()=>{
+      const box=document.createElement('div');
+      box.id='cmBlink137';
+      box.style.cssText='position:fixed;left:0;top:0;padding:8px;background:#120E18;display:flex;gap:8px;z-index:99999';
+      for(const [k,st] of [['turtle',6],['dragon',6],['sprites',6]]){
+        const hold=document.createElement('div');
+        hold.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="160" height="160">'+friendArtInner101(k,st)+'</svg>';
+        box.appendChild(hold);
+      }
+      document.body.appendChild(box);
+    });
+    await p2.waitForTimeout(200);
+    const sample=()=>p2.evaluate(()=>{
+      const pick=sel=>{
+        const el=document.querySelector('#cmBlink137 '+sel);
+        if(!el)return null;
+        const s=getComputedStyle(el);
+        return {anim:(s.animationName||'').replace(/\s/g,''),dur:s.animationDuration,op:s.opacity};
+      };
+      const running=(document.getAnimations?document.getAnimations():[]).filter(a=>{
+        const t=a.effect&&a.effect.target;
+        return t&&t.closest&&t.closest('#cmBlink137');
+      }).map(a=>({name:a.animationName,play:a.playState}));
+      const sig=[...document.querySelectorAll('#cmBlink137 *')].map(el=>{
+        const s=getComputedStyle(el);
+        return [el.tagName,el.getAttribute('class')||'',s.opacity,s.visibility,s.display,s.fill,s.stroke,s.transform,s.filter,s.strokeDashoffset].join('|');
+      });
+      return {wo:pick('.il-wo'),wc:pick('.il-wc'),aura:pick('.il-aura'),running,nWo:document.querySelectorAll('#cmBlink137 .il-wo').length,nWc:document.querySelectorAll('#cmBlink137 .il-wc').length,sig};
+    });
+    const a=await sample();
+    await p2.waitForTimeout(900);
+    const b=await sample();
+    let delta=0;
+    if(!a.sig||!b.sig||a.sig.length!==b.sig.length){delta=-1;}
+    else {for(let i=0;i<a.sig.length;i++) if(a.sig[i]!==b.sig[i]) delta++;}
+    const styles={wo:b.wo,wc:b.wc,aura:b.aura,running:b.running,nWo:b.nWo,nWc:b.nWc,nodes:b.sig.length};
+    const still=styles.wo&&/^(none|)?$/.test(styles.wo.anim)
+      && styles.wc&&/^(none|)?$/.test(styles.wc.anim)
+      && (!styles.aura||/^(none|)?$/.test(styles.aura.anim))
+      && Number(styles.wc.op)===0
+      && Number(styles.wo.op)===1
+      && (styles.running||[]).length===0;
+    companionBlink={
+      delta,
+      still:!!still,
+      styles,
+      ok:delta===0&&!!still&&(styles.nWo||0)>=3&&(styles.nWc||0)>=3
+    };
+    await c2.close();
+  }catch(e){companionBlink={error:String(e)}}
+
   await browser.close();
 
 
-  process.stdout.write(JSON.stringify({ok:small.length===0&&shapeFails.length===0,small,shapeFails,samples,honeycomb,quilt,rainbowNight,moon,candlePicker,fireflies,starCount,polygon,printables,errors},null,2));
+  process.stdout.write(JSON.stringify({ok:small.length===0&&shapeFails.length===0,small,shapeFails,samples,honeycomb,quilt,rainbowNight,moon,candlePicker,fireflies,starCount,polygon,printables,companionBlink,errors},null,2));
 })().catch(e=>{console.error(JSON.stringify({ok:false,error:String(e)}));process.exit(1)});

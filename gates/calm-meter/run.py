@@ -167,6 +167,13 @@ def main():
               or (pr.get('minH') or 0) < 55.5 or not (pr.get('card') or {}).get('card')):
             fails.append({'rule': 'T-printables', 'section': 'printables', 'detail': 'Print card or four print pages missing, or tiles under 56 px', **{k: pr[k] for k in pr}})
 
+    cb = taps.get('companionBlink')
+    if cb:
+        if cb.get('error'):
+            fails.append({'rule': 'F-blink-reduced-motion', 'section': 'friends', 'detail': 'companion blink check error: %s' % cb.get('error')})
+        elif not cb.get('ok') or (cb.get('delta') or 0) != 0 or not cb.get('still'):
+            fails.append({'rule': 'F-blink-reduced-motion', 'section': 'friends', 'detail': 'soft close must be still under reduced motion (delta 0, eyes stay open, no wo/wc/aura animation)', **{k: cb[k] for k in cb}})
+
     baseline = load_baseline()
     known = set(baseline.get('items') or [])
     known_hits, new_fails = [], []
@@ -212,6 +219,7 @@ def main():
         'starCount': taps.get('starCount'),
         'polygon': taps.get('polygon'),
         'printables': taps.get('printables'),
+        'companionBlink': taps.get('companionBlink'),
         'flash_ok': flash.get('ok'),
         'loudness_raw_ok': loud.get('ok'),
         'shapes_ok': shapes.get('ok')
