@@ -35,7 +35,9 @@ function key145(url){
     var u=new URL(url, location.href);
     var p=u.pathname||'';
     if(p==='/'||p==='') return '';
-    return p.replace(/^\/+/,'');
+    p=p.replace(/^\/+/,'');
+    try{p=decodeURIComponent(p)}catch(e){}
+    return p;
   }catch(e){return String(url||'')}
 }
 function has145(set, f){
