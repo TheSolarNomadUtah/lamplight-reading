@@ -477,7 +477,7 @@ if(typeof SCARDS101!=='undefined'&&!SCARDS101.some(c=>c.id==='turtle')){
  SCARDS101.push({id:'turtle',cat:'water',en:'A turtle swims',es:'Una tortuga nada',play:'turtle'});
 }
 if(typeof SCART101==='object'){
- SCART101.turtle=()=>ag101(turtleInner105('water'),'#7ba9ba');
+ SCART101.turtle=()=>ag101('<defs><clipPath id="scTurtleV3"><circle cx="50" cy="50" r="45.5"/></clipPath></defs><g clip-path="url(#scTurtleV3)"><path d="M0 64 Q22 52 40 64 Q58 76 78 60 Q90 52 100 58 L100 100 L0 100Z" fill="#C2DCE2"/><path d="M0 76 Q24 64 42 76 Q62 88 84 72 Q94 66 100 72 L100 100 L0 100Z" fill="#7BA9BA"/><path d="M8 64 Q22 56 34 64" fill="none" stroke="#FFF6D8" stroke-width="2"/><path d="M50 68 Q66 58 82 66" fill="none" stroke="#FFF6D8" stroke-width="2"/></g><ellipse cx="52" cy="48" rx="20" ry="13" fill="#6F9A7A"/><path d="M40 46 L48 40 L56 46 L64 40" fill="none" stroke="#C5DDD0" stroke-width="1.3"/><ellipse cx="28" cy="48" rx="8" ry="6" fill="#E8C894"/><circle cx="25" cy="46.5" r="1.4" fill="#463F52" stroke="none"/><circle cx="24.4" cy="45.8" r=".5" fill="#FFF6D8" stroke="none"/><path d="M28 51 Q32 53 34 51" fill="none" stroke-width="1.1"/><path d="M42 56 Q32 70 22 68" fill="#E8C894"/><path d="M60 54 Q74 68 80 60" fill="#E8C894"/><path d="M46 58 Q42 70 34 72" fill="#E8C894"/><path d="M58 58 Q66 72 74 70" fill="#E8C894"/><path d="M70 48 Q78 46 80 52" fill="none" stroke-width="1.5"/>','#6F9A7A');
 }
 if(typeof SCGAIN102==='object')SCGAIN102.turtle=2.1;
 /* v115 folded: turtle swim sound lives in v102.js scPlay101. */
