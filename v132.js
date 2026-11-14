@@ -340,11 +340,48 @@ function fitStars132(raw,box,opt){
  let pMinX=Infinity,pMaxX=-Infinity,pMinY=Infinity,pMaxY=-Infinity;
  placed.forEach(p=>{if(p.x<pMinX)pMinX=p.x;if(p.x>pMaxX)pMaxX=p.x;if(p.y<pMinY)pMinY=p.y;if(p.y>pMaxY)pMaxY=p.y});
  const pw=(pMaxX-pMinX)||1, ph=(pMaxY-pMinY)||1;
- const fit=Math.min(availW/pw,availH/ph,1);
+ function minPair(list){
+  let m=Infinity;
+  for(let i=0;i<list.length;i++){
+   for(let j=i+1;j<list.length;j++){
+    const d=Math.hypot(list[i].x-list[j].x,list[i].y-list[j].y);
+    if(d>0&&d<m)m=d;
+   }
+  }
+  return m;
+ }
+ /* QA v134: do not shrink below the 56 px floor on the final fit.
+  * Tonight dippers (Reykjavik 54.64 at 390) undershot because the
+  * pusher's work was scaled back to the padded box. Use more of the
+  * box, or a hair more, so centers stay at least 56 CSS px apart. */
+ let fit=Math.min(availW/pw,availH/ph,1);
+ if(wantSep){
+  const origin=placed.map(p=>({x:p.x-pMinX,y:p.y-pMinY}));
+  const minPlaced=minPair(origin);
+  if(minPlaced>0){
+   const need=minVB/minPlaced;
+   if(fit+1e-9<need){
+    const maxInBox=Math.min(box.w/pw,box.h/ph);
+    fit=Math.max(fit,Math.min(need,maxInBox));
+    if(fit+1e-9<need) fit=need;
+   }
+  }
+ }
  const w=pw*fit, h=ph*fit;
- const x0=box.x0+pad+(availW-w)/2;
- const y0=box.y0+pad+(availH-h)/2;
- return placed.map(p=>({x:x0+(p.x-pMinX)*fit,y:y0+(p.y-pMinY)*fit}));
+ const x0=box.x0+(box.w-w)/2;
+ const y0=box.y0+(box.h-h)/2;
+ const out=placed.map(p=>({x:x0+(p.x-pMinX)*fit,y:y0+(p.y-pMinY)*fit}));
+ if(wantSep){
+  const m=minPair(out);
+  if(m>0&&m<minVB){
+   const s=minVB/m;
+   let cx=0,cy=0;
+   out.forEach(p=>{cx+=p.x;cy+=p.y});
+   cx/=out.length;cy/=out.length;
+   out.forEach(p=>{p.x=cx+(p.x-cx)*s;p.y=cy+(p.y-cy)*s});
+  }
+ }
+ return out;
 }
 function projectRaw132(fig,tonight,jd,city){
  const box={x0:22,y0:16,w:156,h:108};

@@ -132,6 +132,32 @@ def main():
             fails.append({'rule': 'T3-star-nearest', 'section': 'starcount', 'detail': 'center tap on a star lit a neighbor, or nearest-star hit-testing failed', **{k: sc[k] for k in ('t3','minSep','n','id','title')}})
         elif (sc.get('minSep') or 0) < 55.5:
             fails.append({'rule': 'T3-star-spacing', 'section': 'starcount', 'detail': 'star centers are closer than 56 px at 390', **{k: sc[k] for k in ('minSep','n','id','title','board')}})
+        elif sc.get('minSepTonight') is not None and (sc.get('minSepTonight') or 0) < 55.5:
+            fails.append({'rule': 'T3-star-spacing-tonight', 'section': 'starcount', 'detail': 'tonight dipper centers are closer than 56 px after the final fit (Reykjavik case)', **{k: sc[k] for k in ('minSepTonight','tonightDipper','minSep')}})
+    poly = taps.get('polygon')
+    if poly:
+        if poly.get('error'):
+            fails.append({'rule': 'T-polygon', 'section': 'polygon', 'detail': 'polygon page error: %s' % poly.get('error')})
+        elif (not poly.get('open') or (poly.get('n') or 0) != 3
+              or (poly.get('minH') or 0) < 55.5
+              or not poly.get('kepler')
+              or (poly.get('name') or '') != 'Triangle'):
+            fails.append({'rule': 'T-polygon', 'section': 'polygon', 'detail': 'Polygon to circle missing, not starting as a triangle, taps under 56 px, or Kepler art missing', **{k: poly[k] for k in poly if k!='steps'}})
+        else:
+            end = poly.get('end') or {}
+            names = [(s.get('n'), s.get('name')) for s in (poly.get('steps') or [])]
+            want_early = {3: 'Triangle', 4: 'Square', 5: 'Pentagon', 6: 'Hexagon'}
+            bad_name = False
+            # steps are recorded after each add, so first step is n=4
+            for s in (poly.get('steps') or []):
+                nn, nm = s.get('n'), s.get('name') or ''
+                if nn in want_early and nm != want_early[nn]:
+                    bad_name = True
+                if nn and nn > 6 and 'looks round' not in nm.lower():
+                    bad_name = True
+            if (end.get('n') or 0) != 16 or not end.get('addGone') or 'looks round' not in (end.get('name') or '').lower() or bad_name:
+                fails.append({'rule': 'T-polygon', 'section': 'polygon', 'detail': 'did not stop at 16 sides, kept adding, or used the wrong shape name', **{'end': end, 'names': names}})
+
     pr = taps.get('printables')
     if pr:
         if pr.get('error'):
@@ -183,6 +209,7 @@ def main():
         'candlePicker': taps.get('candlePicker'),
         'fireflies': taps.get('fireflies'),
         'starCount': taps.get('starCount'),
+        'polygon': taps.get('polygon'),
         'printables': taps.get('printables'),
         'flash_ok': flash.get('ok'),
         'loudness_raw_ok': loud.get('ok'),

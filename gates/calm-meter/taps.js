@@ -394,8 +394,103 @@ const SECTIONS=process.env.CALM_SECTIONS
     if(starCount.minSep==null){
       starCount.minSep=await p.evaluate(()=>window.StarCount132&&StarCount132.minSep?Math.round(StarCount132.minSep()*10)/10:0);
     }
+    /* QA v134 low: tonight dipper at Reykjavik must still meet the 56 px floor after the final fit. */
+    try{
+      await p.evaluate(()=>{
+        if(typeof skySetCity112==='function')skySetCity112(19);
+        if(window.StarCount132){
+          if(StarCount132.setCity)StarCount132.setCity(19);
+          if(StarCount132.setDate)StarCount132.setDate(new Date(2026,0,15,21,0,0));
+        }
+      });
+      await p.waitForTimeout(350);
+      await p.evaluate(()=>{if(window.StarCount132&&StarCount132.pick)StarCount132.pick('dipper',true)});
+      await p.waitForTimeout(200);
+      const night=await p.evaluate(()=>{
+        const st=StarCount132.state();
+        return {
+          cityN:document.getElementById('starCity132')?document.getElementById('starCity132').selectedIndex:-1,
+          city:(document.getElementById('starCity132')||{}).value,
+          id:st&&st.id, tonight:st&&st.tonight, n:(st&&st.lit||[]).length,
+          minSep:StarCount132.minSep?Math.round(StarCount132.minSep()*10)/10:0
+        };
+      });
+      starCount.tonightDipper=night;
+      starCount.minSepTonight=night.minSep;
+    }catch(e){starCount.tonightDipper={error:String(e)};starCount.minSepTonight=0}
     samples.push({section:'starcount',vis:'math',n:starCount.n||0});
   }catch(e){starCount={error:String(e)}}
+
+  let polygon=null;
+  try{
+    await p.evaluate(()=>{if(typeof show==='function')show('math');if(typeof mathOpen==='function')mathOpen('polygon')});
+    await p.waitForTimeout(300);
+    polygon=await p.evaluate(()=>{
+      const add=document.getElementById('poly135add');
+      const again=document.getElementById('poly135again');
+      const hit=document.querySelector('#math .poly135-hit');
+      const name=(document.getElementById('poly135name')||{}).textContent||'';
+      const title=(document.querySelector('#math h2')||{}).textContent||'';
+      const st=window.Polygon135&&Polygon135.state?Polygon135.state():null;
+      const img=document.querySelector('#math .poly135-kepler');
+      function box(el){if(!el)return null;const r=el.getBoundingClientRect();return {w:Math.round(r.width*10)/10,h:Math.round(r.height*10)/10}}
+      const btns=[add,again,hit].filter(Boolean).map(el=>({id:el.id||el.className, ...box(el)}));
+      return {
+        open:/Polygon to circle/i.test(title) && !!document.getElementById('poly135path'),
+        title, name, n:st&&st.n, max:window.Polygon135&&Polygon135.max,
+        add:box(add), again:box(again), hit:box(hit),
+        minH:btns.length?Math.min(...btns.map(b=>b.h)):0,
+        minW:btns.length?Math.min(...btns.filter(b=>b.id!=='poly135-hit'&&b.id.indexOf('poly135-hit')<0).map(b=>b.h===b.h? (b.id.includes('hit')?b.h:b.w) : 0), ...btns.map(b=>b.h)):0,
+        buttons:btns,
+        kepler:!!img, keplerSrc:img?img.getAttribute('src'):'',
+        flashy:/blink|flash/i.test((document.getElementById('v135css')||{}).textContent||'')
+      };
+    });
+    /* T1: Add a corner and Start again are 56 px; the shape overlay is the whole card. */
+    for(const b of (polygon.buttons||[])){
+      const isHit=/hit/.test(b.id||'');
+      if(isHit){
+        if((b.w||0)<55.5||(b.h||0)<55.5){
+          small.push({section:'polygon',rule:'T1',w:b.w,h:b.h,label:'shape',tag:'button',cls:'poly135-hit',id:'',family:'polygon'});
+        }
+      }else if((b.w||0)<55.5||(b.h||0)<55.5){
+        small.push({section:'polygon',rule:'T1',w:b.w,h:b.h,label:b.id,tag:'button',cls:'poly135-btn',id:b.id,family:'polygon'});
+      }
+    }
+    /* Names 3-6, then the round phrase, and a stop at 16. Walk with setN so the slow morph is not skipped. */
+    const steps=[];
+    for(let n=3;n<=16;n++){
+      await p.evaluate(n=>Polygon135.setN(n),n);
+      const snap=await p.evaluate(()=>{
+        const st=Polygon135.state();
+        const name=(document.getElementById('poly135name')||{}).textContent||'';
+        return {n:st.n,name};
+      });
+      steps.push(snap);
+    }
+    const end=await p.evaluate(()=>{
+      const st=Polygon135.state();
+      const add=document.getElementById('poly135add');
+      const name=(document.getElementById('poly135name')||{}).textContent||'';
+      return {n:st.n,name,addGone:!add};
+    });
+    /* One live slow morph: 3 → 4 should still be mid-morph shortly after the tap. */
+    await p.evaluate(()=>Polygon135.setN(3));
+    const d0=await p.evaluate(()=>(document.getElementById('poly135path')||{}).getAttribute('d')||'');
+    await p.evaluate(()=>Polygon135.add());
+    await p.waitForTimeout(180);
+    const mid=await p.evaluate((d0)=>{
+      const d=(document.getElementById('poly135path')||{}).getAttribute('d')||'';
+      const st=Polygon135.state();
+      return {n:st.n,morphing:st.morphing,changed:d!==d0,dlen:d.length};
+    },d0);
+    await p.waitForTimeout(1200);
+    const after=await p.evaluate(()=>Polygon135.state());
+    polygon.steps=steps;
+    polygon.end=end;
+    polygon.morph={mid,after,slow:!!(mid&&mid.changed&&(mid.morphing||after.n===4))};
+    samples.push({section:'polygon',vis:'math',n:2});
+  }catch(e){polygon={error:String(e)}}
 
   let printables=null;
   try{
@@ -429,5 +524,5 @@ const SECTIONS=process.env.CALM_SECTIONS
   await browser.close();
 
 
-  process.stdout.write(JSON.stringify({ok:small.length===0&&shapeFails.length===0,small,shapeFails,samples,honeycomb,quilt,rainbowNight,moon,candlePicker,fireflies,starCount,printables,errors},null,2));
+  process.stdout.write(JSON.stringify({ok:small.length===0&&shapeFails.length===0,small,shapeFails,samples,honeycomb,quilt,rainbowNight,moon,candlePicker,fireflies,starCount,polygon,printables,errors},null,2));
 })().catch(e=>{console.error(JSON.stringify({ok:false,error:String(e)}));process.exit(1)});
