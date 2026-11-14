@@ -257,12 +257,6 @@ function install(){
       return prev.apply(this,arguments);
     };
   });
-  hook('patGrowTwist106',function(prev){
-    return function(){
-      var r=prev.apply(this,arguments);
-      return r;
-    };
-  });
   if(typeof IL150==='object'){
     IL150.runFern=runFern;
     IL150.parseCode=parseCode;
