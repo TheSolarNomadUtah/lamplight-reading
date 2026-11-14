@@ -32,7 +32,7 @@ function scallops(s,u){var L=[[3],[3,5],[3,5,8],[3,5,8]][s-1],R=[[10,34],[8,22,3
 for(i=0;i<L.length;i++)o.push('<path d="'+lobe(L[i],R[i],R[i+1])+'" fill="'+A+'" fill-opacity="'+f(.16+i*.06,2)+'"'+ST+'1.7'+LJ+"/>");
 return '<g clip-path="url(#'+u+')">'+o.join("")+"</g>"}
 function lcg(n,s){for(var x=s,o=[],i=0;i<n;i++)x=(1664525*x+1013904223)>>>0,o.push(x);return o}
-function sites(n){var s=[[50,50]],v=lcg(Math.max(0,n-1),109),i,u,w,t;for(i=0;i<v.length;i++){t=v[i];u=((t%1000)/1000)*2-1;w=((((t/1000)|0)%1000)/1000)*2-1;if(u*u+w*w>1){u*=.7;w*=.7}s.push([50+u*31.2,50+w*31.2])}return s}
+function sites(n,seed){var s=[[50,50]],v=lcg(Math.max(0,n-1),seed==null?109:seed),i,u,w,t;for(i=0;i<v.length;i++){t=v[i];u=((t%1000)/1000)*2-1;w=((((t/1000)|0)%1000)/1000)*2-1;if(u*u+w*w>1){u*=.7;w*=.7}s.push([50+u*31.2,50+w*31.2])}return s}
 function hit(pr,cu,px,py,nx,ny){var dx=cu[0]-pr[0],dy=cu[1]-pr[1],de=nx*dx+ny*dy,t=Math.abs(de)<1e-12?0:(nx*(px-pr[0])+ny*(py-pr[1]))/de;t=t<0?0:t>1?1:t;return[pr[0]+t*dx,pr[1]+t*dy]}
 function clp(poly,px,py,nx,ny){if(!poly.length)return[];var o=[],pr=poly[poly.length-1],pin=nx*pr[0]+ny*pr[1]<=nx*px+ny*py+1e-9,i,cu,cin;
 for(i=0;i<poly.length;i++){cu=poly[i];cin=nx*cu[0]+ny*cu[1]<=nx*px+ny*py+1e-9;if(cin){if(!pin)o.push(hit(pr,cu,px,py,nx,ny));o.push(cu)}else if(pin)o.push(hit(pr,cu,px,py,nx,ny));pr=cu;pin=cin}return o}
@@ -45,5 +45,7 @@ var AL={"dragon-curve":"heighway",dragon:"heighway",fibonacci:"scallops","fib-sc
 function res(id){id=String(id||"").toLowerCase().replace(/_/g,"-");return DRAW[id]?id:AL[id]||null}
 function inner(id,level,idx,uid){var k=res(id);return k?'<svg xmlns="'+NS+'" viewBox="0 0 100 100"><defs>'+clip(uid)+"</defs>"+cloth(idx)+DRAW[k](st(level),uid)+"</svg>":""}
 function square(id,level,opt){opt=opt||{};return inner(id,level,opt.idx||0,opt.uid||"q")}
-return{square:square,ids:["hex","sunflower","heighway","rosette","scallops","voronoi"],resolve:res,stage:st,depth:{hex:["1","4","7","19"],sunflower:[5,8,13,13],heighway:[4,5,6,7],rosette:["6x1","6x1","8x1","8x2"],scallops:["3","3+5","3+5+8","3+5+8"],voronoi:[5,7,9,11]}}
+function voronoiCells(s,opt){opt=opt||{};var n=opt.n||[5,7,9,11][st(s)-1],S=sites(n,opt.seed==null?109:opt.seed),rg=[],i,j,a,cells=[],poly;for(i=0;i<24;i++){a=2*Math.PI*i/24;rg.push([50+40*Math.cos(a),50+40*Math.sin(a)])}for(i=0;i<S.length;i++){poly=rg.slice();for(j=0;j<S.length;j++)if(i!==j){poly=clp(poly,(S[i][0]+S[j][0])/2,(S[i][1]+S[j][1])/2,S[j][0]-S[i][0],S[j][1]-S[i][1]);if(poly.length<3)break}if(poly.length>=3)cells.push({i:i,site:S[i],poly:poly})}return{n:n,sites:S,cells:cells}}
+function rosetteCircles(s){s=st(s);var n=s<3?6:8,rings=s<4?1:2,r=36,o={n:n,rings:rings,r:r,circles:[{x:50,y:50,r:r*.34,kind:"boss"}]},k,i,a,cr;for(k=1;k<=rings;k++){cr=r*(rings===1?.48:.25*k);for(i=0;i<n;i++){a=2*Math.PI*i/n-Math.PI/2;o.circles.push({x:50+cr*Math.cos(a),y:50+cr*Math.sin(a),r:cr,kind:"petal"})}}o.circles.push({x:50,y:50,r:r,kind:"rim"});return o}
+return{square:square,ids:["hex","sunflower","heighway","rosette","scallops","voronoi"],resolve:res,stage:st,depth:{hex:["1","4","7","19"],sunflower:[5,8,13,13],heighway:[4,5,6,7],rosette:["6x1","6x1","8x1","8x2"],scallops:["3","3+5","3+5+8","3+5+8"],voronoi:[5,7,9,11]},voronoiCells:voronoiCells,rosetteCircles:rosetteCircles}
 });
