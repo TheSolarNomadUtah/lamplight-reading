@@ -157,7 +157,7 @@ function previewStage147(pid,kind){
   var st=null;
   try{st=typeof friendState101==='function'?friendState101(kind==='turtle'?'turtle':kind,pid):null}catch(e){}
   if(st&&typeof lampViewStage74==='function') return lampViewStage74(st);
-  return (st&&st.stage)||3;
+  return (st&&st.stage)||1;
 }
 function lookTileSvg147(look,kind,stage){
   var inner='';
