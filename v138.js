@@ -12,8 +12,11 @@ function esc138(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp
    Same Julian-date style as v131 solstices and moon.js. Device clock only; no location. */
 function moonEquinoxJD138(year, month){
   const Y=(year-2000)/1000, Y2=Y*Y, Y3=Y2*Y, Y4=Y3*Y;
-  if(month===9) return 2451810.21715 + 365242.01767*Y - 0.11575*Y2 + 0.00337*Y3 + 0.00078*Y4;
-  return 2451623.80984 + 365242.37404*Y + 0.05169*Y2 - 0.00411*Y3 - 0.00057*Y4;
+  const mean=month===9?2451810.21715+365242.01767*Y-0.11575*Y2+0.00337*Y3+0.00078*Y4
+    :2451623.80984+365242.37404*Y+0.05169*Y2-0.00411*Y3-0.00057*Y4;
+  const peri=(typeof MoonDusk131==='object'&&MoonDusk131&&typeof MoonDusk131.periodic==='function')
+    ?MoonDusk131.periodic:null;
+  return peri?peri(mean):mean;
 }
 function sameLocalDay138(inst, y, m, d){
   return inst.getFullYear()===y && inst.getMonth()===m && inst.getDate()===d;
@@ -32,7 +35,10 @@ function moonEquinox138(date){
 function moonFull138(date){
   try{
     if(typeof MoonDusk==='undefined'||typeof MoonDusk.phase!=='function') return false;
-    return MoonDusk.phase(date instanceof Date?date:new Date()).id==='full';
+    const p=MoonDusk.phase(date instanceof Date?date:new Date());
+    if(p&&typeof p.frac==='number'&&typeof MoonDusk.SYNODIC==='number')
+      return Math.abs(p.frac-0.5)*MoonDusk.SYNODIC<=1.5;
+    return p&&p.id==='full';
   }catch(e){return false}
 }
 

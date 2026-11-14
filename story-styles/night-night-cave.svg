@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Cave-wall painting of Night, Night: a stone wall, a sun, a tree, a sitting cat, a child waving to the moon, and a clay lantern">
+<defs>
+<filter id="st" x="0" y="0" width="100%" height="100%">
+<feTurbulence type="fractalNoise" baseFrequency=".42" numOctaves="4" seed="105" result="n"/>
+<feColorMatrix in="n" type="saturate" values="0" result="g"/>
+<feComponentTransfer in="g" result="a"><feFuncA type="linear" slope=".48"/></feComponentTransfer>
+<feBlend in="SourceGraphic" in2="a" mode="multiply"/>
+</filter>
+<filter id="db" x="-.15" y="-.15" width="1.3" height="1.3">
+<feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="105" result="n"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation=".45"/>
+</filter>
+<radialGradient id="glow" cx="16%" cy="86%" r="70%">
+<stop offset="0" stop-color="#FFE4A4" stop-opacity=".5"/>
+<stop offset=".4" stop-color="#E6B454" stop-opacity=".22"/>
+<stop offset="1" stop-color="#E6B454" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="400" height="300" fill="#B38A62" filter="url(#st)"/>
+<path d="M-20-10C40-20 90 30 70 80C20 110-30 60-20-10Z" fill="#9A7450" opacity=".55"/>
+<path d="M80 0C140-20 200 20 170 70C120 90 70 40 80 0Z" fill="#C4A07A" opacity=".45"/>
+<path d="M210-20C280-30 360 20 340 80C280 70 220 30 210-20Z" fill="#A88860" opacity=".5"/>
+<path d="M300 80C370 50 430 120 400 190C340 180 280 120 300 80Z" fill="#8D6B4A" opacity=".4"/>
+<path d="M-10 160C60 130 120 190 80 230C20 250-30 200-10 160Z" fill="#8D6B4A" opacity=".42"/>
+<path d="M20 240C120 200 260 220 410 250C410 320-10 320 20 240Z" fill="#7A5A3C" opacity=".4"/>
+<path d="M150 90C200 70 240 120 210 150C160 170 120 120 150 90Z" fill="#C4A07A" opacity=".3"/>
+<path d="M250 160C300 140 340 190 310 220C270 240 230 190 250 160Z" fill="#9A7450" opacity=".35"/>
+<g fill="none" stroke="#5A3E28" stroke-width="1.2" stroke-linecap="round" opacity=".55">
+<path d="M48 8C58 50 44 96 62 140C50 180 78 220 70 270"/>
+<path d="M58 96C78 110 70 130 88 148"/>
+<path d="M310 6C298 54 322 100 304 150C326 198 312 244 338 290"/>
+<path d="M304 150C280 160 286 184 268 198"/>
+<path d="M180 40C186 70 174 100 188 130"/>
+</g>
+<ellipse cx="68" cy="258" rx="220" ry="180" fill="url(#glow)"/>
+<g fill="#A24B2E" opacity=".45">
+<circle cx="86" cy="64" r="1.6"/><circle cx="98" cy="52" r="1.1"/><circle cx="74" cy="78" r="1.3"/>
+<circle cx="160" cy="70" r="1.2"/><circle cx="40" cy="200" r="1.4"/><circle cx="54" cy="214" r="1"/>
+<circle cx="310" cy="90" r="1.2"/><circle cx="200" cy="240" r="1.3"/><circle cx="170" cy="44" r="1"/>
+</g>
+<g filter="url(#db)" transform="translate(120 86)" fill="#C4853A" stroke="#C4853A" stroke-linecap="round">
+<path d="M-22 2C-24-12-12-26 2-24C14-30 30-14 26 0C32 12 18 26 4 24C-10 30-22 16-22 2Z"/>
+<path d="M0-28v-9M0 28v9M-28 0h-9M28 0h9M-20-20l-7-7M20 20l7 7M20-20l7-7M-20 20l-7 7" fill="none" stroke-width="3.2"/>
+</g>
+<g fill="#8B3A24" opacity=".75">
+<circle cx="54" cy="128" r="2.4"/><circle cx="66" cy="125" r="2"/><circle cx="78" cy="129" r="2.6"/>
+<circle cx="90" cy="126" r="2.1"/><circle cx="102" cy="130" r="2.5"/><circle cx="114" cy="127" r="2"/>
+<circle cx="126" cy="131" r="2.3"/><circle cx="138" cy="128" r="1.9"/>
+<circle cx="46" cy="236" r="2.2"/><circle cx="60" cy="239" r="2.6"/><circle cx="74" cy="235" r="2"/>
+<circle cx="88" cy="240" r="2.4"/><circle cx="102" cy="236" r="2.1"/><circle cx="200" cy="248" r="2.3"/>
+<circle cx="214" cy="245" r="2"/><circle cx="228" cy="249" r="2.5"/><circle cx="242" cy="246" r="1.9"/>
+<circle cx="320" cy="200" r="2.2"/><circle cx="332" cy="196" r="2.4"/><circle cx="344" cy="201" r="2"/>
+</g>
+<g fill="none" stroke="#2C2622" stroke-linecap="round">
+<path d="M252 252C250 210 255 172 250 128" stroke-width="4.4"/>
+<path d="M251 176C232 160 214 148 196 132" stroke-width="2.8"/>
+<path d="M253 158C270 142 292 130 314 118" stroke-width="2.6"/>
+<path d="M250 140C242 122 238 100 242 82" stroke-width="2.3"/>
+<path d="M254 148C264 132 274 118 286 104" stroke-width="2.1"/>
+<path d="M196 132C186 124 180 114 178 104" stroke-width="1.7"/>
+<path d="M314 118C324 112 334 110 344 114" stroke-width="1.6"/>
+</g>
+<path d="M14.4 16.7A22 22 0 1 0 14.4-16.7A17 17 0 1 1 14.4 16.7Z" transform="translate(348 54)" fill="#E8DCC8" filter="url(#db)"/>
+<g transform="translate(176 208)" fill="none" stroke="#A24B2E" stroke-linecap="round" stroke-linejoin="round" filter="url(#db)">
+<path d="M8 10C0 6-6 16-4 30C0 46 16 52 30 44C40 38 42 24 34 16" stroke-width="3.3"/>
+<path d="M8 10C6 2 12-4 18 2C24-6 30 0 26 8C22 14 12 14 8 10" stroke-width="3"/>
+<path d="M12 0L9-9M24 2L29-7" stroke-width="2.6"/>
+<path d="M4 44v8M16 48v6M28 44v7" stroke-width="2.8"/>
+<path d="M34 20C46 14 50 32 38 38" stroke-width="3"/>
+</g>
+<g transform="translate(112 196)" fill="#8B3A24" stroke="#8B3A24" stroke-linecap="round" filter="url(#db)">
+<path d="M6-12C-4-14-8-4-4 4C2 10 14 6 14-4C14-12 10-12 6-12Z" stroke="none"/>
+<path d="M-2 8C-12 16-14 34-4 46C8 54 24 48 22 34C20 20 10 12 4 8Z" stroke="none"/>
+<path d="M-2 22C-12 28-18 38-20 46" fill="none" stroke-width="4.2"/>
+<path d="M10 16L24 12L28-4" fill="none" stroke-width="4.2" stroke-linejoin="round"/>
+<g transform="translate(28 -4) rotate(24)" fill="none" stroke-width="1.9">
+<path d="M-2.4-1l-2.6-7M-.6-2l0-8M1.4-2l2.4-7.2M3.2-1l4.2-5.8M3.4 2.2l5.2-1.2"/>
+</g>
+</g>
+<path d="M4 268C24 256 48 264 70 258C90 264 112 256 122 270C100 282 40 284 10 276C2 272 0 270 4 268Z" fill="#6F5138"/>
+<g transform="translate(32 228)">
+<circle cx="16" cy="3" r="3" fill="none" stroke="#5B7A6A" stroke-width="1.5"/>
+<path d="M16 6v3" stroke="#5B7A6A" stroke-width="1.3" stroke-linecap="round"/>
+<path d="M6 10c5-3 15-3 20 0v3H6z" fill="#5B7A6A"/>
+<rect x="5" y="13" width="22" height="26" rx="3" fill="#C4A882" stroke="#72583F" stroke-width="1.2"/>
+<rect x="8" y="16" width="16" height="16" rx="2" fill="#1A1620"/>
+<ellipse cx="16" cy="24" rx="5" ry="7" fill="#FFE4A4"/>
+<circle cx="16" cy="24" r="1.3" fill="#FFF6D8"/>
+</g>
+</svg>

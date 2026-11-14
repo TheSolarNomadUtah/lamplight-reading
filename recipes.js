@@ -13,14 +13,14 @@ if(kind!=="1"){r1=ring(1);cells=cells.concat(kind==="1+3"?[r1[0],r1[2],r1[4]]:r1
 if(kind==="1+6+12")cells=cells.concat(ring(2));
 for(i=0;i<cells.length;i++){q=cells[i][0];r=cells[i][1];x=50+sz*(Math.sqrt(3)*q+Math.sqrt(3)/2*r);y=50+sz*1.5*r;p=[];for(j=0;j<6;j++){a=(30+60*j)*Math.PI/180;p.push([x+sz*.96*Math.cos(a),y+sz*.96*Math.sin(a)])}d.push(P(p,1))}
 return '<g clip-path="url(#'+u+')"><path d="'+d.join("")+'" fill="'+A+'" fill-opacity=".22"'+ST+'1.8'+LJ+"/></g>"}
-function sun(s,u){var n=[5,8,13,13][s-1],c=[11.2,9.4,8.2,8.2][s-1],i,a,r,d="";for(i=0;i<n;i++){a=i*G;r=c*Math.sqrt(i+.6);d+="M"+f(50+r*Math.cos(a))+" "+f(50+r*Math.sin(a))+"h0"}
+function sun(s,u){var n=[5,8,13,13][s-1],i,a,r,d="",c;for(i=4;i<=n+3;i++)c=Math.sqrt(i+.6);c=33/c;for(i=4;i<=n+3;i++){a=i*G;r=c*Math.sqrt(i+.6);d+="M"+f(50+r*Math.cos(a))+" "+f(50+r*Math.sin(a))+"h0"}
 return '<g clip-path="url(#'+u+')"><circle cx="50" cy="50" r="5" fill="'+A+'"/><path d="'+d+'" fill="none" stroke="'+A+'" stroke-width="7" stroke-linecap="round"/></g>'}
 function hwy(o){for(var p=[[0,0]],x=0,y=0,dx=1,dy=0,n=1<<o,i=1,t;i<=n;i++){x+=dx;y+=dy;p.push([x,y]);if((i&((i&-i)<<1))===0){t=dx;dx=-dy;dy=t}else{t=dx;dx=dy;dy=-t}}return p}
-function fit(pts,x0,y0,x1,y1,amp){var ax=pts[0][0],ay=pts[0][1],bx=pts[pts.length-1][0],by=pts[pts.length-1][1],vx=bx-ax,vy=by-ay,L=Math.hypot(vx,vy)||1,px=-vy/L,py=vx/L,qx=-(y1-y0),qy=x1-x0,qL=Math.hypot(qx,qy)||1;qx/=qL;qy/=qL;var ext=pts.map(function(p){return(p[0]-ax)*px+(p[1]-ay)*py}),span=Math.max(Math.abs(Math.min.apply(null,ext)),Math.abs(Math.max.apply(null,ext)),1e-6),sa=amp?amp/span:0;
-return pts.map(function(p,i){var t=((p[0]-ax)*vx+(p[1]-ay)*vy)/(L*L);return[x0+t*(x1-x0)+sa*ext[i]*qx,y0+t*(y1-y0)+sa*ext[i]*qy]})}
-function dragon(s,u){return '<g clip-path="url(#'+u+')"><path d="'+P(fit(hwy([4,5,6,7][s-1]),22,74,78,26,22))+'" fill="none"'+ST+'2.6" stroke-linecap="round'+LJ+"/></g>"}
+function fit(pts){var xs=pts.map(function(p){return p[0]}),ys=pts.map(function(p){return p[1]}),minx=Math.min.apply(null,xs),maxx=Math.max.apply(null,xs),miny=Math.min.apply(null,ys),maxy=Math.max.apply(null,ys),s=72/Math.max(maxx-minx,maxy-miny,1e-6),cx=(minx+maxx)/2,cy=(miny+maxy)/2;
+return pts.map(function(p){return[50+(p[0]-cx)*s,50+(p[1]-cy)*s]})}
+function dragon(s,u){return '<g clip-path="url(#'+u+')"><path d="'+P(fit(hwy([4,5,6,7][s-1])))+'" fill="none"'+ST+'2.6" stroke-linecap="round'+LJ+"/></g>"}
 function rose(s,u){var n=s<3?6:8,rings=s<4?1:2,r=36,p=['<circle cx="50" cy="50" r="'+f(r*.34)+'"/>'],k,i,a,cr;
-for(k=1;k<=rings;k++){cr=r*(rings===1?.48:.36*k);for(i=0;i<n;i++){a=2*Math.PI*i/n-Math.PI/2;p.push('<circle cx="'+f(50+cr*Math.cos(a))+'" cy="'+f(50+cr*Math.sin(a))+'" r="'+f(cr)+'"/>')}}
+for(k=1;k<=rings;k++){cr=r*(rings===1?.48:.25*k);for(i=0;i<n;i++){a=2*Math.PI*i/n-Math.PI/2;p.push('<circle cx="'+f(50+cr*Math.cos(a))+'" cy="'+f(50+cr*Math.sin(a))+'" r="'+f(cr)+'"/>')}}
 p.push('<circle cx="50" cy="50" r="'+f(r)+'"/>');
 return '<g clip-path="url(#'+u+')" fill="none"'+ST+'1.8">'+p.join("")+"</g>"}
 function lobe(n,r0,r1){var d="",i,a0,a1,am,x0,y0,x1,y1,tx,ty,px,py,tw,ml,mr,m=function(t,rr){return f(50+rr*Math.cos(t))+" "+f(50+rr*Math.sin(t))};

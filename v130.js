@@ -63,8 +63,8 @@ function quiltCss130(){
   st.textContent=[
     '#patterns .quilt130{background:#120E18;border-radius:16px;padding:12px;margin:12px auto;max-width:520px}',
     '#patterns .quilt130 svg{display:block;width:100%;height:auto}',
-    '#patterns .pat-units [data-pat="quilt"] .quilt-tile130{width:72px;height:72px;display:block;margin:0 auto 6px}',
-    '#patterns .pat-units [data-pat="quilt"] .quilt-tile130 svg{width:72px;height:72px}',
+    '#patterns .pat-units [data-pat="quilt"] .quilt-tile130{width:88px;height:88px;display:block;margin:0 auto 6px}',
+    '#patterns .pat-units [data-pat="quilt"] .quilt-tile130 svg{width:88px;height:88px}',
     '#patterns[data-unit="quilt"] .math-card>button{min-width:56px;min-height:56px;padding:12px 16px}'
   ].join('');
   document.head.appendChild(st);
@@ -73,7 +73,7 @@ function quiltCss130(){
 function quiltTileArt130(){
   try{
     if(typeof PatternQuilt!=='undefined'&&PatternQuilt.square)
-      return '<span class="quilt-tile130">'+PatternQuilt.square('rosette',2,{idx:1,uid:'tile130'})+'</span>';
+      return '<span class="quilt-tile130">'+PatternQuilt.square('rosette',2,{idx:1,uid:'tile130'}).replace(/stroke-width="1\.8"/g,'stroke-width="2.2"')+'</span>';
   }catch(e){}
   return '';
 }

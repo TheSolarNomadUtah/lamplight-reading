@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Folk woodblock print of Night, Night: carved charcoal and ochre inks, a pine tree cut with white gouges, a sitting cat, a waving child, a sun, a moon, and a clay lantern">
+<defs>
+<filter id="wg" x="0" y="0" width="100%" height="100%">
+<feTurbulence type="fractalNoise" baseFrequency=".018 .45" numOctaves="2" seed="105" result="n"/>
+<feColorMatrix in="n" type="saturate" values="0" result="g"/>
+<feComponentTransfer in="g" result="a"><feFuncA type="linear" slope=".2"/></feComponentTransfer>
+<feBlend in="SourceGraphic" in2="a" mode="multiply"/>
+</filter>
+<filter id="ink" x="-.03" y="-.03" width="1.06" height="1.06">
+<feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="1" seed="105" result="n"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="1.5" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+</defs>
+<rect width="400" height="300" fill="#F3E6D0" filter="url(#wg)"/>
+<!-- ochre color block, slightly misregistered -->
+<g transform="translate(2.4 1.6)" fill="#C4853A">
+<circle cx="118" cy="86" r="26"/>
+<path d="M14 226C70 214 160 236 386 222V286H16Z"/>
+<ellipse cx="54" cy="260" rx="30" ry="14"/>
+<g transform="translate(112 196)">
+<circle cx="2" cy="-1" r="12"/>
+<path d="M3 10C-4 16-12 26-12 36C-12 44-6 50 2 51C8 51 12 50 12 48L22 36C23 32 20 28 14 24C10 18 6 12 3 10Z"/>
+</g>
+</g>
+<g filter="url(#ink)" fill="#2C2622" stroke="#2C2622" stroke-linecap="round" stroke-linejoin="round">
+<!-- uneven block border -->
+<path d="M11 16C18 7 382 8 389 18C396 40 396 262 388 284C372 296 28 296 14 286C5 264 4 36 11 16Z" fill="none" stroke-width="8.5"/>
+<!-- carved sky lines -->
+<path d="M25 27C82 27 216 29 374 29M24 38C93 38 223 40 373 40M24 50C90 49 234 51 377 50M25 61C87 60 228 62 373 61M24 71C88 71 215 73 373 73M25 83C80 82 234 84 377 83M22 93C66 93 226 95 375 95M23 105C74 104 233 106 375 105M23 115C73 115 220 117 376 117M25 126C82 126 226 128 376 128M23 137C81 137 213 139 377 139M25 150C69 148 212 150 373 148M23 159C88 159 222 161 377 161M24 171C78 170 222 172 373 171M26 182C70 181 214 183 376 182M25 193C87 192 231 194 377 193M25 205C79 203 234 205 374 203" fill="none" stroke-width="1.15" opacity=".55"/>
+<!-- sun rays, slightly uneven -->
+<g transform="translate(118 86)" fill="none" stroke-width="4.2">
+<path d="M0-30v-11M3 30v10M-31 2h-10M30-2h11M-21-22l-8-6M22 20l8 7M21-22l8-6M-22 21l-7 8"/>
+</g>
+<circle cx="118" cy="86" r="26" fill="none" stroke-width="3.2"/>
+<!-- carved pine: strong silhouette, not the cave tree -->
+<path d="M246 256C248 220 246 190 249 168L263 168C265 190 264 220 266 256Z"/>
+<path d="M200 176C210 150 230 142 256 150C282 142 304 152 314 176C300 186 270 180 256 186C242 180 214 186 200 176Z"/>
+<path d="M210 148C218 122 236 114 256 122C276 114 296 124 304 148C290 158 270 152 256 158C242 152 222 158 210 148Z"/>
+<path d="M222 120C228 90 242 80 256 88C270 80 286 92 292 120C280 130 266 124 256 128C246 124 232 130 222 120Z"/>
+<path d="M232 92C236 64 248 56 256 62C264 56 276 66 280 92C272 102 262 96 256 100C250 96 238 102 232 92Z"/>
+<!-- sitting cat, carved -->
+<g transform="translate(174 206)" stroke="none">
+<ellipse cx="18" cy="30" rx="16" ry="20"/>
+<ellipse cx="5" cy="28" rx="11" ry="17"/>
+<ellipse cx="4" cy="44" rx="12" ry="6"/>
+<circle cx="-2" cy="12" r="12"/>
+<path d="M-12 6L-15-7L-3 2ZM4 3L10-8L14 5Z"/>
+<path d="M32 32C43 24 45 44 30 48C20 50 10 48 4 46" fill="none" stroke="#2C2622" stroke-width="5.5"/>
+</g>
+<!-- child outline, crouched, bent arm, carved five-finger hand -->
+<g transform="translate(112 196)" fill="none">
+<circle cx="2" cy="-1" r="12" stroke-width="2.8"/>
+<path d="M3 10C-4 16-12 26-12 36C-12 44-6 50 2 51C8 51 12 50 12 48L22 36C23 32 20 28 14 24C10 18 6 12 3 10Z" stroke-width="2.8"/>
+<path d="M-4 20C-14 26-20 34-22 42" stroke-width="5"/>
+<ellipse cx="-22" cy="44" rx="4" ry="2.4" fill="#C4853A" stroke-width="2"/>
+<path d="M8 16L24 13L28-2" stroke-width="5"/>
+<g transform="translate(34 -10) rotate(28)" fill="#2C2622" stroke="#2C2622">
+<path d="M-3.6 3.2C-4.4 1-3.2-1-1.4-1.4C-.4-2 1.2-2 2.4-.8C3.6.2 4 2.2 3 3.6C2 5-2.4 5.2-3.6 3.2Z" stroke="none"/>
+<path d="M-2.6-1.2l-2.4-7M-.7-2.2l.1-8M1.4-2.2l2.2-7.2M3.1-1.2l4.2-6M3.4 2.2l5.4-1.4" fill="none" stroke-width="2.2"/>
+</g>
+</g>
+<!-- lantern, carved frame -->
+<g transform="translate(34 226)" stroke-width="2.1" fill="none">
+<path d="M7 42C16 36 40 36 51 42C42 50 16 50 7 44C3 42 3 40 7 42Z" fill="#2C2622" stroke="none"/>
+<circle cx="16" cy="3" r="3"/>
+<path d="M16 6v3" stroke-width="1.8"/>
+<path d="M6 10c5-3 15-3 20 0v3H6z" fill="#2C2622" stroke="none"/>
+<rect x="5" y="13" width="22" height="26" rx="2" fill="#F3E6D0"/>
+<rect x="9" y="17" width="14" height="14" fill="#C4853A" stroke="none"/>
+<ellipse cx="16" cy="24" rx="3.2" ry="5" fill="#F3E6D0" stroke="none"/>
+</g>
+</g>
+<!-- white gouges (paper showing through the ink) -->
+<g fill="none" stroke="#F3E6D0" stroke-linecap="round">
+<!-- ground cuts -->
+<path d="M18 232h357M21 240h356M18 246h361M20 254h359M21 260h356M18 266h358M22 274h358M22 282h356" stroke-width="1.45"/>
+<!-- trunk grain cuts -->
+<path d="M255 252C256 220 255 196 256 174M259 252C260 222 259 196 260 174" stroke-width="1.6"/>
+<!-- needle gouges in the pine tiers -->
+<path d="M220 168l8-10M232 162l6-12M244 160l4-11M256 158l2-12M268 160l-3-11M280 164l-6-10M292 170l-8-8" stroke-width="1.5"/>
+<path d="M226 140l7-10M238 134l5-11M250 132l3-11M262 132l-2-11M274 136l-6-10M286 142l-8-8" stroke-width="1.5"/>
+<path d="M234 112l6-10M246 106l4-11M258 106l-2-11M270 112l-6-9" stroke-width="1.5"/>
+<path d="M240 84l5-9M252 80l1-10M264 84l-5-8" stroke-width="1.4"/>
+<!-- carved eye and a fur gouge on the cat -->
+<circle cx="168" cy="217" r="2.3" fill="#F3E6D0" stroke="none"/>
+<path d="M184 232C190 236 198 238 206 236" stroke-width="1.5"/>
+</g>
+<!-- moon, a reserved cream crescent with a carved dark edge, slightly offset from ochre -->
+<path d="M14.4 16.7A22 22 0 1 0 14.4-16.7A17 17 0 1 1 14.4 16.7Z" transform="translate(310 64)" fill="#2C2622"/>
+<path d="M14.4 16.7A22 22 0 1 0 14.4-16.7A17 17 0 1 1 14.4 16.7Z" transform="translate(308.5 62.8)" fill="#F3E6D0"/>
+</svg>

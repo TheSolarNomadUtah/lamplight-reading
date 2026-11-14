@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Paper cut-out picture for Night, Night: layered torn dusk-blue sky and sage hills with white deckled edges, a gold sun, a scalloped-cut tree, a sitting cat, a waving child, a moon, and a clay lantern">
+<defs>
+<filter id="sh" x="-.3" y="-.3" width="1.6" height="1.6">
+<feGaussianBlur in="SourceAlpha" stdDeviation="2.4" result="b"/>
+<feOffset in="b" dx="1.8" dy="3.2" result="o"/>
+<feFlood flood-color="#2F2A24" flood-opacity=".32" result="c"/>
+<feComposite in="c" in2="o" operator="in" result="s"/>
+<feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="sm" x="-.35" y="-.35" width="1.7" height="1.7">
+<feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="b"/>
+<feOffset in="b" dx="1.1" dy="2" result="o"/>
+<feFlood flood-color="#2F2A24" flood-opacity=".28" result="c"/>
+<feComposite in="c" in2="o" operator="in" result="s"/>
+<feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<radialGradient id="glow" cx="50%" cy="50%" r="50%">
+<stop offset="0" stop-color="#FFE4A4" stop-opacity=".8"/>
+<stop offset=".55" stop-color="#E6B454" stop-opacity=".3"/>
+<stop offset="1" stop-color="#E6B454" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<!-- 1. cream page -->
+<rect width="400" height="300" fill="#FFFDF8"/>
+<!-- 2. dusk-blue sky on a torn white deckle -->
+<g filter="url(#sh)">
+<path fill="#FFFDF8" d="M10 10C40 4 70 14 104 6C138 0 170 12 204 4C238-2 270 12 304 4C336-2 364 10 392 14L390 208C360 198 330 214 300 204C268 192 238 212 206 202C174 192 144 212 112 202C80 192 48 210 16 202Z"/>
+<path fill="#5A6580" d="M18 18C46 12 74 20 106 14C138 8 168 20 200 12C232 6 262 18 294 12C324 6 350 16 382 20L380 198C352 190 324 204 294 196C264 186 236 204 206 196C176 188 148 206 118 198C88 190 58 206 24 198Z"/>
+</g>
+<!-- 3. far sage hill, torn white rim -->
+<g filter="url(#sh)">
+<path fill="#FFFDF8" d="M8 188C48 176 90 196 136 182C182 168 226 192 274 178C322 166 358 186 396 180V292H8Z"/>
+<path fill="#6F9A7A" d="M14 196C52 186 92 204 136 192C180 180 224 200 270 188C316 178 352 196 388 190V284H14Z"/>
+</g>
+<!-- 4. near sage hill, torn white rim -->
+<g filter="url(#sh)">
+<path fill="#FFFDF8" d="M8 226C50 214 96 234 146 220C196 208 246 230 298 218C344 208 374 224 396 220V296H8Z"/>
+<path fill="#4E6B5C" d="M14 234C54 224 98 242 146 230C194 218 244 238 294 228C338 218 368 232 388 228V286H14Z"/>
+</g>
+<!-- 5. cut pieces: gold sun, cream moon, scalloped tree, figures, lantern -->
+<g filter="url(#sm)" transform="translate(108 82) rotate(-10)" fill="#E6B454">
+<circle r="24"/>
+<path d="M-3.5-30h7v11h-7zM-3.5 19h7v11h-7zM-30-3.5v7h11v-7zM19-3.5v7h11v-7z"/>
+<path d="M-23-23l4.6-4.6 7.8 7.8-4.6 4.6zM10.6 10.6l4.6-4.6 7.8 7.8-4.6 4.6zM10.6-10.6l4.6 4.6 7.8-7.8-4.6-4.6zM-23 23l4.6 4.6 7.8-7.8-4.6-4.6z"/>
+</g>
+<path filter="url(#sm)" d="M14.4 16.7A22 22 0 1 0 14.4-16.7A17 17 0 1 1 14.4 16.7Z" transform="translate(338 50) rotate(12)" fill="#FFFDF8"/>
+<!-- scalloped-cut tree, ink, regular scissor lobes, a visible fork -->
+<g filter="url(#sh)" fill="#2F2A24">
+<path d="M244 252v-78h14v78z"/>
+<path d="M248 186l-32-18-4 8 36 20z"/>
+<path d="M256 186l36-16 4 8-36 18z"/>
+<path d="M196 168c0-16 12-16 16-8c4-16 18-18 22-6c6-18 22-16 24-4c6-16 22-20 26-4c8-16 24-14 24 0c8-14 22-10 20 4c10-8 20 2 14 12c10 0 12 14 2 16c6 10-2 18-14 12c0 14-16 14-22 4c-6 14-20 12-24 2c-8 12-22 8-24-4c-8 8-20 2-18-10c-10 0-16-10-8-16z"/>
+</g>
+<!-- sitting cat, art-ink cut -->
+<g filter="url(#sm)" transform="translate(168 206)" fill="#72583F">
+<ellipse cx="18" cy="30" rx="16" ry="20"/>
+<ellipse cx="5" cy="28" rx="11" ry="17"/>
+<ellipse cx="4" cy="44" rx="12" ry="6"/>
+<circle cx="-2" cy="12" r="12"/>
+<path d="M-12 6L-14-6L-4 2ZM4 3L10-7L13 5Z"/>
+<path d="M32 32C42 26 44 44 30 48C20 50 10 48 4 46" fill="none" stroke="#72583F" stroke-width="5" stroke-linecap="round"/>
+<circle cx="-6" cy="11" r="1.6" fill="#FFFDF8"/>
+</g>
+<!-- crouched child, clay paper, bent arm, five-finger cut hand -->
+<g filter="url(#sm)" transform="translate(108 198)" fill="#D9B27A" stroke="#D9B27A" stroke-linecap="round">
+<circle cx="2" cy="-1" r="12" stroke="none"/>
+<path d="M3 10C-4 16-12 26-12 36C-12 44-6 50 2 51C8 51 12 50 12 48L22 36C23 32 20 28 14 24C10 18 6 12 3 10Z" stroke="none"/>
+<path d="M-4 20C-14 26-20 34-22 42" fill="none" stroke-width="5"/>
+<ellipse cx="-22" cy="44" rx="4.2" ry="2.6" stroke="none"/>
+<path d="M8 16L24 13L28-2" fill="none" stroke-width="5" stroke-linejoin="round"/>
+<g transform="translate(34 -10) rotate(28)" stroke-width="2.05">
+<ellipse cx="0" cy="1.2" rx="4" ry="3.4"/>
+<path d="M-2.6-1.2l-2.6-7.2M-.7-2.2l.1-8.2M1.4-2.2l2.3-7.4M3.1-1.2l4.4-6.2M3.4 2.2l5.6-1.4" fill="none"/>
+</g>
+</g>
+<ellipse cx="52" cy="256" rx="50" ry="42" fill="url(#glow)"/>
+<g filter="url(#sm)" transform="translate(34 228)">
+<circle cx="16" cy="3" r="3" fill="none" stroke="#5B7A6A" stroke-width="1.6"/>
+<path d="M16 6v3" stroke="#5B7A6A" stroke-width="1.4" stroke-linecap="round"/>
+<path d="M6 10c5-3 15-3 20 0v3H6z" fill="#5B7A6A"/>
+<rect x="5" y="13" width="22" height="26" rx="3" fill="#D9B27A"/>
+<rect x="8" y="17" width="16" height="14" rx="2" fill="#FFE4A4"/>
+<ellipse cx="16" cy="24" rx="3.5" ry="5" fill="#FFF6D8"/>
+</g>
+</svg>
