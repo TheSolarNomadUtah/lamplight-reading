@@ -141,7 +141,7 @@ document.head.insertAdjacentHTML('beforeend',`<style>
 .mkey.sharp{width:min(11vw,56px);height:min(22vw,110px);opacity:.5}.mkey.lit{opacity:1;box-shadow:0 0 24px var(--c);transform:scale(1.05)}
 .shake{animation:gshake .3s}@keyframes gshake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 .ltiles{display:flex;gap:8px;justify-content:center;margin:8px 0}.ltile{font-size:2.2rem;width:64px;height:72px;background:#1b1f38;border:2px solid #3a4170;border-radius:12px}.ltile.sel{border-color:#ffd97a;box-shadow:0 0 12px #ffd97a}
-.lkeys{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:560px;margin:0 auto}.lkeys button{width:38px;height:42px;padding:0;background:#1b1f38;border-color:#2e3560;font-size:1.1rem}
+.lkeys{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:560px;margin:0 auto}.lkeys button{width:44px;height:44px;padding:0;background:#1b1f38;border-color:#2e3560;font-size:1.1rem}
 .lchain{font-size:1.1rem;letter-spacing:.05em;color:#ffd97a;min-height:1.4em}
 .duet{display:flex;flex-direction:column;gap:10px}.dhalf{border:2px dashed #3a4170;border-radius:16px;padding:8px}.dhalf.flip{transform:rotate(180deg)}
 @media (min-width:900px){.duet{flex-direction:row}.duet .dhalf{flex:1}}

@@ -13,12 +13,12 @@ document.head.insertAdjacentHTML('beforeend',`<style id="v101css">
 @keyframes scPulse101{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 @media (prefers-reduced-motion:reduce){.sc101-card.on .scart101,.sc101-card.on .lamp-art63{animation:none}}
 .pbar101{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:6px 8px;background:#161826;z-index:2;border-top:1px solid #2a2f44}
-.pbar101 button{padding:6px 10px;min-height:40px;font-size:.95rem;background:#2a2f44;color:#fff;border:1px solid #3a3f58;border-radius:10px}
+.pbar101 button{padding:6px 10px;min-height:44px;font-size:.95rem;background:#2a2f44;color:#fff;border:1px solid #3a3f58;border-radius:10px}
 .pbar101 button.on{background:#ffd97a;color:#000}
 .pbar101 .p101-ico{width:22px;height:22px;display:block;margin:0 auto}
 .pbar101 .p101-lab{display:block;font-size:.7rem;line-height:1.1;margin-top:2px}
 .pstamp101{display:flex;flex-wrap:wrap;gap:4px}
-.pstamp101 button{width:40px;height:40px;padding:4px}
+.pstamp101 button{width:44px;height:44px;padding:4px}
 #pstudio.nightsoft101 .pbar101 [data-tool101="sparkle"],
 #pstudio.nightsoft101 .pbar101 [data-tool101="constellation"]{opacity:.45}
 .luStory101{max-width:40rem;margin:0 auto;padding:8px}

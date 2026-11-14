@@ -36,7 +36,7 @@ table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #eee4d2;
 body.painting header,body.painting footer{display:none}body.painting main{max-width:none;padding:0}
 #pstudio{position:fixed;inset:0;background:#0d0f1a;display:flex;flex-direction:column;z-index:50}#pcv,#pgd{position:absolute;left:0;right:0;top:58px;bottom:0;width:100%;height:calc(100% - 58px);touch-action:none}#pgd{pointer-events:none}
 .pbar{min-height:58px;height:auto;display:flex;align-items:center;gap:4px;padding:4px 6px;overflow-x:auto;background:#1a1d2b;z-index:2}.pbar button{padding:6px 9px;font-size:1.2rem;background:#2a2f44;color:#fff;border-color:#3a3f58}.pbar button.on{background:#ffd97a;color:#000}.pbar select{background:#2a2f44;color:#fff}
-.pcols{display:flex;gap:4px;align-items:flex-end}.pc{width:auto!important;min-width:40px;height:auto!important;padding:4px 3px 3px!important;border-radius:10px!important;border:2px solid #444!important;background:transparent!important;display:inline-flex;flex-direction:column;align-items:center;gap:2px;color:#f6efe0}.pc .pc-dot{width:26px;height:26px;border-radius:50%;border:2px solid #666;display:block;box-shadow:inset 0 0 0 1px #0003;flex:none}.pc-name{font-size:10px;line-height:1.15;color:#f6efe0;font-family:Verdana,sans-serif;text-transform:capitalize;max-width:54px;text-align:center}.pc.on{outline:3px solid #ffd97a;outline-offset:1px;background:#2a2f44!important}
+.pcols{display:flex;gap:4px;align-items:flex-end}.pc{width:auto!important;min-width:44px;height:auto!important;padding:4px 3px 3px!important;border-radius:10px!important;border:2px solid #444!important;background:transparent!important;display:inline-flex;flex-direction:column;align-items:center;gap:2px;color:#f6efe0}.pc .pc-dot{width:26px;height:26px;border-radius:50%;border:2px solid #666;display:block;box-shadow:inset 0 0 0 1px #0003;flex:none}.pc-name{font-size:10px;line-height:1.15;color:#f6efe0;font-family:Verdana,sans-serif;text-transform:capitalize;max-width:54px;text-align:center}.pc.on{outline:3px solid #ffd97a;outline-offset:1px;background:#2a2f44!important}
 #plab{position:absolute;right:8px;top:66px;bottom:8px;width:min(380px,94vw);overflow:auto;z-index:3}.labcard{background:#fffdf8;color:#2f2a24;border-radius:18px;padding:14px}.mixrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:10px 0;font-size:1.6rem}.blob{display:inline-block;width:46px;height:46px;border-radius:50%;border:2px solid #ccc}.blob.big2{width:64px;height:64px}
 .ptext{font-size:1.4rem;line-height:1.9}.tline{border-bottom:2px solid #999;margin:14px 0;padding:4px 0;font-size:2.4rem;position:relative}.tw{font-family:Verdana,sans-serif;color:transparent;-webkit-text-stroke:1px #aaa;margin-right:40px;border-bottom:1px dashed #ccc}
 @media print{footer,.pbar{display:none!important}.sheet{page-break-after:always}.tw{-webkit-text-stroke:1px #888}.ppage h3{margin:10px 0 4px}}
@@ -62,7 +62,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=143;
+const APP_VERSION=144;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;const VOLATILE=new Set();
 const RAW={get:k=>{if(VOLATILE.has(k))return Object.hasOwn(MEM,k)?MEM[k]:null;try{const v=window.localStorage.getItem(k);MEM[k]=v;return v}catch(e){STORE_OK=false;return Object.hasOwn(MEM,k)?MEM[k]:null}},
@@ -300,4 +300,5 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="v141.js"></script>
 <script src="v142.js"></script>
 <script src="v143.js"></script>
+<script src="v144.js"></script>
 </body></html>
