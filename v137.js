@@ -53,7 +53,7 @@ function css137(){
    '@container (min-width:560px){.friendPick101[data-cols="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}}'+
    '@supports not (container-type:inline-size){@media (min-width:720px){.friendPick101[data-cols="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}}}'+
    '.spritePick137{display:flex;flex-wrap:wrap;gap:8px;margin:.6rem 0 0;align-items:stretch}'+
-   '.spritePick137 button{min-height:44px;min-width:44px;padding:.4rem .7rem}'+
+   '.spritePick137 button{min-height:56px;min-width:56px;padding:.45rem .8rem}'+
    '.spriteVisit137{margin:.6rem 0 0}.spriteVisit137 svg{display:block;width:100%;max-width:320px;height:auto}';
   (document.documentElement||document.head).appendChild(s);
  }
