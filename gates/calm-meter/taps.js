@@ -234,6 +234,29 @@ const SECTIONS=process.env.CALM_SECTIONS
       }
     }
     samples.push({section:'moon',vis:'patterns',n:(moon.taps||[]).length});
+    try{
+      moon.glow=await p.evaluate(()=>{
+        function shot(date){
+          if(typeof renderMoon131==='function') renderMoon131(date);
+          const host=document.querySelector('#patterns .moon131');
+          const txt=(document.querySelector('#patterns')||document.body).innerText||'';
+          return {
+            long:!!(host&&host.classList.contains('moon-long131')),
+            eq:!!(host&&host.classList.contains('moon-eq131')),
+            full:!!(host&&host.classList.contains('moon-full131')),
+            line:(document.querySelector('#moonLong131,#moonEq138')||{}).textContent||'',
+            countdown:/\d+\s*(day|days|día|días)|days until|countdown/i.test(txt)
+          };
+        }
+        return {
+          eqN:shot(new Date(2026,2,20)),
+          eqS:shot(new Date(2026,8,22)),
+          full:shot(new Date(2026,0,3)),
+          solN:shot(new Date(2026,11,21)),
+          ordinary:shot(new Date(2026,3,10))
+        };
+      });
+    }catch(e){moon.glow={error:String(e)}}
   }catch(e){moon={error:String(e)}}
 
   let candlePicker=null;

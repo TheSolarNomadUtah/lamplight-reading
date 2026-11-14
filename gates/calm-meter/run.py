@@ -104,6 +104,23 @@ def main():
             fails.append({'rule': 'T-moon', 'section': 'moon', 'detail': 'moon-phase dusk page did not open', **{k: moon[k] for k in moon}})
         elif moon.get('countdown'):
             fails.append({'rule': 'T-moon', 'section': 'moon', 'detail': 'longest-night copy looks like a countdown', **{k: moon[k] for k in moon}})
+        else:
+            g = moon.get('glow') or {}
+            if g.get('error'):
+                fails.append({'rule': 'T-moon-glow', 'section': 'moon', 'detail': 'equinox/full-moon glow check error: %s' % g.get('error')})
+            else:
+                eq_ok = all(
+                    (g.get(k) or {}).get('eq') and not (g.get(k) or {}).get('full') and not (g.get(k) or {}).get('long')
+                    and not (g.get(k) or {}).get('countdown') and 'Equinox' in ((g.get(k) or {}).get('line') or '')
+                    for k in ('eqN', 'eqS')
+                )
+                full = g.get('full') or {}
+                sol = g.get('solN') or {}
+                ordinary = g.get('ordinary') or {}
+                if (not eq_ok or not full.get('full') or full.get('eq') or full.get('long') or full.get('countdown')
+                    or not sol.get('long') or sol.get('eq') or sol.get('full') or sol.get('countdown')
+                    or ordinary.get('eq') or ordinary.get('full') or ordinary.get('long') or ordinary.get('countdown')):
+                    fails.append({'rule': 'T-moon-glow', 'section': 'moon', 'detail': 'equinox or full-moon soft glow missing, applied on the wrong night, or looks like a countdown', **{k: g[k] for k in g}})
     cp = taps.get('candlePicker')
     if cp:
         if cp.get('error'):
