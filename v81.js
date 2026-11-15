@@ -351,7 +351,7 @@ document.head.insertAdjacentHTML('beforeend',`<style>
 </style>`);
 
 
-/* Look Closer stays in the repo (v75–v80) but is off in v81. Set LOOK_CLOSER81 to true to bring the Explore tile and page back. */
+/* Look Closer files (v75–v80) stay in the repo but are not loaded. LOOK_CLOSER81 stays false. show('closer') goes Home. */
 const LOOK_CLOSER81=false;
 function lcEnabled81(){return LOOK_CLOSER81}
 function lcIsRecord81(e){return !!(e&&(e.section==='closer'||e.title==='Look Closer'||e.key==='practice:Look Closer'))}
@@ -362,7 +362,7 @@ function lcHideEntry81(root){
 
 {const hub=RENDER.hub;RENDER.hub=renderHub=function(){const r=hub.apply(this,arguments);lcHideEntry81($('hub')||document);return r}}
 {if(!show._v97){const sh=show;show=function(id){if(id==='closer'&&!lcEnabled81())id='hub';return sh.apply(this,arguments)}}}
-{const rc=RENDER.closer;RENDER.closer=function(){if(!lcEnabled81()){show('hub');return}return rc.apply(this,arguments)}}
+{const rc=RENDER.closer;RENDER.closer=function(){if(!lcEnabled81()||typeof rc!=='function'){show('hub');return}return rc.apply(this,arguments)}}
 if(typeof pRecent68==='function'){const rec=pRecent68;pRecent68=function(reads,events){if(!lcEnabled81())events=(events||[]).filter(e=>!lcIsRecord81(e));return rec(reads,events)}}
 if(typeof pRender68==='function'){const pr=pRender68;pRender68=function(){const r=pr.apply(this,arguments);lcHideEntry81($('log')||document);return r}}
 if(typeof renderLook==='function'){pWrap68('renderLook',null,()=>lcHideEntry81($('look')||document))}

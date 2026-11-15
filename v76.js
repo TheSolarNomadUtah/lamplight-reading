@@ -1,6 +1,17 @@
 // v76: the Lamp becomes a six-stage hero light on Home. No new audio or voice files.
 const LAMP76={need:[0,4,10,18,30,48],midi:[60,62,64,67,69,72],map:{1:1,2:3,3:4},names:['spark','ember','candle','lantern','fireflies','starlit']};
 LAMP73.need=LAMP76.need;LAMP73.midi=LAMP76.midi;
+// Live Lamp credit helpers folded here from v75/v77 so Look Closer can unload.
+// lampMoment73 must keep the starlit cap (lampCap77) and the 'notice' kind.
+const LAMP_KINDS75=['rhyme','memory','retry','notice'];
+function lampCap77(){return Math.max(1,(LAMP73.need||[]).length)}
+function lampPickReason74(kinds,trigger){const list=(kinds||[]).filter(k=>LAMP_KINDS75.includes(k));if(!list.length)return trigger;const count={};for(const k of list)count[k]=(count[k]||0)+1;let best=trigger,n=count[trigger]||0;for(const k of LAMP_KINDS75)if((count[k]||0)>n){best=k;n=count[k]}return best}
+function lampReason73(reason){return gT({rhyme:'Your lamp grew because you found two words that sound alike.',memory:'Your lamp grew because you found a matching pair.',retry:'Your lamp grew because you tried again.',notice:'Your lamp grew because you looked closer.'}[reason]||'Your lamp grew because you tried again.')}
+function lampMoment73(reason){if(!LAMP_KINDS75.includes(reason))return false;const s=lampLoad73();if(s.stage>=lampCap77())return false;
+ const session=lampSession74(),day=lampDay74();if(s.session&&s.session===session)return false;if(s.day===day&&s.dayCredits>=2)return false;
+ if(reason==='retry'){const c=P68.g;if(c?.lampRetry73)return false;if(c)c.lampRetry73=true}
+ s.moments++;s.kinds=s.kinds||[];s.kinds.push(reason);s.session=session;s.dayCredits=s.day===day?s.dayCredits+1:1;s.day=day;
+ const next=lampStageFor73(s.moments);if(next>s.stage){const why=lampPickReason74(s.kinds,reason);for(let st=s.stage+1;st<=next;st++)s.pending.push({stage:st,reason:why,from:st-1});s.stage=next;s.kinds=[]}lampPut73(s);return true}
 function lampStageFor73(n){const need=LAMP73.need;let s=1;for(let i=1;i<need.length;i++)if(n>=need[i])s=i+1;return s}
 function lampMapStage76(st){st=Math.max(1,Number(st)||1);return LAMP76.map[st]||st}
 function lampRevealOn76(){return RAW.get('lamp_reveal')!=='off'}

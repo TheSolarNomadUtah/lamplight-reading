@@ -32,7 +32,7 @@ for d,_,n in os.walk(R):
     # so the app can see that no packs are installed).
     if p.startswith('lang/') and p!='lang/es.json':continue
     if p.startswith('packs/') and p!='packs/index.json':continue
-    if p in ('stars.json','seq-demos.js','fonts/PlaywriteUSTrad-OFL.txt'):continue
+    if p in ('stars.json','seq-demos.js','fonts/PlaywriteUSTrad-OFL.txt','v75.js','v77.js'):continue
     fs.append([p,os.path.getsize(os.path.join(d,f))])
 fs.sort();fs.insert(0,['./',os.path.getsize(os.path.join(R,'index.html'))])
 for name,skip in (('offline.json','.opus'),('offline-opus.json','.mp3')):
