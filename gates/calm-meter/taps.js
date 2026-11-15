@@ -554,7 +554,7 @@ const SECTIONS=process.env.CALM_SECTIONS
       const box=document.createElement('div');
       box.id='cmBlink137';
       box.style.cssText='position:fixed;left:0;top:0;padding:8px;background:#120E18;display:flex;gap:8px;z-index:99999';
-      for(const [k,st] of [['turtle',6],['dragon',6],['sprites',6]]){
+      for(const [k,st] of [['turtle',6],['dragon',6],['owl',6]]){
         const hold=document.createElement('div');
         hold.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="160" height="160">'+friendArtInner101(k,st)+'</svg>';
         box.appendChild(hold);
