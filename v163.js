@@ -42,8 +42,10 @@ function reduced163(){return (typeof patReduced==='function'&&patReduced())||(ty
 function pid163(){return typeof curPid==='function'?curPid():''}
 function sfxOn163(){return typeof lampSfxOn73==='function'?!!lampSfxOn73():(typeof LAMP_SFX==='undefined'||!!LAMP_SFX)}
 
+/* Shared membership budget for the drag-a-dot mini-map and the connected/dust line (Pi v163 should-fix). */
+const ITERS163=2000;
 function inMandelbrot163(cr,ci,iters){
-  iters=iters||180;
+  iters=iters==null?ITERS163:iters;
   let zr=0,zi=0,k=0;
   while(k<iters&&zr*zr+zi*zi<=4){
     const nz=zr*zr-zi*zi+cr;zi=2*zr*zi+ci;zr=nz;k++;
@@ -232,8 +234,8 @@ function mandelMap163(cv,dot){
   const cx=-0.5,span=3.5,xmin=cx-span/2,ymin=0-span*H/W/2,dx=span/W,dy=(span*H/W)/H;
   const night=typeof patNight==='function'&&patNight();
   const pal=night?['#0d0f1a','#1c2a3a','#3a4e3f','#6f9a7a','#eac77d','#fff6d8']:['#fff8ec','#e8c894','#c45a3a','#5b7ea8','#6f9a7a','#3a2a1a'];
-  if(!mapCache163||mapCache163.w!==W||mapCache163.h!==H||mapCache163.night!==night){
-    const img=x.createImageData(W,H),d=img.data,iters=80;
+  if(!mapCache163||mapCache163.w!==W||mapCache163.h!==H||mapCache163.night!==night||mapCache163.iters!==ITERS163){
+    const img=x.createImageData(W,H),d=img.data,iters=ITERS163;
     for(let j=0;j<H;j++){
       const y0=ymin+j*dy;
       for(let i=0;i<W;i++){
@@ -245,7 +247,7 @@ function mandelMap163(cv,dot){
         const p=(j*W+i)*4;d[p]=col[0];d[p+1]=col[1];d[p+2]=col[2];d[p+3]=255;
       }
     }
-    mapCache163={w:W,h:H,night:night,img:img};
+    mapCache163={w:W,h:H,night:night,iters:ITERS163,img:img};
   }
   x.putImageData(mapCache163.img,0,0);
   if(dot){
@@ -324,8 +326,8 @@ function paintOverlays163(cv){
 }
 
 function juliaLine163(jr,ji){
-  const ok=inMandelbrot163(jr,ji,200);
-  return ok?t163('This Julia set is one piece.'):t163('This Julia set is dust.');
+  const ok=inMandelbrot163(jr,ji,ITERS163);
+  return ok?t163('Looks like one piece'):t163('Looks like dust');
 }
 
 function bindDot163(map,dotEl){
@@ -504,7 +506,7 @@ hook163('patExRender106',function(prev){
        temporary rec flag — default julia1/julia2 pixels stay untouched. */
     if(kind!=='newton'&&PAT106&&PAT106.ex&&PAT106.ex.mode163==='juliaDot'&&(kind==='julia1'||kind==='julia2')&&!o.plain163){
       const night=typeof patNight==='function'&&patNight();
-      const ok=inMandelbrot163(rec.jr||0,rec.ji||0,200);
+      const ok=inMandelbrot163(rec.jr||0,rec.ji||0,ITERS163);
       const saved=patExColor106;
       const pal=pal163(ok,night);
       /* Reuse the original renderer: paint, then we cannot swap pal inside
@@ -719,6 +721,7 @@ if(typeof pWrap68==='function'){
 
 root.IL163={
   version:163,
+  iters:ITERS163,
   inMandelbrot:inMandelbrot163,
   escapeCount:escapeCount163,
   piNeck:piNeck163,
