@@ -287,7 +287,7 @@ function bindLoader150(el){
     var vals=[].map.call(box.querySelectorAll('[data-gafn]'),function(inp){return inp.value});
     var rec=parseCode150(vals),msg=box.querySelector('[data-gafloadmsg]');
     if(!rec){
-      if(msg){msg.hidden=false;msg.textContent=t("That code isn't one I can read.");}
+      if(msg){msg.hidden=false;msg.textContent=t("Hmm, I can't read that code.");}
       return;
     }
     if(msg){msg.hidden=true;msg.textContent='';}

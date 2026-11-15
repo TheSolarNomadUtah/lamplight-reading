@@ -160,11 +160,26 @@ function previewStage147(pid,kind){
   return (st&&st.stage)||1;
 }
 function lookTileSvg147(look,kind,stage){
-  var inner='';
-  try{
-    if(typeof IL119==='object'&&typeof IL119.art==='function') inner=IL119.art(kind,stage,{look:look})||'';
-  }catch(e){inner=''}
-  return '<svg class="lamp73-svg" viewBox="0 0 100 100" width="100" height="100" aria-hidden="true" focusable="false"><circle class="lamp73-plate" cx="50" cy="50" r="47" fill="#fff2d8" stroke="#72583f" stroke-width="2"/><g class="lamp73-ink">'+inner+'</g></svg>';
+  var inner='',lazy='';
+  if(look==='glass'||look==='constellation'){
+    lazy=' data-il-lazy-look="'+look+'" data-il-lazy-kind="'+kind+'" data-il-lazy-stage="'+stage+'"';
+  }else{
+    try{
+      if(typeof IL119==='object'&&typeof IL119.art==='function') inner=IL119.art(kind,stage,{look:look})||'';
+    }catch(e){inner=''}
+  }
+  return '<svg class="lamp73-svg" viewBox="0 0 100 100" width="100" height="100" aria-hidden="true" focusable="false"'+lazy+'><circle class="lamp73-plate" cx="50" cy="50" r="47" fill="#fff2d8" stroke="#72583f" stroke-width="2"/><g class="lamp73-ink">'+inner+'</g></svg>';
+}
+function fillLazyLookTiles147(root){
+  if(typeof IL157==='object'&&typeof IL157.fillLookTiles==='function'){IL157.fillLookTiles(root);return}
+  root=root&&root.querySelectorAll?root:document;
+  var list=root.querySelectorAll('[data-il-lazy-look]'),i,svg,look,kind,stage,inner,g;
+  for(i=0;i<list.length;i++){
+    svg=list[i];look=svg.getAttribute('data-il-lazy-look');kind=svg.getAttribute('data-il-lazy-kind');stage=svg.getAttribute('data-il-lazy-stage')||'1';inner='';
+    try{if(typeof IL119==='object'&&typeof IL119.art==='function')inner=IL119.art(kind,stage,{look:look})||''}catch(e){inner=''}
+    g=svg.querySelector('g.lamp73-ink');if(g)g.innerHTML=inner;
+    svg.removeAttribute('data-il-lazy-look');svg.removeAttribute('data-il-lazy-kind');svg.removeAttribute('data-il-lazy-stage');
+  }
 }
 function lookRowHTML147(pid){
   css147();
@@ -225,6 +240,7 @@ function attachLookOnLook147(){
   else root.insertAdjacentElement('afterbegin',card);
   bindLookRow147(card.querySelector('[data-look147]'),pid147());
   markLookSize147(card);
+  if(typeof requestIdleCallback==='function')requestIdleCallback(function(){fillLazyLookTiles147(card)},{timeout:800});else setTimeout(function(){fillLazyLookTiles147(card)},0);
 }
 
 function hookPicker147(){
@@ -246,6 +262,7 @@ function hookPicker147(){
         var host=document.querySelector('[data-friends101] [data-look147], [data-look147]');
         bindLookRow147(host,pid147());
         markLookSize147(host||document);
+        if(typeof requestIdleCallback==='function')requestIdleCallback(function(){fillLazyLookTiles147(host||document)},{timeout:800});else setTimeout(function(){fillLazyLookTiles147(host||document)},0);
       }catch(e){}
       return r;
     };
