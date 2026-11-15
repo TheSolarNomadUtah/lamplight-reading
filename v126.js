@@ -8,7 +8,7 @@
 const ADDR126='scout.nomad+seedfeedback@mail.grokbot.com';
 const Q126=[
  'What did your kid love?',
- 'What did they skip?',
+ 'What did they leave for later?',
  'What was confusing?'
 ];
 const NOTE126='This opens your own email. The app sends nothing and keeps no answers.';
@@ -46,7 +46,7 @@ function attach126(){
  if(root.querySelector('[data-yours-editor125],[data-yours-gate125]')||root.getAttribute('data-yours-open'))return;
  const qs=Q126.map(q=>`<li>${e126(t126(q))}</li>`).join('');
  const href=mailto126();
- const html=`<div class="card" data-tell126="1"><h3 class="kline">${e126(t126('Tell us'))}</h3>${art126()}<ol>${qs}</ol><p class="soft">${e126(t126(NOTE126))}</p><p><a href="${e126(href)}">${e126(t126('Open your email'))}</a></p></div>`;
+ const html=`<div class="card" data-tell126="1"><h3 class="kline">${e126(t126('A note'))}</h3>${art126()}<ol>${qs}</ol><p class="soft">${e126(t126(NOTE126))}</p><p><a href="${e126(href)}">${e126(t126('Open your email'))}</a></p></div>`;
  root.insertAdjacentHTML('beforeend',html);
 }
 

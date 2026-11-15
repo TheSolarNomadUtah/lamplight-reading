@@ -15,7 +15,7 @@ function litToday(){const D=getDays();return !!D[dkey()]}
  <radialGradient id="lgf" cx="50%" cy="70%"><stop offset="0" stop-color="#fffaf0"/><stop offset=".55" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff9a3c" stop-opacity=".2"/></radialGradient></defs>
  <circle cx="50" cy="55" r="${30+14*lv}" fill="url(#lgw)" opacity="${lv}"/><path class="fl" d="M50 32 C57 42 61 49 61 57 A11 11 0 0 1 39 57 C39 49 43 42 50 32Z" fill="url(#lgf)" opacity="${.7+.3*lv}"/></svg>`;
  m.insertAdjacentElement('afterend',d);const place=()=>{if(!d.isConnected||!m.isConnected)return;d.style.left=m.offsetLeft+'px';d.style.top=m.offsetTop+'px';d.style.width=m.offsetWidth+'px';d.style.height=m.offsetHeight+'px'};place();setTimeout(place,300);
- m.title=gT('Lit today! Your streak: {n} days',{n:gNum(n)})}catch(e){}};RENDER.hub=renderHub}
+ m.title=gT('Lit today. Reading days: {n}',{n:gNum(n)})}catch(e){}};RENDER.hub=renderHub}
 document.head.insertAdjacentHTML('beforeend',`<style>.litglow{position:absolute;pointer-events:none;mix-blend-mode:screen;border-radius:50%;overflow:hidden}.litglow svg{width:100%;height:100%;display:block}
 .litglow.flick .fl{transform-origin:50% 68%;animation:lflick 3.2s ease-in-out infinite}@keyframes lflick{0%,100%{transform:scale(1,1)}40%{transform:scale(.97,1.04)}70%{transform:scale(1.02,.98)}}
 #hub .lampcard>div:first-child{position:relative}</style>`);

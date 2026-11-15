@@ -72,13 +72,13 @@ function renderDrum(back){const D=MU.D=MU.D||{lvl:0,i:0,taps:0,score:0,free:fals
  $('music').innerHTML=`<div class="card big" style="text-align:center"><h2>🥁 Tap the beats</h2><div>${MUSIC.drum.map((l,k)=>`<button class="${k===D.lvl?'p':''}" onclick="MU.D={lvl:${k},i:0,taps:0,score:0};renderMusic()">${l[0]}</button>`).join(' ')}</div>
  <p class="lsbig" style="font-size:clamp(2.5rem,10vw,4.5rem)" onclick="drumSay()">${w.replace(/\|/g,'')}</p><p class="soft">Say it and tap the drum once for each beat. 🔊 Tap the word to hear it.</p>
  <button id="bigdrum" class="bigdrum" onpointerdown="drumTap()">🥁</button><p id="dtaps" style="font-size:2rem;min-height:1.3em"></p><p id="dfb" style="font-size:1.4rem;min-height:1.5em"></p>
- <p>Score: ${'⭐'.repeat(D.score)||'☆'}</p><button class="bigbtn" onclick="MU.D.free=true;renderMusic()">Free play drums</button> ${back}</div>`;MU.Dw=w;later(drumSay,300)}
+ <p>${'⭐'.repeat(D.score)||'☆'}</p><button class="bigbtn" onclick="MU.D.free=true;renderMusic()">Free play drums</button> ${back}</div>`;MU.Dw=w;later(drumSay,300)}
 function drumSay(){const w=MU.Dw;if(!w)return;loadClip('w_'+mslug(w)).then(b=>playClip(b,0,1.2,w.replace(/\|/g,'')))}
 let dTimer=null;
 function drumTap(){const D=MU.D;D.taps++;drumHit(D.taps%2?'kick':'tom');const b=$('bigdrum');b.classList.add('hit');setTimeout(()=>b.classList.remove('hit'),120);$('dtaps').textContent='● '.repeat(D.taps);clearTimeout(dTimer);dTimer=setTimeout(drumJudge,1300)}
 function drumJudge(){const D=MU.D,w=MU.Dw,r=checkSyllables(D.taps,w),f=$('dfb');if(!f)return;
- if(r==='yes'){f.innerHTML=`✅ Yes! <b>${w.split('|').join(' · ')}</b> has ${syllables(w)} beat${syllables(w)>1?'s':''}!`;D.score++;try{markDay('music')}catch(e){};later(()=>{D.i++;D.taps=0;if(MU.v==='drum'&&!D.free)renderMusic()},1900)}
- else{f.innerHTML=r==='more'?'Almost! Try a few more taps. 👂':'Oops, a few too many. Try again! 👂';D.taps=0;const b=$('dtaps');later(()=>{if(b)b.textContent=''},900);later(drumSay,500)}}
+ if(r==='yes'){const n=syllables(w);f.innerHTML=gT(n===1?'Yes! {word} has {n} beat.':'Yes! {word} has {n} beats.',{word:'<b>'+w.split('|').join(' · ')+'</b>',n:gNum(n)});D.score++;try{markDay('music')}catch(e){};later(()=>{D.i++;D.taps=0;if(MU.v==='drum'&&!D.free)renderMusic()},1900)}
+ else{f.innerHTML=r==='more'?gT('Almost. A few more taps.'):gT('A few too many. Want to try it once more?');D.taps=0;const b=$('dtaps');later(()=>{if(b)b.textContent=''},900);later(drumSay,500)}}
 // Hum & match: pitch detection by autocorrelation. Audio is analysed live and thrown away.
 function detectPitch(buf,sr){const n=buf.length;let rms=0;for(let i=0;i<n;i++)rms+=buf[i]*buf[i];rms=Math.sqrt(rms/n);if(rms<0.01)return -1;
  const minL=Math.floor(sr/1000),maxL=Math.min(Math.floor(sr/70),n>>1);let best=-1,bv=0;const c=new Float32Array(maxL+2);

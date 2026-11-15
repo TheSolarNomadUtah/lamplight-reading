@@ -32,7 +32,7 @@ function renderEcho(){const ev=getEcho();
  <div class="card big"><h2>🔊 Sound board</h2><p class="soft">Tap a picture to hear it. Say it again yourself, then wait for your child's turn.</p>
  <div>${BOARD.map((b,i)=>`<button class="snd" onclick="boardTap(this,${i})">${b[0]}<small>${b[1]}</small></button>`).join('')}</div></div>`}
 function boardTap(el,i){document.querySelectorAll('.snd.say').forEach(x=>x.classList.remove('say'));el.classList.add('say');speak(BOARD[i][2],0.7);setTimeout(()=>el.classList.remove('say'),1500)}
-function echoDone(){const ev=getEcho();ev[ECUR]=(ev[ECUR]||0)+1;LS.set('lamp_echo',JSON.stringify(ev));speak('Yay! Great job!',0.8);ECUR=null;renderEcho()}
+function echoDone(){const ev=getEcho();ev[ECUR]=(ev[ECUR]||0)+1;LS.set('lamp_echo',JSON.stringify(ev));speak('You finished the echo.',0.8);ECUR=null;renderEcho()}
 
 // ---------- Profiles ----------
 function renderBar(){const P=getProfiles();$('pbar').innerHTML=P.list.map(p=>`<button class="pchip ${p.id===P.cur?'on':''}" onclick="switchP('${p.id}')" title="${esc(BANDS[p.band]||'')}">${p.av} ${esc(p.name)}</button>`).join('')+`<button class="pchip" onclick="show('kids')" title="Add or edit kids">＋</button>`}

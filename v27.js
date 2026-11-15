@@ -37,7 +37,7 @@ function rxRender(){const L=GM.custom||rxLvl(),bpm=GM.custom?GM.custom.bpm:(GM.b
  <p>${cr&&cr.turn==='call'?`<button class="bigbtn p" onclick="crRecord()">⏺ Make a call</button>`:`<button class="bigbtn p" id="rxplay" onclick="rxPlay()" ${L.once&&GM.played?'disabled':''}>▶ ${L.once&&GM.played?'Played once':'Hear pattern'}</button> <button class="bigbtn" onclick="rxJudge()">✔ Done</button>`}</p>
  <div class="gpads">${(cr&&cr.turn==='call'?['kick','clap','hat']:rxPads(L)).map((p,i)=>`<button class="gpad" data-pad="${p}" style="--c:${PADS[p][1]}" onpointerdown="rxTap('${p}');event.preventDefault()">${PADS[p][0]}<small>${PADS[p][2]} · ${'FJK'[i]}</small></button>`).join('')}</div>
  <p id="grfb" class="gfb"></p>${cr?'':`<p><button onclick="crStart()">🗣️ Call & response (kid + grown-up)</button></p>`}${gBack}`);rxDraw()}
-function crScore(){const cr=GM.cr;return cr?gT('Score: Kid {k} · Grown-up {g}',{k:'<b>'+gNum(cr.kid)+'</b>',g:'<b>'+gNum(cr.grown)+'</b>'}):''}
+function crScore(){const cr=GM.cr;return cr?gT('Kid {k} · Grown-up {g}',{k:'<b>'+gNum(cr.kid)+'</b>',g:'<b>'+gNum(cr.grown)+'</b>'}):''}
 function rxDraw(taps){const cv=$('grc');if(!cv)return;const x=cv.getContext('2d'),W=cv.width,L=GM.custom||rxLvl(),pads=GM.cr&&GM.cr.turn==='call'?['kick','clap','hat']:rxPads(L),lh=130/pads.length,sx=t=>20+t*(W-40)/L.len;
  x.fillStyle='#14182c';x.fillRect(0,0,W,150);for(let b=0;b<=L.len;b++){x.fillStyle=b%4?'#262c48':'#3a4170';x.fillRect(sx(b),8,2,134)}
  if(!(L.once&&GM.played&&!taps))L.hits.forEach(([t,p])=>{const y=10+lh*(pads.indexOf(p)+.4);x.fillStyle=PADS[p][1];x.globalAlpha=.9;x.beginPath();x.arc(sx(t),y,8,0,7);x.fill()});
@@ -76,7 +76,7 @@ function melPanel(id,L,label){const ks=melKeys(L),btn=([m,c],cls,st)=>`<button c
  return head+`<div class="mkeys piano">${W.map(m=>btn(col(m),'white')).join('')}${Object.entries(B).map(([m,i])=>btn(col(+m),'sharp',`left:calc(${i}*100%/7 - 5.5%)`)).join('')}</div></div>`}
 function melRender(){const st=gStars(),L=MEL[GM.mlvl||0];
  $('games').innerHTML=gCard('🎹 Melody Echo',`<div class="glv">${MEL.map((x,i)=>`<button class="${i===(GM.mlvl||0)?'p':''}" onclick="GM.mlvl=${i};RENDER.games()">${x.g?'👪 ':''}${gT(x.n)}<br><small>${starStr(st['mel_'+x.id]||0)}</small></button>`).join('')}</div>
- <p class="soft">Watch and listen, then play the same notes back. 3 mistakes ends the round.</p>${melPanel('solo',L)}<p><button class="bigbtn p" onclick="melStart('solo')">▶ Play tune</button></p>${gBack}`)}
+ <p class="soft">${gT('Watch and listen, then play the same notes back. After three slips, the round rests.')}</p>${melPanel('solo',L)}<p><button class="bigbtn p" onclick="melStart('solo')">▶ Play tune</button></p>${gBack}`)}
 const MS={};
 function melPlay(id,seq,t0){const c=ac(),b=.55;seq.forEach((m,i)=>{note(m,t0+i*b,.45,'bells',.3);later(()=>melLight(id,m),(t0-c.currentTime+i*b)*1000)});return seq.length*b}
 function melLight(id,m){const k=document.querySelector(`#mp_${id} .mkey[data-m="${m}"]`);if(k){k.classList.add('lit');setTimeout(()=>k.classList.remove('lit'),330)}}
@@ -84,12 +84,12 @@ function melStart(id,seqOverride){gStop();const L=MEL[GM.mlvl||0],c=ac();if(!c)r
 function melTap(id,m){const s=MS[id];note(m,ac().currentTime,.35,'bells',.3);melLight(id,m);if(!s||s.lock||s.done)return;
  if(m===s.seq[s.i]){s.i++;if(s.i===s.seq.length){s.done=1;const stars=s.err===0?3:s.err===1?2:1;if(id==='solo'){gSave('mel_'+s.L.id,stars);melStarRow()}$('mfb_'+id).innerHTML=`${starStr(stars)} You got it!`;if(id!=='solo')duetDone(id,stars)}}
  else{s.err++;const k=document.querySelector(`#mp_${id} .mkeys`);if(k){k.classList.add('shake');setTimeout(()=>k.classList.remove('shake'),300)}
-  if(s.err>=3){s.done=1;$('mfb_'+id).innerHTML=`${starStr(0)} ${gT('3 mistakes. Try again!')}`;if(id!=='solo')duetDone(id,0)}else{$('mfb_'+id).textContent=gT('Oops ({e}/3). Keep going from note {i}.',{e:gNum(s.err),i:gNum(s.i+1)})}}}
+  if(s.err>=3){s.done=1;$('mfb_'+id).innerHTML=`${starStr(0)} ${gT('That went a different way. Want to try it once more?')}`;if(id!=='solo')duetDone(id,0)}else{$('mfb_'+id).textContent=gT('A surprise ({e}/3). You can go on from note {i}.',{e:gNum(s.err),i:gNum(s.i+1)})}}}
 // ================= Word Ladder =================
 const WL={};
 async function ladRender(){const d=await gdata(),st=gStars(),i=GM.lad||0,L=d.ladders[i];
  $('games').innerHTML=gCard('🪜 Word Ladder',`<div class="glv">${d.ladders.map((x,j)=>`<button class="${j===i?'p':''}" onclick="GM.lad=${j};RENDER.games()">${x.tier==='grown'?'👪 ⏱ ':''}${x.a.toUpperCase()} → ${x.b.toUpperCase()}<br><small>${starStr(st['lad_'+x.a+x.b]||0)}</small></button>`).join('')}</div>
- <p class="soft">${gT('Change one letter at a time. Every step must be a real word.')} ${L.tier==='grown'?gT('Grown-up ladder: beat the clock.'):''} ${gT('Best: {n} steps.',{n:gNum(L.par)})}</p>${ladPanel('solo',L)}${gBack}`);ladStart('solo',L)}
+ <p class="soft">${gT('Change one letter at a time. Every step must be a real word.')} ${L.tier==='grown'?gT('Grown-up ladder: a clock is running.'):''} ${gT('Best: {n} steps.',{n:gNum(L.par)})}</p>${ladPanel('solo',L)}${gBack}`);ladStart('solo',L)}
 function ladPanel(id,L){return `<div class="lpanel" id="lp_${id}"><p class="gfb" id="lt_${id}"></p><div class="lchain" id="lc_${id}"></div><div class="ltiles" id="lw_${id}"></div><p class="soft" id="lh_${id}">Goal: <b>${L.b.toUpperCase()}</b></p><p id="lfb_${id}" class="gfb lfb" aria-live="polite"></p>
  <div class="lkeys">${'abcdefghijklmnopqrstuvwxyz'.split('').map(ch=>`<button onclick="ladKey('${id}','${ch}')">${ch}</button>`).join('')}</div><p><button onclick="ladUndo('${id}')">↶ Undo</button> <button onclick="ladStart('${id}')">↺ Restart</button></p></div>`}
 function ladStart(id,L){L=L||WL[id].L;clearInterval((WL[id]||{}).tick);WL[id]={L,chain:[L.a],pos:null,done:0};if(L.tier==='grown'){WL[id].end=Date.now()+(L.a.length===4?120000:90000);WL[id].tick=setInterval(()=>ladTime(id),250)}ladShow(id)}
@@ -118,14 +118,14 @@ function duetGo(){GM.duet={kid:null,grown:null};$('dres').textContent='';if((GM.
   MS.dk={seq:base,i:0,err:0,lock:1,L:MEL[1]};MS.dg={seq:hard,i:0,err:0,lock:1,L:MEL[6]};const d1=melPlay('dk',base,c.currentTime+.2),d2=melPlay('dg',hard,c.currentTime+.6+d1);
   $('mfb_dk').textContent='Listen…';$('mfb_dg').textContent='Wait, then listen…';later(()=>{MS.dk.lock=0;$('mfb_dk').textContent='Your turn!'},(d1+.4)*1000);later(()=>{MS.dg.lock=0;$('mfb_dg').textContent='Your turn!'},(d1+d2+.9)*1000)}
  else{ladStart('dk',GM.dpair[0]);ladStart('dg',GM.dpair[1])}}
-function duetDone(id,stars){GM.duet[id==='dk'?'kid':'grown']=stars;const d=GM.duet;if(d.kid!=null&&d.grown!=null)$('dres').innerHTML=`🧒 ${starStr(d.kid)} · 🧑 ${starStr(d.grown)} — ${d.kid>d.grown?'Kid wins! 🎉':d.kid<d.grown?'Grown-up wins this time!':'A tie! 🤝'}`}
+function duetDone(id,stars){GM.duet[id==='dk'?'kid':'grown']=stars;const d=GM.duet;if(d.kid!=null&&d.grown!=null)$('dres').innerHTML=`🧒 ${starStr(d.kid)} · 🧑 ${starStr(d.grown)} — ${d.kid>d.grown?gT('The child finished first.'):d.kid<d.grown?gT('The grown-up finished first.'):gT('You finished together.')}`}
 // ================= Hub =================
 RENDER.games=function(){if(GM.v==='rx')return rxRender();if(GM.v==='mel')return melRender();if(GM.v==='lad')return ladRender();if(GM.v==='duet')return duetRender();const st=gStars(),n=Object.values(st).reduce((a,b)=>a+b,0);
  $('games').innerHTML=gCard('🎮 Games',`<p>Music and word games for kids and grown-ups. Stars stay on this device.</p><div class="hubgrid">
  <button class="hubtile" onclick="GM.v='rx';GM.lvl=0;GM.cr=null;GM.custom=null;GM.played=0;RENDER.games()"><span>🥁</span>Rhythm Echo<small>${gT('12 levels + call & response')}</small></button>
  <button class="hubtile" onclick="GM.v='mel';RENDER.games()"><span>🎹</span>Melody Echo<small>${gT('3 to 12 notes')}</small></button>
  <button class="hubtile" onclick="GM.v='lad';RENDER.games()"><span>🪜</span>Word Ladder<small>CAT → DOG</small></button>
- <button class="hubtile" onclick="GM.v='duet';RENDER.games()"><span>👫</span>Duet<small>Kid vs grown-up</small></button></div><p class="soft">${gT('Your stars: {n} ⭐',{n:gNum(n)})}</p><p><button class="bigbtn" onclick="show('hub')">⬅ Home</button></p>`)};
+ <button class="hubtile" onclick="GM.v='duet';RENDER.games()"><span>👫</span>Duet<small>${gT('Kid and grown-up')}</small></button></div><p class="soft">${gT('Your stars: {n}',{n:gNum(n)})}</p><p><button class="bigbtn" onclick="show('hub')">⬅ Home</button></p>`)};
 {if(!show._v97){const sh=show;show=function(id){if(id!=='games')gStop();return sh.apply(this,arguments)}}}
 {const rh=renderHub;renderHub=function(){rh();const g=$('hub').querySelector('.hubgrid');if(g&&!g.querySelector('[data-games]'))g.insertAdjacentHTML('beforeend',`<button class="hubtile" data-games onclick="GM.v=null;show('games')"><span>🎮</span>Games<small>Rhythm, melody, words</small></button>`)};RENDER.hub=renderHub}
 {const ra=RENDER.arcade;RENDER.arcade=function(){ra();if(!AR.v){const g=$('arcade').querySelector('.hubgrid');if(g)g.insertAdjacentHTML('beforeend',`<button class="hubtile" onclick="GM.v=null;show('games')"><span>🎮</span>Games<small>Grown-up tiers inside</small></button>`)}}}

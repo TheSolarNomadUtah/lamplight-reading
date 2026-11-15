@@ -42,7 +42,7 @@ function glowRings(cv,opts){const gs=glowStats(),list=[];['music','games','sound
 {const rm=RENDER.mylight;RENDER.mylight=function(){rm();try{const gs=glowStats(),cv=$('lightbig');const bloom=gs.nr>gs.seen?gs.nr-gs.seen:0;
  if(bloom){const g=glowGet();g.seen=gs.nr;glowSet(g)}glowRings(cv,{dpr:Math.min(2,devicePixelRatio||1),bloom});
  const n=v=>gNum(v),p=document.createElement('div');p.className='glowpts';
- p.innerHTML=`<p><b>✨ ${gT('Glow points: {n}',{n:n(gs.total)})}</b> · 📚 ${gT('Stories {n}',{n:n(gs.stories)})} · 🎵 ${gT('Music {n}',{n:n(gs.pts.music)})} · 🎮 ${gT('Games {n}',{n:n(gs.pts.games)})} · 🔊 ${gT('Sounds {n}',{n:n(gs.pts.sounds)})} · ⭐ ${gT('Stars {n}',{n:n(gs.pts.stars)})}</p>
+ p.innerHTML=`<p><b>✨ ${gT('Glow: {n}',{n:n(gs.total)})}</b> · 📚 ${gT('Stories {n}',{n:n(gs.stories)})} · 🎵 ${gT('Music {n}',{n:n(gs.pts.music)})} · 🎮 ${gT('Games {n}',{n:n(gs.pts.games)})} · 🔊 ${gT('Sounds {n}',{n:n(gs.pts.sounds)})} · ⭐ ${gT('Stars {n}',{n:n(gs.pts.stars)})}</p>
  <p class="soft" style="color:#bfb8a8">${gT('Everything adds glow, reading most: a story is worth 3, a game or song 1. Music, games, sounds and stars each add soft rings around your light.')} ${gT('Rings: {n}',{n:n(gs.nr)})}</p>`;
  const h=$('mylight').querySelector('h2');if(h&&h.nextElementSibling)h.nextElementSibling.insertAdjacentElement('afterend',p)}catch(e){console.warn(e)}}}
 {const rh=renderHub;renderHub=function(){rh();try{const m=$('lightmini');if(m)glowRings(m,{dpr:1})}catch(e){}};RENDER.hub=renderHub}

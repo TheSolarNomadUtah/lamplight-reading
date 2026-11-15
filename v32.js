@@ -7,9 +7,9 @@ const ageB=a=>`<b class="agebadge">${gT('Ages {n}+',{n:gNum(a)})}</b>`;
 const GHUB=[
  ['rx','🥁','Rhythm Echo','Listen, then tap it back',4,"GM.v='rx';GM.lvl=0;GM.cr=null;GM.custom=null;GM.played=0;RENDER.games()"],
  ['mel','🎹','Melody Echo','Tunes, songs and free play',4,"GM.v='mel';RENDER.games()"],
- ['duet','👫','Duet','Kid vs grown-up',5,"GM.v='duet';RENDER.games()"],
+ ['duet','👫','Duet',gT('Kid and grown-up'),5,"GM.v='duet';RENDER.games()"],
  ['lad','🪜','Word Ladder','CAT → DOG',6,"GM.v='lad';RENDER.games()"],
- ['syl','⚡','Syllable Sprint','Count the beats, beat the clock',6,"AR.v='syl';SP.st=null;show('arcade')"],
+ ['syl','⚡','Syllable Sprint',gT('Count the beats. A clock can run.'),6,"AR.v='syl';SP.st=null;show('arcade')"],
  ['star','✨','Star songs','Real starlight from Kepler',6,"show('starsongs')"],
  ['scr','🔀','Word Scramble','Unscramble in 60 seconds',8,"AR.v='scr';show('arcade');arScrStart()"],
  ['cym','🌀','Cymatica','Breathe with sound shapes',10,"show('cymatica')"]];
@@ -60,7 +60,7 @@ rxJudge=function(){clearTimeout(GM.rt);GM.turn=0;rxOv('');const L=GM.custom||rxL
  let hit=0,err=0;L.hits.forEach(([t,p])=>{let best=null;taps.forEach(x=>{if(!x.used&&x.p===p){const d=Math.abs(x.t-t)*ms;if(d<=win&&(!best||d<best.d))best={x,d}}});if(best){best.x.used=1;hit++;err+=best.d}});
  const N=L.hits.length,extra=taps.filter(x=>!x.used).length,score=Math.max(0,Math.round(100*hit/N-extra*5)),avg=hit?Math.round(err/hit):0;
  const stars=GM.custom?(score>=100?3:score>=80?2:score>=60?1:0):score>=95&&avg<=win*.5?3:score>=80?2:score>=60?1:0;rxDraw(taps.map(x=>[x.t,x.p,x.used]));GM.taps=[];GM.t0=null;
- const words=hit===N&&!extra?gT('All {n} on time! Great job!',{n:gNum(N)}):gT('{a} of {b} on time!',{a:gNum(hit),b:gNum(N)})+(extra?' '+(extra===1?gT('1 extra tap.'):gT('{n} extra taps.',{n:gNum(extra)})):'')+(stars<3?' '+gT('Try again'):'');
+ const words=hit===N&&!extra?gT('All {n} on time.',{n:gNum(N)}):gT('{a} of {b} on time!',{a:gNum(hit),b:gNum(N)})+(extra?' '+(extra===1?gT('1 extra tap.'):gT('{n} extra taps.',{n:gNum(extra)})):'')+(stars<3?' '+gT('Try again'):'');
  const tight=hit&&stars>=2?` <span class="soft">(${gT('about {n} ms off',{n:gNum(avg)})})</span>`:'';
  const cr=GM.cr;if(cr){if(cr.turn==='answer'){cr[cr.ans]+=stars;cr.turn='call';const nx=cr.ans;cr.who=nx==='kid'?'Kid':'Grown-up';cr.callerKey=nx;GM.custom=null;const sc=$('crscore');if(sc)sc.innerHTML=crScore();$('grfb').innerHTML=`${starStr(stars)} ${words}${tight} ${gT(cr.who==='Kid'?'Now Kid makes the call.':'Now Grown-up makes the call.')}`;setTimeout(rxRender,2200)}return}
  if(stars)gSave('rx_'+L.id,stars);rxStarRow();$('grfb').innerHTML=`${starStr(stars)} ${words}${tight}${stars>=2&&GM.lvl<RXL.length-1?` <button class="p" onclick="GM.lvl++;GM.bpm=null;GM.played=0;RENDER.games()">${gT('Next ▶')}</button>`:''}`};
@@ -86,13 +86,13 @@ const MBEAT=.42;
 melPlay=function(id,seq,t0){const c=ac(),L=(MS[id]||{}).L||{};let t=0;seq.forEach((m,i)=>{const d=L.durs?L.durs[i]*MBEAT:.55;note(m,t0+t,Math.max(.3,d*.9),'bells',.3);later(()=>melLight(id,m),(t0-c.currentTime+t)*1000);t+=d});return t};
 {const mt=melTap;melTap=function(id,m){if(id==='comp')return compTap(m);const s=MS[id];
  if(s&&!s.lock&&!s.done&&s.L.rp&&m===s.seq[s.i]){const now=performance.now();if(s.i>0){const exp=s.L.durs[s.i-1]*MBEAT*1000,dt=now-s.last;if(Math.abs(dt-exp)>Math.max(.4*exp,160)){note(m,ac().currentTime,.35,'bells',.3);melLight(id,m);s.err++;s.last=now;
-   if(s.err>=3){s.done=1;$('mfb_'+id).innerHTML=`${starStr(0)} ${gT('3 mistakes. Try again!')}`}else $('mfb_'+id).textContent=gT('Right note, wrong timing ({e}/3). Keep the beat!',{e:gNum(s.err)});s.i++;if(s.i===s.seq.length){s.done=1;const st=s.err===0?3:s.err===1?2:1;if(id==='solo'){gSave('mel_'+s.L.id,st);melStarRow()}$('mfb_'+id).innerHTML=`${starStr(st)} ${gT('You got it!')}`}return}}s.last=now}
+   if(s.err>=3){s.done=1;$('mfb_'+id).innerHTML=`${starStr(0)} ${gT('That went a different way. Want to try it once more?')}`}else $('mfb_'+id).textContent=gT('The note was right. The timing went a different way ({e}/3).',{e:gNum(s.err)});s.i++;if(s.i===s.seq.length){s.done=1;const st=s.err===0?3:s.err===1?2:1;if(id==='solo'){gSave('mel_'+s.L.id,st);melStarRow()}$('mfb_'+id).innerHTML=`${starStr(st)} ${gT('You found it.')}`}return}}s.last=now}
  return mt(id,m)}}
 melRender=function(){const st=gStars(),L=MEL[GM.mlvl||0],grp=[['Classic','',x=>!x.song&&!x.rp],['Kid songs','',x=>x.song&&!x.rp],['Rhythm + pitch','',x=>x.rp]];
  const btn=(x)=>{const i=MEL.indexOf(x);return `<button class="${i===(GM.mlvl||0)?'p':''}" onclick="GM.mlvl=${i};RENDER.games()">${x.g?'👪 ':''}${gT(x.n)}<br><small>${starStr(st['mel_'+x.id]||0)}</small></button>`};
  $('games').innerHTML=gCard('🎹 '+gT('Melody Echo'),`${grp.map(([g,_,f])=>`<h3 class="mgh">${gT(g)}</h3><div class="glv">${MEL.filter(f).map(btn).join('')}</div>`).join('')}
  <p><button onclick="GM.v='comp';RENDER.games()">🎼 ${gT('Free play & compose')}</button></p>
- <p class="soft">${L.rp?gT('Play the same notes with the same rhythm: long notes wait longer. 3 mistakes ends the round.'):L.song?gT('Listen to the song, then play it back. 3 mistakes ends the round.'):gT('Watch and listen, then play the same notes back. 3 mistakes ends the round.')}</p>${melPanel('solo',L)}<p><button class="bigbtn p" onclick="melStart('solo')">▶ ${gT('Play tune')}</button></p>${gBack}`)};
+ <p class="soft">${L.rp?gT('Play the same notes with the same rhythm: long notes wait longer. After three slips, the round rests.'):L.song?gT('Listen to the song, then play it back. After three slips, the round rests.'):gT('Watch and listen, then play the same notes back. After three slips, the round rests.')}</p>${melPanel('solo',L)}<p><button class="bigbtn p" onclick="melStart('solo')">▶ ${gT('Play tune')}</button></p>${gBack}`)};
 // Free play & compose: tap the piano, record a tune, play it back, keep up to 8 on this device.
 const COMP={rec:null};const compList=()=>safeJSON(LS.get('lamp_melodies'),[]);
 function compTap(m){note(m,ac().currentTime,.5,COMP.inst||'bells',.3);melLight('comp',m);if(COMP.rec){const now=performance.now();COMP.rec.push([m,COMP.t0==null?0:now-COMP.t0]);if(COMP.t0==null)COMP.t0=now;const e=$('compn');if(e)e.textContent=gT('{n} notes',{n:gNum(COMP.rec.length)})}}

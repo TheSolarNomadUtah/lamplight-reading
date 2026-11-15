@@ -74,7 +74,7 @@ function labUI(){const el=$('lab');if(!el||el.classList.contains('hidden'))retur
  :`<p class="labsl"><label>${gT('Turn')} <input type="range" min="0" max="20" step="0.05" value="${LAB.mo.a}" oninput="LAB.mo.a=+this.value;LAB.mo.auto=0"></label> <label>${gT('Size')} <input type="range" min="0.9" max="1.15" step="0.002" value="${LAB.mo.s}" oninput="LAB.mo.s=+this.value;LAB.mo.auto=0"></label></p>
   <p class="soft">${gT('Drag the picture to slide the top mesh.')}</p><p><button onclick="LAB.mo.auto=LAB.mo.auto?0:1;labUI()">${LAB.mo.auto?gT('Pause breathing'):gT('Let it breathe')}</button></p>`;
  el.innerHTML=`<div class="card big labcard"><div class="labhead">${LAB_SVG}<div><h2>${gT('Sound Lab')}</h2><b class="labexp">${gT('Experimental')}</b></div></div>
- <p class="soft">${gT('A test space for grown-ups and curious kids together. These toys do not count toward the light or the streak.')}</p>
+ <p class="soft">${gT('A test space for grown-ups and curious kids together. These toys do not count toward the light or reading days.')}</p>
  <div class="labtabs" role="tablist">${Object.entries(labTxt).map(([k,v])=>`<button role="tab" aria-selected="${k===t}" class="${k===t?'p':''}" onclick="labStop();LAB.toy='${k}';labUI()">${gT(v[0])}</button>`).join(' ')}</div>
  <h3>${gT(labTxt[t][0])}</h3><p>${gT(labTxt[t][1])}</p>
  <div class="labcv" dir="ltr"><canvas id="labc" width="${t==='moire'?(LAB_NARROW()?360:900):(LAB_NARROW()?560:900)}" height="${t==='elise'?560:t==='moire'?(LAB_NARROW()?380:520):(LAB_NARROW()?360:340)}"></canvas></div>${ctl}

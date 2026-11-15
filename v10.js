@@ -1,3 +1,6 @@
+// Safe gT/gNum until i18n.js defines the real ones (v22 can show() before that).
+if(typeof gT!=='function')gT=function(s,o){let r=String(s||'');if(o)for(const k in o)r=r.split('{'+k+'}').join(o[k]);return r};
+if(typeof gNum!=='function')gNum=function(n,d){n=Number(n);if(!isFinite(n))return '0';return d?n.toFixed(d):String(n)};
 // v10: Home hub, library filters, picture-word cards, trace-a-letter, daily lamp streak,
 // record yourself, daycare mode, printable pages, Paint Studio. Zero data: nothing leaves this device.
 PKEYS.push('lamp_days','lamp_trace','lamp_cards');
@@ -35,7 +38,7 @@ function renderLibList(){const sv=getSolo(),G=GRADES.find(x=>x[0]===LF.g);const 
 // ---------- Home hub ----------
 const ZERO='We collect zero data. No accounts, no tracking, no analytics. Everything stays on this device.';
 function renderHub(){const p=curProfile(),D=getDays(),n=streakOf(D),total=Object.keys(D).length,ts=todayStory(p.band),done=!!D[dkey()];
- const msg=done?`Your lamp is lit today! ${n>1?n+' days in a row. ':''}✨`:(n?`${n} day${n>1?'s':''} glowing. Read today to keep it bright.`:(total?'Welcome back! Your lamp is ready to glow again.':'Read or play today to light your lamp.'));
+ const msg=done?(n>1?gT('Your lamp is lit today. {n} reading days.',{n:gNum(n)}):gT('Your lamp is lit today.')):(n?gT(n===1?'Your lamp holds {n} reading day.':'Your lamp holds {n} reading days.',{n:gNum(n)}):(total?gT('Your lamp is ready.'):gT('A story or a game can light your lamp.')));
  const A=[['📖','Read','lib'],['⭐','Solo','solo'],['🔤','Letters','letters'],['✍️','Trace','trace'],['🖼️','Cards','cards'],['🎨','Paint','paint'],['🎙️','Record','record'],['👶','Echo','echo']];
  const AGES=[['👶','Babies 0–3',"show('echo')",'Echo · Cards'],['🧸','Pre-K & K',"LF={g:'k',type:'all',tag:'',q:''};show('lib')",'Stories · Letters · Trace'],['📗','Grades 1–2',"LF={g:'g12',type:'all',tag:'',q:''};show('lib')",'Read · Solo'],['🚀','Grades 3–5',"LF={g:'g35',type:'all',tag:'',q:''};show('lib')",'Solo · Mysteries · Space']];
  $('hub').innerHTML=`<div class="card lampcard"><div>${lampSVG(n,140)}</div><div><h2 style="margin:.2em 0">${p.av} Hi, ${esc(p.name)}!</h2><p>${msg}</p>

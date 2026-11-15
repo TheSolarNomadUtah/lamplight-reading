@@ -62,7 +62,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=161;
+const APP_VERSION=162;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;const VOLATILE=new Set();
 const RAW={get:k=>{if(VOLATILE.has(k))return Object.hasOwn(MEM,k)?MEM[k]:null;try{const v=window.localStorage.getItem(k);MEM[k]=v;return v}catch(e){STORE_OK=false;return Object.hasOwn(MEM,k)?MEM[k]:null}},
@@ -182,16 +182,16 @@ function renderLetters(){const p=getLet(),known=AB.filter(L=>(p[L]||0)>=3).lengt
 function findRound(){const pool=letPool(),T=pool[Math.floor(Math.random()*pool.length)];const opts=shuf([T,...shuf(AB.filter(x=>x!==T)).slice(0,3)]);
  $('lgame').innerHTML=`<p style="font-size:1.4rem">Find the little letter for</p><div class="tile" style="display:inline-flex;align-items:center;justify-content:center;font-size:clamp(4rem,16vw,7rem)" onclick="LG.say&&speak('${T}')">${T}</div><div>${opts.map(o=>`<button class="tile" onclick="findPick(this,'${o}','${T}')">${o.toLowerCase()}</button>`).join('')}</div><p id="lfb" style="font-size:1.3rem;min-height:1.6em"></p>`;
  if(LG.say)speak('Find the little letter for '+T)}
-function findPick(b,o,T){if(b.classList.contains('yes'))return;if(o===T){b.classList.add('yes');letGot(T);$('lfb').textContent='⭐ Yes! Big '+T+' and little '+T.toLowerCase()+' match!';if(LG.say)speak('Yes! '+T+'.');setTimeout(()=>{const k=$('lk');renderLetters()},1300)}
- else{b.classList.remove('no');void b.offsetWidth;b.classList.add('no');$('lfb').textContent='Almost! That one is little '+o.toLowerCase()+'. Try again.';if(LG.say)speak('That is '+o+'. Try again.')}}
+function findPick(b,o,T){if(b.classList.contains('yes'))return;if(o===T){b.classList.add('yes');letGot(T);$('lfb').textContent=gT('Yes! Big {A} and little {a} match!',{A:T,a:T.toLowerCase()});if(LG.say)speak('Yes! '+T+'.');setTimeout(()=>{const k=$('lk');renderLetters()},1300)}
+ else{b.classList.remove('no');void b.offsetWidth;b.classList.add('no');$('lfb').textContent=gT('That one is little {a}. Want to try another?',{a:o.toLowerCase()});if(LG.say)speak('That is '+o+'.')}}
 let PR=null;
 function pairsRound(){const ls=shuf(letPool()).slice(0,4);PR={sel:null,left:4};
  $('lgame').innerHTML=`<p style="font-size:1.3rem">Tap a big letter, then its little letter.</p><div>${shuf(ls).map(L=>`<button class="tile" data-k="${L}" data-u="1" onclick="pairTap(this)">${L}</button>`).join('')}</div><div>${shuf(ls).map(L=>`<button class="tile" data-k="${L}" data-u="0" onclick="pairTap(this)">${L.toLowerCase()}</button>`).join('')}</div><p id="lfb" style="font-size:1.3rem;min-height:1.6em"></p>`}
 function pairTap(b){if(b.classList.contains('done'))return;if(LG.say)speak(b.dataset.k);
  if(!PR.sel||PR.sel.dataset.u===b.dataset.u){if(PR.sel)PR.sel.classList.remove('sel');PR.sel=b;b.classList.add('sel');return}
  const a=PR.sel;a.classList.remove('sel');PR.sel=null;
- if(a.dataset.k===b.dataset.k){a.classList.add('done');b.classList.add('done');letGot(b.dataset.k);PR.left--;$('lfb').textContent='⭐ '+b.dataset.k+' and '+b.dataset.k.toLowerCase()+' match!';if(!PR.left){$('lfb').textContent='🌟 All matched! Great job!';if(LG.say)speak('All matched! Great job!');setTimeout(renderLetters,1600)}}
- else{[a,b].forEach(x=>{x.classList.remove('no');void x.offsetWidth;x.classList.add('no')});$('lfb').textContent='Not a match yet. Try again!'}}
+ if(a.dataset.k===b.dataset.k){a.classList.add('done');b.classList.add('done');letGot(b.dataset.k);PR.left--;$('lfb').textContent=gT('{A} and {a} match!',{A:b.dataset.k,a:b.dataset.k.toLowerCase()});if(!PR.left){$('lfb').textContent=gT('All matched.');if(LG.say)speak('All matched.');setTimeout(renderLetters,1600)}}
+ else{[a,b].forEach(x=>{x.classList.remove('no');void x.offsetWidth;x.classList.add('no')});$('lfb').textContent=gT('Not a match yet. Want to try another pair?')}}
 // ---------- v7: Solo reading (kid alone) ----------
 const getSolo=()=>safeJSON(LS.get('lamp_solo'),{});
 let SO=null,readTimer=null;
@@ -324,4 +324,5 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="v159.js"></script>
 <script src="v160.js"></script>
 <script src="v161.js"></script>
+<script src="v162.js"></script>
 </body></html>
