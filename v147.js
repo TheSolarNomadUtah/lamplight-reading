@@ -221,8 +221,10 @@ function bindLookRow147(host,pid){
     var b=ev.target.closest('[data-il-look147]');
     if(!b) return;
     ev.preventDefault();
-    lookSave147(b.getAttribute('data-il-look147'),pid||pid147());
-    refreshAfterLook147();
+    var id=b.getAttribute('data-il-look147');
+    function apply(){lookSave147(id,pid||pid147());refreshAfterLook147()}
+    if(typeof IL159==='object'&&typeof IL159.ensure==='function'&&(id==='glass'||id==='constellation')) IL159.ensure(id).then(apply).catch(apply);
+    else apply();
   });
 }
 

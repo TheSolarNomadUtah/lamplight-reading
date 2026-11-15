@@ -62,7 +62,7 @@ body.painting header,body.painting footer{display:none}body.painting main{max-wi
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=158;
+const APP_VERSION=159;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;const VOLATILE=new Set();
 const RAW={get:k=>{if(VOLATILE.has(k))return Object.hasOwn(MEM,k)?MEM[k]:null;try{const v=window.localStorage.getItem(k);MEM[k]=v;return v}catch(e){STORE_OK=false;return Object.hasOwn(MEM,k)?MEM[k]:null}},
@@ -302,8 +302,23 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="v145.js"></script>
 <script src="v146.js"></script>
 <script src="looks/sils_v2.js"></script>
-<script src="looks/mode_constellation_v2.min.js"></script>
-<script src="looks/mode_glass_v21.min.js"></script>
+<script>
+/* v159: load Glass/Constellation kits only when a saved look needs them at boot. */
+(function(){
+ try{
+  var glass=false,cons=false,ids=['device'],raw,P,i,v;
+  raw=localStorage.getItem('lamp_profiles');
+  if(raw){P=JSON.parse(raw);if(P&&P.cur)ids.push(P.cur);if(P&&Array.isArray(P.list))for(i=0;i<P.list.length;i++)if(P.list[i]&&P.list[i].id)ids.push(P.list[i].id)}
+  for(i=0;i<ids.length;i++){
+   v=localStorage.getItem('lamp_il_look@'+ids[i]);
+   if(v==='glass')glass=true;
+   if(v==='constellation')cons=true;
+  }
+  if(cons)document.write('<script src="looks/mode_constellation_v2.min.js"><\/script>');
+  if(glass)document.write('<script src="looks/mode_glass_v21.min.js"><\/script>');
+ }catch(e){}
+})();
+</script>
 <script src="v147.js"></script>
 <script src="v148.js"></script>
 <script src="v149.js"></script>
@@ -316,4 +331,5 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="v156.js"></script>
 <script src="v157.js"></script>
 <script src="v158.js"></script>
+<script src="v159.js"></script>
 </body></html>
