@@ -2249,7 +2249,7 @@
   "Antlers": "Astas",
   "More seeds": "Más semillas",
   "Friends": "Amigos",
-  "Hold to pause, like a held breath.": "Mantén pulsado para pausar, como un suspiro retenido.",
+  "Hold to pause, like a held breath.": "Mantén pulsado para pausar, como una respiración retenida.",
   "Breathe": "Respirar",
   "Pause": "Pausa",
   "It found its rest.": "Encontró su descanso.",
@@ -2275,5 +2275,17 @@
   "Corners": "Esquinas",
   "Jump": "Salto",
   "Mod {n}": "Módulo {n}",
-  "A star ring from your fractal. It stays on this device.": "Un anillo de estrellas de tu fractal. Se queda en este aparato."
+  "A star ring from your fractal. It stays on this device.": "Un anillo de estrellas de tu fractal. Se queda en este aparato.",
+  "branch tips": "puntas de rama",
+  "tips": "puntas",
+  "segments": "segmentos",
+  "sides": "lados",
+  "triangles": "triángulos",
+  "cells": "celdas",
+  "rings": "anillos",
+  "seeds": "semillas",
+  "dots": "puntos",
+  "circles": "círculos",
+  "spirals": "espirales",
+  "pieces": "piezas"
 }
