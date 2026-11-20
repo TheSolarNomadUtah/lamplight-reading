@@ -1,7 +1,7 @@
 /* Lamplight U5 prototype: "Sound Draws Shapes" bedtime fade (Studio, 2026-11-15).
    Two soft tones, one per ear, in a simple ratio (default 2:3). The picture is
    drawn from the same numbers: x follows the left tone, y the right tone.
-   A tiny mistune makes the loop turn slowly (one turn every 8 s). After a few
+   A tiny mistune makes the loop turn slowly (one turn every 6 s). After a few
    quiet turns, both ears fade together with e^(-d t) (Professor Pi's
    harmonograph spec, d = 0.043), so the loop spirals in to a still dot and
    silence. About 95 s. Gold on night ink, no flashes, no colour changes.
@@ -13,7 +13,7 @@
 (function(root){
 'use strict';
 var PAIRS={'1:1':[1,1,Math.PI/2],'1:2':[1,2,0],'2:3':[2,3,0]}; /* Pi's kid picks */
-var BASE=110, TURN=8, D=.043, HOLD=20, TAIL=75, IN=2, PEAK=.07;
+var BASE=110, TURN=6, D=.043, HOLD=20, TAIL=75, IN=2, PEAK=.07;
 var INK='#120E18', GOLD='#E6B454', TIP='#FFE4A4';
 var S=null, gen=0;
 
@@ -121,6 +121,7 @@ function attach(o){
     root.addEventListener&&root.addEventListener('pagehide',onHide);
     S.timer=setInterval(function(){
       if(!S||S.gen!==my)return;
+      if(S.snd&&!soundOn())return detach('muted');  /* Soft sounds off mid-play stops it (as U6/U15) */
       var ok=true;try{ok=o.isActive?!!o.isActive():visible(host)}catch(e){ok=false}
       if(!ok)detach('left');
     },400);

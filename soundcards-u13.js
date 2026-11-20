@@ -79,6 +79,8 @@ if(typeof scPlay101==='function'&&!scPlay101._sc13){
   scPlay101._sc13=1;
 }
 document.addEventListener('visibilitychange',function(){if(document.hidden&&typeof scStop101==='function')try{scStop101()}catch(e){}});
+/* leaving the page (iOS pagehide) stops a card too; v176's own listener is kept and is harmless (stop is idempotent) */
+window.addEventListener('pagehide',function(){if(typeof scStop101==='function')try{scStop101()}catch(e){}});
 
 function creditsHtml(esc){
   esc=esc||function(s){return String(s).replace(/[&<>"]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]})};

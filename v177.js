@@ -14,7 +14,7 @@ var TX={en:{title:'See your sound',tile:'Two numbers draw a shape',intro:'Turn t
   aria:'A gold shape drawn by two numbers',down:'down',up:'up'},
  es:{title:'Mira tu sonido',tile:'Dos números dibujan una forma',intro:'Gira los dos diales. Cada número es un tono; juntos dibujan una forma. Los auriculares son opcionales: el dibujo sale de los números.',
   left:'Izquierda',right:'Derecha',on:'Sonido sí',off:'Sonido no',count:'Contar',top:'Cuenta los bultos de arriba.',side:'Cuenta los bultos de cada lado.',
-  bed:'Hora de dormir',bedStop:'Parar',bedNote:'La forma gira despacio y luego se hace más pequeña y más bajita hasta descansar.',night:'Buenas noches.',
+  bed:'Hora de dormir',bedStop:'Parar',bedNote:'La forma gira despacio y luego se hace más pequeña y más suave hasta descansar.',night:'Buenas noches.',
   aria:'Una forma dorada dibujada por dos números',down:'menos',up:'más'}};
 function L(){try{return (typeof LANG==='string'&&LANG==='es')?'es':'en'}catch(e){return 'en'}}
 function T(k){return TX[L()][k]}
