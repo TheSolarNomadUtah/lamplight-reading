@@ -1,34 +1,64 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Year Wheel</title>
 <style>
-:root{--bg:#120e18;--card:#1d1726;--ink:#f6ecd8;--soft:#bfb3a0;--gold:#e6b454}
+:root{--bg:#f6f1e7;--card:#fffdf8;--ink:#2f2a24;--soft:#7a6f60;--gold:#c28500;--line:#d8cdb8;--chip:#fffdf8;--nightshade:rgba(18,14,24,.35)}
+html.dark{--bg:#120e18;--card:#1d1726;--ink:#f6ecd8;--soft:#bfb3a0;--gold:#e6b454;--line:#4a3e55;--chip:#2a2233;--nightshade:rgba(18,14,24,.45)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 Georgia,serif}
-main{max-width:760px;margin:auto;padding:16px}h1{font-weight:normal;margin:.2em 0}h2{font-weight:normal;color:var(--gold);margin:.2em 0 .4em}
-section{background:var(--card);border-radius:18px;padding:16px;margin:14px 0}
-button,input{font:inherit}button{background:#2a2233;color:var(--ink);border:1px solid #4a3e55;border-radius:12px;padding:6px 12px;cursor:pointer}
-button,input[type=text],input[type=date]{min-height:44px;min-width:44px}input[type=range]{height:44px}
-button:focus-visible,input:focus-visible{outline:2px solid var(--gold)}
-.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-svg{width:100%;height:auto;display:block}.sl{cursor:pointer;transition:opacity .4s}.sl:hover{opacity:.85}
-#info{min-height:5em}.soft{color:var(--soft)}input[type=range]{width:100%}
-ul{padding-left:1.2em}li{margin:.2em 0}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-input[type=text],input[type=date]{background:#2a2233;color:var(--ink);border:1px solid #4a3e55;border-radius:10px;padding:5px 8px}
+main{max-width:760px;margin:auto;padding:16px}
+h1{font-weight:normal;margin:.2em 0;font-size:clamp(1.15rem,4.2vw,1.7rem);white-space:nowrap}
+h2{font-weight:normal;color:var(--gold);margin:.2em 0 .4em}
+section{background:var(--card);border-radius:18px;padding:16px;margin:14px 0;border:1px solid var(--line)}
+button,input,select{font:inherit;color:var(--ink)}
+button,select,input[type=text]{background:var(--chip);border:1px solid var(--line);border-radius:12px;padding:8px 14px;cursor:pointer;min-height:56px;min-width:56px}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+input[type=range]{width:100%;height:56px;accent-color:var(--gold)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+#back{color:var(--gold);min-height:56px;min-width:56px;display:inline-flex;align-items:center;text-decoration:none;padding:8px 12px}
+svg{width:100%;height:auto;display:block}
+.sl{cursor:pointer}
+@media(prefers-reduced-motion:reduce){.sl{transition:none}}
+#info{min-height:5em}.soft{color:var(--soft)}
+ul{padding-left:1.2em}li{margin:.4em 0}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .big{font-size:1.6em;color:var(--gold)}
+details.tell{margin-top:8px}details.tell>summary{min-height:56px;display:flex;align-items:center;cursor:pointer;color:var(--gold)}
+.us-box{margin-top:10px}
+.note{font-size:.95rem;margin:.4em 0}
 </style></head><body><main>
-<div class="top"><a id="back" href="../" style="color:var(--gold);min-height:44px;display:inline-flex;align-items:center">← Lamplight</a><h1 id="t_title">The Year Wheel</h1><button id="lang">Español</button></div>
+<div class="top"><a id="back" href="../index.html?from=patterns">← Lamplight</a><h1 id="t_title">Year Wheel</h1>
+<div class="row"><button type="button" id="theme" aria-pressed="false">Light</button><button type="button" id="lang">Español</button></div></div>
 <p class="soft" id="t_intro">Tap a month on the wheel.</p>
-<section><svg id="wheel" viewBox="-160 -160 320 320" role="img" aria-label="Year wheel"></svg><div id="info"></div></section>
+<section>
+<div class="row"><button type="button" id="hemi"></button><button type="button" id="reset">Today</button></div>
+<p class="soft note" id="t_slices"></p>
+<svg id="wheel" viewBox="-160 -160 320 320" role="img" aria-label="Year wheel"></svg>
+<div id="info"></div>
+</section>
 <section><h2 id="t_orbit">Why do we have seasons?</h2>
-<svg id="orbit" viewBox="-170 -120 340 240" aria-label="Earth going around the Sun"></svg>
+<svg id="orbit" viewBox="-170 -130 340 270" aria-label="Earth going around the Sun"></svg>
 <input id="day" type="range" min="1" max="365" value="1" aria-label="Day of the year">
 <p id="orbitTxt"></p><p class="soft" id="t_tilt"></p></section>
-<section><h2 id="t_hol">Holidays</h2><ul id="hols"></ul>
-<h2 id="t_h2"></h2><ul id="hols2"></ul>
-<div class="row"><input id="hn" type="text" maxlength="40" placeholder="Name"><input id="hd" type="date"><button id="hadd">Add our own</button></div>
+<section><h2 id="t_hol">Holidays</h2>
+<ul id="hols"></ul>
+<h2 id="t_h2"></h2>
+<ul id="hols2"></ul>
+<details class="us-box" id="usbox"><summary id="t_us"></summary><ul id="holsUS"></ul></details>
+<h2 id="t_own"></h2>
+<div class="row">
+<input id="hn" type="text" maxlength="40" placeholder="Name">
+<select id="hm" aria-label="Month"></select>
+<select id="hd" aria-label="Day"></select>
+<button type="button" id="hadd">Add our own</button>
+</div>
 <p class="soft" id="t_saved">Your own days are saved only on this device.</p></section>
-<section><h2 id="t_math">Year math</h2><div id="math"></div>
-<div class="row"><span id="t_until">How many days until…</span><input id="ud" type="date"></div><p class="big" id="ures"></p></section>
-</main><script>
+<section>
+<details class="tell" id="mathbox"><summary id="t_more"></summary>
+<h2 id="t_math">Year math</h2><div id="math"></div></details>
+<div class="row"><span id="t_until">How many days until…</span>
+<select id="um" aria-label="Month"></select>
+<select id="uday" aria-label="Day"></select>
+</div><p class="big" id="ures"></p></section>
+</main>
+<script>
 const L={en:{title:"The Year Wheel",intro:"Tap a month on the wheel.",orbit:"Why do we have seasons?",hol:"Holidays",saved:"Your own days are saved only on this device.",mathT:"Year math",until:"How many days until…",add:"Add our own",name:"Name",btn:"Español",
 months:["January","February","March","April","May","June","July","August","September","October","November","December"],
 seasons:["Winter","Spring","Summer","Fall"],
@@ -51,44 +81,216 @@ now:"Estación aquí:",eq:["Equinoccio de primavera","Solsticio de verano","Equi
 h2t:"Días festivos en países de habla hispana",hols2:[["Día de los Reyes Magos","6 ene · España, México, Puerto Rico y más","Recuerda a los tres reyes magos que llevaron regalos al niño Jesús. Los niños suelen recibir regalos y las familias comparten la rosca de reyes."],["Cinco de Mayo","5 may · México","Recuerda cuando el ejército mexicano venció al ejército francés en la Batalla de Puebla en 1862. NO es el Día de la Independencia de México, ¡y se celebra más en EE. UU. que en casi todo México!"],["Día de la Independencia de México","16 sept · México","En 1810, el cura Miguel Hidalgo tocó la campana de su iglesia y llamó a independizarse de España. La gente grita ¡Viva México!"],["Día de la Hispanidad","12 oct · España","La fiesta nacional de España. Marca el día de 1492 en que los barcos de Colón llegaron a América y celebra el idioma español que comparten muchos países."],["Día de los Muertos","1–2 nov · México","¡No es un día de miedo! Las familias recuerdan a sus seres queridos que han muerto, con ofrendas, flores de cempasúchil, fotos y calaveritas de azúcar."],["Día de la Virgen de Guadalupe","12 dic · México","Una gran fiesta católica a la Virgen de Guadalupe, con cantos, flores y visitas a su basílica en la Ciudad de México."],["Las Posadas","16–24 dic · México","Durante nueve noches, la gente va de casa en casa cantando y representa a María y José buscando dónde quedarse. Luego hay dulces y piñatas."],["Nochebuena","24 dic · España y Latinoamérica","Las familias comparten una gran cena por la noche; muchas veces es la noche más importante de la Navidad."]],hols:[["Año Nuevo","1 ene","El primer día del año nuevo. Mucha gente espera la medianoche para recibirlo y se pone metas llamadas propósitos."],["Día de Martin Luther King Jr.","3.er lunes de ene","Honra al Dr. King, que dirigió marchas pacíficas para que todas las personas fueran tratadas con justicia, sin importar el color de su piel."],["Día de los Presidentes","3.er lunes de feb","Empezó como el cumpleaños de George Washington. Ahora honra a todos los presidentes de EE. UU."],["San Valentín","14 feb","Un día para mostrar amor y amistad con tarjetas, corazones y palabras amables."],["Día de San Patricio","17 mar","Recuerda a San Patricio de Irlanda. La gente se viste de verde y celebra la cultura irlandesa."],["Día de la Tierra","22 abr","Empezó en 1970 para recordarnos cuidar nuestro planeta."],["Día de la Madre (EE. UU.)","2.º domingo de mayo","Un día para dar gracias a las mamás y a quienes nos cuidan como mamás."],["Memorial Day","último lunes de mayo","Recuerda a los soldados que murieron sirviendo a Estados Unidos."],["Día del Padre","3.er domingo de junio","Un día para dar gracias a los papás y a quienes nos cuidan como papás."],["Juneteenth","19 jun","El 19 de junio de 1865, las personas esclavizadas en Texas supieron que eran libres. Celebra la libertad."],["Día de la Independencia","4 jul","El 4 de julio de 1776 se aprobó la Declaración de Independencia. Es el cumpleaños de Estados Unidos, con fuegos artificiales y desfiles."],["Día del Trabajo (EE. UU.)","1.er lunes de sept","Honra a los trabajadores que construyen y mueven el país. Muchas veces marca el fin del verano."],["Halloween","31 oct","Una antigua fiesta de la cosecha. Hoy los niños se disfrazan y piden dulces."],["Día de los Veteranos","11 nov","Da gracias a quienes han servido en las fuerzas armadas de EE. UU. Empezó cuando terminó la Primera Guerra Mundial, el 11 de noviembre de 1918."],["Acción de Gracias","4.º jueves de nov","Una comida de cosecha para dar gracias. Recuerda la comida de 1621 que compartieron los peregrinos y el pueblo wampanoag."],["Navidad","25 dic","Los cristianos celebran el nacimiento de Jesús. Muchas familias comparten regalos, luces y tiempo juntos."]],
 math:y=>`<p>Un año tiene <b>12 meses</b> y <b>365 días</b>. Son unas <b>52 semanas</b>, porque 52 × 7 = 364, más 1 día extra.</p><p>La Tierra tarda unos <b>365¼ días</b> en dar la vuelta al Sol. Cuatro cuartos hacen un día entero, así que cada 4 años agregamos el <b>29 de febrero</b>: un <b>año bisiesto</b> de 366 días. (Los años que terminan en 00 no lo tienen, salvo si se dividen entre 400, como el 2000).</p><p>${y} ${leap(y)?"es":"no es"} bisiesto. El próximo año bisiesto es ${nextLeap(y)}.</p>`,
 today:"¡Es hoy!",days:n=>`${n==1?"Falta":"Faltan"} ${n} día${n==1?"":"s"} (unas ${(n/7).toFixed(1)} semanas)`,ago:n=>`Fue hace ${n} día${n==1?"":"s"}.`,del:"quitar"}};
-let lang=(new URLSearchParams(location.search).get("lang"))||localStorage.yw_lang||"en";if(lang!="es")lang="en";let sel=new Date().getMonth();const $=id=>document.getElementById(id),T=()=>L[lang];
+const X={en:{
+  back:"← Patterns Everywhere",
+  themeLight:"Light",themeDark:"Dark",
+  hemiN:"Northern half of Earth",hemiS:"Southern half of Earth",
+  slices:"Bigger slices are longer months. January starts at the top.",
+  reset:"Today",
+  more:"Tell me more about year math",
+  us:"United States days",
+  own:"Our own days",
+  southNote:"On the southern half, seasons are the other way around: June is winter and December is summer.",
+  until:"How many days until…"
+},es:{
+  back:"← Patrones en todas partes",
+  themeLight:"Claro",themeDark:"Oscuro",
+  hemiN:"Hemisferio norte",hemiS:"Hemisferio sur",
+  slices:"Las rebanadas más grandes son los meses más largos. Enero empieza arriba.",
+  reset:"Hoy",
+  more:"Cuéntame más sobre la cuenta del año",
+  us:"Días de Estados Unidos",
+  own:"Nuestros días",
+  southNote:"En el hemisferio sur las estaciones van al revés: junio es invierno y diciembre es verano.",
+  until:"Cuántos días faltan para…"
+}};
+function TX(k){return (X[lang]&&X[lang][k])||(X.en[k]||k)}
+
+const US_EN=["Martin Luther King Jr. Day","Presidents' Day","Memorial Day","Juneteenth","Independence Day","Labor Day","Veterans Day","Thanksgiving"];
+/* Match by the first field of the English list, then take the same index from the active language. */
+const US_IDX=(L.en.hols||[]).map((h,i)=>US_EN.indexOf(h[0])>=0?i:-1).filter(i=>i>=0);
+
+const q=new URLSearchParams(location.search);
+let lang=(q.get("lang"))||localStorage.yw_lang||"en";if(lang!="es")lang="en";
+let sel=new Date().getMonth();
+const $=id=>document.getElementById(id),T=()=>L[lang];
 const leap=y=>y%4==0&&(y%100!=0||y%400==0),nextLeap=y=>{y++;while(!leap(y))y++;return y};
-const Y=new Date().getFullYear(),DIM=m=>new Date(Y,m+1,0).getDate(),SEA=m=>[0,0,1,1,1,2,2,2,3,3,3,0][m];
+const Y=new Date().getFullYear(),DIM=m=>new Date(Y,m+1,0).getDate();
+const SEA_N=m=>[0,0,1,1,1,2,2,2,3,3,3,0][m];
 const SC=["#7aa7d8","#8cc98a","#e6b454","#e08a5a"],NS="http://www.w3.org/2000/svg";
+let hemi=localStorage.yw_hemi||"N";if(hemi!=="S")hemi="N";
+function SEA(m){const s=SEA_N(m);return hemi==="S"?(s+2)%4:s}
+function seasonFlip(s){return hemi==="S"?(s+2)%4:s}
+
+function themeInit(){
+  let th=localStorage.yw_theme;
+  if(th!=="light"&&th!=="dark"){
+    th=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";
+  }
+  document.documentElement.classList.toggle("dark",th==="dark");
+  document.documentElement.setAttribute("data-theme",th);
+}
+function themeToggle(){
+  const dark=!document.documentElement.classList.contains("dark");
+  document.documentElement.classList.toggle("dark",dark);
+  localStorage.yw_theme=dark?"dark":"light";
+  $("theme").textContent=dark?TX("themeDark"):TX("themeLight");
+  $("theme").setAttribute("aria-pressed",dark?"true":"false");
+  wheel();orbit();
+}
+
 function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e}
-function wheel(){const s=$("wheel");s.innerHTML="";const R=150,r=58;
-for(let m=0;m<12;m++){const a0=(m/12-.25)*2*Math.PI-Math.PI/12,a1=a0+Math.PI/6,p=(a,rr)=>[rr*Math.cos(a),rr*Math.sin(a)];
-const[x0,y0]=p(a0,R),[x1,y1]=p(a1,R),[x2,y2]=p(a1,r),[x3,y3]=p(a0,r);
-const g=el("path",{d:`M${x0} ${y0}A${R} ${R} 0 0 1 ${x1} ${y1}L${x2} ${y2}A${r} ${r} 0 0 0 ${x3} ${y3}Z`,fill:SC[SEA(m)],"fill-opacity":m==sel?1:.55,stroke:"#120e18","stroke-width":2,class:"sl",tabindex:0,role:"button","aria-label":T().months[m]},s);
-g.onclick=g.onkeydown=e=>{if(e.type=="keydown"&&e.key!="Enter"&&e.key!=" ")return;sel=m;wheel()};
-const[tx,ty]=p((a0+a1)/2,(R+r)/2+6);const t=el("text",{x:tx,y:ty,"text-anchor":"middle","dominant-baseline":"middle","font-size":13,fill:"#120e18","pointer-events":"none"},s);t.textContent=T().months[m].slice(0,3)}
-const c=el("text",{x:0,y:0,"text-anchor":"middle","dominant-baseline":"middle","font-size":15,fill:"#f6ecd8"},s);c.textContent=Y;
-$("info").innerHTML=`<h2>${T().months[sel]}</h2><p>${T().mi(sel+1,DIM(sel),T().seasons[SEA(sel)])}</p><p>${T().facts[sel]}</p>`}
+function monthAng(){
+  const days=Array.from({length:12},(_,m)=>DIM(m)),tot=days.reduce((a,b)=>a+b,0);
+  let a=-Math.PI/2,out=[];
+  for(let m=0;m<12;m++){const a0=a,a1=a+days[m]/tot*2*Math.PI;out.push([a0,a1]);a=a1}
+  return out;
+}
+function wheel(){
+  const s=$("wheel");s.innerHTML="";const R=150,r=58,ang=monthAng(),ink=document.documentElement.classList.contains("dark")?"#120e18":"#2f2a24",yearFill=document.documentElement.classList.contains("dark")?"#f6ecd8":"#2f2a24";
+  for(let m=0;m<12;m++){
+    const[a0,a1]=ang[m],p=(a,rr)=>[rr*Math.cos(a),rr*Math.sin(a)];
+    const[x0,y0]=p(a0,R),[x1,y1]=p(a1,R),[x2,y2]=p(a1,r),[x3,y3]=p(a0,r);
+    const large=a1-a0>Math.PI?1:0;
+    const g=el("path",{d:`M${x0} ${y0}A${R} ${R} 0 ${large} 1 ${x1} ${y1}L${x2} ${y2}A${r} ${r} 0 ${large} 0 ${x3} ${y3}Z`,fill:SC[SEA(m)],"fill-opacity":m==sel?1:.62,stroke:ink,"stroke-width":1.5,class:"sl",tabindex:"0",role:"button","aria-label":T().months[m]},s);
+    g.onclick=g.onkeydown=e=>{if(e.type=="keydown"&&e.key!="Enter"&&e.key!=" ")return;sel=m;wheel()};
+    const mid=(a0+a1)/2,[tx,ty]=p(mid,(R+r)/2+4);
+    const t=el("text",{x:tx,y:ty,"text-anchor":"middle","dominant-baseline":"middle","font-size":12,fill:ink,"pointer-events":"none"},s);
+    t.textContent=T().months[m].slice(0,3);
+  }
+  const c=el("text",{x:0,y:0,"text-anchor":"middle","dominant-baseline":"middle","font-size":15,fill:yearFill},s);c.textContent=Y;
+  const note=hemi==="S"?`<p class="soft">${TX("southNote")}</p>`:"";
+  $("info").innerHTML=`<h2>${T().months[sel]}</h2><p>${T().mi(sel+1,DIM(sel),T().seasons[SEA(sel)])}</p><p>${T().facts[sel]}</p>${note}`;
+}
 function doy(d){return Math.round((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(d.getFullYear(),0,0))/864e5)}
 const YD=leap(Y)?366:365,DO=(m,d)=>doy(new Date(Y,m,d)),EQ=[DO(2,20),DO(5,21),DO(8,22),DO(11,21)];
-function seasonOf(d){return d<EQ[0]?0:d<EQ[1]?1:d<EQ[2]?2:d<EQ[3]?3:0}
-function orbit(){const s=$("orbit"),d=+$("day").value;s.innerHTML="";const RX=140,RY=80;
-el("ellipse",{cx:0,cy:0,rx:RX,ry:RY,fill:"none",stroke:"#4a3e55","stroke-dasharray":"4 5"},s);
-el("circle",{cx:0,cy:0,r:22,fill:"#e6b454"},s);el("circle",{cx:0,cy:0,r:32,fill:"#e6b454",opacity:.18},s);
-const ang=dd=>(dd-EQ[1])/YD*2*Math.PI;
-[[EQ[0],0],[EQ[1],1],[EQ[2],2],[EQ[3],3]].forEach(([dd,i])=>{const a=ang(dd),x=RX*Math.cos(a),y=RY*Math.sin(a);el("circle",{cx:x,cy:y,r:3,fill:"#bfb3a0"},s);const t=el("text",{x:x>5?x-4:x<-5?x+4:x,y:y>5?y+16:y<-5?y-9:y+18,"text-anchor":x>5?"end":x<-5?"start":"middle","font-size":10,fill:"#bfb3a0"},s);t.textContent=T().eq[i]});
-const a=ang(d),ex=RX*Math.cos(a),ey=RY*Math.sin(a),tl=23.4*Math.PI/180;
-el("circle",{cx:ex,cy:ey,r:12,fill:"#7aa7d8"},s);
-const hx=Math.cos(a+Math.PI),hy=Math.sin(a+Math.PI);// half facing sun shading
-el("path",{d:`M${ex} ${ey-12}A12 12 0 0 ${hx>0?1:0} ${ex} ${ey+12}Z`,fill:"#120e18",opacity:.0},s);
-el("line",{x1:ex+19*Math.sin(-tl),y1:ey-19*Math.cos(tl),x2:ex-19*Math.sin(-tl),y2:ey+19*Math.cos(tl),stroke:"#f6ecd8","stroke-width":2},s);
-const n=el("text",{x:ex+19*Math.sin(-tl)-3,y:ey-22,"font-size":10,fill:"#f6ecd8","text-anchor":"middle"},s);n.textContent="N";
-const dt=new Date(Y,0,d),c=Math.cos(a);
-$("orbitTxt").innerHTML=`<b>${T().months[dt.getMonth()]} ${dt.getDate()}</b>. ${c>.5?T().sumr:c<-.5?T().wint:T().mid} ${T().now} <b>${T().seasons[seasonOf(d)]}</b>.${d<=10?" "+T().near+".":d>=180&&d<=192?" "+T().far+".":""}`;
-$("t_tilt").textContent=T().tilt}
-function hols(){const own=JSON.parse(localStorage.yw_own||"[]"),u=$("hols");u.innerHTML="";
-T().hols.forEach(([n,d,w])=>{const li=document.createElement("li");li.innerHTML=`<b>${n}</b> · ${d}<br><span class="soft">${w}</span>`;u.appendChild(li)});
-const u2=$("hols2");u2.innerHTML="";T().hols2.forEach(([n,d,w])=>{const li=document.createElement("li");li.innerHTML=`<b>${n}</b> · ${d}<br><span class="soft">${w}</span>`;u2.appendChild(li)});$("t_h2").textContent=T().h2t;
-own.forEach((h,i)=>{const li=document.createElement("li"),b=document.createElement("button");li.textContent=`★ ${h.n} · ${h.d} `;b.textContent=T().del;b.onclick=()=>{own.splice(i,1);localStorage.yw_own=JSON.stringify(own);hols()};li.appendChild(b);u.appendChild(li)})}
-$("hadd").onclick=()=>{const n=$("hn").value.trim(),d=$("hd").value;if(!n||!d)return;const own=JSON.parse(localStorage.yw_own||"[]");own.push({n,d});localStorage.yw_own=JSON.stringify(own);$("hn").value="";hols()};
-$("ud").oninput=()=>{const v=$("ud").value;if(!v)return;const[a,b,c]=v.split("-").map(Number),t=new Date(),t0=Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()),n=Math.round((Date.UTC(a,b-1,c)-t0)/864e5);$("ures").textContent=n==0?T().today:n>0?T().days(n):T().ago(-n)};
+function seasonOf(d){const s=d<EQ[0]?0:d<EQ[1]?1:d<EQ[2]?2:d<EQ[3]?3:0;return seasonFlip(s)}
+function orbit(){
+  const s=$("orbit"),d=+$("day").value;s.innerHTML="";const RX=140,RY=80;
+  el("ellipse",{cx:0,cy:0,rx:RX,ry:RY,fill:"none",stroke:"#8a7a68","stroke-dasharray":"4 5"},s);
+  el("circle",{cx:0,cy:0,r:22,fill:"#e6b454"},s);el("circle",{cx:0,cy:0,r:32,fill:"#e6b454",opacity:.18},s);
+  const ang=dd=>(dd-EQ[1])/YD*2*Math.PI;
+  const labels=hemi==="S"?[T().eq[2],T().eq[3],T().eq[0],T().eq[1]]:T().eq;
+  [[EQ[0],0],[EQ[1],1],[EQ[2],2],[EQ[3],3]].forEach(([dd,i])=>{
+    const a=ang(dd),x=RX*Math.cos(a),y=RY*Math.sin(a);
+    el("circle",{cx:x,cy:y,r:3,fill:"#8a7a68"},s);
+    const off=22,lx=x+(x>=0?10:-10),ly=y+(y>=0?off:-14);
+    const t=el("text",{x:lx,y:ly,"text-anchor":x>=0?"start":"end","font-size":10,fill:"currentColor"},s);
+    t.textContent=labels[i];
+  });
+  const a=ang(d),ex=RX*Math.cos(a),ey=RY*Math.sin(a),tl=23.4*Math.PI/180;
+  el("circle",{cx:ex,cy:ey,r:12,fill:"#7aa7d8"},s);
+  const hx=Math.cos(a+Math.PI);
+  el("path",{d:`M${ex} ${ey-12}A12 12 0 0 ${hx>0?1:0} ${ex} ${ey+12}Z`,fill:"#120e18",opacity:.4},s);
+  el("line",{x1:ex+19*Math.sin(-tl),y1:ey-19*Math.cos(tl),x2:ex-19*Math.sin(-tl),y2:ey+19*Math.cos(tl),stroke:"currentColor","stroke-width":2},s);
+  const n=el("text",{x:ex+19*Math.sin(-tl)-3,y:ey-22,"font-size":10,fill:"currentColor","text-anchor":"middle"},s);n.textContent="N";
+  const dt=new Date(Y,0,d),c=Math.cos(a);
+  const lean=hemi==="S"?(c<-.5?T().sumr:c>.5?T().wint:T().mid):(c>.5?T().sumr:c<-.5?T().wint:T().mid);
+  $("orbitTxt").innerHTML=`<b>${T().months[dt.getMonth()]} ${dt.getDate()}</b>. ${lean} ${T().now} <b>${T().seasons[seasonOf(d)]}</b>.${d<=10?" "+T().near+".":d>=180&&d<=192?" "+T().far+".":""}`;
+  $("t_tilt").textContent=T().tilt;
+}
+
+function fillDaySel(selEl, monthEl, keep){
+  const m=+monthEl.value, n=new Date(Y,m,0).getDate?new Date(Y,m,0):null;
+  const dim=new Date(Y,m,0).getDate(); /* m is 1-12 if value is month number... we'll use 0-11 */
+}
+function daysIn(m0){return new Date(Y,m0+1,0).getDate()}
+function fillDays(daySel, monthIdx, keep){
+  const n=daysIn(monthIdx);const cur=keep||+daySel.value||1;
+  daySel.innerHTML="";
+  for(let d=1;d<=n;d++){const o=document.createElement("option");o.value=d;o.textContent=d;daySel.appendChild(o)}
+  daySel.value=String(Math.min(cur,n));
+}
+function fillMonths(selEl){
+  selEl.innerHTML="";
+  T().months.forEach((name,i)=>{const o=document.createElement("option");o.value=i;o.textContent=name;selEl.appendChild(o)});
+}
+
+function hols(){
+  const own=JSON.parse(localStorage.yw_own||"[]"),u=$("hols"),uUS=$("holsUS");
+  u.innerHTML="";uUS.innerHTML="";
+  const list=T().hols||[];
+  list.forEach((row,i)=>{
+    const li=document.createElement("li");li.innerHTML=`<b>${row[0]}</b> · ${row[1]}<br><span class="soft">${row[2]}</span>`;
+    if(US_IDX.indexOf(i)>=0) uUS.appendChild(li); else u.appendChild(li);
+  });
+  const u2=$("hols2");u2.innerHTML="";
+  (T().hols2||[]).forEach(row=>{const li=document.createElement("li");li.innerHTML=`<b>${row[0]}</b> · ${row[1]}<br><span class="soft">${row[2]}</span>`;u2.appendChild(li)});
+  $("t_h2").textContent=T().h2t||"";
+  own.forEach((h,i)=>{
+    const li=document.createElement("li"),b=document.createElement("button");
+    li.textContent=`★ ${h.n} · ${h.d} `;b.textContent=T().del;b.type="button";
+    b.onclick=()=>{own.splice(i,1);localStorage.yw_own=JSON.stringify(own);hols()};
+    li.appendChild(b);u.appendChild(li);
+  });
+}
+function dateFromSelects(mEl,dEl){
+  const m=+mEl.value,d=+dEl.value;
+  if(m!==m||d!==d)return "";
+  return Y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+}
+function untilCount(){
+  const v=dateFromSelects($("um"),$("uday"));if(!v)return;
+  const[a,b,c]=v.split("-").map(Number),t=new Date(),t0=Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()),n=Math.round((Date.UTC(a,b-1,c)-t0)/864e5);
+  $("ures").textContent=n==0?T().today:n>0?T().days(n):T().ago(-n);
+}
+function goToday(){
+  const n=new Date();sel=n.getMonth();$("day").value=doy(n);
+  $("hm").value=String(n.getMonth());fillDays($("hd"),n.getMonth(),n.getDate());
+  $("um").value=String(n.getMonth());fillDays($("uday"),n.getMonth(),n.getDate());
+  wheel();orbit();untilCount();
+}
+
+$("hadd").onclick=()=>{
+  const n=$("hn").value.trim(),d=dateFromSelects($("hm"),$("hd"));
+  if(!n||!d)return;
+  const own=JSON.parse(localStorage.yw_own||"[]");own.push({n,d});localStorage.yw_own=JSON.stringify(own);$("hn").value="";hols();
+};
 $("day").oninput=orbit;
 $("lang").onclick=()=>{lang=lang=="en"?"es":"en";localStorage.yw_lang=lang;all()};
-function all(){const t=T();document.documentElement.lang=lang;for(const k of["title","intro","orbit","hol","saved","until"])$("t_"+k).textContent=t[k];$("t_math").textContent=t.mathT;$("lang").textContent=t.btn;$("hadd").textContent=t.add;$("hn").placeholder=t.name;$("math").innerHTML=t.math(Y);wheel();orbit();hols();$("ud").oninput()}
-$("day").max=YD;$("day").value=doy(new Date());all();
+$("theme").onclick=themeToggle;
+$("hemi").onclick=()=>{hemi=hemi==="N"?"S":"N";localStorage.yw_hemi=hemi;all()};
+$("reset").onclick=goToday;
+$("hm").onchange=()=>fillDays($("hd"),+$("hm").value,+$("hd").value);
+$("um").onchange=()=>{fillDays($("uday"),+$("um").value,+$("uday").value);untilCount()};
+$("uday").onchange=untilCount;
+$("hd").onchange=()=>{};
+
+function all(){
+  const t=T();
+  document.documentElement.lang=lang;
+  $("t_title").textContent=t.title.replace(/^The /,"") && lang==="en"?"Year Wheel":t.title;
+  if(lang==="en") $("t_title").textContent="Year Wheel"; else $("t_title").textContent=t.title;
+  $("t_intro").textContent=t.intro;
+  $("t_orbit").textContent=t.orbit;
+  $("t_hol").textContent=t.hol;
+  $("t_saved").textContent=t.saved;
+  $("t_until").textContent=TX("until");
+  $("t_math").textContent=t.mathT;
+  $("lang").textContent=t.btn;
+  $("hadd").textContent=t.add;
+  $("hn").placeholder=t.name;
+  $("math").innerHTML=t.math(Y);
+  $("t_slices").textContent=TX("slices");
+  $("t_more").textContent=TX("more");
+  $("t_us").textContent=TX("us");
+  $("t_own").textContent=TX("own");
+  $("reset").textContent=TX("reset");
+  $("hemi").textContent=hemi==="S"?TX("hemiS"):TX("hemiN");
+  const dark=document.documentElement.classList.contains("dark");
+  $("theme").textContent=dark?TX("themeDark"):TX("themeLight");
+  $("theme").setAttribute("aria-pressed",dark?"true":"false");
+  $("back").textContent=TX("back");
+  $("back").setAttribute("href","../index.html?from=patterns"+(lang==="es"?"&lang=es":""));
+  fillMonths($("hm"));fillMonths($("um"));
+  const now=new Date();
+  if(!$("hm").value) $("hm").value=String(now.getMonth());
+  if(!$("um").value) $("um").value=String(now.getMonth());
+  fillDays($("hd"),+$("hm").value,+$("hd").value||now.getDate());
+  fillDays($("uday"),+$("um").value,+$("uday").value||now.getDate());
+  wheel();orbit();hols();untilCount();
+}
+themeInit();
+$("day").max=YD;$("day").value=doy(new Date());
+all();
 </script></body></html>
