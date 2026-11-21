@@ -2503,5 +2503,6 @@
   "Both cuts make two halves. Fair means the same amount. The pieces do not have to be the same shape.": "Los dos cortes hacen dos mitades. Justo quiere decir la misma cantidad. Los pedazos no tienen que tener la misma forma.",
   "Each square has 2 pieces. A rectangle half and a triangle half are the same amount.": "Cada cuadrado tiene 2 pedazos. La mitad con forma de rectángulo y la mitad con forma de triángulo son la misma cantidad.",
   "Too many to count on the screen. Each Grow makes more by the same rule.": "Son demasiados para contarlos en la pantalla. Cada vez que pulsas Crecer, salen más con la misma regla.",
-  "Some are off the screen now. Reset to count them all.": "Ahora algunos están fuera de la pantalla. Pulsa Empezar de nuevo para contarlos todos."
+  "Some are off the screen now. Reset to count them all.": "Ahora algunos están fuera de la pantalla. Pulsa Empezar de nuevo para contarlos todos.",
+  "The middle tile has {mid}. {lit} are filled on the screen.": "La ficha del medio tiene {mid}. Hay {lit} pintadas en la pantalla."
 }
