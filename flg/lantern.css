@@ -1,0 +1,23 @@
+/* First Letter Garden "Lantern Letter" v3 draft (Art Director, 2026-11-20), CC0. Each stroke's vine grows once, in writing order; one flower opens once after the page is read. No loops, no flashing.
+   Vines are cased (dark olive edge + light gold-green core), so the same vine reads on the cream field, the night field and on the letter's own ink. */
+.lt{--lt-field:#F0E0B8;--lt-g:#FFF6D8;--lt-ga:1;--lt-frame:#855A00;--lt-dot:#855A00;--lt-ink:#7A2E22;--lt-rim:#855A00;--lt-case:#3E4C14;--lt-core:#D4DC78;--lt-leaf:#5A6A48;--lt-pet:#C07058;--lt-fc:#E6B454;display:block;width:100%;height:auto}
+.lt-dark,body.night .lt{--lt-field:#140C08;--lt-g:#E8A840;--lt-ga:.3;--lt-frame:#C47A00;--lt-dot:#E6B454;--lt-ink:#F3E0B8;--lt-rim:#C47A00;--lt-leaf:#9AB07A;--lt-pet:#F4D09A;--lt-fc:#C47A00}
+.lt-p{fill:var(--lt-field);stroke:var(--lt-frame);stroke-width:1.1}
+.lt-g0{stop-color:var(--lt-g);stop-opacity:var(--lt-ga)}.lt-g1{stop-color:var(--lt-g);stop-opacity:calc(var(--lt-ga)*.45)}.lt-g2{stop-color:var(--lt-g);stop-opacity:0}
+.lt-gl{opacity:0;animation:lt-in 1.6s ease-out forwards}
+.lt-dt{fill:var(--lt-dot)}
+.lt-vc,.lt-v{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 2;stroke-dashoffset:1;animation:lt-grow var(--u,4s) linear var(--d,0s) forwards}
+.lt-vc{stroke:var(--lt-case);stroke-width:2.3}.lt-v{stroke:var(--lt-core);stroke-width:1}
+.lt-f{fill:var(--lt-leaf);stroke:var(--lt-case);stroke-width:.5;opacity:0;transform-box:fill-box;transform-origin:0 50%;transform:scale(.2);animation:lt-pop 1.2s ease-out var(--d,0s) forwards}
+.lt-sd{fill:var(--lt-core);stroke:var(--lt-case);stroke-width:.9;opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.2);animation:lt-pop .5s ease-out var(--d,0s) forwards}
+.lt-o{fill:none;stroke:var(--lt-rim);stroke-width:10.6;stroke-linecap:round;stroke-linejoin:round}
+.lt-l{fill:none;stroke:var(--lt-ink);stroke-width:8.4;stroke-linecap:round;stroke-linejoin:round}
+.lt-ma{fill:var(--lt-ink);stroke:var(--lt-rim);stroke-width:1;stroke-linejoin:round}.lt-mv{fill:none;stroke:var(--lt-g);stroke-width:.7;stroke-linecap:round}
+.lt-mo{fill:none;stroke:var(--lt-rim);stroke-width:5.4;stroke-linecap:round}.lt-ml{fill:none;stroke:var(--lt-ink);stroke-width:3.6;stroke-linecap:round}
+.lt-pt{fill:var(--lt-pet);stroke:var(--lt-case);stroke-width:.4}.lt-fc{fill:var(--lt-fc);stroke:var(--lt-case);stroke-width:.35}
+.lt-fl{opacity:0;transform:scale(.2)}
+.lt-read .lt-fl{animation:lt-bloom 1.4s ease-out var(--r,0s) forwards}
+@keyframes lt-in{to{opacity:1}}@keyframes lt-grow{to{stroke-dashoffset:0}}@keyframes lt-pop{to{opacity:1;transform:scale(1)}}@keyframes lt-bloom{to{opacity:1;transform:scale(1)}} 
+.lt-sr{fill:none;stroke:var(--lt-core);stroke-width:.55}.lt-src{stroke:var(--lt-case);stroke-width:1.45}
+.lt-still .lt-gl,.lt-still .lt-vc,.lt-still .lt-v,.lt-still .lt-f,.lt-still .lt-sd,.lt-still.lt-read .lt-fl{animation:none;opacity:1;stroke-dashoffset:0;transform:none}
+@media (prefers-reduced-motion:reduce){.lt .lt-gl,.lt .lt-vc,.lt .lt-v,.lt .lt-f,.lt .lt-sd{animation:none;opacity:1;stroke-dashoffset:0;transform:none}.lt .lt-fl{animation:none;opacity:1;transform:none}} /* reduced motion: no animation, finished letter with seeds and flower */

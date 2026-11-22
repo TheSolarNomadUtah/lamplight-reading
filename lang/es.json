@@ -2504,5 +2504,7 @@
   "Each square has 2 pieces. A rectangle half and a triangle half are the same amount.": "Cada cuadrado tiene 2 pedazos. La mitad con forma de rectángulo y la mitad con forma de triángulo son la misma cantidad.",
   "Too many to count on the screen. Each Grow makes more by the same rule.": "Son demasiados para contarlos en la pantalla. Cada vez que pulsas Crecer, salen más con la misma regla.",
   "Some are off the screen now. Reset to count them all.": "Ahora algunos están fuera de la pantalla. Pulsa Empezar de nuevo para contarlos todos.",
-  "The middle tile has {mid}. {lit} are filled on the screen.": "La ficha del medio tiene {mid}. Hay {lit} pintadas en la pantalla."
+  "The middle tile has {mid}. {lit} are filled on the screen.": "La ficha del medio tiene {mid}. Hay {lit} pintadas en la pantalla.",
+  "Animated first letter": "Letra inicial animada",
+  "A glowing letter can grow once at the start of a story. It shows how the letter is written. This does not change story voices.": "Una letra luminosa puede crecer una sola vez al empezar un cuento. Muestra cómo se escribe la letra. Esto no cambia las voces de los cuentos."
 }
