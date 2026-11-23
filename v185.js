@@ -5,7 +5,8 @@
    Plus Paint dead-band fix (t442u, 4:36 PM): last-wins setPaintBarHeight so --pbh
    includes .pbar101 (or 0 when tools are hidden), without wiping the drawing.
    Plus feedback email (t446u, 5:48 PM): Lamplightlearn@protonmail.com as a
-   visible tappable mailto on Grown-ups and Help & feedback. */
+   visible tappable mailto on Grown-ups and Help & feedback.
+   Plus Trace S/s mid-join fix (t450u, 6:08 PM): one smooth continuous stroke. */
 (function(root){
 'use strict';
 
@@ -805,11 +806,26 @@ function installFeedback185(){
   }catch(e2){}
 }
 
+
+/* ---- 7. Trace guides: S and s bowls meet with continuous tangent (t450u) ---- */
+var STK_FIX185={
+  S:["A4,2.5,3.6,2.5,-20,-270 A4,7.5,3.8,2.5,-90,160"],
+  s:["A3,5.45,2.6,1.55,-20,-270 A3,8.55,2.8,1.55,-90,160"]
+};
+function patchTraceStrokes185(){
+  try{
+    if(typeof STK==='object'&&STK){
+      Object.keys(STK_FIX185).forEach(function(k){ STK[k]=STK_FIX185[k].slice(); });
+    }
+  }catch(e){}
+}
+
 function install(){
   css185();
   hookAc185();
   hookLoomDraw185();
   wrapPaint185();
+  patchTraceStrokes185();
   installFeedback185();
   installHuntGone185();
   wrapNav185();
@@ -840,7 +856,9 @@ root.IL185={
   setPaintBarHeight:setPaintBarHeight185,
   paintRefit:paintRefit185,
   feedbackEmail:FEEDBACK_EMAIL185,
-  feedbackMailto:feedbackMailto185
+  feedbackMailto:feedbackMailto185,
+  patchTraceStrokes:patchTraceStrokes185,
+  STK_FIX:STK_FIX185
 };
 root.FEEDBACK_EMAIL185=FEEDBACK_EMAIL185;
 root.setPaintBarHeight185=setPaintBarHeight185;
