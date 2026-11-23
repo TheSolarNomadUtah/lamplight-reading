@@ -3,7 +3,9 @@
    remove Find the baby, Count the spokes, and Honeycomb Builder;
    soft growth sound on Endless Honeycomb, stopped on every leave path.
    Plus Paint dead-band fix (t442u, 4:36 PM): last-wins setPaintBarHeight so --pbh
-   includes .pbar101 (or 0 when tools are hidden), without wiping the drawing. */
+   includes .pbar101 (or 0 when tools are hidden), without wiping the drawing.
+   Plus feedback email (t446u, 5:48 PM): Lamplightlearn@protonmail.com as a
+   visible tappable mailto on Grown-ups and Help & feedback. */
 (function(root){
 'use strict';
 
@@ -120,7 +122,9 @@ function css185(){
   s.textContent=
     '.loom181-dial button[data-loom185-spin]{min-width:56px;min-height:56px;padding:6px 10px;font:600 14px system-ui,sans-serif}'+
     '.loom181-dial button[data-loom185-spin].on{box-shadow:inset 0 0 0 2px #c28500}'+
-    '.loom181-dial button[data-loom185-spin][aria-disabled="true"]{opacity:.55}';
+    '.loom181-dial button[data-loom185-spin][aria-disabled="true"]{opacity:.55}'+
+    'a[data-feedback-mail185]{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding:8px 12px;box-sizing:border-box;color:var(--ink,#2f2a24);font-weight:700;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere;word-break:break-word}'+
+    'html[data-look-theme="dark"] a[data-feedback-mail185],body.night a[data-feedback-mail185],body.night76 a[data-feedback-mail185]{color:var(--ink,#e8e4da)}';
   document.head.appendChild(s);
 }
 
@@ -709,11 +713,104 @@ function wrapPaint185(){
   }
 }
 
+
+/* ---- 6. Feedback email: visible mailto on Grown-ups and Help & feedback ---- */
+var FEEDBACK_EMAIL185='Lamplightlearn@protonmail.com';
+function feedbackMailto185(){
+  var qs=['What did your kid love?','What did they leave for later?','What was confusing?'].map(function(q){return t185(q)});
+  return 'mailto:'+FEEDBACK_EMAIL185+'?subject='+encodeURIComponent(qs.join(' '))+'&body='+encodeURIComponent(qs.join('\n\n')+'\n\n');
+}
+function feedbackLinkHTML185(){
+  return '<a data-feedback-mail185 href="'+esc185(feedbackMailto185())+'">'+esc185(FEEDBACK_EMAIL185)+'</a>';
+}
+function stampFeedbackLink185(a){
+  if(!a) return;
+  a.setAttribute('data-feedback-mail185','');
+  a.setAttribute('href',feedbackMailto185());
+  a.textContent=FEEDBACK_EMAIL185;
+}
+function fixTellCard185(){
+  var root=$('adults'); if(!root) return;
+  try{if(typeof attach126==='function') attach126()}catch(e){}
+  var card=root.querySelector('[data-tell126]');
+  if(!card) return;
+  var a=card.querySelector('a[data-feedback-mail185], a[href^="mailto:"]');
+  if(!a){
+    var p=document.createElement('p');
+    p.innerHTML=feedbackLinkHTML185();
+    card.appendChild(p);
+    a=p.querySelector('a');
+  }
+  stampFeedbackLink185(a);
+}
+function fixAboutFeedback185(){
+  var about=$('about'); if(!about) return;
+  var card=null;
+  Array.prototype.forEach.call(about.querySelectorAll('.card'),function(c){
+    var hEl=c.querySelector('h2,h3');
+    var h=(hEl&&hEl.textContent||'').replace(/\s+/g,' ').trim();
+    if(/Send feedback|Enviar comentarios|أرسل ملاحظات/i.test(h)||c.querySelector('#fb_text,#fb_tried')) card=c;
+  });
+  if(!card){
+    about.insertAdjacentHTML('beforeend','<div class="card" data-feedback185="1"><h2 class="kline">'+esc185(t185('Send feedback'))+'</h2><p>'+feedbackLinkHTML185()+'</p></div>');
+    return;
+  }
+  var a=card.querySelector('a[data-feedback-mail185], a[href^="mailto:"]');
+  if(!a){
+    var p=document.createElement('p');
+    p.innerHTML=feedbackLinkHTML185();
+    var btn=card.querySelector('button, #fb_msg');
+    if(btn&&btn.parentNode) btn.parentNode.insertBefore(p,btn);
+    else card.appendChild(p);
+    a=p.querySelector('a');
+  }
+  stampFeedbackLink185(a);
+}
+function installFeedback185(){
+  try{
+    if(root.IL126){
+      IL126.ADDR=FEEDBACK_EMAIL185;
+      IL126.mailto=feedbackMailto185;
+    }
+  }catch(e){}
+  hook('renderAdults',function(prev){
+    return function(){
+      var r=prev.apply(this,arguments);
+      try{fixTellCard185()}catch(e){}
+      return r;
+    };
+  });
+  hook('renderAbout',function(prev){
+    return function(){
+      var r=prev.apply(this,arguments);
+      try{fixAboutFeedback185()}catch(e){}
+      return r;
+    };
+  });
+  hook('afterShow95',function(prev){
+    return function(id){
+      var r=prev.apply(this,arguments);
+      try{
+        if(id==='adults') fixTellCard185();
+        if(id==='about') fixAboutFeedback185();
+      }catch(e){}
+      return r;
+    };
+  });
+  try{
+    if(typeof RENDER==='object'){
+      if(typeof renderAdults==='function') RENDER.adults=renderAdults;
+      if(typeof renderAbout==='function') RENDER.about=renderAbout;
+    }
+  }catch(e2){}
+}
+
 function install(){
   css185();
   hookAc185();
   hookLoomDraw185();
   wrapPaint185();
+  installFeedback185();
   installHuntGone185();
   wrapNav185();
   /* Window capture runs before v182's document capture, so the kid path hits ehFill185. */
@@ -741,8 +838,11 @@ root.IL185={
   stopEhSound:stopEhSound185,
   stripHunt:stripHunt185,
   setPaintBarHeight:setPaintBarHeight185,
-  paintRefit:paintRefit185
+  paintRefit:paintRefit185,
+  feedbackEmail:FEEDBACK_EMAIL185,
+  feedbackMailto:feedbackMailto185
 };
+root.FEEDBACK_EMAIL185=FEEDBACK_EMAIL185;
 root.setPaintBarHeight185=setPaintBarHeight185;
 root.ehFill185=ehFill185;
 root.stopEhSound185=stopEhSound185;
