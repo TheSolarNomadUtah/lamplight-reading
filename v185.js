@@ -1,7 +1,9 @@
 /* Lamplight v185 — Ignacio 22 Nov 3:56 PM America/Denver (t434u Yes):
    Pattern Loom Bloom buttons grow the picture and a visible Spin control;
    remove Find the baby, Count the spokes, and Honeycomb Builder;
-   soft growth sound on Endless Honeycomb, stopped on every leave path. */
+   soft growth sound on Endless Honeycomb, stopped on every leave path.
+   Plus Paint dead-band fix (t442u, 4:36 PM): last-wins setPaintBarHeight so --pbh
+   includes .pbar101 (or 0 when tools are hidden), without wiping the drawing. */
 (function(root){
 'use strict';
 
@@ -12,7 +14,8 @@ function $(id){return document.getElementById(id)}
 function hook(name, wrap){
   var prev=root[name];
   if(typeof prev!=='function')return false;
-  if(prev._v185)return true;
+  /* Stack wraps. A one-shot _v185 guard would skip wrapNav after wrapPaint
+     and leave Home (showCore/afterShow) without the growth-sound stop. */
   var next=wrap(prev);
   next._v185=1;
   root[name]=next;
@@ -550,10 +553,167 @@ function watchDom185(){
   if(el) obs.observe(el,{childList:true,subtree:true});
 }
 
+
+/* ---- 5. Paint dead band: last-wins --pbh includes .pbar101, 0 when hidden ---- */
+function setPaintBarHeight185(){
+  var s=$('pstudio'); if(!s) return 0;
+  var top=s.getBoundingClientRect().top, h=0;
+  if(!s.classList.contains('paint-hide181')){
+    ['.pbar','.pbar101'].forEach(function(sel){
+      var el=s.querySelector(sel);
+      if(el && getComputedStyle(el).display!=='none')
+        h=Math.max(h, el.getBoundingClientRect().bottom-top);
+    });
+  }
+  var px=Math.ceil(h)+'px';
+  if(s.style.getPropertyValue('--pbh')!==px) s.style.setProperty('--pbh', px);
+  return h;
+}
+function paintSnap185(cv){
+  if(!cv||!cv.width||!cv.height) return null;
+  try{
+    var snap=document.createElement('canvas');
+    snap.width=cv.width; snap.height=cv.height;
+    snap.getContext('2d').drawImage(cv,0,0);
+    return snap;
+  }catch(e){return null}
+}
+function paintBackingFit185(snap, oldBox){
+  var cv=$('pcv'), g=$('pgd'), f=$('pfx');
+  if(!cv) return;
+  var dpr=Math.min(window.devicePixelRatio||1,1.5);
+  try{if(typeof PT==='object'&&PT.dpr) dpr=PT.dpr}catch(e){}
+  var r=cv.getBoundingClientRect();
+  var w=Math.max(300,Math.round(r.width*dpr));
+  var h=Math.max(300,Math.round(r.height*dpr));
+  var need=cv.width!==w||cv.height!==h;
+  if(need){
+    cv.width=w; cv.height=h;
+    if(g){g.width=w;g.height=h}
+    if(f){f.width=w;f.height=h}
+    try{if(typeof PT==='object') PT.dpr=dpr}catch(e2){}
+  }
+  try{
+    var x=cv.getContext('2d');
+    if(need||snap){
+      if(typeof paintBg==='function') paintBg(x);
+      else{
+        x.globalCompositeOperation='source-over';
+        x.fillStyle=(typeof PT==='object'&&PT.dark)?'#0d0f1a':'#fffdf8';
+        x.fillRect(0,0,w,h);
+      }
+    }
+    if(snap){
+      var dx=0, dy=0;
+      if(oldBox&&r.height){
+        dy=(oldBox.top-r.top)*(h/Math.max(1,r.height));
+        dx=(oldBox.left-r.left)*(w/Math.max(1,r.width));
+      }
+      x.drawImage(snap, dx, dy);
+    }
+  }catch(e3){}
+  try{if(typeof guides==='function') guides()}catch(e4){}
+}
+function paintRefit185(){
+  var cv=$('pcv'); if(!cv) return;
+  var oldBox=cv.getBoundingClientRect();
+  var snap=null;
+  try{if(typeof PT==='object'&&PT.inited) snap=paintSnap185(cv)}catch(e){}
+  setPaintBarHeight185();
+  paintBackingFit185(snap, oldBox);
+}
+var _paintSetupBusy185=false;
+function wrapPaint185(){
+  hook('paintSetup',function(prev){
+    return function(){
+      if(_paintSetupBusy185) return prev.apply(this,arguments);
+      _paintSetupBusy185=true;
+      try{
+        var cv=$('pcv'), snap=null, oldBox=null;
+        try{
+          if(cv&&typeof PT==='object'&&PT.inited){
+            snap=paintSnap185(cv);
+            oldBox=cv.getBoundingClientRect();
+          }
+        }catch(e){}
+        var r=prev.apply(this,arguments);
+        setPaintBarHeight185();
+        paintBackingFit185(snap, oldBox);
+        return r;
+      }finally{_paintSetupBusy185=false}
+    };
+  });
+  hook('renderPaintBar',function(prev){
+    return function(){
+      var r=prev.apply(this,arguments);
+      try{paintRefit185()}catch(e){}
+      return r;
+    };
+  });
+  hook('afterShow95',function(prev){
+    return function(id){
+      var r=prev.apply(this,arguments);
+      try{if(id==='paint') paintRefit185()}catch(e){}
+      return r;
+    };
+  });
+  hook('showCore10_97',function(prev){
+    return function(id){
+      var r=prev.apply(this,arguments);
+      try{if(id==='paint') paintRefit185()}catch(e){}
+      return r;
+    };
+  });
+  window.addEventListener('click',function(ev){
+    var t=ev.target&&ev.target.closest&&ev.target.closest('.paint-hidebtn181, .paint-tab181');
+    if(!t) return;
+    setTimeout(function(){ try{paintRefit185()}catch(e){} },0);
+  },false);
+  window.addEventListener('resize',function(){
+    try{
+      var s=$('pstudio'); if(!s) return;
+      var paint=$('paint');
+      if(paint&&paint.classList.contains('hidden')) return;
+      paintRefit185();
+    }catch(e){}
+  });
+  try{
+    if(window.visualViewport){
+      window.visualViewport.addEventListener('resize',function(){
+        try{
+          var paint=$('paint');
+          if(paint&&paint.classList.contains('hidden')) return;
+          if($('pstudio')) paintRefit185();
+        }catch(e){}
+      });
+    }
+  }catch(e2){}
+  if(!wrapPaint185._obs){
+    wrapPaint185._obs=1;
+    var ticking=false, last='';
+    var obs=new MutationObserver(function(){
+      if(ticking) return;
+      var s=$('pstudio'); if(!s) return;
+      var sig=s.classList.contains('paint-hide181')+'|'+(s.querySelector('.pbar101')&&getComputedStyle(s.querySelector('.pbar101')).display)||'';
+      if(sig===last) return;
+      ticking=true;
+      requestAnimationFrame(function(){
+        ticking=false;
+        var s2=$('pstudio'); if(!s2) return;
+        last=s2.classList.contains('paint-hide181')+'|'+(s2.querySelector('.pbar101')&&getComputedStyle(s2.querySelector('.pbar101')).display)||'';
+        try{paintRefit185()}catch(e){}
+      });
+    });
+    var host=$('pstudio')||$('paint')||document.body;
+    if(host) obs.observe(host,{attributes:true,attributeFilter:['class','style'],subtree:true,childList:true});
+  }
+}
+
 function install(){
   css185();
   hookAc185();
   hookLoomDraw185();
+  wrapPaint185();
   installHuntGone185();
   wrapNav185();
   /* Window capture runs before v182's document capture, so the kid path hits ehFill185. */
@@ -579,8 +739,11 @@ root.IL185={
   ehChime:ehChime185,
   ehSwell:ehSwell185,
   stopEhSound:stopEhSound185,
-  stripHunt:stripHunt185
+  stripHunt:stripHunt185,
+  setPaintBarHeight:setPaintBarHeight185,
+  paintRefit:paintRefit185
 };
+root.setPaintBarHeight185=setPaintBarHeight185;
 root.ehFill185=ehFill185;
 root.stopEhSound185=stopEhSound185;
 root.loomApplyBloom185=loomApplyBloom185;
