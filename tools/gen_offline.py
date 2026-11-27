@@ -1,3 +1,4 @@
+# v189: _archive/ (unused files kept for history; Jekyll does not serve _dirs) is never in the save.
 # Writes offline.json (MP3 audio) and offline-opus.json (Opus audio). Non-audio files are in both; each device downloads only its own format.
 import os,json
 R=os.path.dirname(os.path.dirname(os.path.abspath(__file__)));fs=[]
@@ -16,7 +17,7 @@ for d,_,n in os.walk(R):
   if is_hidden(rel):
     continue
   top=(rel.replace('\\','/').split('/')[0] if rel!='.' else '')
-  if top in ('tools','gates'):
+  if top in ('tools','gates','_archive'):
     continue
   for f in n:
     if is_hidden(f):
