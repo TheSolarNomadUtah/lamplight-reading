@@ -1,0 +1,1412 @@
+{
+  "version": 192,
+  "generated_from": [
+    "LICENSE",
+    "LICENSE-CONTENT",
+    "_archive/v192/README-v191-changelog.md",
+    "gallery/core/manifest.json",
+    "gallery/app-pack/manifest.json",
+    "soundcards-u13.js",
+    "soundcards-u13.js"
+  ],
+  "note": "Every asset path appears once and points at a credit template. Templates are taken only from existing Lamplight credit and license files (LICENSE, LICENSE-CONTENT including the former LICENSES.md map, gallery manifests, soundcards-u13.js CREDITS, and the Credits section of the previous README). If an asset is not named in those sources, source/author/license/url are \"unknown\". Nothing here was guessed. The app's visible credits were not changed. A rule with a prefix applies to every shipped file under that path. Assets listed under \"assets\" are the ones not covered by a prefix rule.",
+  "counts": {
+    "assets": 4763,
+    "templates": 53,
+    "unknown_or_partial": 1,
+    "rules": 12,
+    "listed_paths": 226
+  },
+  "templates": [
+    {
+      "id": "t001",
+      "source": "Free Software Foundation, GNU General Public License Version 3, 29 June 2007",
+      "author": "Free Software Foundation, Inc.",
+      "license": "GNU General Public License, version 3",
+      "url": "https://fsf.org/",
+      "notes": "Legal text kept word for word. App code is licensed under GPL-3.0-or-later."
+    },
+    {
+      "id": "t002",
+      "source": "Creative Commons Attribution-ShareAlike 4.0 International legal code, followed by the plain-language license map formerly in LICENSES.md, copied word for word",
+      "author": "Creative Commons Corporation (legal code); Lamplight Learning (map text)",
+      "license": "CC BY-SA 4.0 legal code plus third-party notices as listed in the map",
+      "url": "unknown",
+      "notes": "v192 merged LICENSE-CONTENT and LICENSES.md into this one content file. Notices were not edited."
+    },
+    {
+      "id": "t003",
+      "source": "Lamplight Learning app code",
+      "author": "Ignacio Valero / Lamplight Learning",
+      "license": "GPL-3.0-or-later",
+      "url": "https://lamplightlearn.org",
+      "notes": "LICENSES.md: All app code (JavaScript, HTML, CSS, the service worker, and tools) is licensed under the GNU General Public License, version 3 or later. Copyright (C) 2026 Ignacio Valero / Lamplight Learning."
+    },
+    {
+      "id": "t004",
+      "source": "Pre-recorded with Kokoro-82M (Apache-2.0), folder audio/alex/",
+      "author": "unknown",
+      "license": "AI-made clips stay under their own model terms and are not licensed as CC BY-SA 4.0, pending Ignacio's decision",
+      "url": "unknown",
+      "notes": "LICENSES.md Audio voices and recordings; also the Credits section of the previous README. The owner has not decided on CC BY-SA (\"Im not sure,\" 13 Nov 2026)."
+    },
+    {
+      "id": "t005",
+      "source": "Pre-recorded with Kokoro-82M (Apache-2.0), folder audio/bella/",
+      "author": "unknown",
+      "license": "AI-made clips stay under their own model terms and are not licensed as CC BY-SA 4.0, pending Ignacio's decision",
+      "url": "unknown",
+      "notes": "LICENSES.md Audio voices and recordings; also the Credits section of the previous README. The owner has not decided on CC BY-SA (\"Im not sure,\" 13 Nov 2026)."
+    },
+    {
+      "id": "t006",
+      "source": "Pre-recorded with Kokoro-82M (Apache-2.0), folder audio/dora/",
+      "author": "unknown",
+      "license": "AI-made clips stay under their own model terms and are not licensed as CC BY-SA 4.0, pending Ignacio's decision",
+      "url": "unknown",
+      "notes": "LICENSES.md Audio voices and recordings; also the Credits section of the previous README. The owner has not decided on CC BY-SA (\"Im not sure,\" 13 Nov 2026)."
+    },
+    {
+      "id": "t007",
+      "source": "Pre-recorded with Kokoro-82M (Apache-2.0), folder audio/emma/",
+      "author": "unknown",
+      "license": "AI-made clips stay under their own model terms and are not licensed as CC BY-SA 4.0, pending Ignacio's decision",
+      "url": "unknown",
+      "notes": "LICENSES.md Audio voices and recordings; also the Credits section of the previous README. The owner has not decided on CC BY-SA (\"Im not sure,\" 13 Nov 2026)."
+    },
+    {
+      "id": "t008",
+      "source": "Pre-recorded with Kokoro-82M (Apache-2.0), folder audio/heart/",
+      "author": "unknown",
+      "license": "AI-made clips stay under their own model terms and are not licensed as CC BY-SA 4.0, pending Ignacio's decision",
+      "url": "unknown",
+      "notes": "LICENSES.md Audio voices and recordings; also the Credits section of the previous README. The owner has not decided on CC BY-SA (\"Im not sure,\" 13 Nov 2026)."
+    },
+    {
+      "id": "t009",
+      "source": "Versilian Community Sample Library (VCSL) Vibraphone, soft mallets",
+      "author": "Versilian Community Sample Library",
+      "license": "CC0",
+      "url": "unknown",
+      "notes": "LICENSES.md Audio samples. No VCSL URL is written there."
+    },
+    {
+      "id": "t010",
+      "source": "FreePats World Percussion (Xavimart, Gonzalo, Roberto; congas from the Versilian Community Sample Library)",
+      "author": "Xavimart, Gonzalo, Roberto / FreePats; congas from VCSL",
+      "license": "CC0",
+      "url": "unknown",
+      "notes": "LICENSES.md Audio samples. No pack URL is written there."
+    },
+    {
+      "id": "t011",
+      "source": "Upright Piano KW by FreePats (Gonzalo & Roberto)",
+      "author": "Gonzalo & Roberto / FreePats",
+      "license": "CC0",
+      "url": "unknown",
+      "notes": "LICENSES.md Audio samples. No FreePats URL is written there."
+    },
+    {
+      "id": "t012",
+      "source": "Pre-recorded with Kokoro-82M (Apache-2.0), folder audio/michael/",
+      "author": "unknown",
+      "license": "AI-made clips stay under their own model terms and are not licensed as CC BY-SA 4.0, pending Ignacio's decision",
+      "url": "unknown",
+      "notes": "LICENSES.md Audio voices and recordings; also the Credits section of the previous README. The owner has not decided on CC BY-SA (\"Im not sure,\" 13 Nov 2026)."
+    },
+    {
+      "id": "t013",
+      "source": "Pre-recorded with Kokoro-82M (Apache-2.0), folder audio/nicole/",
+      "author": "unknown",
+      "license": "AI-made clips stay under their own model terms and are not licensed as CC BY-SA 4.0, pending Ignacio's decision",
+      "url": "unknown",
+      "notes": "LICENSES.md Audio voices and recordings; also the Credits section of the previous README. The owner has not decided on CC BY-SA (\"Im not sure,\" 13 Nov 2026)."
+    },
+    {
+      "id": "t014",
+      "source": "Pre-recorded with Kokoro-82M (Apache-2.0), folder audio/puck/",
+      "author": "unknown",
+      "license": "AI-made clips stay under their own model terms and are not licensed as CC BY-SA 4.0, pending Ignacio's decision",
+      "url": "unknown",
+      "notes": "LICENSES.md Audio voices and recordings; also the Credits section of the previous README. The owner has not decided on CC BY-SA (\"Im not sure,\" 13 Nov 2026)."
+    },
+    {
+      "id": "t015",
+      "source": "Bison bellow. NPS / Shan Burson, Yellowstone Sound Library (public domain).",
+      "author": "unknown",
+      "license": "public domain (as written in soundcards-u13.js CREDITS)",
+      "url": "unknown",
+      "notes": "Copied from the existing CREDITS map in soundcards-u13.js, which the app already shows. No separate URL is stored there."
+    },
+    {
+      "id": "t016",
+      "source": "Sandhill crane. NPS & MSU Acoustic Atlas / Jennifer Jerrett, Yellowstone Sound Library (public domain), via Wikimedia Commons.",
+      "author": "unknown",
+      "license": "public domain (as written in soundcards-u13.js CREDITS)",
+      "url": "unknown",
+      "notes": "Copied from the existing CREDITS map in soundcards-u13.js, which the app already shows. No separate URL is stored there."
+    },
+    {
+      "id": "t017",
+      "source": "Elk bugle. NPS / Neal Herbert, Yellowstone Sound Library (public domain).",
+      "author": "unknown",
+      "license": "public domain (as written in soundcards-u13.js CREDITS)",
+      "url": "unknown",
+      "notes": "Copied from the existing CREDITS map in soundcards-u13.js, which the app already shows. No separate URL is stored there."
+    },
+    {
+      "id": "t018",
+      "source": "Old Faithful erupting. NPS / Jennifer Jerrett, Yellowstone Sound Library (public domain).",
+      "author": "unknown",
+      "license": "public domain (as written in soundcards-u13.js CREDITS)",
+      "url": "unknown",
+      "notes": "Copied from the existing CREDITS map in soundcards-u13.js, which the app already shows. No separate URL is stored there."
+    },
+    {
+      "id": "t019",
+      "source": "Horse whinny. Wikimedia Commons user Hü. (public domain).",
+      "author": "unknown",
+      "license": "public domain (as written in soundcards-u13.js CREDITS)",
+      "url": "unknown",
+      "notes": "Copied from the existing CREDITS map in soundcards-u13.js, which the app already shows. No separate URL is stored there."
+    },
+    {
+      "id": "t020",
+      "source": "Common loons. NPS & MSU Acoustic Atlas / Jennifer Jerrett, Yellowstone Sound Library (public domain), via Wikimedia Commons.",
+      "author": "unknown",
+      "license": "public domain (as written in soundcards-u13.js CREDITS)",
+      "url": "unknown",
+      "notes": "Copied from the existing CREDITS map in soundcards-u13.js, which the app already shows. No separate URL is stored there."
+    },
+    {
+      "id": "t021",
+      "source": "Cat purring. Wikimedia Commons user Mysid (public domain).",
+      "author": "unknown",
+      "license": "public domain (as written in soundcards-u13.js CREDITS)",
+      "url": "unknown",
+      "notes": "Copied from the existing CREDITS map in soundcards-u13.js, which the app already shows. No separate URL is stored there."
+    },
+    {
+      "id": "t022",
+      "source": "Common raven. NPS / David Restivo, Yellowstone Sound Library (public domain), via Wikimedia Commons.",
+      "author": "unknown",
+      "license": "public domain (as written in soundcards-u13.js CREDITS)",
+      "url": "unknown",
+      "notes": "Copied from the existing CREDITS map in soundcards-u13.js, which the app already shows. No separate URL is stored there."
+    },
+    {
+      "id": "t023",
+      "source": "Rooster crowing. \"alys\", pdsounds.org (public domain), via Wikimedia Commons.",
+      "author": "unknown",
+      "license": "public domain (as written in soundcards-u13.js CREDITS)",
+      "url": "unknown",
+      "notes": "Copied from the existing CREDITS map in soundcards-u13.js, which the app already shows. No separate URL is stored there."
+    },
+    {
+      "id": "t024",
+      "source": "Sheep bleating. \"earthcalling\", pdsounds.org (public domain), via Wikimedia Commons.",
+      "author": "unknown",
+      "license": "public domain (as written in soundcards-u13.js CREDITS)",
+      "url": "unknown",
+      "notes": "Copied from the existing CREDITS map in soundcards-u13.js, which the app already shows. No separate URL is stored there."
+    },
+    {
+      "id": "t025",
+      "source": "Humpback whale song. NOAA PMEL (U.S. government work, public domain), via Wikimedia Commons.",
+      "author": "unknown",
+      "license": "public domain (as written in soundcards-u13.js CREDITS)",
+      "url": "unknown",
+      "notes": "Copied from the existing CREDITS map in soundcards-u13.js, which the app already shows. No separate URL is stored there."
+    },
+    {
+      "id": "t026",
+      "source": "Wolves howling. NPS & MSU Acoustic Atlas / Jennifer Jerrett, Yellowstone Sound Library (public domain).",
+      "author": "unknown",
+      "license": "public domain (as written in soundcards-u13.js CREDITS)",
+      "url": "unknown",
+      "notes": "Copied from the existing CREDITS map in soundcards-u13.js, which the app already shows. No separate URL is stored there."
+    },
+    {
+      "id": "t027",
+      "source": "Kenney",
+      "author": "Kenney",
+      "license": "CC0",
+      "url": "https://kenney.nl",
+      "notes": "LICENSES.md and the README Credits section: Interface and page sounds: Kenney (kenney.nl), CC0. This filename names Kenney."
+    },
+    {
+      "id": "t028",
+      "source": "Made for Lamplight from simple harmonic ratios (3:2, 5:4)",
+      "author": "Lamplight Learning",
+      "license": "CC0",
+      "url": "https://lamplightlearn.org",
+      "notes": "README Credits section: \"Chimes and sparkles: made for Lamplight from simple harmonic ratios (3:2, 5:4), CC0.\""
+    },
+    {
+      "id": "t029",
+      "source": "Kenney",
+      "author": "Kenney",
+      "license": "CC0",
+      "url": "https://kenney.nl",
+      "notes": "README Credits: \"Interface and page sounds: Kenney (kenney.nl), CC0.\" These are the remaining audio/sfx files named in the v38 list, not the chimes/sparkles line."
+    },
+    {
+      "id": "t030",
+      "source": "AI-made Luna mix / singing (SoulX-Singer with Kokoro-82M timbres), as documented in LICENSES.md and the previous README Credits section",
+      "author": "shown in the app as Luna",
+      "license": "AI-made audio stays under its own model terms and is not licensed as CC BY-SA 4.0, pending Ignacio's decision",
+      "url": "unknown",
+      "notes": "Tune origins (traditional vs original Lamplight words) are listed per title in the LICENSES.md song table. This row is for the recording file only."
+    },
+    {
+      "id": "t031",
+      "source": "Generated from the existing Lamplight license and credit files listed in this document",
+      "author": "Lamplight Learning",
+      "license": "GPL-3.0-or-later (this machine-readable list is part of the app code)",
+      "url": "https://lamplightlearn.org"
+    },
+    {
+      "id": "t032",
+      "source": "Original art written for Lamplight (including code-drawn pictures)",
+      "author": "Lamplight Learning (lamplightlearn.org)",
+      "license": "CC BY-SA 4.0",
+      "url": "https://lamplightlearn.org",
+      "notes": "LICENSES.md class for original art, including code-drawn companions and patterns. Individual filenames are not listed there."
+    },
+    {
+      "id": "t033",
+      "source": "Playwrite Project / Playwrite US Trad",
+      "author": "The Playwrite Project Authors",
+      "license": "SIL Open Font License, Version 1.1",
+      "url": "unknown",
+      "notes": "From LICENSES.md Fonts section. The license text is in fonts/PlaywriteUSTrad-OFL.txt. No project URL is given there."
+    },
+    {
+      "id": "t034",
+      "source": "Ernst Haeckel; lithograph by Adolf Giltsch. Kunstformen der Natur, 1904. Scan: Wikimedia Commons.",
+      "author": "Ernst Haeckel (lithograph by Adolf Giltsch)",
+      "license": "Public domain (as stated in the gallery manifest and LICENSES.md)",
+      "url": "https://commons.wikimedia.org/wiki/File:Haeckel_Spumellaria.jpg",
+      "notes": "From gallery/app-pack/manifest.json (title: Kunstformen der Natur, Plate 91 (Spumellaria)). Also described in the LICENSES.md Quiet Gallery section."
+    },
+    {
+      "id": "t035",
+      "source": "ESA/Webb, NASA & CSA, J. Lee and the PHANGS-JWST Team; ESA/Hubble & NASA, R. Chandar Acknowledgement: J. Schmidt",
+      "author": "ESA/Webb, NASA and CSA, J. Lee and the PHANGS-JWST Team; ESA/Hubble and NASA, R. Chandar",
+      "license": "CC BY 4.0",
+      "url": "https://esawebb.org/images/potm2208b/",
+      "notes": "From gallery/app-pack/manifest.json (title: The Phantom Galaxy Across the Spectrum (M74)). Also described in the LICENSES.md Quiet Gallery section."
+    },
+    {
+      "id": "t036",
+      "source": "Lamplight Learning app code (gallery manifest)",
+      "author": "Ignacio Valero / Lamplight Learning",
+      "license": "GPL-3.0-or-later",
+      "url": "https://lamplightlearn.org",
+      "notes": "Machine-readable credits for the pictures in this folder; the pictures keep the licenses in each row."
+    },
+    {
+      "id": "t037",
+      "source": "ambientCG (Lennart Demes / ambientCG.com). CC0 — credit appreciated, not required.",
+      "author": "ambientCG (Lennart Demes)",
+      "license": "CC0",
+      "url": "https://ambientcg.com/a/Bark014",
+      "notes": "From gallery/core/manifest.json (title: Bark 014). Also described in the LICENSES.md Quiet Gallery section."
+    },
+    {
+      "id": "t038",
+      "source": "Ernst Florens Friedrich Chladni, Entdeckungen über die Theorie des Klanges, 1787. Scan: e-rara / Wikimedia Commons.",
+      "author": "Ernst Florens Friedrich Chladni",
+      "license": "Public domain (as stated in the gallery manifest and LICENSES.md)",
+      "url": "https://commons.wikimedia.org/wiki/File:Ernst_Florens_Friedrich_Chladni_-_Entdeckungen_über_die_Theorie_des_Klanges_-_1787.pdf",
+      "notes": "From gallery/core/manifest.json (title: Entdeckungen über die Theorie des Klanges, Tab. IX). Also described in the LICENSES.md Quiet Gallery section."
+    },
+    {
+      "id": "t039",
+      "source": "Ernst Florens Friedrich Chladni, Entdeckungen über die Theorie des Klanges, 1787. Scan: e-rara / Wikimedia Commons.",
+      "author": "Ernst Florens Friedrich Chladni",
+      "license": "Public domain (as stated in the gallery manifest and LICENSES.md)",
+      "url": "https://commons.wikimedia.org/wiki/File:Ernst_Florens_Friedrich_Chladni_-_Entdeckungen_über_die_Theorie_des_Klanges_-_1787.pdf",
+      "notes": "From gallery/core/manifest.json (title: Entdeckungen über die Theorie des Klanges, Tab. VIII). Also described in the LICENSES.md Quiet Gallery section."
+    },
+    {
+      "id": "t040",
+      "source": "Ernst Florens Friedrich Chladni, Entdeckungen über die Theorie des Klanges, 1787. Scan: e-rara / Wikimedia Commons.",
+      "author": "Ernst Florens Friedrich Chladni",
+      "license": "Public domain (as stated in the gallery manifest and LICENSES.md)",
+      "url": "https://commons.wikimedia.org/wiki/File:Ernst_Florens_Friedrich_Chladni_-_Entdeckungen_über_die_Theorie_des_Klanges_-_1787.pdf",
+      "notes": "From gallery/core/manifest.json (title: Entdeckungen über die Theorie des Klanges, Tab. X). Also described in the LICENSES.md Quiet Gallery section."
+    },
+    {
+      "id": "t041",
+      "source": "Wenzel Jamnitzer (design) and Jost Amman (etchings), 1568. Scan: The Metropolitan Museum of Art, Open Access (CC0).",
+      "author": "Wenzel Jamnitzer (design) and Jost Amman (etchings)",
+      "license": "Public domain (as stated in the gallery manifest and LICENSES.md)",
+      "url": "https://www.metmuseum.org/art/collection/search/339008",
+      "notes": "From gallery/core/manifest.json (title: Perspectiva Corporum Regularium, plate F.III). Also described in the LICENSES.md Quiet Gallery section."
+    },
+    {
+      "id": "t042",
+      "source": "Wenzel Jamnitzer (design) and Jost Amman (etchings), 1568. Scan: The Metropolitan Museum of Art, Open Access (CC0).",
+      "author": "Wenzel Jamnitzer (design) and Jost Amman (etchings)",
+      "license": "Public domain (as stated in the gallery manifest and LICENSES.md)",
+      "url": "https://www.metmuseum.org/art/collection/search/339008",
+      "notes": "From gallery/core/manifest.json (title: Perspectiva Corporum Regularium, plate F.VI). Also described in the LICENSES.md Quiet Gallery section."
+    },
+    {
+      "id": "t043",
+      "source": "Johannes Kepler, Harmonices Mundi, 1619. Scan: Internet Archive / Wikimedia Commons.",
+      "author": "Johannes Kepler",
+      "license": "Public domain (as stated in the gallery manifest and LICENSES.md)",
+      "url": "https://commons.wikimedia.org/wiki/File:Ioanniskepplerih00kepl_0081.jpg",
+      "notes": "From gallery/core/manifest.json (title: Harmonices Mundi, platonic solids plate). Also described in the LICENSES.md Quiet Gallery section."
+    },
+    {
+      "id": "t044",
+      "source": "Maria Sibylla Merian, Metamorphosis insectorum Surinamensium, 1705. Scan: Minneapolis Institute of Art / Wikimedia Commons.",
+      "author": "Maria Sibylla Merian",
+      "license": "Public domain (as stated in the gallery manifest and LICENSES.md)",
+      "url": "https://commons.wikimedia.org/wiki/File:Maria_Merian_Metamorphosis_Insectorum_Surinamensium_MIA_P18717.jpg",
+      "notes": "From gallery/core/manifest.json (title: Metamorphosis insectorum Surinamensium, Plate 11). Also described in the LICENSES.md Quiet Gallery section."
+    },
+    {
+      "id": "t045",
+      "source": "Greg Zaal / Poly Haven (polyhaven.com). CC0, credit appreciated, not required. Tone-mapped from the CC0 HDRI; the site's example-render preview is not used.",
+      "author": "Greg Zaal (Poly Haven)",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/rogland_clear_night",
+      "notes": "From gallery/core/manifest.json (title: Rogland Clear Night). Also described in the LICENSES.md Quiet Gallery section."
+    },
+    {
+      "id": "t046",
+      "source": "ENABLE word list, intersected with common English words and then filtered for children",
+      "author": "unknown",
+      "license": "ENABLE stays public domain",
+      "url": "unknown",
+      "notes": "LICENSES.md Word lists section. No ENABLE URL is written there."
+    },
+    {
+      "id": "t047",
+      "source": "Original stories or translations written for Lamplight",
+      "author": "Lamplight Learning (lamplightlearn.org)",
+      "license": "CC BY-SA 4.0 (stories and lessons); the file is also app code under GPL-3.0-or-later",
+      "url": "https://lamplightlearn.org",
+      "notes": "LICENSES.md: Original stories, art, lessons, and lyrics written for Lamplight are licensed under Creative Commons Attribution-ShareAlike 4.0 International."
+    },
+    {
+      "id": "t048",
+      "source": "Stellarium modern sky culture data (skycultures/modern)",
+      "author": "Stellarium",
+      "license": "Text and data CC BY-SA 4.0",
+      "url": "unknown",
+      "notes": "LICENSES.md: Stick-figure constellation lines. Stellarium's illustrations (Free Art License) are not used. No project URL is written in that file."
+    },
+    {
+      "id": "t049",
+      "source": "Original lyrics written for Lamplight, or timings for those songs",
+      "author": "Lamplight Learning (lamplightlearn.org)",
+      "license": "CC BY-SA 4.0 (original lyrics); recordings are listed separately",
+      "url": "https://lamplightlearn.org",
+      "notes": "LICENSES.md: original lyrics are CC BY-SA 4.0. This does not change the license of any AI-made recording."
+    },
+    {
+      "id": "t050",
+      "source": "Lamplight Learning app code / config",
+      "author": "Ignacio Valero / Lamplight Learning",
+      "license": "GPL-3.0-or-later",
+      "url": "https://lamplightlearn.org"
+    },
+    {
+      "id": "t051",
+      "source": "unknown",
+      "author": "unknown",
+      "license": "unknown",
+      "url": "unknown",
+      "notes": "LICENSES.md describes star, constellation, and sky-math files by name, but does not name sky/cities.min.json."
+    },
+    {
+      "id": "t052",
+      "source": "Original Lamplight code by Professor Pi",
+      "author": "Professor Pi / Lamplight Learning",
+      "license": "GPL-3.0-or-later",
+      "url": "https://lamplightlearn.org",
+      "notes": "LICENSES.md: Sun, Moon and planet positions follow Paul Schlyter's published method, \"How to compute planetary positions\" (stjarnhimlen.se); no code was copied."
+    },
+    {
+      "id": "t053",
+      "source": "HYG Star Database (v4.4, Astronomy Nexus)",
+      "author": "Astronomy Nexus",
+      "license": "CC BY-SA 4.0",
+      "url": "https://codeberg.org/astronexus/hyg",
+      "notes": "LICENSES.md: Look Up star places and brightness. Positions are for the year 2000. Already credited in the app."
+    }
+  ],
+  "assets": [
+    {
+      "path": "LICENSE",
+      "use": "t001"
+    },
+    {
+      "path": "LICENSE-CONTENT",
+      "use": "t002"
+    },
+    {
+      "path": "art63.js",
+      "use": "t003"
+    },
+    {
+      "path": "art64.js",
+      "use": "t003"
+    },
+    {
+      "path": "art65.js",
+      "use": "t003"
+    },
+    {
+      "path": "audio/sc13/bison.mp3",
+      "use": "t015"
+    },
+    {
+      "path": "audio/sc13/bison.opus",
+      "use": "t015"
+    },
+    {
+      "path": "audio/sc13/crane.mp3",
+      "use": "t016"
+    },
+    {
+      "path": "audio/sc13/crane.opus",
+      "use": "t016"
+    },
+    {
+      "path": "audio/sc13/elk.mp3",
+      "use": "t017"
+    },
+    {
+      "path": "audio/sc13/elk.opus",
+      "use": "t017"
+    },
+    {
+      "path": "audio/sc13/geyser.mp3",
+      "use": "t018"
+    },
+    {
+      "path": "audio/sc13/geyser.opus",
+      "use": "t018"
+    },
+    {
+      "path": "audio/sc13/horse.mp3",
+      "use": "t019"
+    },
+    {
+      "path": "audio/sc13/horse.opus",
+      "use": "t019"
+    },
+    {
+      "path": "audio/sc13/loon.mp3",
+      "use": "t020"
+    },
+    {
+      "path": "audio/sc13/loon.opus",
+      "use": "t020"
+    },
+    {
+      "path": "audio/sc13/purr.mp3",
+      "use": "t021"
+    },
+    {
+      "path": "audio/sc13/purr.opus",
+      "use": "t021"
+    },
+    {
+      "path": "audio/sc13/raven.mp3",
+      "use": "t022"
+    },
+    {
+      "path": "audio/sc13/raven.opus",
+      "use": "t022"
+    },
+    {
+      "path": "audio/sc13/rooster.mp3",
+      "use": "t023"
+    },
+    {
+      "path": "audio/sc13/rooster.opus",
+      "use": "t023"
+    },
+    {
+      "path": "audio/sc13/sheep.mp3",
+      "use": "t024"
+    },
+    {
+      "path": "audio/sc13/sheep.opus",
+      "use": "t024"
+    },
+    {
+      "path": "audio/sc13/whale.mp3",
+      "use": "t025"
+    },
+    {
+      "path": "audio/sc13/whale.opus",
+      "use": "t025"
+    },
+    {
+      "path": "audio/sc13/wolf.mp3",
+      "use": "t026"
+    },
+    {
+      "path": "audio/sc13/wolf.opus",
+      "use": "t026"
+    },
+    {
+      "path": "audio/sfx/alt_correct_kenney.mp3",
+      "use": "t027"
+    },
+    {
+      "path": "audio/sfx/alt_correct_kenney.opus",
+      "use": "t027"
+    },
+    {
+      "path": "audio/sfx/chime_correct.mp3",
+      "use": "t028"
+    },
+    {
+      "path": "audio/sfx/chime_correct.opus",
+      "use": "t028"
+    },
+    {
+      "path": "audio/sfx/page_turn.mp3",
+      "use": "t029"
+    },
+    {
+      "path": "audio/sfx/page_turn.opus",
+      "use": "t029"
+    },
+    {
+      "path": "audio/sfx/sparkle_star.mp3",
+      "use": "t028"
+    },
+    {
+      "path": "audio/sfx/sparkle_star.opus",
+      "use": "t028"
+    },
+    {
+      "path": "audio/sfx/tap_soft.mp3",
+      "use": "t029"
+    },
+    {
+      "path": "audio/sfx/tap_soft.opus",
+      "use": "t029"
+    },
+    {
+      "path": "audio/sfx/try_again.mp3",
+      "use": "t029"
+    },
+    {
+      "path": "audio/sfx/try_again.opus",
+      "use": "t029"
+    },
+    {
+      "path": "avatars-1115.js",
+      "use": "t003"
+    },
+    {
+      "path": "avatars-bots.js",
+      "use": "t003"
+    },
+    {
+      "path": "candle_tokens.css",
+      "use": "t003"
+    },
+    {
+      "path": "companions-v167.js",
+      "use": "t003"
+    },
+    {
+      "path": "credits.json",
+      "use": "t031"
+    },
+    {
+      "path": "drum63.js",
+      "use": "t003"
+    },
+    {
+      "path": "echo.js",
+      "use": "t003"
+    },
+    {
+      "path": "echo65-data.js",
+      "use": "t003"
+    },
+    {
+      "path": "engine.min.js",
+      "use": "t003"
+    },
+    {
+      "path": "favicon.ico",
+      "use": "t032"
+    },
+    {
+      "path": "flg/lantern.css",
+      "use": "t003"
+    },
+    {
+      "path": "flg/lantern.js",
+      "use": "t003"
+    },
+    {
+      "path": "fonts/cursive.woff2",
+      "use": "t033"
+    },
+    {
+      "path": "gallery/app-pack/images/haeckel-spumellaria.webp",
+      "use": "t034"
+    },
+    {
+      "path": "gallery/app-pack/images/phantom-galaxy-m74.webp",
+      "use": "t035"
+    },
+    {
+      "path": "gallery/app-pack/manifest.json",
+      "use": "t036"
+    },
+    {
+      "path": "gallery/core/images/ambientcg-bark014.webp",
+      "use": "t037"
+    },
+    {
+      "path": "gallery/core/images/chladni-tab-ix.webp",
+      "use": "t038"
+    },
+    {
+      "path": "gallery/core/images/chladni-tab-viii.webp",
+      "use": "t039"
+    },
+    {
+      "path": "gallery/core/images/chladni-tab-x.webp",
+      "use": "t040"
+    },
+    {
+      "path": "gallery/core/images/jamnitzer-perspectiva-fiii.webp",
+      "use": "t041"
+    },
+    {
+      "path": "gallery/core/images/jamnitzer-perspectiva-fvi.webp",
+      "use": "t042"
+    },
+    {
+      "path": "gallery/core/images/kepler-harmonices-mundi.webp",
+      "use": "t043"
+    },
+    {
+      "path": "gallery/core/images/merian-surinam-plate-11.webp",
+      "use": "t044"
+    },
+    {
+      "path": "gallery/core/images/polyhaven-rogland-clear-night.webp",
+      "use": "t045"
+    },
+    {
+      "path": "gallery/core/manifest.json",
+      "use": "t036"
+    },
+    {
+      "path": "games-data.json",
+      "use": "t046"
+    },
+    {
+      "path": "honeycomb-tone.js",
+      "use": "t003"
+    },
+    {
+      "path": "i18n.js",
+      "use": "t003"
+    },
+    {
+      "path": "icon.svg",
+      "use": "t032"
+    },
+    {
+      "path": "icons65.js",
+      "use": "t003"
+    },
+    {
+      "path": "index.html",
+      "use": "t003"
+    },
+    {
+      "path": "lang/es.json",
+      "use": "t047"
+    },
+    {
+      "path": "looks/mode_constellation_v2.min.js",
+      "use": "t048"
+    },
+    {
+      "path": "looks/mode_glass_v21.min.js",
+      "use": "t003"
+    },
+    {
+      "path": "looks/sils_v2.js",
+      "use": "t003"
+    },
+    {
+      "path": "lyrics/luna_timings.json",
+      "use": "t049"
+    },
+    {
+      "path": "manifest.webmanifest",
+      "use": "t050"
+    },
+    {
+      "path": "math.js",
+      "use": "t003"
+    },
+    {
+      "path": "moon.js",
+      "use": "t003"
+    },
+    {
+      "path": "move.js",
+      "use": "t003"
+    },
+    {
+      "path": "music-box-data-v5.js",
+      "use": "t003"
+    },
+    {
+      "path": "music-box-v2.js",
+      "use": "t003"
+    },
+    {
+      "path": "music-data.js",
+      "use": "t003"
+    },
+    {
+      "path": "music.js",
+      "use": "t003"
+    },
+    {
+      "path": "pack.js",
+      "use": "t003"
+    },
+    {
+      "path": "packs/index.json",
+      "use": "t050"
+    },
+    {
+      "path": "print/all.es.html",
+      "use": "t003"
+    },
+    {
+      "path": "print/all.html",
+      "use": "t003"
+    },
+    {
+      "path": "print/dragon.es.html",
+      "use": "t003"
+    },
+    {
+      "path": "print/dragon.html",
+      "use": "t003"
+    },
+    {
+      "path": "print/draw.js",
+      "use": "t003"
+    },
+    {
+      "path": "print/honeycomb.es.html",
+      "use": "t003"
+    },
+    {
+      "path": "print/honeycomb.html",
+      "use": "t003"
+    },
+    {
+      "path": "print/index.es.html",
+      "use": "t003"
+    },
+    {
+      "path": "print/index.html",
+      "use": "t003"
+    },
+    {
+      "path": "print/moon.es.html",
+      "use": "t003"
+    },
+    {
+      "path": "print/moon.html",
+      "use": "t003"
+    },
+    {
+      "path": "print/seed.es.html",
+      "use": "t003"
+    },
+    {
+      "path": "print/seed.html",
+      "use": "t003"
+    },
+    {
+      "path": "print/walk.es.html",
+      "use": "t003"
+    },
+    {
+      "path": "print/walk.html",
+      "use": "t003"
+    },
+    {
+      "path": "progress68.js",
+      "use": "t003"
+    },
+    {
+      "path": "quilt.js",
+      "use": "t003"
+    },
+    {
+      "path": "recipes.js",
+      "use": "t003"
+    },
+    {
+      "path": "sky/cities.min.json",
+      "use": "t051"
+    },
+    {
+      "path": "sky/constellations.min.json",
+      "use": "t048"
+    },
+    {
+      "path": "sky/sky.min.js",
+      "use": "t052"
+    },
+    {
+      "path": "sky/stars.min.json",
+      "use": "t053"
+    },
+    {
+      "path": "soundcards-u13.js",
+      "use": "t003"
+    },
+    {
+      "path": "stories-es.js",
+      "use": "t003"
+    },
+    {
+      "path": "stories.js",
+      "use": "t003"
+    },
+    {
+      "path": "stories2.js",
+      "use": "t003"
+    },
+    {
+      "path": "stories3.js",
+      "use": "t003"
+    },
+    {
+      "path": "stories64.js",
+      "use": "t003"
+    },
+    {
+      "path": "story-styles/night-night-cave.svg",
+      "use": "t032"
+    },
+    {
+      "path": "story-styles/night-night-chalk.svg",
+      "use": "t032"
+    },
+    {
+      "path": "story-styles/night-night-paper.svg",
+      "use": "t032"
+    },
+    {
+      "path": "story-styles/night-night-woodblock.svg",
+      "use": "t032"
+    },
+    {
+      "path": "story-styles/palettes.json",
+      "use": "t032"
+    },
+    {
+      "path": "story-styles/swatch-cave.svg",
+      "use": "t032"
+    },
+    {
+      "path": "story-styles/swatch-chalk.svg",
+      "use": "t032"
+    },
+    {
+      "path": "story-styles/swatch-paper.svg",
+      "use": "t032"
+    },
+    {
+      "path": "story-styles/swatch-woodblock.svg",
+      "use": "t032"
+    },
+    {
+      "path": "sw.js",
+      "use": "t003"
+    },
+    {
+      "path": "v10.js",
+      "use": "t003"
+    },
+    {
+      "path": "v100.js",
+      "use": "t003"
+    },
+    {
+      "path": "v101-art.js",
+      "use": "t003"
+    },
+    {
+      "path": "v101-stories.js",
+      "use": "t003"
+    },
+    {
+      "path": "v101.js",
+      "use": "t003"
+    },
+    {
+      "path": "v102.js",
+      "use": "t003"
+    },
+    {
+      "path": "v105.js",
+      "use": "t003"
+    },
+    {
+      "path": "v106.js",
+      "use": "t003"
+    },
+    {
+      "path": "v109.js",
+      "use": "t003"
+    },
+    {
+      "path": "v111.js",
+      "use": "t003"
+    },
+    {
+      "path": "v112.js",
+      "use": "t003"
+    },
+    {
+      "path": "v116.js",
+      "use": "t003"
+    },
+    {
+      "path": "v118.js",
+      "use": "t003"
+    },
+    {
+      "path": "v119-129.js",
+      "use": "t003"
+    },
+    {
+      "path": "v12.js",
+      "use": "t003"
+    },
+    {
+      "path": "v130.js",
+      "use": "t003"
+    },
+    {
+      "path": "v131-132.js",
+      "use": "t003"
+    },
+    {
+      "path": "v133-135.js",
+      "use": "t003"
+    },
+    {
+      "path": "v137-145.js",
+      "use": "t003"
+    },
+    {
+      "path": "v14.js",
+      "use": "t003"
+    },
+    {
+      "path": "v147-164.js",
+      "use": "t003"
+    },
+    {
+      "path": "v16-art.js",
+      "use": "t003"
+    },
+    {
+      "path": "v16-seq.js",
+      "use": "t003"
+    },
+    {
+      "path": "v16.js",
+      "use": "t003"
+    },
+    {
+      "path": "v165-174.js",
+      "use": "t003"
+    },
+    {
+      "path": "v17.js",
+      "use": "t003"
+    },
+    {
+      "path": "v175-183.js",
+      "use": "t003"
+    },
+    {
+      "path": "v181-mandel-worker.js",
+      "use": "t003"
+    },
+    {
+      "path": "v184-185.js",
+      "use": "t003"
+    },
+    {
+      "path": "v186.js",
+      "use": "t003"
+    },
+    {
+      "path": "v187.js",
+      "use": "t003"
+    },
+    {
+      "path": "v188.js",
+      "use": "t003"
+    },
+    {
+      "path": "v189.js",
+      "use": "t003"
+    },
+    {
+      "path": "v19.js",
+      "use": "t003"
+    },
+    {
+      "path": "v190.js",
+      "use": "t003"
+    },
+    {
+      "path": "v191.js",
+      "use": "t003"
+    },
+    {
+      "path": "v20.js",
+      "use": "t003"
+    },
+    {
+      "path": "v21.js",
+      "use": "t003"
+    },
+    {
+      "path": "v22.js",
+      "use": "t003"
+    },
+    {
+      "path": "v23.js",
+      "use": "t003"
+    },
+    {
+      "path": "v24.js",
+      "use": "t003"
+    },
+    {
+      "path": "v25.js",
+      "use": "t003"
+    },
+    {
+      "path": "v27.js",
+      "use": "t003"
+    },
+    {
+      "path": "v28.js",
+      "use": "t003"
+    },
+    {
+      "path": "v30.js",
+      "use": "t003"
+    },
+    {
+      "path": "v31.js",
+      "use": "t003"
+    },
+    {
+      "path": "v32.js",
+      "use": "t003"
+    },
+    {
+      "path": "v33.js",
+      "use": "t003"
+    },
+    {
+      "path": "v34.js",
+      "use": "t003"
+    },
+    {
+      "path": "v35.js",
+      "use": "t003"
+    },
+    {
+      "path": "v36.js",
+      "use": "t003"
+    },
+    {
+      "path": "v37.js",
+      "use": "t003"
+    },
+    {
+      "path": "v38.js",
+      "use": "t003"
+    },
+    {
+      "path": "v41.js",
+      "use": "t003"
+    },
+    {
+      "path": "v43.js",
+      "use": "t003"
+    },
+    {
+      "path": "v44.js",
+      "use": "t003"
+    },
+    {
+      "path": "v46.js",
+      "use": "t003"
+    },
+    {
+      "path": "v47.js",
+      "use": "t003"
+    },
+    {
+      "path": "v48.js",
+      "use": "t003"
+    },
+    {
+      "path": "v49.js",
+      "use": "t003"
+    },
+    {
+      "path": "v51.js",
+      "use": "t003"
+    },
+    {
+      "path": "v52.js",
+      "use": "t003"
+    },
+    {
+      "path": "v54.js",
+      "use": "t003"
+    },
+    {
+      "path": "v56.js",
+      "use": "t003"
+    },
+    {
+      "path": "v57.js",
+      "use": "t003"
+    },
+    {
+      "path": "v58.js",
+      "use": "t003"
+    },
+    {
+      "path": "v59.js",
+      "use": "t003"
+    },
+    {
+      "path": "v60.js",
+      "use": "t003"
+    },
+    {
+      "path": "v61.js",
+      "use": "t003"
+    },
+    {
+      "path": "v62.js",
+      "use": "t003"
+    },
+    {
+      "path": "v63.js",
+      "use": "t003"
+    },
+    {
+      "path": "v64.js",
+      "use": "t003"
+    },
+    {
+      "path": "v65.js",
+      "use": "t003"
+    },
+    {
+      "path": "v66.js",
+      "use": "t003"
+    },
+    {
+      "path": "v67.js",
+      "use": "t003"
+    },
+    {
+      "path": "v68.js",
+      "use": "t003"
+    },
+    {
+      "path": "v69.js",
+      "use": "t003"
+    },
+    {
+      "path": "v71.js",
+      "use": "t003"
+    },
+    {
+      "path": "v73.js",
+      "use": "t003"
+    },
+    {
+      "path": "v74.js",
+      "use": "t003"
+    },
+    {
+      "path": "v76.js",
+      "use": "t003"
+    },
+    {
+      "path": "v81.js",
+      "use": "t003"
+    },
+    {
+      "path": "v82.js",
+      "use": "t003"
+    },
+    {
+      "path": "v83.js",
+      "use": "t003"
+    },
+    {
+      "path": "v85.js",
+      "use": "t003"
+    },
+    {
+      "path": "v86.js",
+      "use": "t003"
+    },
+    {
+      "path": "v87.js",
+      "use": "t003"
+    },
+    {
+      "path": "v88.js",
+      "use": "t003"
+    },
+    {
+      "path": "v89.js",
+      "use": "t003"
+    },
+    {
+      "path": "v90.js",
+      "use": "t003"
+    },
+    {
+      "path": "v91.js",
+      "use": "t003"
+    },
+    {
+      "path": "v92.js",
+      "use": "t003"
+    },
+    {
+      "path": "v93.js",
+      "use": "t003"
+    },
+    {
+      "path": "v94.js",
+      "use": "t003"
+    },
+    {
+      "path": "v95.js",
+      "use": "t003"
+    },
+    {
+      "path": "v97.js",
+      "use": "t003"
+    },
+    {
+      "path": "v99.js",
+      "use": "t003"
+    },
+    {
+      "path": "version.json",
+      "use": "t050"
+    },
+    {
+      "path": "wind-down-shapes.js",
+      "use": "t003"
+    },
+    {
+      "path": "year-wheel/index.html",
+      "use": "t003"
+    }
+  ],
+  "rules": [
+    {
+      "prefix": "audio/alex/",
+      "use": "t004",
+      "n": 777
+    },
+    {
+      "prefix": "audio/bella/",
+      "use": "t005",
+      "n": 487
+    },
+    {
+      "prefix": "audio/dora/",
+      "use": "t006",
+      "n": 777
+    },
+    {
+      "prefix": "audio/emma/",
+      "use": "t007",
+      "n": 487
+    },
+    {
+      "prefix": "audio/heart/",
+      "use": "t008",
+      "n": 487
+    },
+    {
+      "prefix": "audio/inst/bells/",
+      "use": "t009",
+      "n": 14
+    },
+    {
+      "prefix": "audio/inst/drums/",
+      "use": "t010",
+      "n": 8
+    },
+    {
+      "prefix": "audio/inst/piano/",
+      "use": "t011",
+      "n": 20
+    },
+    {
+      "prefix": "audio/michael/",
+      "use": "t012",
+      "n": 487
+    },
+    {
+      "prefix": "audio/nicole/",
+      "use": "t013",
+      "n": 487
+    },
+    {
+      "prefix": "audio/puck/",
+      "use": "t014",
+      "n": 487
+    },
+    {
+      "prefix": "audio/sing/",
+      "use": "t030",
+      "n": 19
+    }
+  ]
+}

@@ -9,4 +9,4 @@ try{const vis=SECTIONS.find(x=>$(x)&&!$(x).classList.contains('hidden'))||'hub';
 document.head.insertAdjacentHTML('beforeend',`<style>@media (max-width:640px){#pstudio .pbar{height:auto!important;min-height:58px;padding:6px!important;flex-wrap:wrap!important}}
 body.inpaint #fhome{display:none!important}</style>`);
 
-addEventListener('resize',()=>{if($('pstudio')&&!$('paint').classList.contains('hidden'))try{renderPaintBar()}catch(e){}});
+addEventListener('resize',()=>{/* v192: paint resize is owned by v192.js; do not call renderPaintBar (it rebuilt the bar). */});
