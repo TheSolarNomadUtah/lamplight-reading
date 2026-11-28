@@ -78,7 +78,7 @@ header nav button{min-height:56px;min-width:56px;display:inline-flex;align-items
 <script src="echo.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const APP_VERSION=190;
+const APP_VERSION=191;
 // Safe storage: Brave/Firefox strict privacy can block or throw on localStorage. Fall back to memory.
 const MEM={};let STORE_OK=true;const VOLATILE=new Set();
 const RAW={get:k=>{if(VOLATILE.has(k))return Object.hasOwn(MEM,k)?MEM[k]:null;try{const v=window.localStorage.getItem(k);MEM[k]=v;return v}catch(e){STORE_OK=false;return Object.hasOwn(MEM,k)?MEM[k]:null}},
@@ -277,39 +277,20 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="v111.js"></script>
 <script src="sky/sky.min.js"></script>
 <script src="v112.js"></script>
-<script src="v115.js"></script>
 <script src="v116.js"></script>
 <script src="pack.js"></script>
 <script src="math.js"></script>
 <script src="v118.js"></script>
-<script src="v119.js"></script>
-<script src="v120.js"></script>
-<script src="v121.js"></script>
-<script src="v122.js"></script>
-<script src="v123.js"></script>
-<script src="v124.js"></script>
-<script src="v125.js"></script>
-<script src="v126.js"></script>
-<script src="v127.js"></script>
-<script src="v129-breathing.js"></script>
-<script src="v129.js"></script>
+<script src="v119-129.js"></script>
 <script src="recipes.js"></script>
 <script src="quilt.js"></script>
 <script src="v130.js"></script>
 <script src="moon.js"></script>
-<script src="v131.js"></script>
-<script src="v132.js"></script>
+<script src="v131-132.js"></script>
 <script src="print/draw.js"></script>
-<script src="v133.js"></script>
-<script src="v135.js"></script>
+<script src="v133-135.js"></script>
 <script src="engine.min.js"></script>
-<script src="v137.js"></script>
-<script src="v138.js"></script>
-<script src="v139.js"></script>
-<script src="v140.js"></script>
-<script src="v141.js"></script>
-<script src="v143.js"></script>
-<script src="v145.js"></script>
+<script src="v137-145.js"></script>
 <script src="looks/sils_v2.js"></script>
 <script>
 /* v159: load Glass/Constellation kits only when a saved look needs them at boot. */
@@ -328,50 +309,15 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
  }catch(e){}
 })();
 </script>
-<script src="v147.js"></script>
-<script src="v148.js"></script>
-<script src="v149.js"></script>
-<script src="v150.js"></script>
-<script src="v151.js"></script>
-<script src="v152.js"></script>
-<script src="v153.js"></script>
-<script src="v154.js"></script>
-<script src="v155.js"></script>
-<script src="v156.js"></script>
-<script src="v157.js"></script>
-<script src="v159.js"></script>
-<script src="v160.js"></script>
-<script src="v161.js"></script>
-<script src="v162.js"></script>
-<script src="v163.js"></script>
-<script src="v164.js"></script>
+<script src="v147-164.js"></script>
 <script src="companions-v167.js"></script>
-<script src="v165.js"></script>
-<script src="v166.js"></script>
-<script src="v167.js"></script>
-<script src="v168.js"></script>
-<script src="v169.js"></script>
-<script src="v170.js"></script>
-<script src="v171.js"></script>
-<script src="v172.js"></script>
-<script src="v173.js"></script>
-<script src="v174.js"></script>
+<script src="v165-174.js"></script>
 <script src="honeycomb-tone.js"></script>
 <script src="wind-down-shapes.js"></script>
 <script src="soundcards-u13.js"></script>
-<script src="v175.js"></script>
-<script src="v176.js"></script>
-<script src="v177.js"></script>
-<script src="v178.js"></script>
-<script src="v179.js"></script>
-<script src="v180.js"></script>
-<script src="v181.js"></script>
-<script src="v181-deep.js"></script>
-<script src="v182.js"></script>
-<script src="v183.js"></script>
+<script src="v175-183.js"></script>
 <script src="flg/lantern.js"></script>
-<script src="v184.js"></script>
-<script src="v185.js"></script>
+<script src="v184-185.js"></script>
 <script src="music-box-data-v5.js"></script>
 <script src="music-box-v2.js"></script>
 <script src="v186.js"></script>
@@ -379,4 +325,5 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){const hadSW=!!navi
 <script src="v188.js"></script>
 <script src="v189.js"></script>
 <script src="v190.js"></script>
+<script src="v191.js"></script>
 </body></html>
